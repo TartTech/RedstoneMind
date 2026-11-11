@@ -85,8 +85,8 @@
   "eventsBotaBotname": "Eventos do bot \"{{botName}}\"",
   "upravlenieBotaBotname": "Bot management \"{{botName}}\"",
   "stranitsaBotaBotname": "Bot page \"{{botName}}\"",
-  "diffsecSekAgo": "{{diffSec}} sec ago",
-  "mMinAgo": "{{m}} min ago",
+  "diffsecSekAgo": "{{diffSec}} seg atrás",
+  "mMinAgo": "{{m}} min atrás",
   "botBotid": "Bot {{botId}}",
   "titles": {
     "accessDenied": "Acesso negado",
@@ -129,5 +129,8 @@
   "novyyGraf": "Novo grafo",
   "sobytiya": "events",
   "prosmotrTrassirovki": "📊 Visualização do rastreamento",
-  "obychnyyRezhim": "✏️ Normal modo"
+  "obychnyyRezhim": "✏️ Modo normal",
+  "onlineNow": "Online agora",
+  "nobodyOnline": "Ninguém está online.",
+  "open": "Abrir"
 }

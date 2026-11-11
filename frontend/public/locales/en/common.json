@@ -129,5 +129,8 @@
   "novyyGraf": "New graph",
   "sobytiya": "events",
   "prosmotrTrassirovki": "📊 Trace view",
-  "obychnyyRezhim": "✏️ Normal mode"
+  "obychnyyRezhim": "✏️ Normal mode",
+  "onlineNow": "Online now",
+  "nobodyOnline": "Nobody is online.",
+  "open": "Open"
 }

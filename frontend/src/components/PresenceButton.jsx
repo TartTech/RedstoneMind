@@ -140,9 +140,9 @@ export default function PresenceButton() {
 				</Button>
 			</PopoverTrigger>
 			<PopoverContent align="end" className="w-80 max-w-[90vw] p-2">
-				<div className="text-sm font-medium mb-2">Онлайн сейчас</div>
+				<div className="text-sm font-medium mb-2">{t('onlineNow')}</div>
 				{count === 0 ? (
-					<div className="text-xs text-muted-foreground">Никого нет онлайн.</div>
+					<div className="text-xs text-muted-foreground">{t('nobodyOnline')}</div>
 				) : (
 					<ul className="space-y-1 max-h-64 overflow-auto">
 						{enrichedList.map((u) => (
@@ -152,7 +152,7 @@ export default function PresenceButton() {
 									<div className="text-xs text-muted-foreground truncate">{routeTitles(u.path, u.metadata, t)}</div>
 									<div className="text-[10px] text-muted-foreground">{sinceText(u.lastSeen, t)}</div>
 								</div>
-								<Button size="sm" variant="secondary" onClick={() => navigate(u.path)}>Открыть</Button>
+								<Button size="sm" variant="secondary" onClick={() => navigate(u.path)}>{t('open')}</Button>
 							</li>
 						))}
 					</ul>

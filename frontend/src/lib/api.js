@@ -99,7 +99,26 @@ export const apiHelper = async (url, options = {}, successMessage) => {
       return true;
     }
 
-    const data = await response.json();
+    const responseText = await response.text();
+    if (!responseText) {
+      if (successMessage) {
+        toast({
+          title: translateCommon('messages.success', i18n.t('titles.success')),
+          description: successMessage,
+        });
+      }
+      return true;
+    }
+
+    let data;
+    try {
+      data = JSON.parse(responseText);
+    } catch {
+      if (!response.ok) {
+        throw new Error(responseText || `HTTP ${response.status}`);
+      }
+      return responseText;
+    }
 
     if (!response.ok) {
       if (response.status === 401) {

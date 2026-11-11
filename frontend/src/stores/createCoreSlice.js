@@ -145,9 +145,9 @@ export const createCoreSlice = (set, get) => ({
                 return {
                     ...state,
                     bots: Array.isArray(botsData) ? botsData : [],
-                    servers: serversData?.items || [],
-                    proxies: proxiesData?.items || [],
-                    botStatuses: stateData.statuses || {},
+                    servers: Array.isArray(serversData?.items) ? serversData.items : [],
+                    proxies: Array.isArray(proxiesData?.items) ? proxiesData.items : [],
+                    botStatuses: stateData?.statuses || {},
                     appVersion: currentVersion,
                     botLogs: newBotLogs,
                     showPanelUpdateDialog: shouldShowUpdate ? true : state.showPanelUpdateDialog,
@@ -158,7 +158,7 @@ export const createCoreSlice = (set, get) => ({
                 await get().openChangelogDialog();
             }
         } catch (error) {
-             console.error("Не удалось загрузить начальные данные:", error.message);
+             console.error("Failed to load initial data:", error.message, error);
              set(state => ({
                  ...state,
                  bots: [],

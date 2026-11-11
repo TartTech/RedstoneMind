@@ -7,7 +7,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
 import { useTranslation } from 'react-i18next';
 
-const routeTitles = (path, metadata = {}) => {
+const routeTitles = (path, metadata = {}, t) => {
 	if (path === '/') return t('yesshbord');
 	if (path.startsWith('/bots/')) {
 		const parts = path.split('/');
@@ -29,7 +29,7 @@ const routeTitles = (path, metadata = {}) => {
 	return path;
 };
 
-function sinceText(ts) {
+function sinceText(ts, t) {
 	const diffSec = Math.max(0, Math.floor((Date.now() - ts) / 1000));
 	if (diffSec < 60) return t('diffsecSekAgo', { diffSec: diffSec });
 	const m = Math.floor(diffSec / 60);
@@ -79,7 +79,7 @@ export default function PresenceButton() {
 					if (!currentUser || user.userId !== currentUser.id) {
 						const lastLeft = lastLeftAtRef.current.get(user.userId);
 						if (!lastLeft || now - lastLeft >= 5 * 60 * 1000) {
-							toast({ title: t('messages.userusernameZashelVPanel', { username: user.username }), description: routeTitles(user.path, user.metadata) });
+							toast({ title: t('messages.userusernameZashelVPanel', { username: user.username }), description: routeTitles(user.path, user.metadata, t) });
 						}
 					}
 				}
@@ -149,8 +149,8 @@ export default function PresenceButton() {
 							<li key={u.userId} className="text-sm flex items-center justify-between">
 								<div>
 									<div className="font-medium">{u.username}</div>
-									<div className="text-xs text-muted-foreground truncate">{routeTitles(u.path, u.metadata)}</div>
-									<div className="text-[10px] text-muted-foreground">{sinceText(u.lastSeen)}</div>
+									<div className="text-xs text-muted-foreground truncate">{routeTitles(u.path, u.metadata, t)}</div>
+									<div className="text-[10px] text-muted-foreground">{sinceText(u.lastSeen, t)}</div>
 								</div>
 								<Button size="sm" variant="secondary" onClick={() => navigate(u.path)}>Открыть</Button>
 							</li>

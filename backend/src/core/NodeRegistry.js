@@ -2,6 +2,7 @@ const validationService = require('./services/ValidationService');
 const { GRAPH_TYPES } = require('./constants/graphTypes');
 const { NodeDefinition } = require('./NodeDefinition');
 const { applyDynamicPins } = require('../../../shared/nodePins.cjs');
+const { t } = require('../i18n');
 
 class NodeRegistry {
   constructor() {
@@ -122,7 +123,6 @@ class NodeRegistry {
       for (const file of files) {
         try {
           const registry = require(path.join(registriesDir, file));
-const { t } = require('../i18n');
 
           if (typeof registry.registerNodes === 'function') {
             registry.registerNodes(this);

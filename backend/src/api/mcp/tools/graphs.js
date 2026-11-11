@@ -8,6 +8,7 @@ const VAR_NAME = z.string().regex(/^[A-Za-z_][A-Za-z0-9_]{0,63}$/);
 function managerOrError() {
     try {
         return require('../../../core/services/GraphCollaborationManager').getGlobalCollaborationManager();
+const { t } = require('../../../i18n');
     } catch {
         return null;
     }
@@ -27,28 +28,28 @@ function summarizeRoom(room) {
 
 function resolveRoom(user, botId, graphId) {
     const manager = managerOrError();
-    if (!manager) return { error: err('Редактор графов ещё не готов') };
+    if (!manager) return { error: err(t('mcp:msg_906e9981')) };
     const mine = manager.roomsForUser(user.userId);
     if (botId == null && graphId == null) {
         if (mine.length === 0) {
-            return { error: err('Открой граф в редакторе. Изменения попадают только в открытую сессию и сами не сохраняются.') };
+            return { error: err(t('mcp:msg_3556bf8c')) };
         }
         if (mine.length > 1) {
-            return { error: err('Открыто несколько графов. Укажи botId и graphId.', { graphs: mine.map(summarizeRoom) }) };
+            return { error: err(t('mcp:msg_178c625b'), { graphs: mine.map(summarizeRoom) }) };
         }
         return { manager, room: mine[0] };
     }
     const room = manager.rooms.get(manager.getRoomKey(botId, graphId));
     const present = room && Array.from(room.users.values()).some((member) => member.userId === user.userId);
     if (!present) {
-        return { error: err('Этого графа нет в твоей открытой сессии. Сначала открой его в редакторе.') };
+        return { error: err(t('mcp:msg_598be220')) };
     }
     return { manager, room };
 }
 
 function ensureReady(room) {
     if (!room.graphState?.initialized) {
-        return err('Граф в сессии ещё не загрузился. Подожди, пока редактор откроется.');
+        return err(t('mcp:msg_07bac64a'));
     }
     return null;
 }
@@ -77,10 +78,10 @@ function register(server, { user }) {
         const permErr = requirePermission(user, 'management:edit');
         if (permErr) return permErr;
         const manager = managerOrError();
-        if (!manager) return err('Редактор графов ещё не готов');
+        if (!manager) return err(t('mcp:msg_906e9981'));
         const graphs = manager.roomsForUser(user.userId).map(summarizeRoom);
         if (graphs.length === 0) {
-            return err('Открой граф в редакторе. Изменения попадают только в открытую сессию и сами не сохраняются.');
+            return err(t('mcp:msg_3556bf8c'));
         }
         return ok({ success: true, graphs });
     }));
@@ -129,7 +130,7 @@ function register(server, { user }) {
             data: data && typeof data === 'object' ? data : {},
         };
         if (resolved.room.graphState.nodes.some((item) => item.id === node.id)) {
-            return err(`Нода ${node.id} уже есть на холсте`);
+            return err(t('mcp:msg_c77153ec', { node: node.id }));
         }
         const payload = { node };
         resolved.manager.applyNodeChange(resolved.room, 'create', payload);
@@ -157,7 +158,7 @@ function register(server, { user }) {
         const readyErr = ensureReady(resolved.room);
         if (readyErr) return readyErr;
         if (!resolved.room.graphState.nodes.some((item) => item.id === nodeId)) {
-            return err(`Нода ${nodeId} не найдена в открытом графе`);
+            return err(t('mcp:msg_2994112b', { nodeId: nodeId }));
         }
         const payload = { nodeId, nodeData: data };
         resolved.manager.applyNodeChange(resolved.room, 'update', payload);
@@ -212,7 +213,7 @@ function register(server, { user }) {
         const protectedNode = resolved.room.graphState.nodes.find((node) => (
             nodeIds.includes(node.id) && (node.deletable === false || node.id === 'start')
         ));
-        if (protectedNode) return err(`Ноду ${protectedNode.id} удалять нельзя`);
+        if (protectedNode) return err(t('mcp:msg_c28e8951', { protectedNode: protectedNode.id }));
         const payload = { nodeIds };
         resolved.manager.applyNodeChange(resolved.room, 'delete', payload);
         resolved.manager.pushToRoom(resolved.room, 'collab:node-changed', {
@@ -243,7 +244,7 @@ function register(server, { user }) {
         if (readyErr) return readyErr;
         const nodes = resolved.room.graphState.nodes;
         if (!nodes.some((node) => node.id === source) || !nodes.some((node) => node.id === target)) {
-            return err('Оба конца связи должны быть нодами открытого графа');
+            return err(t('mcp:validation_c45b5a0d'));
         }
         const edge = {
             id: id || `e_${randomUUID().slice(0, 8)}`,

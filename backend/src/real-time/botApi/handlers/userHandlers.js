@@ -1,7 +1,8 @@
 const UserService = require('../../../core/UserService');
+const { t } = require('../../../i18n');
 
 /**
- * action:get_user - Получить данные о пользователе
+ * action:get_user - Получить data о пользователе
  */
 async function handleGetUser(socket, payload) {
     try {
@@ -34,7 +35,7 @@ async function handleGetUser(socket, payload) {
             },
         });
     } catch (error) {
-        console.error('[Bot API] Ошибка получения пользователя:', error);
+        console.error(t('core:error_b91e2d86'), error);
         socket.emit('error', {
             action: 'get_user',
             message: 'Internal error',
@@ -43,10 +44,10 @@ async function handleGetUser(socket, payload) {
 }
 
 /**
- * action:update_user - Обновить данные пользователя
+ * action:update_user - Обновить data user
  */
 async function handleUpdateUser(socket, payload) {
-    // Проверяем права
+    // Проверяем permissions
     if (socket.permissions === 'Read') {
         return socket.emit('error', {
             action: 'update_user',
@@ -127,7 +128,7 @@ async function handleUpdateUser(socket, payload) {
             result,
         });
     } catch (error) {
-        console.error('[Bot API] Ошибка обновления пользователя:', error);
+        console.error(t('core:error_37dc6a3a'), error);
         socket.emit('error', {
             action: 'update_user',
             message: error.message || 'Internal error',

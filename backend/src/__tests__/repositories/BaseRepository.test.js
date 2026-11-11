@@ -1,4 +1,5 @@
 const BaseRepository = require('../../repositories/BaseRepository');
+const { t } = require('../../i18n');
 
 describe('BaseRepository', () => {
     let repository;
@@ -23,7 +24,7 @@ describe('BaseRepository', () => {
     });
 
     describe('findById', () => {
-        test('должен вызвать findUnique с правильным ID', async () => {
+        test(t('tests:validation_851a0baf'), async () => {
             const mockResult = { id: 1, name: 'Test' };
             mockPrisma.testModel.findUnique.mockResolvedValue(mockResult);
 
@@ -37,7 +38,7 @@ describe('BaseRepository', () => {
     });
 
     describe('findMany', () => {
-        test('должен вызвать findMany без параметров', async () => {
+        test(t('tests:validation_768f6ced'), async () => {
             const mockResults = [{ id: 1 }, { id: 2 }];
             mockPrisma.testModel.findMany.mockResolvedValue(mockResults);
 
@@ -49,7 +50,7 @@ describe('BaseRepository', () => {
             expect(results).toEqual(mockResults);
         });
 
-        test('должен вызвать findMany с where условием', async () => {
+        test(t('tests:validation_b9a5d93a'), async () => {
             const mockResults = [{ id: 1, status: 'active' }];
             mockPrisma.testModel.findMany.mockResolvedValue(mockResults);
 
@@ -61,7 +62,7 @@ describe('BaseRepository', () => {
             expect(results).toEqual(mockResults);
         });
 
-        test('должен вызвать findMany с дополнительными опциями', async () => {
+        test(t('tests:validation_9e00dd42'), async () => {
             const mockResults = [{ id: 1 }];
             mockPrisma.testModel.findMany.mockResolvedValue(mockResults);
 
@@ -80,7 +81,7 @@ describe('BaseRepository', () => {
     });
 
     describe('create', () => {
-        test('должен создать новую запись', async () => {
+        test(t('tests:validation_313bfc2a'), async () => {
             const newData = { name: 'New Item' };
             const mockResult = { id: 1, ...newData };
             mockPrisma.testModel.create.mockResolvedValue(mockResult);
@@ -95,7 +96,7 @@ describe('BaseRepository', () => {
     });
 
     describe('update', () => {
-        test('должен обновить запись по ID', async () => {
+        test(t('tests:validation_0c98e11f'), async () => {
             const updateData = { name: 'Updated' };
             const mockResult = { id: 1, ...updateData };
             mockPrisma.testModel.update.mockResolvedValue(mockResult);
@@ -111,7 +112,7 @@ describe('BaseRepository', () => {
     });
 
     describe('delete', () => {
-        test('должен удалить запись по ID', async () => {
+        test(t('tests:validation_e55857e5'), async () => {
             const mockResult = { id: 1 };
             mockPrisma.testModel.delete.mockResolvedValue(mockResult);
 
@@ -125,7 +126,7 @@ describe('BaseRepository', () => {
     });
 
     describe('count', () => {
-        test('должен посчитать количество записей', async () => {
+        test(t('tests:validation_7325e010'), async () => {
             mockPrisma.testModel.count.mockResolvedValue(42);
 
             const result = await repository.count({ status: 'active' });
@@ -138,7 +139,7 @@ describe('BaseRepository', () => {
     });
 
     describe('model getter', () => {
-        test('должен вернуть правильную модель Prisma', () => {
+        test(t('tests:validation_e42266c1'), () => {
             const model = repository.model;
             expect(model).toBe(mockPrisma.testModel);
         });

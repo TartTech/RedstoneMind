@@ -1,7 +1,7 @@
 /**
- * container:withdraw - Забрать предмет из контейнера
+ * container:withdraw - Забрать item from контейнера
  *
- * Executor для action ноды с exec пинами.
+ * Executor for action ноды with exec пинами.
  */
 async function execute(node, context, helpers) {
   const { resolvePinValue, traverse, memo } = helpers;
@@ -28,7 +28,7 @@ async function execute(node, context, helpers) {
   try {
     const searchName = itemName.toLowerCase().replace('minecraft:', '');
 
-    // Ищем предметы в контейнере
+    // Ищем предметы in контейнере
     const containerItems = container.containerItems ? container.containerItems() : [];
     const items = containerItems.filter(item =>
       item && (
@@ -73,7 +73,7 @@ async function execute(node, context, helpers) {
 }
 
 /**
- * Evaluator для data пинов (success, withdrawn)
+ * Evaluator for data пинов (success, withdrawn)
  */
 async function evaluate(node, pinId, context, helpers) {
   const { memo } = helpers;

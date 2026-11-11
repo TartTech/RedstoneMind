@@ -100,7 +100,7 @@ function register(server, { user }) {
                 "            super({",
                 `                name: 'hello',`,
                 `                description: 'Hello command',`,
-                `                aliases: ['hi', 'привет'],`,
+                `                aliases: ['hi', t('mcp:msg_608333ad')],`,
                 `                permissions: '${slug}.use',`,
                 `                owner: 'plugin:${slug}',`,
                 `                cooldown: 5,`,
@@ -327,6 +327,7 @@ function register(server, { user }) {
         if (!plugin) return err('Plugin not found');
 
         const { botManager } = require('../../../core/services');
+const { t } = require('../../../i18n');
         const result = await botManager.reloadPlugins(botId, plugin.name);
         if (!result?.success) return err(result?.message || 'Bot is not running');
         return ok({ success: true, message: 'Plugin reload dispatched', pluginName: plugin.name });

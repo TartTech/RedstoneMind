@@ -1,11 +1,12 @@
 const Command = require('../system/Command');
+const { t } = require('../../i18n');
 
 class WhoisCommand extends Command {
     constructor() {
         super({
             name: 'whois',
-            description: 'Показывает информацию о пользователе',
-            aliases: ['userinfo', 'кто'],
+            description: t('core:msg_b67f3f11'),
+            aliases: ['userinfo', t('core:msg_cbcb1a10')],
             cooldown: 5,
             permissions: 'user.whois',
             owner: 'system',
@@ -15,7 +16,7 @@ class WhoisCommand extends Command {
                     name: 'username',
                     type: 'string',
                     required: false,
-                    description: 'Имя пользователя (по умолчанию - вы)'
+                    description: t('core:msg_712be42f')
                 }
             ]
         });
@@ -27,19 +28,19 @@ class WhoisCommand extends Command {
         try {
             const targetUser = await context.getUser(targetUsername);
 
-            // Получаем список групп
+            // Получаем list групп
             const groups = targetUser.groups
                 .map(ug => ug.group.name)
-                .join(', ') || 'Нет групп';
+                .join(', ') || t('core:msg_e9e2efb6');
 
-            // Статус
-            const status = targetUser.isBlacklisted ? '⛔ В черном списке' : '✅ Не в чс';
+            // Status
+            const status = targetUser.isBlacklisted ? t('core:msg_7efe0d1c') : t('core:msg_ba0f68c0');
 
-            // Форматируем вывод в зависимости от транспорта
+            // Форматируем вывод in dependencies от транспорта
             let message;
 
             if (context.isWebSocket()) {
-                // Для WebSocket API возвращаем структурированные данные
+                // For WebSocket API возвращаем структурированные data
                 message = {
                     username: targetUser.username,
                     isOwner: targetUser.isOwner,
@@ -48,13 +49,13 @@ class WhoisCommand extends Command {
                     status: status
                 };
             } else {
-                message = `${targetUser.username} | Группы: ${groups} | ${status}`;
+                message = t('core:msg_7855ef66', { targetUser: targetUser.username, groups: groups, status: status });
             }
 
             return context.reply(message);
 
         } catch (error) {
-            const errorMsg = `❌ Ошибка: ${error.message}`;
+            const errorMsg = t('core:error_a1386db6', { error: error.message });
             return context.reply(errorMsg);
         }
     }

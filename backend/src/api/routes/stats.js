@@ -1,5 +1,6 @@
 const express = require('express');
 const TtlCache = require('../../core/utils/ttlCache');
+const { t } = require('../../i18n');
 
 const router = express.Router();
 
@@ -37,7 +38,7 @@ router.get('/', async (req, res) => {
         statsCache.set(STATS_CACHE_KEY, stats);
         res.json(stats);
     } catch (error) {
-        console.warn(`[stats proxy] Не удалось получить статистику: ${error.message}`);
+        console.warn(t('api:error_8d87ff72', { error: error.message }));
         res.json({
             online_bots_count: 0,
             total_unique_bots_ever: 0,

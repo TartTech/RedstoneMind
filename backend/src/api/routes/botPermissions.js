@@ -22,7 +22,7 @@ router.get('/:botId/permissions', authenticateUniversal, authorize('management:v
         });
     } catch (error) {
         console.error('[API Error] GET /bots/:botId/permissions:', error);
-        res.status(500).json({ error: 'Не удалось получить список прав' });
+        res.status(500).json({ error: t('bots:error_e0a810da') });
     }
 });
 
@@ -36,13 +36,13 @@ router.get('/:botId/permissions/:permissionId', authenticateUniversal, authorize
         });
 
         if (!permission) {
-            return res.status(404).json({ error: 'Право не найдено' });
+            return res.status(404).json({ error: t('bots:msg_0657020d') });
         }
 
         res.json(permission);
     } catch (error) {
         console.error('[API Error] GET /bots/:botId/permissions/:permissionId:', error);
-        res.status(500).json({ error: 'Не удалось получить право' });
+        res.status(500).json({ error: t('bots:error_1d1ff5cd') });
     }
 });
 
@@ -57,7 +57,7 @@ router.put('/:botId/permissions/:permissionId', authenticateUniversal, authorize
         });
 
         if (!permission) {
-            return res.status(404).json({ error: 'Право не найдено' });
+            return res.status(404).json({ error: t('bots:msg_0657020d') });
         }
 
         const updateData = {};
@@ -72,7 +72,7 @@ router.put('/:botId/permissions/:permissionId', authenticateUniversal, authorize
         res.json(updated);
     } catch (error) {
         console.error('[API Error] PUT /bots/:botId/permissions/:permissionId:', error);
-        res.status(500).json({ error: 'Не удалось обновить право' });
+        res.status(500).json({ error: t('bots:error_cfb1b1ae') });
     }
 });
 
@@ -86,19 +86,20 @@ router.delete('/:botId/permissions/:permissionId', authenticateUniversal, author
         });
 
         if (!permission) {
-            return res.status(404).json({ error: 'Право не найдено' });
+            return res.status(404).json({ error: t('bots:msg_0657020d') });
         }
 
         await prisma.groupPermission.deleteMany({ where: { permissionId } });
         await prisma.permission.delete({ where: { id: permissionId } });
 
         const { botManager } = require('../../core/services');
+const { t } = require('../../i18n');
         botManager.invalidateAllUserCache(botId);
 
         res.json({ success: true });
     } catch (error) {
         console.error('[API Error] DELETE /bots/:botId/permissions/:permissionId:', error);
-        res.status(500).json({ error: 'Не удалось удалить право' });
+        res.status(500).json({ error: t('bots:error_9286b9e6') });
     }
 });
 

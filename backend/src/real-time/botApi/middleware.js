@@ -1,8 +1,9 @@
 const bcrypt = require('bcryptjs');
 const prisma = require('../../lib/prisma');
+const { t } = require('../../i18n');
 
 /**
- * Middleware для аутентификации API клиентов
+ * Middleware for authentication API клиентов
  */
 async function authenticateApiClient(socket, next) {
     try {
@@ -10,12 +11,12 @@ async function authenticateApiClient(socket, next) {
         const botId = parseInt(socket.handshake.query.botId, 10);
 
         if (!apiKey || !botId) {
-            console.error('[Bot API] Отклонено: Нет токена или botId');
+            console.error(t('core:log_5597d324'));
             return next(new Error('Authentication error: Missing token or botId'));
         }
 
         if (!apiKey.startsWith('bk_')) {
-            console.error('[Bot API] Отклонено: Неверный формат токена');
+            console.error(t('core:error_972ed3f7'));
             return next(new Error('Authentication error: Invalid token format'));
         }
 
@@ -33,7 +34,7 @@ async function authenticateApiClient(socket, next) {
         }
 
         if (!matchedKey) {
-            console.error('[Bot API] Отклонено: Неверный ключ для бота', botId);
+            console.error(t('core:error_c71261df'), botId);
             return next(new Error('Authentication failed: Invalid token'));
         }
 
@@ -49,13 +50,13 @@ async function authenticateApiClient(socket, next) {
 
         return next();
     } catch (error) {
-        console.error('[Bot API] Ошибка аутентификации:', error);
+        console.error(t('core:error_de79b4c2'), error);
         return next(new Error('Authentication error'));
     }
 }
 
 /**
- * Логирует подключение/отключение клиента
+ * Логирует connection/отключение клиента
  */
 async function logConnection(socket, action) {
     try {
@@ -69,7 +70,7 @@ async function logConnection(socket, action) {
             },
         });
     } catch (error) {
-        console.error(`[Bot API] Ошибка логирования ${action}:`, error);
+        console.error(t('core:error_23df3c64', { action: action }), error);
     }
 }
 

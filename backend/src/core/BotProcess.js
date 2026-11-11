@@ -123,12 +123,12 @@ function handleIncomingCommand(type, username, message) {
     const commandName = commandParts.shift().toLowerCase();
     const restOfMessage = commandParts.join(' ');
 
-    // Сначала проверяем стандартные команды
+    // Сначала проверяем стандартные commands
     let commandInstance = bot.commands.get(commandName) ||
         Array.from(bot.commands.values()).find(cmd => cmd.aliases.includes(commandName));
 
     if (!commandInstance) {
-        // Если не найдена, проверяем временные команды из runtime registry
+        // If not найдена, проверяем временные commands from runtime registry
         const runtimeRegistry = getRuntimeCommandRegistry();
         commandInstance = runtimeRegistry.get(bot.config.id, commandName);
     }
@@ -164,8 +164,8 @@ function handleIncomingCommand(type, username, message) {
             }
 
             if (processedArgs[argDef.name] === undefined) {
-                // Не проверяем required здесь - это будет сделано в CommandExecutionService
-                // после проверки типа чата и прав владельца
+                // Not проверяем required здесь - это will сделано in CommandExecutionService
+                // after verification type chat and прав владельца
                 if (argDef.default !== undefined) {
                     processedArgs[argDef.name] = argDef.default;
                 }
@@ -183,7 +183,7 @@ function handleIncomingCommand(type, username, message) {
             });
         }
     } catch (e) {
-        sendLog(`[BotProcess] Ошибка парсинга аргументов: ${e.message}`);
+        sendLog(t('core:error_614a83a5', { e: e.message }));
     }
 }
 
@@ -264,7 +264,7 @@ process.on('message', async (message) => {
             const radius = message.payload?.radius || 32;
 
             if (centerPos) {
-                // Перебираем все сущности
+                // Перебираем all entities
                 for (const entity of Object.values(bot.entities)) {
                     if (entity && entity.position && entity.isValid) {
                         // Вычисляем расстояние
@@ -273,7 +273,7 @@ process.on('message', async (message) => {
                         const dz = entity.position.z - centerPos.z;
                         const distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
 
-                        // Если существо в радиусе, добавляем в список
+                        // If существо in радиусе, добавляем in list
                         if (distance <= radius) {
                             entities.push(serializeEntity(entity));
                         }
@@ -387,9 +387,9 @@ process.on('message', async (message) => {
                 state.currentWindow = null;
             }
 
-            // playerList и scoreboard НЕ включаем в state-stream —
-            // они шлются через отдельные события viewer:playerList / viewer:scoreboard
-            // с правильным парсингом JSON chat-component и team prefix/suffix
+            // playerList и scoreboard Not включаем in state-stream —
+            // они шлются through отдельные events viewer:playerList / viewer:scoreboard
+            // with правильным парсингом JSON chat-component и team prefix/suffix
 
             process.send({
                 type: MessageTypes.VIEWER.STATE_RESPONSE,
@@ -525,7 +525,7 @@ process.on('message', async (message) => {
                     break;
 
                 case 'drop_item': {
-                    // Q — выкинуть один предмет из текущего хотбар-слота
+                    // Q — выкинуть один item from current хотбар-слота
                     // command.full = true → выкинуть весь стак (Ctrl+Q)
                     try {
                         const heldItem = bot.heldItem;
@@ -541,12 +541,12 @@ process.on('message', async (message) => {
                 }
 
                 case 'swap_hands': {
-                    // F — поменять предметы между основной и второй рукой (offhand)
+                    // F — поменять предметы between main and второй рукой (offhand)
                     try {
                         if (typeof bot.swapHands === 'function') {
                             bot.swapHands().catch(err => sendLog(`[Viewer] swap_hands error: ${err.message}`));
                         } else if (bot._client) {
-                            // Ручной пакет, если функция отсутствует
+                            // Ручной пакет, if function отсутствует
                             bot._client.write('block_dig', {
                                 status: 6, // SWAP_ITEM_WITH_OFFHAND
                                 location: bot.entity.position,
@@ -560,10 +560,10 @@ process.on('message', async (message) => {
                 }
 
                 case 'use_item': {
-                    // ПКМ — активировать предмет (use)
-                    // Не делаем auto-deactivate, т.к. серверные GUI плагины
-                    // могут не успеть открыть окно за 50мс. Для bow/crossbow
-                    // используется отдельная команда deactivate_item.
+                    // ПКМ — активировать item (use)
+                    // Not делаем auto-deactivate, т.to. серверные GUI plugins
+                    // могут not успеть открыть окно за 50мс. For bow/crossbow
+                    // используется отдельная command deactivate_item.
                     try {
                         bot.activateItem(command.offHand === true);
                     } catch (e) {
@@ -578,7 +578,7 @@ process.on('message', async (message) => {
                 }
 
                 case 'attack_entity': {
-                    // ЛКМ по entity (вместо блока)
+                    // ЛКМ by entity (вместо block)
                     try {
                         if (command.entityId && bot.entities[command.entityId]) {
                             bot.attack(bot.entities[command.entityId]);
@@ -590,7 +590,7 @@ process.on('message', async (message) => {
                 }
 
                 case 'place_block': {
-                    // ПКМ по блоку — поставить блок из руки на грань
+                    // ПКМ by блоку — поставить block from руки on грань
                     try {
                         if (command.position && command.face) {
                             const ref = bot.blockAt(new Vec3(
@@ -611,7 +611,7 @@ process.on('message', async (message) => {
                 }
 
                 case 'activate_block': {
-                    // ПКМ по блоку без предмета — открыть/активировать (сундук, рычаг и т.д.)
+                    // ПКМ by блоку without item — открыть/активировать (сундук, рычаг and т.д.)
                     try {
                         if (command.position) {
                             const block = bot.blockAt(new Vec3(
@@ -629,7 +629,7 @@ process.on('message', async (message) => {
                 }
 
                 case 'open_inventory': {
-                    // E — emit виртуальное окно инвентаря (нет настоящего windowOpen для инвентаря в mineflayer)
+                    // E — emit виртуальное окно инвентаря (no настоящего windowOpen for инвентаря in mineflayer)
                     if (process.send && bot.inventory) {
                         try {
                             const win = bot.inventory;
@@ -691,7 +691,7 @@ process.on('message', async (message) => {
         }
     } else if (message.type === MessageTypes.BOT.START) {
         const config = message.config;
-        sendLog(`[System] Получена команда на запуск бота ${config.username}...`);
+        sendLog(t('core:log_62985256', { config: config.username }));
         try {
             const botOptions = {
                 host: config.server.host,
@@ -706,7 +706,7 @@ process.on('message', async (message) => {
 
             if (config.proxyHost && config.proxyPort) {
                 const proxyType = config.proxyType || config.proxy?.type || 'socks5';
-                sendLog(`[System] Используется прокси (${proxyType}): ${config.proxyHost}:${config.proxyPort}`);
+                sendLog(t('bots:log_c71f4f38', { proxyType: proxyType, config: config.proxyHost, config1: config.proxyPort }));
 
                 const cleanProxyUsername = config.proxyUsername ? config.proxyUsername.trim() : null;
                 const cleanProxyPassword = config.proxyPassword || null;
@@ -730,7 +730,7 @@ process.on('message', async (message) => {
                     });
                 }
             } else {
-                sendLog(`[System] Прокси не настроен, используется прямое подключение.`);
+                sendLog(t('core:log_cafb5871'));
             }
 
             bot = mineflayer.createBot(botOptions);
@@ -738,7 +738,7 @@ process.on('message', async (message) => {
 
             connectionTimeout = setTimeout(() => {
                 if (bot && !bot.player) {
-                    sendLog('[System] Таймаут подключения к серверу (30 секунд). Завершение работы...');
+                    sendLog(t('core:log_e60171b5'));
                     process.exit(1);
                 }
             }, 30000);
@@ -754,7 +754,7 @@ process.on('message', async (message) => {
             bot.sendLog = sendLog;
             bot.messageQueue = new MessageQueue(bot);
 
-            // Plugin Registry для экспорта API между плагинами
+            // Plugin Registry for экспорта API between плагинами
             bot.pluginRegistry = new Map();
 
             const installedPluginNames = config.plugins.map(p => p.name);
@@ -808,7 +808,7 @@ process.on('message', async (message) => {
                                     create: {
                                         botId: bot.config.id,
                                         name: command.permissions,
-                                        description: `Автоматически создано для команды ${command.name}`,
+                                        description: t('bots:success_63b194b8', { command: command.name }),
                                         owner: command.owner || 'system',
                                     },
                                 });
@@ -832,7 +832,7 @@ process.on('message', async (message) => {
                                     create: {
                                         botId: bot.config.id,
                                         name: command.permissions,
-                                        description: `Автоматически создано для команды ${command.name}`,
+                                        description: t('bots:success_63b194b8', { command: command.name }),
                                         owner: command.owner || 'system',
                                     },
                                 });
@@ -895,7 +895,7 @@ process.on('message', async (message) => {
                             }
                         }
                     } catch (error) {
-                        sendLog(`[API] Ошибка при регистрации команды: ${error.message}`);
+                        sendLog(t('bots:error_726cc29a', { error: error.message }));
                     }
                 },
                 performUserAction: (username, action, data = {}) => {
@@ -981,15 +981,15 @@ process.on('message', async (message) => {
                             }
                         }
 
-                        sendLog(`[API] Граф события "${graphData.name}" от плагина "${graphData.owner}" зарегистрирован.`);
+                        sendLog(`[API] Граф события "${graphData.name}t('bots:msg_c1da7057')${graphData.owner}" зарегистрирован.`);
                         return eventGraph;
                     } catch (error) {
-                        sendLog(`[API] Ошибка при регистрации графа события: ${error.message}`);
+                        sendLog(t('bots:error_9408476d', { error: error.message }));
                         throw error;
                     }
                 },
                 executeCommand: (command) => {
-                    sendLog(`[Graph] Выполнение серверной команды: ${command}`);
+                    sendLog(t('bots:log_ee65e3e7', { command: command }));
                     if (bot && bot.messageQueue) {
                         bot.messageQueue.enqueue('command', command);
                     }
@@ -1039,7 +1039,7 @@ process.on('message', async (message) => {
                     }
                 },
 
-                // === Методы для управления credentials ===
+                // === Методы for управления credentials ===
                 updateCredentials: async ({ username, password }) => {
                     return new Promise((resolve, reject) => {
                         const requestId = uuidv4();
@@ -1127,7 +1127,7 @@ process.on('message', async (message) => {
                 bot.api.sendMessage(type, message, username);
             };
 
-            // Добавляем bot.sendLog для команд
+            // Добавляем bot.sendLog for команд
             bot.sendLog = (message) => sendLog(message);
 
             const processApi = {
@@ -1146,8 +1146,8 @@ process.on('message', async (message) => {
             for (const dbCommand of dbCommands) {
                 const existingCommand = bot.commands.get(dbCommand.name);
 
-                // Не удаляем выключенные команды, а помечаем их
-                // Владельцы смогут использовать выключенные команды через проверку в CommandExecutionService
+                // Not удаляем выключенные commands, а помечаем их
+                // Владельцы смогут использовать выключенные commands through проверку in CommandExecutionService
 
                 if (existingCommand) {
                     existingCommand.isEnabled = dbCommand.isEnabled;
@@ -1157,7 +1157,7 @@ process.on('message', async (message) => {
                     existingCommand.permissionId = dbCommand.permissionId;
                     existingCommand.allowedChatTypes = JSON.parse(dbCommand.allowedChatTypes || '[]');
 
-                    // Добавляем алиасы в bot.commands для быстрого доступа
+                    // Добавляем алиасы in bot.commands for быстрого access
                     const aliases = JSON.parse(dbCommand.aliases || '[]');
                     for (const alias of aliases) {
                         bot.commands.set(alias, existingCommand);
@@ -1200,7 +1200,7 @@ process.on('message', async (message) => {
                 }
             }
 
-            // Добавляем алиасы для всех загруженных команд (системных и плагинов)
+            // Добавляем алиасы for всех загруженных команд (системных and плагинов)
             for (const cmd of bot.commands.values()) {
                 if (cmd.aliases && Array.isArray(cmd.aliases)) {
                     for (const alias of cmd.aliases) {
@@ -1243,7 +1243,7 @@ process.on('message', async (message) => {
                 } else {
                     reasonText = String(reason);
                 }
-                sendLog(`[Event: kicked] Меня кикнули. Причина: ${reasonText}. Перезапуск.`);
+                sendLog(t('core:log_5c71e8d8', { reasonText: reasonText }));
                 process.exit(1);
             });
 
@@ -1252,7 +1252,7 @@ process.on('message', async (message) => {
                     clearTimeout(connectionTimeout);
                     connectionTimeout = null;
                 }
-                sendLog(`[Event: error] Произошла ошибка: ${err.stack || err.message}`);
+                sendLog(t('core:error_9b227cf6', { err: err.stack || err.message }));
             });
 
             bot.on('end', (reason) => {
@@ -1263,7 +1263,7 @@ process.on('message', async (message) => {
                 const restartableReasons = ['socketClosed', 'keepAliveError'];
                 const exitCode = restartableReasons.includes(reason) ? 1 : 0;
 
-                sendLog(`[Event: end] Отключен от сервера. Причина: ${reason}`);
+                sendLog(t('core:log_daea6970', { reason: reason }));
                 process.exit(exitCode);
             });
 
@@ -1271,7 +1271,7 @@ process.on('message', async (message) => {
 
             await ensurePluginDependencies(config.plugins, sendLog);
             await initializePlugins(bot, config.plugins, prisma);
-            sendLog('[System] Все системы инициализированы.');
+            sendLog(t('bots:log_be7ab7dd'));
 
             let messageHandledByCustomParser = false;
 
@@ -1350,7 +1350,7 @@ process.on('message', async (message) => {
                             break;
                     }
                 } catch (error) {
-                    sendLog(`Ошибка при обработке userAction: ${error.message}`);
+                    sendLog(t('bots:error_e859d98c', { error: error.message }));
                 }
             });
 
@@ -1359,7 +1359,7 @@ process.on('message', async (message) => {
                     clearTimeout(connectionTimeout);
                     connectionTimeout = null;
                 }
-                sendLog('[Event: login] Успешно залогинился!');
+                sendLog(t('core:success_4a36adbb'));
                 if (process.send && !botReadySent) {
                     process.send({ type: MessageTypes.BOT.READY });
                     process.send({ type: MessageTypes.BOT.STATUS, status: 'running' });
@@ -1425,7 +1425,7 @@ process.on('message', async (message) => {
                     isReady = true;
                 }, 3000);
 
-                // Отправка события для viewer
+                // Sending events for viewer
                 if (process.send) {
                     process.send({
                         type: MessageTypes.VIEWER.SPAWN,
@@ -1487,7 +1487,7 @@ process.on('message', async (message) => {
             });
 
             // === Viewer: контейнеры (windowOpen / windowUpdate / windowClose) ===
-            // Извлечение текста из NBT-узла (mineflayer prismarine-nbt format)
+            // Извлечение текста from NBT-node (mineflayer prismarine-nbt format)
             const extractNbtString = (node) => {
                 if (node == null) return null;
                 if (typeof node === 'string') return node;
@@ -1523,7 +1523,7 @@ process.on('message', async (message) => {
                 return out;
             };
 
-            // Парсинг NBT компонента display{Name,Lore} + новый customName/customLore (1.20.5+)
+            // Parsing NBT компонента display{Name,Lore} + new customName/customLore (1.20.5+)
             const extractItemDisplay = (item) => {
                 if (!item) return { displayName: null, lore: [] };
                 try {
@@ -1571,7 +1571,7 @@ process.on('message', async (message) => {
                         }
                     }
 
-                    // Старый NBT формат: nbt.value.display.value.{Name,Lore}
+                    // Old NBT format: nbt.value.display.value.{Name,Lore}
                     if (item.nbt) {
                         const display = item.nbt?.value?.display?.value;
                         if (display) {
@@ -1591,7 +1591,7 @@ process.on('message', async (message) => {
                 }
             };
 
-            // Безопасное преобразование любого title (строка/JSON/component) в строку с § кодами
+            // Безопасное conversion любого title (string/JSON/component) in строку with § кодами
             const titleToString = (t) => {
                 if (t == null) return '';
                 if (typeof t !== 'string') return parseTextComponent(t) || '';
@@ -1665,16 +1665,16 @@ process.on('message', async (message) => {
                 });
             });
 
-            // Mineflayer: 'windowItemsChanged' — нет такого события, но есть updateSlot
+            // Mineflayer: 'windowItemsChanged' — no такого events, но есть updateSlot
             bot.inventory?.on?.('updateSlot', () => {
                 if (bot.currentWindow) broadcastWindowUpdate();
             });
 
-            // Также броадкаст обновлений хотбара через viewer:state
-            // (хотбар-слоты приходят через regular state stream)
+            // Also броадкаст обновлений хотбара through viewer:state
+            // (хотбар-слоты приходят through regular state stream)
 
-            // === Viewer: список игроков (TAB) ===
-            // Сохраняем header/footer из пакета playerlist_header (mineflayer event)
+            // === Viewer: list игроков (TAB) ===
+            // Сохраняем header/footer from пакета playerlist_header (mineflayer event)
             let tablistHeader = '';
             let tablistFooter = '';
 
@@ -1733,7 +1733,7 @@ process.on('message', async (message) => {
             bot.on('playerLeft', () => broadcastPlayerListThrottled());
             bot.on('playerUpdated', () => broadcastPlayerListThrottled());
 
-            // mineflayer/protocol — пакет с header/footer TAB-меню в разных версиях называется по-разному
+            // mineflayer/protocol — пакет with header/footer TAB-меню in разных версиях называется by-разному
             const handleTabHeaderFooter = (packet) => {
                 try {
                     const headerRaw = packet.header ?? packet.headerJson;
@@ -1785,8 +1785,8 @@ process.on('message', async (message) => {
                     };
                     const items = sb.itemsMap
                         ? Object.values(sb.itemsMap).map(item => {
-                            // Имя записи — это собственно текст строки на скорборде.
-                            // Если есть team у этого имени, prefix+suffix дают окрашенный текст.
+                            // Name records — это собственно текст string on скорборде.
+                            // If есть team у этого name, prefix+suffix дают окрашенный текст.
                             let line = '';
                             const team = bot.teamMap?.[item.name];
                             if (team) {
@@ -1814,10 +1814,10 @@ process.on('message', async (message) => {
                 }
             };
 
-            // === Throttle для частых обновлений (scoreboard, playerList)
-            // Вместо реакции на каждое событие — делаем периодический snapshot
-            // raz в 500мс. Это гарантирует что когда мы шлём данные, они полностью
-            // консистентны: scoreboard + все team prefix/suffix уже на месте.
+            // === Throttle for частых обновлений (scoreboard, playerList)
+            // Вместо реакции on каждое event — делаем периодический snapshot
+            // raz в 500мс. Это гарантирует что when мы шлём data, они полностью
+            // консистентны: scoreboard + all team prefix/suffix already on месте.
             const makeThrottled = (fn, delay = 200) => {
                 let timer = null;
                 let lastArgs = null;
@@ -1848,23 +1848,23 @@ process.on('message', async (message) => {
                     payload: serializeScoreboard(sb)
                 });
             };
-            // Используем НЕ throttled — реактивно отправляем
-            // Но фильтруем "плохие" snapshot'ы на frontend
+            // Используем Not throttled — реактивно отправляем
+            // Но фильтруем "плохие" snapshot'ы on frontend
             const broadcastScoreboardThrottled = makeThrottled(broadcastScoreboard, 250);
 
             const broadcastPlayerListThrottled = makeThrottled(broadcastPlayerList, 250);
 
-            // === Периодический snapshot (главный механизм) ===
+            // === Периодический snapshot (main механизм) ===
             // Каждые 500мс собираем полный snapshot scoreboard и player list.
-            // Это гарантирует консистентность данных: даже если какое-то событие
-            // мы пропустили или пришло в "плохом" состоянии — следующий snapshot
-            // будет корректным.
+            // Это гарантирует консистентность data: даже if какое-то event
+            // мы пропустили or пришло in "плохом" состоянии — следующий snapshot
+            // will корректным.
             const snapshotInterval = setInterval(() => {
                 if (!process.send) return;
                 broadcastScoreboard();
                 broadcastPlayerList();
             }, 500);
-            // Чистим при отключении бота
+            // Чистим when отключении bot
             bot.once?.('end', () => clearInterval(snapshotInterval));
             bot.once?.('error', () => clearInterval(snapshotInterval));
 
@@ -1875,7 +1875,7 @@ process.on('message', async (message) => {
             bot.on('scoreRemoved', () => broadcastScoreboardThrottled());
             bot.on('scoreboardPosition', () => broadcastScoreboardThrottled());
 
-            // Также пере-броадкаст при изменении команды (нужно для prefix/suffix)
+            // Also пере-броадкаст when изменении commands (need for prefix/suffix)
             const teamUpdateHandler = () => {
                 broadcastPlayerListThrottled();
                 broadcastScoreboardThrottled();
@@ -1886,7 +1886,7 @@ process.on('message', async (message) => {
             bot.on('teamMemberAdded', teamUpdateHandler);
             bot.on('teamMemberRemoved', teamUpdateHandler);
         } catch (err) {
-            sendLog(`[CRITICAL] Критическая ошибка при создании бота: ${err.stack}`);
+            sendLog(t('bots:error_6875a321', { err: err.stack }));
             process.exit(1);
         }
     } else if (message.type === MessageTypes.CONFIG.RELOAD) {
@@ -1914,7 +1914,7 @@ process.on('message', async (message) => {
         }
         botReadySent = false;
         if (bot) {
-            try { bot.quit(); } catch (error) { sendLog(`[System] Ошибка при отключении: ${error.message}`); }
+            try { bot.quit(); } catch (error) { sendLog(t('bots:error_47b0b50a', { error: error.message })); }
         }
         setTimeout(() => process.exit(0), 1000);
     } else if (message.type === MessageTypes.CHAT.CHAT) {
@@ -1926,7 +1926,7 @@ process.on('message', async (message) => {
             }
         }
     } else if (message.type === MessageTypes.COMMAND.REGISTER_TEMP) {
-        // Регистрация временной команды из главного процесса
+        // Registration временной commands from главного process
         const { commandData } = message;
 
         try {
@@ -1946,7 +1946,7 @@ process.on('message', async (message) => {
             tempCommand.isVisual = false;
             tempCommand.handler = () => { };
 
-            // Регистрируем команду в bot.commands
+            // Регистрируем команду in bot.commands
             bot.commands.set(commandData.name, tempCommand);
 
             if (Array.isArray(commandData.aliases)) {
@@ -1955,7 +1955,7 @@ process.on('message', async (message) => {
                 }
             }
         } catch (error) {
-            sendLog(`[BotProcess] Ошибка регистрации временной команды: ${error.message}`);
+            sendLog(t('bots:error_35ef09de', { error: error.message }));
         }
     } else if (message.type === MessageTypes.COMMAND.UNREGISTER_TEMP) {
         const { commandName, aliases } = message;
@@ -1973,7 +1973,7 @@ process.on('message', async (message) => {
                 }
             }
         } catch (error) {
-            sendLog(`[BotProcess] Ошибка удаления временной команды: ${error.message}`);
+            sendLog(t('bots:error_4f59895c', { error: error.message }));
         }
     } else if (message.type === MessageTypes.GRAPH.EXECUTE_HANDLER) {
         const { commandName, username, args, typeChat, cooldownKey, cooldownStamp } = message;
@@ -2002,7 +2002,7 @@ process.on('message', async (message) => {
                         await commandInstance.handler(bot, typeChat, user, args);
                     }
                 } catch (e) {
-                    sendLog(`[Handler Error] Ошибка в handler-е команды ${commandName}: ${e.message}`);
+                    sendLog(t('bots:error_0f764e33', { commandName: commandName, e: e.message }));
                     sendLog(`[Handler Error] Stack trace: ${e.stack}`);
                     releaseCooldown();
                 }
@@ -2038,13 +2038,13 @@ process.on('message', async (message) => {
                         }
                     } else {
                         commandInstance.handler(context).catch(e => {
-                            sendLog(`[Handler Error] Ошибка в handler-е команды ${commandName}: ${e.message}`);
+                            sendLog(t('bots:error_0f764e33', { commandName: commandName, e: e.message }));
                         });
                     }
                 } else {
                     // Старая сигнатура: handler(bot, typeChat, user, args)
                     if (typeChat === 'websocket') {
-                        // Для websocket перехватываем bot.sendMessage
+                        // For websocket перехватываем bot.sendMessage
                         const originalSendMessage = bot.sendMessage;
                         let resultFromSendMessage = null;
                         let sendMessageCalled = false;
@@ -2069,9 +2069,9 @@ process.on('message', async (message) => {
                             bot.sendMessage = originalSendMessage;
                         }
                     } else {
-                        // Для игровых команд просто выполняем
+                        // For игровых команд просто выполняем
                         commandInstance.handler(bot, typeChat, user, args).catch(e => {
-                            sendLog(`[Handler Error] Ошибка в handler-е команды ${commandName}: ${e.message}`);
+                            sendLog(t('bots:error_0f764e33', { commandName: commandName, e: e.message }));
                         });
                     }
                 }
@@ -2093,7 +2093,7 @@ process.on('message', async (message) => {
                     UserService.cache.delete(cacheKey);
                 }
             }
-            sendLog(`[BotProcess] Кэш пользователей очищен для бота ${bot.config.id}`);
+            sendLog(t('core:log_8d1e4976', { bot: bot.config.id }));
         }
     } else if (message.type === MessageTypes.COMMAND.HANDLE_PERMISSION_ERROR) {
         const { commandName, username, typeChat } = message;
@@ -2102,7 +2102,7 @@ process.on('message', async (message) => {
             if (commandInstance.onInsufficientPermissions !== Command.prototype.onInsufficientPermissions) {
                 commandInstance.onInsufficientPermissions(bot, typeChat, { username });
             } else {
-                bot.api.sendMessage(typeChat, `У вас нет прав для выполнения команды ${commandName}.`, username);
+                bot.api.sendMessage(typeChat, t('core:msg_d8258c77', { commandName: commandName }), username);
             }
         }
     } else if (message.type === MessageTypes.COMMAND.HANDLE_WRONG_CHAT) {
@@ -2112,7 +2112,7 @@ process.on('message', async (message) => {
             if (commandInstance.onWrongChatType !== Command.prototype.onWrongChatType) {
                 commandInstance.onWrongChatType(bot, typeChat, { username });
             } else {
-                bot.api.sendMessage('private', `Команду ${commandName} нельзя использовать в этом типе чата - ${typeChat}.`, username);
+                bot.api.sendMessage('private', t('core:msg_e991f72d', { commandName: commandName, typeChat: typeChat }), username);
             }
         }
     } else if (message.type === MessageTypes.COMMAND.HANDLE_COOLDOWN) {
@@ -2122,7 +2122,7 @@ process.on('message', async (message) => {
             if (commandInstance.onCooldown !== Command.prototype.onCooldown) {
                 commandInstance.onCooldown(bot, typeChat, { username }, timeLeft);
             } else {
-                bot.api.sendMessage(typeChat, `Команду ${commandName} можно будет использовать через ${timeLeft} сек.`, username);
+                bot.api.sendMessage(typeChat, t('core:msg_86e18a3f', { commandName: commandName, timeLeft: timeLeft }), username);
             }
         }
     } else if (message.type === MessageTypes.COMMAND.HANDLE_BLACKLIST) {
@@ -2144,7 +2144,7 @@ process.on('message', async (message) => {
             if (typeof x === 'number' && typeof y === 'number' && typeof z === 'number') {
                 bot.lookAt(new Vec3(x, y, z));
             } else {
-                sendLog(`[BotProcess] Ошибка lookAt: получены невалидные координаты: ${JSON.stringify(message.payload.position)}`);
+                sendLog(t('bots:error_cc1c6948', { JSON: JSON.stringify(message.payload.position) }));
             }
         }
     } else if (message.type === 'plugins:unload') {
@@ -2152,13 +2152,13 @@ process.on('message', async (message) => {
             const { unloadPluginByName } = require('./PluginLoader');
             await unloadPluginByName(bot, message.pluginName, prisma);
         } catch (error) {
-            sendLog(`[System] Ошибка выгрузки плагина ${message.pluginName}: ${error.message}`);
+            sendLog(t('bots:error_c1140913', { message: message.pluginName, error: error.message }));
         }
         if (process.send) {
             process.send({ type: 'plugins:unloaded', requestId: message.requestId });
         }
     } else if (message.type === MessageTypes.PLUGINS.RELOAD) {
-        sendLog('[System] Получена команда на перезагрузку плагинов...');
+        sendLog(t('core:log_d6d66632'));
         try {
             const newConfig = await fetchNewConfig(bot.config.id, prisma);
             if (newConfig) {
@@ -2170,21 +2170,21 @@ process.on('message', async (message) => {
                 if (message.pluginName) {
                     const plugin = (newConfig.installedPlugins || []).find((item) => item.name === message.pluginName);
                     if (!plugin) {
-                        sendLog(`[System] Плагин ${message.pluginName} не найден или выключен.`);
+                        sendLog(t('bots:log_c8ca78a6', { message: message.pluginName }));
                     } else {
                         const { reloadInstalledPlugin } = require('./PluginLoader');
                         await reloadInstalledPlugin(bot, plugin, prisma);
-                        sendLog(`[System] Плагин ${plugin.name} перезагружен.`);
+                        sendLog(t('bots:success_21d876b4', { plugin: plugin.name }));
                     }
                 } else {
                     await initializePlugins(bot, newConfig.installedPlugins, prisma);
-                    sendLog('[System] Плагины успешно перезагружены.');
+                    sendLog(t('bots:success_876ed04f'));
                 }
             } else {
-                sendLog('[System] Не удалось получить новую конфигурацию для перезагрузки плагинов.');
+                sendLog(t('bots:error_f02458da'));
             }
         } catch (error) {
-            sendLog(`[System] Ошибка перезагрузки плагинов: ${error.message}`);
+            sendLog(t('bots:error_15a00c57', { error: error.message }));
         }
     } else if (message.type === MessageTypes.SERVER.COMMAND) {
         if (bot && bot.messageQueue && message.payload && message.payload.command) {
@@ -2206,6 +2206,7 @@ process.on('message', async (message) => {
             }
 
             const { buildGraphContext } = require('./graphContext');
+const { t } = require('../i18n');
             const context = buildGraphContext({
                 bot,
                 botId: config.id,
@@ -2226,36 +2227,36 @@ process.on('message', async (message) => {
 });
 
 process.on('unhandledRejection', (reason, promise) => {
-    const errorMsg = `[FATAL] Необработанная ошибка процесса: ${reason?.stack || reason}`;
+    const errorMsg = t('bots:error_49ec9483', { reason_: reason?.stack || reason });
     sendLog(errorMsg);
     setTimeout(() => process.exit(1), 100);
 });
 
 process.on('uncaughtException', (error) => {
-    const errorMsg = `[FATAL] Необработанное исключение: ${error.stack || error.message}`;
+    const errorMsg = t('bots:log_6ddf7670', { error: error.stack || error.message });
     sendLog(errorMsg);
     setTimeout(() => process.exit(1), 100);
 });
 
 process.on('SIGTERM', () => {
-    sendLog('[System] Получен сигнал SIGTERM. Завершение работы...');
+    sendLog(t('bots:log_5f16c45d'));
     if (bot) {
         try {
             bot.quit();
         } catch (error) {
-            sendLog(`[System] Ошибка при корректном завершении бота: ${error.message}`);
+            sendLog(t('bots:error_ed8c8233', { error: error.message }));
         }
     }
     setTimeout(() => process.exit(0), 100);
 });
 
 process.on('SIGINT', () => {
-    sendLog('[System] Получен сигнал SIGINT. Завершение работы...');
+    sendLog(t('bots:log_a689bb61'));
     if (bot) {
         try {
             bot.quit();
         } catch (error) {
-            sendLog(`[System] Ошибка при корректном завершении бота: ${error.message}`);
+            sendLog(t('bots:error_ed8c8233', { error: error.message }));
         }
     }
     setTimeout(() => process.exit(0), 100);

@@ -1,7 +1,7 @@
 /**
- * container:find_item - Найти предмет в контейнере
+ * container:find_item - Найти item in контейнере
  *
- * Data нода (без exec пинов) - использует только evaluator.
+ * Data нода (without exec пинов) - использует only evaluator.
  */
 async function evaluate(node, pinId, context, helpers) {
   const { resolvePinValue } = helpers;
@@ -19,10 +19,10 @@ async function evaluate(node, pinId, context, helpers) {
   try {
     const searchName = itemName.toLowerCase().replace('minecraft:', '');
 
-    // Получаем предметы из контейнера
+    // Получаем предметы from контейнера
     const containerItems = container.containerItems ? container.containerItems() : [];
 
-    // Ищем предмет
+    // Ищем item
     let foundItem = null;
     let foundSlot = -1;
     let totalCount = 0;
@@ -45,7 +45,7 @@ async function evaluate(node, pinId, context, helpers) {
     if (pinId === 'item') {
       if (!foundItem) return null;
 
-      // Извлекаем прочность из NBT
+      // Извлекаем прочность from NBT
       const damage = foundItem.nbt?.value?.Damage?.value ?? 0;
       const maxDurability = foundItem.maxDurability ?? null;
       const durability = maxDurability ? maxDurability - damage : null;

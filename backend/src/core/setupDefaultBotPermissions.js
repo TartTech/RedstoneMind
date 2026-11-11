@@ -1,13 +1,14 @@
 const prisma = require('../lib/prisma');
+const { t } = require('../i18n');
 
 const INITIAL = {
     groups: ['User', 'Admin'],
     permissions: [
-        { name: 'admin.*', description: 'Все права администратора' },
-        { name: 'admin.cooldown.bypass', description: 'Обход кулдауна для админ-команд' },
-        { name: 'user.*', description: 'Все права обычного пользователя' },
-        { name: 'user.say', description: 'Доступ к простым командам' },
-        { name: 'user.cooldown.bypass', description: 'Обход кулдауна для юзер-команд' },
+        { name: 'admin.*', description: t('tests:perm_87b060b3') },
+        { name: 'admin.cooldown.bypass', description: t('services:msg_8e581741') },
+        { name: 'user.*', description: t('services:perm_9b091116') },
+        { name: 'user.say', description: t('services:perm_a22ada6c') },
+        { name: 'user.cooldown.bypass', description: t('services:msg_c72d67c6') },
     ],
     groupPermissions: {
         User: ['user.say'],

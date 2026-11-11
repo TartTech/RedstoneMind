@@ -1,4 +1,4 @@
-// Создаём глобальные моки для Prisma методов
+// Создаём глобальные моки for Prisma методов
 const mockUserFindUnique = jest.fn();
 const mockUserUpsert = jest.fn();
 const mockUserUpdate = jest.fn();
@@ -34,6 +34,7 @@ jest.mock('@prisma/client', () => {
 });
 
 const User = require('../../core/UserService');
+const { t } = require('../../i18n');
 
 describe('UserService', () => {
     beforeEach(() => {
@@ -46,7 +47,7 @@ describe('UserService', () => {
     });
 
     describe('User constructor', () => {
-        test('должен создать пользователя с правами владельца', () => {
+        test(t('tests:validation_e5bea78a'), () => {
             const userInstance = {
                 id: 1,
                 username: 'TestOwner',
@@ -67,7 +68,7 @@ describe('UserService', () => {
             expect(user.id).toBe(1);
         });
 
-        test('должен создать пользователя без прав владельца', () => {
+        test(t('tests:validation_a6acecf3'), () => {
             const userInstance = {
                 id: 1,
                 username: 'RegularUser',
@@ -86,7 +87,7 @@ describe('UserService', () => {
             expect(user.isOwner).toBe(false);
         });
 
-        test('должен создать пользователя с правами через глобального владельца на keksik серверах', () => {
+        test(t('tests:validation_5a7b4f54'), () => {
             const userInstance = {
                 id: 1,
                 username: 'merka',
@@ -105,7 +106,7 @@ describe('UserService', () => {
             expect(user.isOwner).toBe(true);
         });
 
-        test('должен собрать права из групп пользователя', () => {
+        test(t('tests:validation_b21a46bf'), () => {
             const userInstance = {
                 id: 1,
                 username: 'TestUser',
@@ -137,7 +138,7 @@ describe('UserService', () => {
     });
 
     describe('isBlacklisted getter', () => {
-        test('должен вернуть false для владельца даже если в БД true', () => {
+        test(t('tests:validation_963bc88f'), () => {
             const userInstance = {
                 id: 1,
                 username: 'Owner',
@@ -156,7 +157,7 @@ describe('UserService', () => {
             expect(user.isBlacklisted).toBe(false);
         });
 
-        test('должен вернуть true для обычного пользователя из БД', () => {
+        test(t('tests:validation_8fac3395'), () => {
             const userInstance = {
                 id: 1,
                 username: 'BadUser',
@@ -177,7 +178,7 @@ describe('UserService', () => {
     });
 
     describe('hasPermission', () => {
-        test('владелец должен иметь любые права', () => {
+        test(t('tests:validation_10a8df2d'), () => {
             const userInstance = {
                 id: 1,
                 username: 'Owner',
@@ -197,7 +198,7 @@ describe('UserService', () => {
             expect(user.hasPermission('admin.delete')).toBe(true);
         });
 
-        test('должен вернуть false для пустого имени права', () => {
+        test(t('tests:validation_275dc752'), () => {
             const userInstance = {
                 id: 1,
                 username: 'User',
@@ -217,7 +218,7 @@ describe('UserService', () => {
             expect(user.hasPermission('')).toBe(false);
         });
 
-        test('должен проверить точное совпадение права', () => {
+        test(t('tests:validation_06dffe49'), () => {
             const userInstance = {
                 id: 1,
                 username: 'User',
@@ -244,7 +245,7 @@ describe('UserService', () => {
             expect(user.hasPermission('user.kick')).toBe(false);
         });
 
-        test('должен проверить wildcard права (domain.*)', () => {
+        test(t('tests:validation_5d122732'), () => {
             const userInstance = {
                 id: 1,
                 username: 'User',
@@ -273,7 +274,7 @@ describe('UserService', () => {
             expect(user.hasPermission('user.say')).toBe(false);
         });
 
-        test('должен проверить универсальное право (*)', () => {
+        test(t('tests:validation_530398fe'), () => {
             const userInstance = {
                 id: 1,
                 username: 'SuperAdmin',
@@ -303,7 +304,7 @@ describe('UserService', () => {
     });
 
     describe('hasGroup', () => {
-        test('должен вернуть true если пользователь в группе', () => {
+        test(t('tests:validation_f7c9271d'), () => {
             const userInstance = {
                 id: 1,
                 username: 'User',
@@ -327,7 +328,7 @@ describe('UserService', () => {
             expect(user.hasGroup('Moderator')).toBe(true);
         });
 
-        test('должен вернуть false если пользователь не в группе', () => {
+        test(t('tests:validation_d6b86b27'), () => {
             const userInstance = {
                 id: 1,
                 username: 'User',
@@ -346,7 +347,7 @@ describe('UserService', () => {
             expect(user.hasGroup('Admin')).toBe(false);
         });
 
-        test('должен вернуть false если нет групп', () => {
+        test(t('tests:validation_2b735dec'), () => {
             const userInstance = {
                 id: 1,
                 username: 'User',
@@ -367,7 +368,7 @@ describe('UserService', () => {
     });
 
     describe('setBlacklist', () => {
-        test('должен обновить статус черного списка', async () => {
+        test(t('tests:validation_9bdd0189'), async () => {
             const updatedUser = {
                 id: 1,
                 username: 'BadUser',
@@ -406,7 +407,7 @@ describe('UserService', () => {
     });
 
     describe('clearCache', () => {
-        test('должен очистить кеш для конкретного пользователя', () => {
+        test(t('tests:validation_684b186f'), () => {
             User.cache.set('1:testuser', {});
             User.cache.set('1:anotheruser', {});
 
@@ -416,26 +417,26 @@ describe('UserService', () => {
             expect(User.cache.has('1:anotheruser')).toBe(true);
         });
 
-        test('не должен падать при пустых параметрах', () => {
+        test(t('tests:validation_b473b940'), () => {
             expect(() => User.clearCache(null, null)).not.toThrow();
             expect(() => User.clearCache('', '')).not.toThrow();
         });
     });
 
     describe('getUser', () => {
-        test('должен выбросить ошибку если нет username', async () => {
+        test(t('tests:validation_38e53a17'), async () => {
             await expect(User.getUser(null, 1)).rejects.toThrow(
-                'Имя пользователя и ID бота обязательны.'
+                t('tests:validation_74db81a7')
             );
         });
 
-        test('должен выбросить ошибку если нет botId', async () => {
+        test(t('tests:validation_99bd823e'), async () => {
             await expect(User.getUser('TestUser', null)).rejects.toThrow(
-                'Имя пользователя и ID бота обязательны.'
+                t('tests:validation_74db81a7')
             );
         });
 
-        test('должен вернуть пользователя из кеша', async () => {
+        test(t('tests:validation_bc1274ff'), async () => {
             const cachedUser = new User(
                 { id: 1, username: 'testuser', isBlacklisted: false, groups: [] },
                 { id: 1, owners: '', server: { host: 'test.com' } }
@@ -449,7 +450,7 @@ describe('UserService', () => {
             expect(mockUserFindUnique).not.toHaveBeenCalled();
         });
 
-        test('должен создать нового пользователя если не существует', async () => {
+        test(t('tests:validation_8b2f1478'), async () => {
             const botConfig = {
                 id: 1,
                 owners: '',
@@ -488,7 +489,7 @@ describe('UserService', () => {
             expect(mockUserUpsert).toHaveBeenCalled();
         });
 
-        test('должен загрузить существующего пользователя из БД', async () => {
+        test(t('tests:validation_124c0d1b'), async () => {
             const botConfig = {
                 id: 1,
                 owners: '',
@@ -520,7 +521,7 @@ describe('UserService', () => {
             expect(user.hasPermission('admin.kick')).toBe(true);
         });
 
-        test('должен использовать переданный botConfig вместо загрузки из БД', async () => {
+        test(t('tests:validation_84521741'), async () => {
             const botConfig = {
                 id: 1,
                 owners: 'TestOwner',
@@ -543,7 +544,7 @@ describe('UserService', () => {
             expect(mockBotFindUnique).not.toHaveBeenCalled();
         });
 
-        test('должен закешировать пользователя после загрузки', async () => {
+        test(t('tests:validation_7972d36d'), async () => {
             const botConfig = {
                 id: 1,
                 owners: '',
@@ -565,13 +566,13 @@ describe('UserService', () => {
 
             expect(User.cache.has('1:testuser')).toBe(true);
 
-            // Второй вызов должен вернуть из кеша
+            // Второй вызов must вернуть from кеша
             await User.getUser('TestUser', 1);
 
             expect(mockUserFindUnique).toHaveBeenCalledTimes(1);
         });
 
-        test('должен создать пользователя без дефолтной группы если группа User не найдена', async () => {
+        test(t('tests:validation_2ac38df4'), async () => {
             const botConfig = {
                 id: 1,
                 owners: '',
@@ -586,7 +587,7 @@ describe('UserService', () => {
                 groups: [], // Без групп
             };
 
-            // Mock console.warn для проверки предупреждения
+            // Mock console.warn for verification предупреждения
             const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation();
 
             mockBotFindUnique.mockResolvedValue(botConfig);
@@ -599,7 +600,7 @@ describe('UserService', () => {
             expect(user).toBeInstanceOf(User);
             expect(user.username).toBe('newuser');
             expect(consoleWarnSpy).toHaveBeenCalledWith(
-                expect.stringContaining('Дефолтная группа \'User\' не найдена')
+                expect.stringContaining(t('tests:msg_90deb400')User\t('tests:msg_e821f785'))
             );
             expect(mockUserUpsert).toHaveBeenCalled();
 
@@ -608,7 +609,7 @@ describe('UserService', () => {
     });
 
     describe('addGroup', () => {
-        test('должен добавить группу пользователю', async () => {
+        test(t('tests:validation_1aa1b2df'), async () => {
             const userInstance = {
                 id: 1,
                 username: 'testuser',
@@ -655,7 +656,7 @@ describe('UserService', () => {
             expect(result).toBeInstanceOf(User);
         });
 
-        test('должен выбросить ошибку если группа не найдена', async () => {
+        test(t('tests:validation_0b5629cb'), async () => {
             const userInstance = {
                 id: 1,
                 username: 'testuser',
@@ -675,11 +676,11 @@ describe('UserService', () => {
             mockGroupFindUnique.mockResolvedValue(null);
 
             await expect(user.addGroup('NonExistent')).rejects.toThrow(
-                'Группа NonExistent не найдена'
+                t('tests:msg_c8659cbe')
             );
         });
 
-        test('не должен добавлять группу если связь уже существует', async () => {
+        test(t('tests:validation_0f37df8f'), async () => {
             const userInstance = {
                 id: 1,
                 username: 'testuser',
@@ -711,7 +712,7 @@ describe('UserService', () => {
     });
 
     describe('removeGroup', () => {
-        test('должен удалить группу у пользователя', async () => {
+        test(t('tests:validation_064d3689'), async () => {
             const userInstance = {
                 id: 1,
                 username: 'testuser',
@@ -755,7 +756,7 @@ describe('UserService', () => {
             expect(result).toBeInstanceOf(User);
         });
 
-        test('должен выбросить ошибку если группа не найдена', async () => {
+        test(t('tests:validation_0b5629cb'), async () => {
             const userInstance = {
                 id: 1,
                 username: 'testuser',
@@ -775,11 +776,11 @@ describe('UserService', () => {
             mockGroupFindUnique.mockResolvedValue(null);
 
             await expect(user.removeGroup('NonExistent')).rejects.toThrow(
-                'Группа NonExistent не найдена'
+                t('tests:msg_c8659cbe')
             );
         });
 
-        test('должен добавить дефолтную группу User если не осталось групп', async () => {
+        test(t('tests:validation_ac69d883'), async () => {
             const userInstance = {
                 id: 1,
                 username: 'testuser',
@@ -841,7 +842,7 @@ describe('UserService', () => {
     });
 
     describe('refresh', () => {
-        test('должен обновить пользователя из БД', async () => {
+        test(t('tests:validation_224fab5a'), async () => {
             const userInstance = {
                 id: 1,
                 username: 'testuser',

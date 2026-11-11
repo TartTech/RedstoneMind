@@ -3,6 +3,7 @@ const { authenticate, authorize } = require('../middleware/auth');
 const { checkBotAccess } = require('../middleware/botAccess');
 const router = express.Router();
 const { getTraceCollector } = require('../../core/services/TraceCollectorService');
+const { t } = require('../../i18n');
 
 router.use(authenticate);
 router.use('/:botId', (req, res, next) => {
@@ -12,7 +13,7 @@ router.use('/:botId', (req, res, next) => {
 
 /**
  * GET /api/traces/:botId
- * Получить трассировки для бота
+ * Получить трассировки for bot
  */
 router.get('/:botId', authorize('management:view'), async (req, res) => {
   try {
@@ -33,7 +34,7 @@ router.get('/:botId', authorize('management:view'), async (req, res) => {
       traces,
     });
   } catch (error) {
-    console.error('[API /traces/:botId] Ошибка:', error);
+    console.error(t('api:error_a2d08b49'), error);
     res.status(500).json({
       success: false,
       error: error.message,
@@ -43,7 +44,7 @@ router.get('/:botId', authorize('management:view'), async (req, res) => {
 
 /**
  * GET /api/traces/:botId/:traceId
- * Получить конкретную трассировку по ID
+ * Получить конкретную трассировку by ID
  */
 router.get('/:botId/:traceId', authorize('management:view'), async (req, res) => {
   try {
@@ -52,7 +53,7 @@ router.get('/:botId/:traceId', authorize('management:view'), async (req, res) =>
     const traceCollector = getTraceCollector();
     let trace = traceCollector.getTrace(traceId);
 
-    // Если не нашли в памяти, пытаемся загрузить из БД
+    // If not нашли in памяти, пытаемся загрузить from БД
     if (!trace) {
       trace = await traceCollector.loadTraceFromDb(traceId);
     }
@@ -60,7 +61,7 @@ router.get('/:botId/:traceId', authorize('management:view'), async (req, res) =>
     if (!trace) {
       return res.status(404).json({
         success: false,
-        error: 'Трассировка не найдена',
+        error: t('api:msg_b3ba1397'),
       });
     }
 
@@ -69,7 +70,7 @@ router.get('/:botId/:traceId', authorize('management:view'), async (req, res) =>
       trace,
     });
   } catch (error) {
-    console.error('[API /traces/:botId/:traceId] Ошибка:', error);
+    console.error(t('api:error_e29a2c91'), error);
     res.status(500).json({
       success: false,
       error: error.message,
@@ -79,8 +80,8 @@ router.get('/:botId/:traceId', authorize('management:view'), async (req, res) =>
 
 /**
  * GET /api/traces/:botId/graph/:graphId/last
- * Получить последнюю трассировку для графа
- * Query params: eventType (опционально) - фильтр по типу события
+ * Получить последнюю трассировку for graph
+ * Query params: eventType (опционально) - фильтр by типу events
  */
 router.get('/:botId/graph/:graphId/last', authorize('management:view'), async (req, res) => {
   try {
@@ -94,7 +95,7 @@ router.get('/:botId/graph/:graphId/last', authorize('management:view'), async (r
     if (!trace) {
       return res.status(404).json({
         success: false,
-        error: 'Трассировка не найдена',
+        error: t('api:msg_b3ba1397'),
       });
     }
 
@@ -103,7 +104,7 @@ router.get('/:botId/graph/:graphId/last', authorize('management:view'), async (r
       trace,
     });
   } catch (error) {
-    console.error('[API /traces/:botId/graph/:graphId/last] Ошибка:', error);
+    console.error(t('api:error_7b61ba36'), error);
     res.status(500).json({
       success: false,
       error: error.message,
@@ -125,7 +126,7 @@ router.get('/stats', authorize('management:view'), async (req, res) => {
       stats,
     });
   } catch (error) {
-    console.error('[API /traces/stats] Ошибка:', error);
+    console.error(t('api:error_204fb65a'), error);
     res.status(500).json({
       success: false,
       error: error.message,

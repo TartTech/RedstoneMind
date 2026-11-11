@@ -1,6 +1,7 @@
 const fs = require('fs/promises');
 const path = require('path');
 const prisma = require('../lib/prisma');
+const { t } = require('../i18n');
 
 class PluginService {
     async registerPluginFromPath(directoryPath) {
@@ -13,7 +14,7 @@ class PluginService {
             const packageJson = JSON.parse(packageJsonContent);
 
             if (!packageJson.name || !packageJson.version || !packageJson.main) {
-                throw new Error('package.json не содержит обязательных полей: name, version, main');
+                throw new Error(t('core:validation_157b159e'));
             }
 
             const manifest = packageJson.botpanel || {};
@@ -33,8 +34,8 @@ class PluginService {
                 create: { ...pluginData },
             });
         } catch (error) {
-            console.error(`[PluginService] Ошибка регистрации плагина из ${directoryPath}:`, error.message);
-            throw new Error(`Не удалось зарегистрировать плагин: ${error.message}`);
+            console.error(t('core:error_30bb2275', { directoryPath: directoryPath }), error.message);
+            throw new Error(t('core:error_bbb0f4f5', { error: error.message }));
         }
     }
 

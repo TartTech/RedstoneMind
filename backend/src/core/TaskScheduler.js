@@ -1,16 +1,17 @@
 const cron = require('node-cron');
 const prisma = require('../lib/prisma');
 const { botManager } = require('./services');
+const { t } = require('../i18n');
 
 class TaskScheduler {
     constructor() {
         this.scheduledJobs = new Map();
         this.runningTasks = new Set();
-        console.log('[TaskScheduler] Сервис планировщика инициализирован.');
+        console.log(t('tasks:log_50084482'));
     }
 
     async initialize() {
-        console.log('[TaskScheduler] Загрузка и планирование задач из БД...');
+        console.log(t('tasks:log_92118bc0'));
         const allTasks = await prisma.scheduledTask.findMany();
         
         const tasksToSchedule = allTasks.filter(task => task.isEnabled && task.cronPattern && cron.validate(task.cronPattern));
@@ -20,10 +21,10 @@ class TaskScheduler {
             this.scheduleTask(task);
         });
         
-        console.log(`[TaskScheduler] Запланировано ${this.scheduledJobs.size} cron-задач.`);
+        console.log(t('tasks:log_d68f0ef4', { this: this.scheduledJobs.size }));
 
         if (tasksToRunOnStartup.length > 0) {
-            console.log(`[TaskScheduler] Обнаружено ${tasksToRunOnStartup.length} задач для выполнения при запуске.`);
+            console.log(t('tasks:log_c7ddea0c', { tasksToRunOnStartup: tasksToRunOnStartup.length }));
             for (const task of tasksToRunOnStartup) {
                 setTimeout(() => this.executeTask(task), 2000);
             }
@@ -45,13 +46,13 @@ class TaskScheduler {
                 if (Array.isArray(targetIds) && targetIds[0] === 'ALL') {
                     const allBots = await prisma.bot.findMany({ select: { id: true } });
                     botIds = allBots.map(b => b.id);
-                    console.log(`[TaskScheduler] Задача будет выполнена для всех ботов (${botIds.length} ботов)`);
+                    console.log(t('tasks:log_a7a1676c', { botIds: botIds.length }));
                 } else {
                     botIds = targetIds.map(id => parseInt(id, 10));
                     console.log(`[TaskScheduler] Задача будет выполнена для ботов: ${botIds.join(', ')}`);
                 }
             } catch (e) {
-                console.error(`[TaskScheduler] Ошибка парсинга targetBotIds для задачи ${task.id}:`, e.message);
+                console.error(t('tasks:error_9379381f', { task: task.id }), e.message);
                 return;
             }
 
@@ -62,31 +63,31 @@ class TaskScheduler {
 
                     switch (task.action) {
                         case 'START_BOT':
-                            console.log(`[TaskScheduler] -> Запуск бота ${botConfig.username} (ID: ${botId})`);
+                            console.log(t('tasks:log_74b0d139', { botConfig: botConfig.username, botId: botId }));
                             if (!botManager.isBotRunning(botId)) {
                                 await botManager.startBot(botConfig);
-                                console.log(`[TaskScheduler] -> Бот ${botConfig.username} успешно запущен`);
+                                console.log(t('tasks:success_ccbe2340', { botConfig: botConfig.username }));
                             } else {
-                                console.log(`[TaskScheduler] -> Бот ${botConfig.username} уже запущен`);
+                                console.log(t('tasks:log_7101d07d', { botConfig: botConfig.username }));
                             }
                             break;
                         case 'STOP_BOT':
-                            console.log(`[TaskScheduler] -> Остановка бота ${botConfig.username} (ID: ${botId})`);
+                            console.log(t('tasks:log_130e5fc6', { botConfig: botConfig.username, botId: botId }));
                             if (botManager.isBotRunning(botId)) {
                                 await botManager.stopBot(botId);
-                                console.log(`[TaskScheduler] -> Бот ${botConfig.username} остановлен`);
+                                console.log(t('tasks:log_c097d602', { botConfig: botConfig.username }));
                             } else {
-                                console.log(`[TaskScheduler] -> Бот ${botConfig.username} уже остановлен`);
+                                console.log(t('tasks:log_de607b02', { botConfig: botConfig.username }));
                             }
                             break;
                         case 'RESTART_BOT':
-                            console.log(`[TaskScheduler] -> Перезапуск бота ${botConfig.username} (ID: ${botId})`);
+                            console.log(t('tasks:log_f59af163', { botConfig: botConfig.username, botId: botId }));
                             if (botManager.isBotRunning(botId)) {
                                 await botManager.restartBot(botId);
                             } else {
                                 await botManager.startBot(botConfig);
                             }
-                            console.log(`[TaskScheduler] -> Бот ${botConfig.username} запущен`);
+                            console.log(t('tasks:log_73b1bb3f', { botConfig: botConfig.username }));
                             break;
                         case 'SEND_COMMAND':
                             if (botManager.isBotRunning(botId)) {
@@ -96,12 +97,12 @@ class TaskScheduler {
                                     botManager.sendMessageToBot(botId, payload.command);
                                 }
                             } else {
-                                console.log(`[TaskScheduler] -> Бот ${botConfig.username} не запущен, команда не отправлена`);
+                                console.log(t('tasks:log_fc4c80ff', { botConfig: botConfig.username }));
                             }
                             break;
                     }
                 } catch (error) {
-                    console.error(`[TaskScheduler] Ошибка выполнения действия для бота ID ${botId}:`, error);
+                    console.error(t('tasks:error_3ed7cbbb', { botId: botId }), error);
                 }
             }
             await prisma.scheduledTask.update({ where: { id: task.id }, data: { lastRun: new Date() } });
@@ -120,7 +121,7 @@ class TaskScheduler {
 
         if (!task.cronPattern || !cron.validate(task.cronPattern)) {
             if (!task.runOnStartup) {
-                 console.error(`[TaskScheduler] Неверный или отсутствующий cron-паттерн для задачи ID ${task.id}: ${task.cronPattern}`);
+                 console.error(t('tasks:error_1e75f4ff', { task: task.id, task1: task.cronPattern }));
             }
             return;
         }
@@ -142,7 +143,7 @@ class TaskScheduler {
         if (job) {
             job.stop();
             this.scheduledJobs.delete(taskId);
-            console.log(`[TaskScheduler] Задача ID ${taskId} снята с планирования.`);
+            console.log(t('tasks:log_a897e0ae', { taskId: taskId }));
         }
     }
 
@@ -154,10 +155,10 @@ class TaskScheduler {
     }
 
     shutdown() {
-        console.log('[TaskScheduler] Остановка всех запланированных задач...');
+        console.log(t('tasks:log_afd1a419'));
         this.scheduledJobs.forEach(job => job.stop());
         this.scheduledJobs.clear();
-        console.log('[TaskScheduler] Все задачи остановлены.');
+        console.log(t('tasks:log_43e11c35'));
     }
 }
 

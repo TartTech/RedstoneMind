@@ -1,6 +1,6 @@
 /**
  * BotManager Facade - делегирует вызовы специализированным сервисам
- * Этот класс - точка входа для обратной совместимости со старым кодом
+ * Этот class - точка input for обратной совместимости со старым кодом
  */
 class BotManager {
     constructor({
@@ -231,7 +231,7 @@ class BotManager {
         return this.lifecycleService.getChildProcess(botId);
     }
 
-    // === Legacy async methods для migration ===
+    // === Legacy async methods for migration ===
     async _syncSystemPermissions(botId) {
         return this.lifecycleService._syncSystemPermissions(botId);
     }

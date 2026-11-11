@@ -1,6 +1,6 @@
 /**
  * GraphCollaborationManager
- * Управляет совместным редактированием графов в реальном времени
+ * Управляет совместным редактированием графов in реальном времени
  */
 class GraphCollaborationManager {
     constructor() {
@@ -11,7 +11,7 @@ class GraphCollaborationManager {
     }
 
     /**
-     * Инициализация с Socket.IO instance
+     * Initialization with Socket.IO instance
      */
     initialize(io) {
         this.io = io;
@@ -19,18 +19,18 @@ class GraphCollaborationManager {
     }
 
     /**
-     * Пользователь присоединяется к графу
+     * User присоединяется to графу
      */
     joinGraph(socket, { botId, graphId, username, userId, debugMode = 'normal' }) {
         const roomKey = this.getRoomKey(botId, graphId);
 
-        // Создаем комнату если не существует
+        // Создаем комнату if not существует
         if (!this.rooms.has(roomKey)) {
             this.rooms.set(roomKey, {
                 botId,
                 graphId,
                 users: new Map(),
-                // Храним текущее состояние графа для синхронизации при переподключении
+                // Храним текущее state graph for синхронизации when переподключении
                 graphState: {
                     nodes: [],
                     edges: [],
@@ -44,7 +44,7 @@ class GraphCollaborationManager {
 
         const room = this.rooms.get(roomKey);
 
-        // Добавляем пользователя в комнату
+        // Добавляем user in комнату
         const userInfo = {
             socketId: socket.id,
             username: username || 'Anonymous',
@@ -58,12 +58,12 @@ class GraphCollaborationManager {
 
         room.users.set(socket.id, userInfo);
 
-        // Присоединяем socket к комнате
+        // Присоединяем socket to комнате
         socket.join(roomKey);
 
         console.log(`[GraphCollaboration] User ${username} (${socket.id}) joined bot ${botId}, graph ${graphId} in ${debugMode} mode. Total users: ${room.users.size}`);
 
-        // Отправляем текущее состояние новому пользователю
+        // Отправляем текущее state новому пользователю
         socket.emit('collab:state', {
             users: Array.from(room.users.values()).map(u => ({
                 socketId: u.socketId,
@@ -74,7 +74,7 @@ class GraphCollaborationManager {
                 selectedNodes: u.selectedNodes,
                 debugMode: u.debugMode,
             })),
-            // Отправляем текущее состояние графа (если есть другие пользователи)
+            // Отправляем текущее state graph (if есть другие users)
             graphState: room.users.size > 1 ? room.graphState : null,
         });
 
@@ -93,7 +93,7 @@ class GraphCollaborationManager {
     }
 
     /**
-     * Пользователь покидает граф
+     * User покидает graph
      */
     leaveGraph(socket, { botId, graphId }) {
         const roomKey = this.getRoomKey(botId, graphId);
@@ -115,7 +115,7 @@ class GraphCollaborationManager {
             username: userInfo.username,
         });
 
-        // Удаляем комнату если пустая
+        // Удаляем комнату if empty
         if (room.users.size === 0) {
             this.rooms.delete(roomKey);
             console.log(`[GraphCollaboration] Removed empty room for bot ${botId}, graph ${graphId}`);
@@ -123,7 +123,7 @@ class GraphCollaborationManager {
     }
 
     /**
-     * Обновление позиции курсора
+     * Update position курсора
      */
     updateCursor(socket, { botId, graphId, x, y }) {
         const roomKey = this.getRoomKey(botId, graphId);
@@ -147,7 +147,7 @@ class GraphCollaborationManager {
     }
 
     /**
-     * Обновление режима отладки пользователя
+     * Update режима отладки user
      */
     updateDebugMode(socket, { botId, graphId, debugMode }) {
         const roomKey = this.getRoomKey(botId, graphId);
@@ -171,7 +171,7 @@ class GraphCollaborationManager {
     }
 
     /**
-     * Обновление выбранных нод
+     * Update выбранных нод
      */
     updateSelectedNodes(socket, { botId, graphId, nodeIds }) {
         const roomKey = this.getRoomKey(botId, graphId);
@@ -194,7 +194,7 @@ class GraphCollaborationManager {
     }
 
     /**
-     * Начало создания соединения
+     * Start создания connection
      */
     startConnection(socket, { botId, graphId, fromX, fromY, fromNodeId, fromHandleId }) {
         const roomKey = this.getRoomKey(botId, graphId);
@@ -202,7 +202,7 @@ class GraphCollaborationManager {
 
         if (!userInfo) return;
 
-        // Broadcast начало соединения
+        // Broadcast start connection
         socket.to(roomKey).emit('collab:connection-start', {
             socketId: socket.id,
             username: userInfo.username,
@@ -215,7 +215,7 @@ class GraphCollaborationManager {
     }
 
     /**
-     * Обновление позиции соединения во время тяжения
+     * Update position connection во время тяжения
      */
     updateConnection(socket, { botId, graphId, toX, toY }) {
         const roomKey = this.getRoomKey(botId, graphId);
@@ -223,7 +223,7 @@ class GraphCollaborationManager {
 
         if (!userInfo) return;
 
-        // Broadcast обновление позиции
+        // Broadcast update position
         socket.to(roomKey).emit('collab:connection-update', {
             socketId: socket.id,
             toX,
@@ -232,19 +232,19 @@ class GraphCollaborationManager {
     }
 
     /**
-     * Завершение создания соединения
+     * Завершение создания connection
      */
     endConnection(socket, { botId, graphId }) {
         const roomKey = this.getRoomKey(botId, graphId);
 
-        // Broadcast завершение соединения
+        // Broadcast завершение connection
         socket.to(roomKey).emit('collab:connection-end', {
             socketId: socket.id,
         });
     }
 
     /**
-     * Инициализировать состояние графа (вызывается первым пользователем после загрузки из БД)
+     * Инициализировать state graph (вызывается первым пользователем after загрузки from БД)
      */
     initializeGraphState(socket, { botId, graphId, nodes, edges, variables }) {
         const roomKey = this.getRoomKey(botId, graphId);
@@ -264,7 +264,7 @@ class GraphCollaborationManager {
     }
 
     /**
-     * Broadcast изменения нод (движение, создание, удаление)
+     * Broadcast изменения нод (движение, creation, deletion)
      */
     broadcastNodeChange(socket, { botId, graphId, type, data }) {
         const roomKey = this.getRoomKey(botId, graphId);
@@ -283,7 +283,7 @@ class GraphCollaborationManager {
     }
 
     /**
-     * Broadcast изменения связей (создание, удаление)
+     * Broadcast изменения связей (creation, deletion)
      */
     broadcastEdgeChange(socket, { botId, graphId, type, data }) {
         const roomKey = this.getRoomKey(botId, graphId);
@@ -301,7 +301,7 @@ class GraphCollaborationManager {
     }
 
     /**
-     * Broadcast hot reload графа
+     * Broadcast hot reload graph
      */
     broadcastGraphReloaded(botId, graphId) {
         const roomKey = this.getRoomKey(botId, graphId);
@@ -325,7 +325,7 @@ class GraphCollaborationManager {
     }
 
     /**
-     * Получить всех пользователей в комнате
+     * Получить всех пользователей in комнате
      */
     getRoomUsers(botId, graphId) {
         const roomKey = this.getRoomKey(botId, graphId);
@@ -345,7 +345,7 @@ class GraphCollaborationManager {
     }
 
     /**
-     * Удалить пользователя из всех комнат (при disconnect)
+     * Удалить user from всех комнат (when disconnect)
      */
     removeUserFromAllRooms(socket) {
         for (const [roomKey, room] of this.rooms.entries()) {
@@ -369,7 +369,7 @@ class GraphCollaborationManager {
     }
 
     /**
-     * Генерация ключа комнаты
+     * Generation key комнаты
      */
     applyNodeChange(room, type, data) {
         switch (type) {
@@ -458,7 +458,7 @@ class GraphCollaborationManager {
     }
 
     /**
-     * Генерация уникального цвета для пользователя
+     * Generation уникального цвета for user
      */
     generateUserColor(socketId) {
         const colors = [
@@ -474,7 +474,7 @@ class GraphCollaborationManager {
             '#52C785', // Green
         ];
 
-        // Простой хеш для консистентности цвета
+        // Простой хеш for консистентности цвета
         const hash = socketId.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
         return colors[hash % colors.length];
     }

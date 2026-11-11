@@ -1,5 +1,5 @@
 /**
- * inventory:get_held_item - Получить предмет в руке бота
+ * inventory:get_held_item - Получить item in руке bot
  */
 async function evaluate(node, pinId, context, helpers) {
   const bot = context.bot;
@@ -13,20 +13,20 @@ async function evaluate(node, pinId, context, helpers) {
     return null;
   }
 
-  // Получаем предмет в руке
+  // Получаем item in руке
   let item;
   if (hand === 'off') {
     // Офхенд слот (40 в Java Edition)
     item = bot.inventory.slots[45]; // offhand slot
   } else {
-    // Основная рука - текущий выбранный слот хотбара
+    // Основная рука - current выбранный слот хотбара
     item = bot.heldItem;
   }
 
   if (pinId === 'item') {
     if (!item) return null;
 
-    // Извлекаем прочность из NBT
+    // Извлекаем прочность from NBT
     const damage = item.nbt?.value?.Damage?.value ?? 0;
     const maxDurability = item.maxDurability ?? null;
     const durability = maxDurability ? maxDurability - damage : null;

@@ -1,4 +1,5 @@
 const path = require('path');
+const { t } = require('../../i18n');
 
 const DEFAULT_MAX_ENTRIES = 10000;
 const DEFAULT_MAX_TOTAL_BYTES = 500 * 1024 * 1024;
@@ -14,7 +15,7 @@ function assertSafeZip(zip, targetDir) {
     const entries = typeof zip.getEntries === 'function' ? zip.getEntries() : [];
     for (const entry of entries) {
         if (!isEntrySafe(entry.entryName, targetDir)) {
-            throw new Error(`Небезопасный путь в архиве: ${entry.entryName}`);
+            throw new Error(t('core:msg_ec08770f', { entry: entry.entryName }));
         }
     }
 }
@@ -23,7 +24,7 @@ function assertArchiveLimits(zip, { maxEntries = DEFAULT_MAX_ENTRIES, maxTotalBy
     const entries = typeof zip.getEntries === 'function' ? zip.getEntries() : [];
 
     if (entries.length > maxEntries) {
-        const err = new Error(`Слишком много файлов в архиве: ${entries.length} (максимум ${maxEntries})`);
+        const err = new Error(t('core:validation_e2a4da56', { entries: entries.length, maxEntries: maxEntries }));
         err.statusCode = 400;
         throw err;
     }
@@ -33,7 +34,7 @@ function assertArchiveLimits(zip, { maxEntries = DEFAULT_MAX_ENTRIES, maxTotalBy
         const size = (entry && entry.header && Number.isFinite(entry.header.size)) ? entry.header.size : 0;
         totalBytes += size;
         if (totalBytes > maxTotalBytes) {
-            const err = new Error(`Распакованный размер архива превышает допустимый лимит (${maxTotalBytes} байт)`);
+            const err = new Error(t('core:msg_b8feb894', { maxTotalBytes: maxTotalBytes }));
             err.statusCode = 400;
             throw err;
         }

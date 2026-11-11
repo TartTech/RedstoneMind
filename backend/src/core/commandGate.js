@@ -1,3 +1,4 @@
+const { t } = require('../i18n');
 function parseStringList(value, fallback) {
     if (Array.isArray(value)) return value;
     if (typeof value !== 'string' || !value) return fallback;
@@ -50,8 +51,8 @@ function checkCommandAccess({
             allowed: false,
             reason: 'args',
             messages: [
-                { typeChat, message: `Ошибка: Необходимо указать: ${argDef.description || argDef.name}` },
-                { typeChat, message: `Использование: ${prefix}${commandName} ${usage}`.trim() },
+                { typeChat, message: t('core:error_18fc663a', { argDef: argDef.description || argDef.name }) },
+                { typeChat, message: t('core:msg_94cf8115', { prefix: prefix, commandName: commandName, usage: usage }).trim() },
             ],
         };
     }
@@ -61,7 +62,7 @@ function checkCommandAccess({
             allowed: false,
             reason: 'permission',
             messages: [
-                { typeChat, message: `У вас нет прав для выполнения команды ${commandName}.` },
+                { typeChat, message: t('core:msg_d8258c77', { commandName: commandName }) },
             ],
         };
     }
@@ -72,7 +73,7 @@ function checkCommandAccess({
             allowed: false,
             reason: 'cooldown',
             messages: [
-                { typeChat, message: `Команду ${commandName} можно будет использовать через ${cooldownLeft} сек.` },
+                { typeChat, message: t('core:msg_c8355083', { commandName: commandName, cooldownLeft: cooldownLeft }) },
             ],
         };
     }

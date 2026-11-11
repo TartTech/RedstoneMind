@@ -1,6 +1,7 @@
 const BotLifecycleService = require('../../core/services/BotLifecycleService');
 const DependencyService = require('../../core/DependencyService');
 const UserService = require('../../core/UserService');
+const { t } = require('../../i18n');
 
 // Mock dependencies
 jest.mock('../../core/DependencyService');
@@ -123,23 +124,23 @@ describe('BotLifecycleService', () => {
     });
 
     describe('startBot', () => {
-        test('должен вернуть ошибку если бот уже запущен', async () => {
+        test(t('tests:validation_42ccc0a6'), async () => {
             mockProcessManager.isRunning.mockReturnValue(true);
 
             const botConfig = { id: 1, username: 'TestBot' };
             const result = await service.startBot(botConfig);
 
             expect(result.success).toBe(false);
-            expect(result.message).toContain('уже запущен');
+            expect(result.message).toContain(t('tests:msg_22a2593b'));
             expect(mockProcessManager.spawn).not.toHaveBeenCalled();
         });
 
-        // Примечание: тесты с startBot требуют сложных моков Socket.IO
+        // Примечание: тесты with startBot требуют сложных моков Socket.IO
         // Основная функциональность покрыта интеграционными тестами
     });
 
     describe('stopBot', () => {
-        test('должен остановить запущенного бота', async () => {
+        test(t('tests:validation_f4659fab'), async () => {
             const mockChild = {
                 send: jest.fn(),
                 kill: jest.fn(),
@@ -155,16 +156,16 @@ describe('BotLifecycleService', () => {
             expect(result.success).toBe(true);
         });
 
-        test('должен вернуть ошибку если бот не найден', async () => {
+        test(t('tests:validation_7c552ae1'), async () => {
             mockProcessManager.getProcess.mockReturnValue(null);
 
             const result = await service.stopBot(1);
 
             expect(result.success).toBe(false);
-            expect(result.message).toContain('не найден');
+            expect(result.message).toContain(t('tests:msg_5075a7c6'));
         });
 
-        test('перезапуск стартует сразу после выхода процесса', async () => {
+        test(t('tests:msg_a58e3614'), async () => {
             let onExit;
             const botConfig = { id: 1, username: 'TestBot' };
             const mockChild = {
@@ -192,7 +193,7 @@ describe('BotLifecycleService', () => {
             expect(startSpy).toHaveBeenCalledWith(botConfig);
         });
 
-        test('зависший процесс убивается через 5 секунд и стартует после выхода', async () => {
+        test(t('tests:msg_bdb0bd72'), async () => {
             let onExit;
             const botConfig = { id: 1, username: 'TestBot' };
             const mockChild = {
@@ -219,7 +220,7 @@ describe('BotLifecycleService', () => {
             expect(startSpy).toHaveBeenCalledWith(botConfig);
         });
 
-        test('должен принудительно завершить процесс через 5 секунд', async () => {
+        test(t('tests:validation_2c2ef606'), async () => {
             const mockChild = {
                 send: jest.fn(),
                 kill: jest.fn(),
@@ -236,7 +237,7 @@ describe('BotLifecycleService', () => {
     });
 
     describe('loadConfigForBot', () => {
-        test('должен загрузить и закешировать конфигурацию', async () => {
+        test(t('tests:validation_d04ec23b'), async () => {
             const commands = [
                 { id: 1, name: 'test', aliases: '["t"]' },
                 { id: 2, name: 'help', aliases: '[]' }
@@ -262,7 +263,7 @@ describe('BotLifecycleService', () => {
             expect(result.commandAliases.get('t')).toBe('test');
         });
 
-        test('должен обработать ошибку загрузки', async () => {
+        test(t('tests:validation_1ddbf631'), async () => {
             mockCommandRepository.findByBotId.mockRejectedValue(new Error('DB error'));
 
             await expect(service.loadConfigForBot(1)).rejects.toThrow('Failed to load/cache bot configuration');
@@ -271,7 +272,7 @@ describe('BotLifecycleService', () => {
     });
 
     describe('invalidateConfigCache', () => {
-        test('должен инвалидировать кеш если он существует', () => {
+        test(t('tests:validation_1e6d6aa8'), () => {
             mockCacheManager.getBotConfig.mockReturnValue({ commands: new Map() });
 
             service.invalidateConfigCache(1);
@@ -280,7 +281,7 @@ describe('BotLifecycleService', () => {
             expect(mockLogger.debug).toHaveBeenCalled();
         });
 
-        test('не должен вызывать delete если кеш пуст', () => {
+        test(t('tests:validation_1026d3fb'), () => {
             mockCacheManager.getBotConfig.mockReturnValue(null);
 
             service.invalidateConfigCache(1);
@@ -290,20 +291,20 @@ describe('BotLifecycleService', () => {
     });
 
     describe('getBotLogs', () => {
-        test('должен вернуть пустой массив для несуществующего бота', () => {
+        test(t('tests:validation_582dd24c'), () => {
             const logs = service.getBotLogs(999);
             expect(logs).toEqual([]);
         });
     });
 
     describe('isBotRunning', () => {
-        test('должен вернуть true если бот запущен', () => {
+        test(t('tests:validation_03e36d72'), () => {
             mockProcessManager.isRunning.mockReturnValue(true);
 
             expect(service.isBotRunning(1)).toBe(true);
         });
 
-        test('должен вернуть false если бот остановлен', () => {
+        test(t('tests:validation_b1a7ff56'), () => {
             mockProcessManager.isRunning.mockReturnValue(false);
 
             expect(service.isBotRunning(1)).toBe(false);
@@ -311,7 +312,7 @@ describe('BotLifecycleService', () => {
     });
 
     describe('sendMessageToBot', () => {
-        test('должен отправить сообщение боту', () => {
+        test(t('tests:validation_1e523d55'), () => {
             const mockSendMessage = jest.fn();
             const mockChild = {
                 api: {
@@ -326,18 +327,18 @@ describe('BotLifecycleService', () => {
             expect(result.success).toBe(true);
         });
 
-        test('должен вернуть ошибку если бот не найден', () => {
+        test(t('tests:validation_7c552ae1'), () => {
             mockProcessManager.getProcess.mockReturnValue(null);
 
             const result = service.sendMessageToBot(1, 'Hello');
 
             expect(result.success).toBe(false);
-            expect(result.message).toContain('не найден');
+            expect(result.message).toContain(t('tests:msg_5075a7c6'));
         });
     });
 
     describe('lookAt', () => {
-        test('должен отправить команду lookAt', () => {
+        test(t('tests:validation_aa045eec'), () => {
             const position = { x: 0, y: 64, z: 0 };
             const result = service.lookAt(1, position);
 
@@ -348,7 +349,7 @@ describe('BotLifecycleService', () => {
             expect(result.success).toBe(true);
         });
 
-        test('должен вернуть ошибку если не удалось отправить', () => {
+        test(t('tests:error_66a6990c'), () => {
             mockProcessManager.sendMessage.mockReturnValue(false);
 
             const result = service.lookAt(1, { x: 0, y: 64, z: 0 });
@@ -359,7 +360,7 @@ describe('BotLifecycleService', () => {
     });
 
     describe('getPlayerList', () => {
-        test('должен вернуть пустой массив если бот не запущен', async () => {
+        test(t('tests:validation_7e736177'), async () => {
             mockProcessManager.isRunning.mockReturnValue(false);
 
             const result = await service.getPlayerList(1);
@@ -367,7 +368,7 @@ describe('BotLifecycleService', () => {
             expect(result).toEqual([]);
         });
 
-        test('должен вернуть закешированный список игроков', async () => {
+        test(t('tests:validation_28a65a51'), async () => {
             const cachedPlayers = ['Player1', 'Player2'];
             mockProcessManager.isRunning.mockReturnValue(true);
             mockCacheManager.getPlayerList.mockReturnValue(cachedPlayers);
@@ -380,7 +381,7 @@ describe('BotLifecycleService', () => {
     });
 
     describe('invalidateUserCache', () => {
-        test('должен очистить кеш пользователя', () => {
+        test(t('tests:validation_f121e937'), () => {
             UserService.clearCache = jest.fn();
 
             const result = service.invalidateUserCache(1, 'TestUser');
@@ -395,7 +396,7 @@ describe('BotLifecycleService', () => {
     });
 
     describe('invalidateAllUserCache', () => {
-        test('должен очистить весь кеш пользователей для бота', () => {
+        test(t('tests:validation_a72ee94a'), () => {
             UserService.cache = new Map([
                 ['1:user1', {}],
                 ['1:user2', {}],
@@ -415,7 +416,7 @@ describe('BotLifecycleService', () => {
     });
 
     describe('_syncSystemPermissions', () => {
-        test('должен создать системные права', async () => {
+        test(t('tests:validation_88d36aaa'), async () => {
             mockPermissionRepository.findByName = jest.fn(() => Promise.resolve(null));
             mockPermissionRepository.create = jest.fn();
 
@@ -431,9 +432,9 @@ describe('BotLifecycleService', () => {
             );
         });
 
-        test('должен обновить существующие права если описание изменилось', async () => {
+        test(t('tests:validation_acb89022'), async () => {
             mockPermissionRepository.findByName = jest.fn(() =>
-                Promise.resolve({ id: 1, description: 'Старое описание' })
+                Promise.resolve({ id: 1, description: t('tests:msg_28abda75') })
             );
             mockPermissionRepository.update = jest.fn();
             mockPermissionRepository.create = jest.fn();
@@ -444,22 +445,22 @@ describe('BotLifecycleService', () => {
             expect(mockPermissionRepository.create).not.toHaveBeenCalled();
         });
 
-        test('не должен обновлять если описание не изменилось', async () => {
+        test(t('tests:validation_e6dcc626'), async () => {
             mockPermissionRepository.findByName = jest.fn((botId, name) =>
                 Promise.resolve({
                     id: 1,
-                    description: name === 'admin.*' ? 'Все права администратора' : 'Test'
+                    description: name === 'admin.*' ? t('tests:perm_87b060b3') : 'Test'
                 })
             );
             mockPermissionRepository.update = jest.fn();
 
             await service._syncSystemPermissions(1);
 
-            // Первое право не обновится, остальные 4 обновятся
+            // Первое право not обновится, остальные 4 обновятся
             expect(mockPermissionRepository.update).toHaveBeenCalledTimes(4);
         });
 
-        test('должен обработать ошибку синхронизации', async () => {
+        test(t('tests:validation_b3f040ac'), async () => {
             mockPermissionRepository.findByName = jest.fn(() =>
                 Promise.reject(new Error('DB error'))
             );

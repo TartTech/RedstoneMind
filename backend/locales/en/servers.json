@@ -1,0 +1,15 @@
+{
+  "error_109c8f3e": "Failed to create server",
+  "error_12079c6b": "Failed to update server",
+  "error_253e1dbc": "Failed to get server",
+  "error_28ae49fc": "Failed to delete server",
+  "error_8cd5e92a": "[API /api/servers] Error updating server:",
+  "error_aa2edc07": "Invalid ID server",
+  "error_cb732a5d": "[API /api/servers] Error getting list servers:",
+  "error_f20c2bda": "[API /api/servers/:id] Error getting server:",
+  "msg_0a311f6d": "A server with this name already exists",
+  "msg_269b9f3c": "Server not found",
+  "msg_53f17922": "Cannot delete server, так as он is used {{botsOnServer}} bot(ами).",
+  "validation_24910023": "Port must be a number from 1 to 65535 (maximum 5 digits)",
+  "validation_49972ec1": "Name, хост and version server is required"
+}

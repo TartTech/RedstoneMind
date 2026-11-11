@@ -1,7 +1,7 @@
 /**
- * furnace:put_input - Печка: положить для плавки
+ * furnace:put_input - Печка: положить for плавки
  *
- * Кладёт предмет в слот плавки печки.
+ * Кладёт item in слот плавки печки.
  */
 async function execute(node, context, helpers) {
   const { resolvePinValue, traverse, memo } = helpers;
@@ -26,7 +26,7 @@ async function execute(node, context, helpers) {
   try {
     const searchName = itemName.toLowerCase().replace('minecraft:', '');
 
-    // Ищем предмет в инвентаре
+    // Ищем item in инвентаре
     const item = bot.inventory.items().find(i =>
       i.name.toLowerCase().includes(searchName) ||
       i.displayName?.toLowerCase().includes(searchName)
@@ -40,7 +40,7 @@ async function execute(node, context, helpers) {
 
     const amount = count ? Math.min(count, item.count) : item.count;
 
-    // Кладём в слот плавки
+    // Кладём in слот плавки
     await furnace.putInput(item.type, item.metadata, amount);
 
     memo.set(`${node.id}:success`, true);

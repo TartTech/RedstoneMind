@@ -13,6 +13,7 @@ const TtlCache = require('../../core/utils/ttlCache');
 const { filterSecretSettings, parseManifest, isGroupedSettings } = require('../../core/utils/pluginSettings');
 const { normalizeCatalog } = require('../../core/utils/pluginCatalog');
 const { removeOwnUnofficialEntry } = require('../../core/utils/pluginPublish');
+const { t } = require('../../i18n');
 
 const router = express.Router();
 const OFFICIAL_CATALOG_URL = 'https://raw.githubusercontent.com/TartTech/official-plugins-list/main/index.json';
@@ -85,7 +86,7 @@ router.get('/catalog', async (req, res) => {
         if (error.name === 'AbortError' || error.message.includes('aborted') || error.message.includes('timed out')) {
             return res.json([]);
         }
-        res.status(500).json({ error: 'Не удалось загрузить каталог плагинов.' });
+        res.status(500).json({ error: t('plugins:error_216c66a6') });
     }
 });
 
@@ -97,7 +98,7 @@ router.post('/check-updates/:botId', authenticateUniversal, checkBotAccess, auth
         res.json(updates);
     } catch (error) {
         console.error('[API Error] /check-updates:', error);
-        res.status(500).json({ error: 'Не удалось проверить обновления.' });
+        res.status(500).json({ error: t('panel:error_7c3e8d3f') });
     }
 });
 
@@ -116,10 +117,10 @@ router.post('/:id/clear-data', authenticateUniversal, authorize('plugin:settings
     try {
         const pluginId = parseInt(req.params.id);
         await pluginManager.clearPluginData(pluginId);
-        res.status(200).json({ message: 'Данные плагина успешно очищены.' });
+        res.status(200).json({ message: t('plugins:success_510f9808') });
     } catch (error) {
         console.error(`[API Error] /plugins/:id/clear-data:`, error);
-        res.status(500).json({ error: error.message || 'Не удалось очистить данные плагина.' });
+        res.status(500).json({ error: error.message || t('plugins:error_5c745e0d') });
     }
 });
 
@@ -127,10 +128,10 @@ router.post('/:id/reload', authenticateUniversal, authorize('plugin:settings:edi
     try {
         const pluginId = parseInt(req.params.id);
         const updatedPlugin = await pluginManager.reloadLocalPlugin(pluginId);
-        res.status(200).json({ message: 'Плагин перезагружен. Настройки не изменены.', plugin: updatedPlugin });
+        res.status(200).json({ message: t('plugins:success_19ad3520'), plugin: updatedPlugin });
     } catch (error) {
         console.error(`[API Error] /plugins/:id/reload:`, error);
-        res.status(500).json({ error: error.message || 'Не удалось перезагрузить плагин.' });
+        res.status(500).json({ error: error.message || t('plugins:error_6fd1c356') });
     }
 });
 
@@ -162,7 +163,7 @@ router.get('/:id/info', authenticateUniversal, authorize('plugin:list'), checkPl
         });
 
         if (!plugin) {
-            return res.status(404).json({ error: 'Плагин не найден.' });
+            return res.status(404).json({ error: t('plugins:msg_7ab2db23') });
         }
 
         const manifest = parseManifest(plugin);
@@ -174,14 +175,14 @@ router.get('/:id/info', authenticateUniversal, authorize('plugin:list'), checkPl
                 const filtered = filterSecretSettings(parsed, manifestSettings, isGroupedSettings(manifestSettings));
                 safePlugin = { ...plugin, settings: JSON.stringify(filtered) };
             } catch (e) {
-                console.warn(`[API] Не удалось распарсить settings плагина ${plugin.name}: ${e.message}`);
+                console.warn(t('plugins:error_e424457f', { plugin: plugin.name, e: e.message }));
             }
         }
 
         res.json(safePlugin);
     } catch (error) {
         console.error(`[API Error] /plugins/:id/info:`, error);
-        res.status(500).json({ error: 'Не удалось получить информацию о плагине.' });
+        res.status(500).json({ error: t('plugins:error_41b8eda6') });
     }
 });
 
@@ -230,7 +231,7 @@ router.get('/bot/:botId', authenticateUniversal, checkBotAccess, authorize('plug
         res.json(safePlugins);
     } catch (error) {
         console.error(`[API Error] /plugins/bot/:botId:`, error);
-        res.status(500).json({ error: 'Не удалось получить список плагинов.' });
+        res.status(500).json({ error: t('plugins:error_fa381c12') });
     }
 });
 
@@ -247,7 +248,7 @@ router.post('/catalog/:name/unlist', authenticateUniversal, async (req, res) => 
     } catch (error) {
         const status = error.statusCode || error.status || 500;
         res.status(status >= 400 && status < 600 ? status : 500).json({
-            error: error.message || 'Не удалось убрать плагин из списка.',
+            error: error.message || t('plugins:error_f10faf77'),
         });
     }
 });
@@ -286,10 +287,10 @@ router.get('/catalog/:name', async (req, res) => {
         const catalog = await fetchOfficialCatalog();
         const pluginInfo = catalog.find((p) => p.name === pluginName);
         if (!pluginInfo) {
-            return res.status(404).json({ error: 'Плагин с таким именем не найден в каталоге.' });
+            return res.status(404).json({ error: t('plugins:msg_932d261b') });
         }
 
-        let readmeContent = pluginInfo.description || 'Описание для этого плагина не предоставлено.';
+        let readmeContent = pluginInfo.description || t('plugins:msg_2abeb3ca');
         let readmeHtml = null;
 
         const repoInfo = tryParseGithubRepoUrl(pluginInfo.repoUrl);
@@ -301,7 +302,7 @@ router.get('/catalog/:name', async (req, res) => {
                     readmeHtml = await renderGithubMarkdown(fetchedReadme, repoInfo.owner, repoInfo.repo);
                 }
             } catch (readmeError) {
-                console.error(`[API] Не удалось загрузить README для ${pluginName}:`, readmeError.message);
+                console.error(t('plugins:error_c3d99285', { pluginName: pluginName }), readmeError.message);
             }
         }
 
@@ -310,7 +311,7 @@ router.get('/catalog/:name', async (req, res) => {
         res.json(finalPluginData);
     } catch (error) {
         console.error(`[API Error] /catalog/:name :`, error);
-        res.status(500).json({ error: 'Не удалось загрузить данные плагина.' });
+        res.status(500).json({ error: t('plugins:error_6b7f966b') });
     }
 });
 
@@ -319,20 +320,20 @@ async function loadPluginForRequest(req, res, next) {
         const botId = parseInt(req.params.botId, 10);
         const pluginName = req.params.pluginName;
         if (isNaN(botId) || !pluginName) {
-            return res.status(400).json({ error: 'Некорректные параметры.' });
+            return res.status(400).json({ error: t('plugins:error_7b9bdfd5') });
         }
         const plugin = await prisma.installedPlugin.findFirst({
             where: { botId, name: pluginName },
             select: { id: true, manifest: true },
         });
         if (!plugin) {
-            return res.status(404).json({ error: 'Плагин не найден.' });
+            return res.status(404).json({ error: t('plugins:msg_7ab2db23') });
         }
         req.targetPluginInfo = plugin;
         next();
     } catch (e) {
         console.error('[plugins/store] loadPluginForRequest error', e);
-        res.status(500).json({ error: 'Ошибка получения плагина.' });
+        res.status(500).json({ error: t('plugins:error_9f8b6a6a') });
     }
 }
 
@@ -357,7 +358,7 @@ router.get('/bot/:botId/:pluginName/store', authenticateUniversal, checkBotAcces
         res.json(safe);
     } catch (error) {
         console.error(`[API Error] GET /plugins/bot/:botId/:pluginName/store:`, error);
-        res.status(500).json({ error: 'Не удалось получить данные store плагина.' });
+        res.status(500).json({ error: t('plugins:error_26b2fe90') });
     }
 });
 
@@ -372,7 +373,7 @@ router.get('/bot/:botId/:pluginName/store/:key', authenticateUniversal, checkBot
             select: { value: true, createdAt: true, updatedAt: true },
         });
         if (!storeItem) {
-            return res.status(404).json({ error: 'Ключ не найден в store.' });
+            return res.status(404).json({ error: t('plugins:msg_ad2ec656') });
         }
 
         let parsedValue;
@@ -386,7 +387,7 @@ router.get('/bot/:botId/:pluginName/store/:key', authenticateUniversal, checkBot
         res.json({ key, value: wrapped[key], createdAt: storeItem.createdAt, updatedAt: storeItem.updatedAt });
     } catch (error) {
         console.error(`[API Error] GET /plugins/bot/:botId/:pluginName/store/:key:`, error);
-        res.status(500).json({ error: 'Не удалось получить значение из store.' });
+        res.status(500).json({ error: t('plugins:error_60de8b47') });
     }
 });
 
@@ -398,7 +399,7 @@ router.put('/bot/:botId/:pluginName/store/:key', authenticateUniversal, checkBot
         const { value } = req.body;
 
         if (value === undefined) {
-            return res.status(400).json({ error: 'Поле value обязательно.' });
+            return res.status(400).json({ error: t('plugins:validation_a76cedf7') });
         }
 
         let stringValue;
@@ -408,11 +409,11 @@ router.put('/bot/:botId/:pluginName/store/:key', authenticateUniversal, checkBot
             try {
                 stringValue = JSON.stringify(value);
             } catch (e) {
-                return res.status(400).json({ error: 'Значение нельзя сериализовать в JSON.' });
+                return res.status(400).json({ error: t('plugins:msg_1d1b77e2') });
             }
         }
         if (stringValue === undefined) {
-            return res.status(400).json({ error: 'Недопустимое значение.' });
+            return res.status(400).json({ error: t('plugins:error_30c001fc') });
         }
 
         const storeItem = await prisma.pluginDataStore.upsert({
@@ -424,7 +425,7 @@ router.put('/bot/:botId/:pluginName/store/:key', authenticateUniversal, checkBot
         res.json({ key, value, updatedAt: storeItem.updatedAt });
     } catch (error) {
         console.error(`[API Error] PUT /plugins/bot/:botId/:pluginName/store/:key:`, error);
-        res.status(500).json({ error: 'Не удалось сохранить значение в store.' });
+        res.status(500).json({ error: t('plugins:error_68be99bf') });
     }
 });
 
@@ -438,13 +439,13 @@ router.delete('/bot/:botId/:pluginName/store/:key', authenticateUniversal, check
             where: { pluginName_botId_key: { pluginName, botId, key } },
         });
 
-        res.json({ message: 'Значение удалено из store.' });
+        res.json({ message: t('plugins:success_b1f7e363') });
     } catch (error) {
         if (error.code === 'P2025') {
-            return res.status(404).json({ error: 'Ключ не найден в store.' });
+            return res.status(404).json({ error: t('plugins:msg_ad2ec656') });
         }
         console.error(`[API Error] DELETE /plugins/bot/:botId/:pluginName/store/:key:`, error);
-        res.status(500).json({ error: 'Не удалось удалить значение из store.' });
+        res.status(500).json({ error: t('plugins:error_8af514eb') });
     }
 });
 

@@ -1,0 +1,12 @@
+{
+  "msg_07bac64a": "Grafo em сессии ещё não загрузился. Подожди, пока редактор откроется.",
+  "msg_178c625b": "Открыто vários графов. Укажи botId e graphId.",
+  "msg_2994112b": "Nó {{nodeId}} não encontrado em открытом графе",
+  "msg_3556bf8c": "Abra grafo em редакторе. Изменения попадают только em открытую сессию e сами não сохраняются.",
+  "msg_598be220": "Deste grafo нет em твоей открытой сессии. Primeiro abra seu em редакторе.",
+  "msg_608333ad": "Olá",
+  "msg_906e9981": "O editor de grafos ainda não está pronto",
+  "msg_c28e8951": "Ноду {{protectedNode}} excluir não é possível",
+  "msg_c77153ec": "Nó {{node}} já é em холсте",
+  "validation_c45b5a0d": "Оба конца связи deve ser нодами открытого grafo"
+}

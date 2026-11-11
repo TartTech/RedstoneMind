@@ -9,6 +9,7 @@ const {
     bumpPatch,
     tagFor,
 } = require('../pluginCatalog');
+const { t } = require('../../../i18n');
 
 describe('plugin catalog sections', () => {
     const pinned = {
@@ -154,12 +155,12 @@ describe('plugin catalog sections', () => {
         expect(updated[0].previous.latestTag).toBe('v0.1.0');
         const described = diffCatalog(before, {
             official: [pinned],
-            unofficial: [{ ...added, description: 'Коротко о плагине', author: 'ada', categories: ['Чат'] }],
+            unofficial: [{ ...added, description: t('tests:msg_bf3b56a3'), author: 'ada', categories: [t('tests:msg_c52b4c5c')] }],
         });
         const embed = buildPayloads(described, { commitUrl: 'https://github.com/TartTech/official-plugins-list/commit/abc', pusher: 'ada' })[0].embeds[0];
-        expect(embed.description).toBe('Коротко о плагине');
-        expect(embed.fields.find((field) => field.name === 'Автор').value).toBe('ada');
-        expect(embed.fields.find((field) => field.name === 'Категории').value).toBe('Чат');
+        expect(embed.description).toBe(t('tests:msg_bf3b56a3'));
+        expect(embed.fields.find((field) => field.name === t('tests:msg_7c7d054b')).value).toBe('ada');
+        expect(embed.fields.find((field) => field.name === t('tests:msg_6926e02b')).value).toBe(t('tests:msg_c52b4c5c'));
     });
 
     test('version bump stays on the patch', () => {

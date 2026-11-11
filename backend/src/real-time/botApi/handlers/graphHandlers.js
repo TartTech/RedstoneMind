@@ -1,11 +1,12 @@
 const prisma = require('../../../lib/prisma');
 const { botManager } = require('../../../core/services');
+const { t } = require('../../../i18n');
 
 /**
- * action:trigger_graph - Запустить визуальный граф
+ * action:trigger_graph - Запустить визуальный graph
  */
 async function handleTriggerGraph(socket, payload) {
-    // Проверяем права
+    // Проверяем permissions
     if (socket.permissions === 'Read') {
         return socket.emit('error', {
             action: 'trigger_graph',
@@ -23,7 +24,7 @@ async function handleTriggerGraph(socket, payload) {
             });
         }
 
-        // Проверяем, что бот онлайн
+        // Проверяем, что bot онлайн
         if (!botManager.isBotRunning(socket.botId)) {
             return socket.emit('error', {
                 action: 'trigger_graph',
@@ -39,7 +40,7 @@ async function handleTriggerGraph(socket, payload) {
             });
         }
 
-        // Получаем граф из базы с триггерами
+        // Получаем graph from базы with триггерами
         const graph = await prisma.eventGraph.findFirst({
             where: {
                 botId: socket.botId,
@@ -63,10 +64,10 @@ async function handleTriggerGraph(socket, payload) {
             });
         }
 
-        // Парсим граф
+        // Парсим graph
         const parsedGraph = JSON.parse(graph.graphJson);
 
-        // Запускаем граф в child process через IPC
+        // Запускаем graph in child process through IPC
         await botManager.eventGraphManager.executeGraphInChildProcess(
             socket.botId,
             'api_trigger', // Тип события
@@ -86,7 +87,7 @@ async function handleTriggerGraph(socket, payload) {
             graphName,
         });
     } catch (error) {
-        console.error('[Bot API] Ошибка запуска графа:', error);
+        console.error(t('core:error_b6690b8e'), error);
         socket.emit('error', {
             action: 'trigger_graph',
             message: 'Internal error',

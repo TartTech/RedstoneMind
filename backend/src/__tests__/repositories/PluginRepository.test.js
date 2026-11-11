@@ -1,4 +1,5 @@
 const PluginRepository = require('../../repositories/PluginRepository');
+const { t } = require('../../i18n');
 
 describe('PluginRepository', () => {
     let repository;
@@ -22,7 +23,7 @@ describe('PluginRepository', () => {
     });
 
     describe('findByBotId', () => {
-        test('должен найти все плагины бота', async () => {
+        test(t('tests:validation_ec071783'), async () => {
             const mockPlugins = [
                 { id: 1, botId: 1, name: 'plugin1' },
                 { id: 2, botId: 1, name: 'plugin2' }
@@ -40,7 +41,7 @@ describe('PluginRepository', () => {
     });
 
     describe('findByName', () => {
-        test('должен найти плагин по имени', async () => {
+        test(t('tests:validation_f4645604'), async () => {
             const mockPlugin = {
                 id: 1,
                 botId: 1,
@@ -58,7 +59,7 @@ describe('PluginRepository', () => {
     });
 
     describe('findEnabledByBotId', () => {
-        test('должен найти только включенные плагины', async () => {
+        test(t('tests:validation_23f0a226'), async () => {
             const mockPlugins = [
                 { id: 1, botId: 1, name: 'enabled-plugin', isEnabled: true }
             ];
@@ -77,7 +78,7 @@ describe('PluginRepository', () => {
     });
 
     describe('updateEnabled', () => {
-        test('должен обновить статус isEnabled', async () => {
+        test(t('tests:validation_7d654a48'), async () => {
             const mockPlugin = { id: 1, isEnabled: false };
             mockPrisma.installedPlugin.update.mockResolvedValue(mockPlugin);
 
@@ -92,7 +93,7 @@ describe('PluginRepository', () => {
     });
 
     describe('deleteByName', () => {
-        test('должен удалить плагин по имени', async () => {
+        test(t('tests:validation_0f219c54'), async () => {
             const mockResult = { count: 1 };
             mockPrisma.installedPlugin.deleteMany.mockResolvedValue(mockResult);
 

@@ -30,22 +30,22 @@ function getPanelSelfUsage() {
 }
 
 /**
- * Вычисляет системное использование CPU на основе средней загрузки
- * Избегает состояния гонки, не используя глобальное состояние
+ * Вычисляет системное usage CPU on основе средней загрузки
+ * Избегает state гонки, not используя глобальное state
  */
 function getSystemCpuUsage() {
     // Используем среднюю загрузку системы за 1 минуту
     const loadAvg = os.loadavg()[0]; // 1-минутное среднее
     const cpuCount = os.cpus().length;
-    // Конвертируем в процент (loadAvg / cpuCount * 100)
+    // Конвертируем in процент (loadAvg / cpuCount * 100)
     const cpuPercentage = Math.round((loadAvg / cpuCount) * 100);
     return Math.max(0, Math.min(100, cpuPercentage));
 }
 
 /**
  * @route GET /api/system/health
- * @desc Получить информацию о здоровье системы
- * @access Требуется авторизация
+ * @desc Получить информацию о health системы
+ * @access Требуется authorization
  */
 router.get('/health', authenticateUniversal, async (req, res) => {
     try {
@@ -67,7 +67,7 @@ router.get('/health', authenticateUniversal, async (req, res) => {
             panelCpu = panelStats.cpu;
             panelMemory = panelStats.memory;
         } catch (error) {
-            console.error('Ошибка получения статистики процесса:', error);
+            console.error(t('api:error_402733e3'), error);
         }
         
         const platform = process.platform;
@@ -153,11 +153,12 @@ router.get('/health', authenticateUniversal, async (req, res) => {
 /**
  * @route GET /api/system/stats
  * @desc Получить статистику системы
- * @access Требуется авторизация
+ * @access Требуется authorization
  */
 router.get('/stats', authenticateUniversal, async (req, res) => {
     try {
         const prisma = req.app.get('prisma') || require('../../lib/prisma');
+const { t } = require('../../i18n');
         
         const totalBots = await prisma.bot.count();
         const totalServers = await prisma.server.count();

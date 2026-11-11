@@ -77,7 +77,7 @@ class GraphExecutionEngine {
                 const startNode = GraphValidation.findStartNode(this.activeGraph, eventType);
                 if (!startNode) {
                     if (!eventType) {
-                        throw new Error('Не найдена стартовая нода события (event:command) в графе.');
+                        throw new Error(t('core:msg_7d45fcbd'));
                     }
                     break;
                 }
@@ -227,7 +227,7 @@ class GraphExecutionEngine {
 
         const isStoppedByDebugger = error?.message === 'Execution stopped by debugger';
         if (!(error instanceof BreakLoopSignal) && !isStoppedByDebugger) {
-            console.error(`[GraphExecutionEngine] Критическая ошибка выполнения графа: ${error.stack}`);
+            console.error(t('core:error_7ca4f677', { error: error.stack }));
         } else if (isStoppedByDebugger) {
             console.log('[GraphExecutionEngine] Execution stopped by user from debugger');
         }
@@ -254,10 +254,10 @@ class GraphExecutionEngine {
 
         this._stepCount = (this._stepCount || 0) + 1;
         if (this._stepCount > MAX_NODE_EXECUTIONS) {
-            throw new Error(`Превышен лимит выполнения графа (${MAX_NODE_EXECUTIONS} нод).`);
+            throw new Error(t('core:msg_98982882', { MAX_NODE_EXECUTIONS: MAX_NODE_EXECUTIONS }));
         }
         if (this._deadline && Date.now() > this._deadline) {
-            throw new Error('Превышено максимальное время выполнения графа.');
+            throw new Error(t('core:msg_b807a57e'));
         }
 
         const startTime = Date.now();
@@ -438,6 +438,7 @@ class GraphExecutionEngine {
 
     _evaluateLegacyNode(node, pinId, defaultValue) {
         const { evaluateEventPin } = require('./nodes/event/evaluateEvent');
+const { t } = require('../i18n');
         if (node?.type?.startsWith('event:')) {
             const eventValue = evaluateEventPin(node, pinId, this.context);
             return eventValue !== undefined ? eventValue : defaultValue;

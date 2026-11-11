@@ -1,8 +1,8 @@
 /**
- * Jest Setup - выполняется перед всеми тестами
+ * Jest Setup - выполняется before всеми тестами
  */
 
-// Мокируем логгер чтобы тесты были тихими
+// Мокируем logger чтобы тесты were тихими
 global.console = {
     ...console,
     log: jest.fn(),
@@ -12,14 +12,14 @@ global.console = {
     error: jest.fn(),
 };
 
-// Устанавливаем переменные окружения для тестов
+// Устанавливаем переменные окружения for тестов
 process.env.NODE_ENV = 'test';
 process.env.DEBUG = 'false';
 
-// Mock для Prisma (если нужно)
+// Mock for Prisma (if need)
 jest.mock('../lib/prisma', () => ({
     bot: {},
     command: {},
     permission: {},
-    // ... другие модели при необходимости
+    // ... другие model when необходимости
 }));

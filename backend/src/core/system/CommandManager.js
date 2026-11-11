@@ -12,17 +12,18 @@ class CommandManager {
     }
 
     /**
-     * Сканирует директорию, загружает и кэширует "шаблоны" команд.
-     * Шаблон - это конфигурация по умолчанию из файла команды.
+     * Сканирует директорию, loads and кэширует "шаблоны" команд.
+     * Шаблон - это configuration by умолчанию from file commands.
      */
     loadCommandTemplates() {
-        console.log('[CommandManager] Загрузка шаблонов команд...');
+        console.log(t('core:log_cd56a92f'));
         try {
             const commandFiles = fs.readdirSync(this.commandsPath).filter(file => file.endsWith('.js'));
 
             for (const file of commandFiles) {
                 const filePath = path.join(this.commandsPath, file);
                 const CommandClass = require(filePath);
+const { t } = require('../../i18n');
                 
                 if (CommandClass.prototype instanceof Command) {
                     const commandInstance = new CommandClass();
@@ -40,17 +41,17 @@ class CommandManager {
 
                     if (config.name) {
                         this.commandTemplates.set(config.name, config);
-                       // console.log(`[CommandManager] Шаблон для команды "${config.name}" успешно загружен.`);
+                       // console.log(`[CommandManager] Шаблон for commands "${config.name}" успешно загружен.`);
                     }
                 }
             }
         } catch (error) {
-            console.error('[CommandManager] Ошибка при загрузке шаблонов команд:', error);
+            console.error(t('core:error_bacff327'), error);
         }
     }
 
     /**
-     * Возвращает массив всех шаблонов команд.
+     * Returns array всех шаблонов команд.
      * @returns {Array<object>}
      */
     getCommandTemplates() {

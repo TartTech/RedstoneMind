@@ -1,9 +1,9 @@
 /**
- * Конфигурация для Live Debug системы
+ * Configuration for Live Debug системы
  */
 
 module.exports = {
-    // Таймауты (в миллисекундах)
+    // Таймауты (in миллисекундах)
     BREAKPOINT_TIMEOUT: 30000,        // 30 секунд - максимальное время ожидания breakpoint response
     STEP_MODE_TIMEOUT: 30000,         // 30 секунд - максимальное время ожидания step mode response
     TRACE_CLEANUP_DELAY: 5000,        // 5 секунд - задержка перед удалением completed trace
@@ -13,7 +13,7 @@ module.exports = {
     MAX_COMPLETED_TRACES: 100,        // Максимальное количество хранимых completed traces
     MAX_OUTPUT_LENGTH: 30000,         // Максимальная длина output при передаче через IPC
 
-    // IPC Message Types (для type safety)
+    // IPC Message Types (for type safety)
     IPC_TYPES: {
         EXECUTE_EVENT_GRAPH: 'execute_event_graph',
         EXECUTE_HANDLER: 'execute_handler',

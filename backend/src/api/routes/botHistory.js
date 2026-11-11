@@ -1,6 +1,7 @@
 const express = require('express');
 const { authenticateUniversal, authorize } = require('../middleware/auth');
 const botHistoryStore = require('../../core/BotHistoryStore');
+const { t } = require('../../i18n');
 
 const router = express.Router();
 
@@ -33,7 +34,7 @@ router.get('/:botId/chat', authenticateUniversal, authorize('bot:list'), async (
         console.error('[API Error] GET /bots/:botId/chat:', error);
         res.status(500).json({
             success: false,
-            error: 'Не удалось получить историю чата.'
+            error: t('bots:error_b216e526')
         });
     }
 });
@@ -70,7 +71,7 @@ router.get('/:botId/commands', authenticateUniversal, authorize('bot:list'), asy
         console.error('[API Error] GET /bots/:botId/commands:', error);
         res.status(500).json({
             success: false,
-            error: 'Не удалось получить логи команд.'
+            error: t('bots:error_6abcc118')
         });
     }
 });
@@ -85,7 +86,7 @@ router.get('/:botId/stats', authenticateUniversal, authorize('bot:list'), async 
         console.error('[API Error] GET /bots/:botId/stats:', error);
         res.status(500).json({
             success: false,
-            error: 'Не удалось получить статистику.'
+            error: t('bots:error_51a0ca06')
         });
     }
 });
@@ -97,13 +98,13 @@ router.delete('/:botId/clear', authenticateUniversal, authorize('bot:list'), asy
 
         res.json({
             success: true,
-            message: 'История бота очищена.'
+            message: t('bots:msg_dbb31f3a')
         });
     } catch (error) {
         console.error('[API Error] DELETE /bots/:botId/clear:', error);
         res.status(500).json({
             success: false,
-            error: 'Не удалось очистить историю.'
+            error: t('bots:error_c8bc970b')
         });
     }
 });

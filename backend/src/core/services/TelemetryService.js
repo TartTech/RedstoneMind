@@ -33,7 +33,7 @@ class TelemetryService {
                 fs.writeFileSync(this.INSTANCE_ID_PATH, this.instanceId, 'utf-8');
             }
         } catch (error) {
-            this.logger.error({ error }, 'Ошибка загрузки Instance ID');
+            this.logger.error({ error }, t('services:error_acb032ff'));
             return null;
         }
 
@@ -102,6 +102,7 @@ class TelemetryService {
             } while (!hash.startsWith('0'.repeat(difficulty)));
 
             const packageJson = require('../../../../package.json');
+const { t } = require('../../i18n');
             await fetch(`${this.STATS_SERVER_URL}/api/heartbeat`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -113,9 +114,9 @@ class TelemetryService {
                 })
             });
 
-            this.logger.debug('Heartbeat отправлен успешно');
+            this.logger.debug(t('services:success_48390e3c'));
         } catch (error) {
-            this.logger.debug({ err: error.message }, 'Heartbeat пропущен');
+            this.logger.debug({ err: error.message }, t('services:msg_2ee88dd8'));
         }
     }
 }

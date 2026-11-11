@@ -2,6 +2,7 @@ const express = require('express');
 const { authenticateUniversal, authorize } = require('../middleware/auth');
 const { checkBotAccess } = require('../middleware/botAccess');
 const { botManager } = require('../../core/services');
+const { t } = require('../../i18n');
 
 const router = express.Router();
 
@@ -32,7 +33,7 @@ router.get('/:id/status', authenticateUniversal, authorize('bot:list'), async (r
         });
     } catch (error) {
         console.error('[API Error] GET /bots/:id/status:', error);
-        res.status(500).json({ error: 'Не удалось получить статус бота' });
+        res.status(500).json({ error: t('bots:error_d5e654b6') });
     }
 });
 

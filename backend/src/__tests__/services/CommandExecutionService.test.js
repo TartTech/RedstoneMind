@@ -1,5 +1,6 @@
 const CommandExecutionService = require('../../core/services/CommandExecutionService');
 const UserService = require('../../core/UserService');
+const { t } = require('../../i18n');
 
 jest.mock('../../core/UserService');
 
@@ -74,7 +75,7 @@ describe('CommandExecutionService', () => {
     });
 
     describe('sendMessageToBot', () => {
-        test('должен отправить сообщение боту', () => {
+        test(t('tests:validation_1e523d55'), () => {
             const mockSendMessage = jest.fn();
             const mockChild = {
                 api: {
@@ -89,18 +90,18 @@ describe('CommandExecutionService', () => {
             expect(result.success).toBe(true);
         });
 
-        test('должен вернуть ошибку если бот не найден', () => {
+        test(t('tests:validation_7c552ae1'), () => {
             mockProcessManager.getProcess.mockReturnValue(null);
 
             const result = service.sendMessageToBot(1, 'Hello');
 
             expect(result.success).toBe(false);
-            expect(result.message).toContain('не найден');
+            expect(result.message).toContain(t('tests:msg_5075a7c6'));
         });
     });
 
     describe('validateAndExecuteCommandForApi', () => {
-        test('должен выбросить ошибку если бот не найден', async () => {
+        test(t('tests:validation_be742cdd'), async () => {
             mockProcessManager.getProcess.mockReturnValue(null);
 
             await expect(
@@ -108,7 +109,7 @@ describe('CommandExecutionService', () => {
             ).rejects.toThrow('Bot configuration not found');
         });
 
-        test('должен загрузить кэш команд, если он был сброшен', async () => {
+        test(t('tests:validation_15332675'), async () => {
             mockProcessManager.getProcess.mockReturnValue({
                 botConfig: { id: 1 }
             });
@@ -130,7 +131,7 @@ describe('CommandExecutionService', () => {
             expect(mockCacheManager.getOrLoadBotConfig).toHaveBeenCalledWith(1);
         });
 
-        test('должен выбросить ошибку если пользователь в черном списке', async () => {
+        test(t('tests:validation_8096987c'), async () => {
             const mockUser = {
                 isBlacklisted: true,
                 username: 'Player1'
@@ -150,7 +151,7 @@ describe('CommandExecutionService', () => {
             ).rejects.toThrow('is blacklisted');
         });
 
-        test('должен выбросить ошибку если команда не найдена', async () => {
+        test(t('tests:validation_e6543f18'), async () => {
             const mockUser = {
                 isBlacklisted: false,
                 isOwner: false,
@@ -171,7 +172,7 @@ describe('CommandExecutionService', () => {
             ).rejects.toThrow('not found or is disabled');
         });
 
-        test('должен выбросить ошибку если недостаточно прав', async () => {
+        test(t('tests:validation_0841f60a'), async () => {
             const mockUser = {
                 isBlacklisted: false,
                 isOwner: false,
@@ -203,7 +204,7 @@ describe('CommandExecutionService', () => {
     });
 
     describe('_executeCommandInProcess', () => {
-        test('должен вернуть ошибку если бот не запущен', async () => {
+        test(t('tests:validation_b1d71a17'), async () => {
             mockProcessManager.getProcess.mockReturnValue(null);
 
             const mockUser = { username: 'Player1', id: 1 };
@@ -213,7 +214,7 @@ describe('CommandExecutionService', () => {
             ).rejects.toThrow('Bot is not running');
         });
 
-        test('должен вернуть ошибку если процесс убит', async () => {
+        test(t('tests:validation_df5eca68'), async () => {
             mockProcessManager.getProcess.mockReturnValue({ killed: true });
 
             const mockUser = { username: 'Player1', id: 1 };
@@ -223,7 +224,7 @@ describe('CommandExecutionService', () => {
             ).rejects.toThrow('Bot is not running');
         });
 
-        test('должен выполнить команду успешно', async () => {
+        test(t('tests:success_46b16bff'), async () => {
             const mockChild = {
                 killed: false,
                 send: jest.fn()
@@ -250,7 +251,7 @@ describe('CommandExecutionService', () => {
             );
         });
 
-        test('должен вернуть таймаут если команда не выполнилась', async () => {
+        test(t('tests:validation_0b87e35c'), async () => {
             const mockChild = {
                 killed: false,
                 send: jest.fn()
@@ -258,7 +259,7 @@ describe('CommandExecutionService', () => {
             mockProcessManager.getProcess.mockReturnValue(mockChild);
 
             mockProcessManager.addCommandRequest.mockImplementation(() => {
-                // Не вызываем resolve/reject
+                // Not вызываем resolve/reject
             });
 
             const mockUser = { username: 'Player1', id: 1 };
@@ -271,7 +272,7 @@ describe('CommandExecutionService', () => {
     });
 
     describe('handleCommandRegistration', () => {
-        test('должен создать новую команду', async () => {
+        test(t('tests:validation_820a7de4'), async () => {
             mockCommandRepository.findByName.mockResolvedValue(null);
             mockPermissionRepository.findByName.mockResolvedValue(null);
             mockPermissionRepository.create.mockResolvedValue({ id: 1 });
@@ -299,7 +300,7 @@ describe('CommandExecutionService', () => {
             expect(mockCacheManager.deleteBotConfig).toHaveBeenCalledWith(1);
         });
 
-        test('должен обновить существующую команду', async () => {
+        test(t('tests:validation_c14aaae0'), async () => {
             mockCommandRepository.findByName.mockResolvedValue({ id: 10, name: 'test' });
             mockPermissionRepository.findByName.mockResolvedValue(null);
             mockPermissionRepository.create.mockResolvedValue({ id: 1 });
@@ -322,7 +323,7 @@ describe('CommandExecutionService', () => {
             expect(mockCommandRepository.create).not.toHaveBeenCalled();
         });
 
-        test('должен обработать ошибку регистрации', async () => {
+        test(t('tests:validation_85e76a02'), async () => {
             mockCommandRepository.findByName.mockRejectedValue(new Error('DB error'));
 
             const commandConfig = {
@@ -337,7 +338,7 @@ describe('CommandExecutionService', () => {
     });
 
     describe('handlePermissionsRegistration', () => {
-        test('должен создать новые права', async () => {
+        test(t('tests:validation_54f24f0f'), async () => {
             mockPermissionRepository.findByName.mockResolvedValue(null);
             mockPermissionRepository.create.mockResolvedValue({ id: 1 });
 
@@ -352,7 +353,7 @@ describe('CommandExecutionService', () => {
             expect(mockCacheManager.deleteBotConfig).toHaveBeenCalledWith(1);
         });
 
-        test('должен обновить существующие права', async () => {
+        test(t('tests:validation_7462da76'), async () => {
             mockPermissionRepository.findByName.mockResolvedValue({ id: 1, name: 'admin.*' });
             mockPermissionRepository.update.mockResolvedValue({ id: 1 });
 
@@ -368,7 +369,7 @@ describe('CommandExecutionService', () => {
             );
         });
 
-        test('должен пропустить права без имени или владельца', async () => {
+        test(t('tests:validation_42187548'), async () => {
             mockPermissionRepository.findByName.mockResolvedValue(null);
             mockPermissionRepository.create.mockResolvedValue({ id: 1 });
 
@@ -386,7 +387,7 @@ describe('CommandExecutionService', () => {
     });
 
     describe('handleGroupRegistration', () => {
-        test('должен создать/обновить группу', async () => {
+        test(t('tests:validation_6fab9332'), async () => {
             mockGroupRepository.upsertGroup.mockResolvedValue({ id: 1, name: 'Admin' });
 
             const groupConfig = {
@@ -408,7 +409,7 @@ describe('CommandExecutionService', () => {
             expect(mockCacheManager.deleteBotConfig).toHaveBeenCalledWith(1);
         });
 
-        test('должен пропустить группу без имени или владельца', async () => {
+        test(t('tests:validation_81e3390a'), async () => {
             await service.handleGroupRegistration(1, { description: 'No name' });
 
             expect(mockLogger.warn).toHaveBeenCalled();
@@ -417,7 +418,7 @@ describe('CommandExecutionService', () => {
     });
 
     describe('clearBotUserCache', () => {
-        test('несколько сбросов подряд уходят одним сообщением', () => {
+        test(t('tests:msg_6a51e6b1'), () => {
             mockProcessManager.sendMessage = jest.fn();
 
             service.clearBotUserCache(1);
@@ -432,7 +433,7 @@ describe('CommandExecutionService', () => {
     });
 
     describe('handleAddPermissionsToGroup', () => {
-        test('должен добавить права в группу', async () => {
+        test(t('tests:validation_87905bc1'), async () => {
             mockGroupRepository.findByName.mockResolvedValue({ id: 1, name: 'Admin' });
             mockGroupRepository.addPermissionToGroup.mockResolvedValue(undefined);
             mockPermissionRepository.findByName.mockImplementation((botId, name) =>
@@ -451,7 +452,7 @@ describe('CommandExecutionService', () => {
             expect(mockCacheManager.deleteBotConfig).toHaveBeenCalledWith(1);
         });
 
-        test('должен вернуться если группа не найдена', async () => {
+        test(t('tests:validation_9e707477'), async () => {
             mockGroupRepository.findByName.mockResolvedValue(null);
 
             const message = {
@@ -465,7 +466,7 @@ describe('CommandExecutionService', () => {
             expect(mockGroupRepository.addPermissionToGroup).not.toHaveBeenCalled();
         });
 
-        test('должен пропустить несуществующие права', async () => {
+        test(t('tests:validation_4fc40ab7'), async () => {
             mockGroupRepository.findByName.mockResolvedValue({ id: 1, name: 'Admin' });
             mockGroupRepository.addPermissionToGroup.mockResolvedValue(undefined);
             mockPermissionRepository.findByName.mockImplementation((botId, name) => {
@@ -517,7 +518,7 @@ describe('CommandExecutionService', () => {
             mockProcessManager.getProcess.mockReturnValue({ send: jest.fn() });
         }
 
-        test('повтор до снятия резерва получает кулдаун, после release команда снова уходит в бота', async () => {
+        test(t('tests:msg_f9874eb1'), async () => {
             mockPingCommand();
             const botConfig = { id: 7, prefix: '@' };
 

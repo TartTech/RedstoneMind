@@ -12,20 +12,21 @@ const {
     resolveRestartMethod,
     getPm2Target,
 } = require('../../core/services/PanelUpdateService');
+const { t } = require('../../i18n');
 
 describe('PanelUpdateService helpers', () => {
-    test('shortSha берёт первые 7 символов', () => {
+    test(t('tests:msg_ca5beeae'), () => {
         expect(shortSha('abcdef1234567890')).toBe('abcdef1');
         expect(shortSha('')).toBe('');
         expect(shortSha(null)).toBe('');
     });
 
-    test('firstLine отрезает тело коммита', () => {
+    test(t('tests:msg_04a31bad'), () => {
         expect(firstLine('feat: panel update\n\nlonger body')).toBe('feat: panel update');
         expect(firstLine('')).toBe('');
     });
 
-    test('isDefaultBranch понимает master/main и ветку репозитория', () => {
+    test(t('tests:msg_43a825fd'), () => {
         expect(isDefaultBranch('master', 'main')).toBe(true);
         expect(isDefaultBranch('main', 'master')).toBe(true);
         expect(isDefaultBranch('HEAD', 'master')).toBe(true);
@@ -33,7 +34,7 @@ describe('PanelUpdateService helpers', () => {
         expect(isDefaultBranch('develop', 'develop')).toBe(true);
     });
 
-    test('isSafeRef отклоняет опасные аргументы git', () => {
+    test(t('tests:msg_3d3f7c2c'), () => {
         expect(isSafeRef('master')).toBe(true);
         expect(isSafeRef('feat/panel-update')).toBe(true);
         expect(isSafeRef('-c')).toBe(false);
@@ -41,13 +42,13 @@ describe('PanelUpdateService helpers', () => {
         expect(isSafeRef('abc..def')).toBe(false);
     });
 
-    test('обновление кладёт официальную ветку в свою ссылку, без FETCH_HEAD', () => {
+    test(t('tests:success_e3677fdf'), () => {
         expect(officialUpdateRef('master')).toBe('refs/panel-update/master');
         expect(officialFetchRefspec('master')).toBe('+refs/heads/master:refs/panel-update/master');
         expect(officialFetchRefspec('-c')).toBe('+refs/heads/master:refs/panel-update/master');
     });
 
-    test('parseListeningPids достаёт PID из netstat', () => {
+    test(t('tests:msg_54115e76'), () => {
         const sample = [
             'TCP    127.0.0.1:3001         0.0.0.0:0              LISTENING       12345',
             'TCP    127.0.0.1:5173         0.0.0.0:0              LISTENING       67890',
@@ -57,14 +58,14 @@ describe('PanelUpdateService helpers', () => {
         expect(parseListeningPids(sample, 5173)).toEqual(['67890']);
     });
 
-    test('parseGitLogLine разбирает git log', () => {
+    test(t('tests:msg_16172806'), () => {
         const mapped = parseGitLogLine('abcdef1234567890\x1ffeat: panel\x1fmerka\x1f2026-09-25T15:32:00+03:00');
         expect(mapped.shortSha).toBe('abcdef1');
         expect(mapped.message).toBe('feat: panel');
         expect(mapped.author).toBe('merka');
     });
 
-    test('mapGithubCommit собирает короткое описание', () => {
+    test(t('tests:msg_6bb06eaf'), () => {
         const mapped = mapGithubCommit({
             sha: '1234567890abcdef',
             html_url: 'https://github.com/TartTech/redstonemind/commit/1234567890abcdef',
@@ -94,7 +95,7 @@ describe('resolveUpdateDecision', () => {
         remoteVersion: '1.27.1',
     };
 
-    test('можно обновлять git-клон на master без локальных правок', () => {
+    test(t('tests:msg_d5176d44'), () => {
         expect(resolveUpdateDecision(base)).toEqual({
             updateAvailable: true,
             canUpdate: true,
@@ -102,7 +103,7 @@ describe('resolveUpdateDecision', () => {
         });
     });
 
-    test('одинаковые коммиты — обновления нет', () => {
+    test(t('tests:success_5dab83f1'), () => {
         const sha = base.localSha;
         expect(resolveUpdateDecision({
             ...base,
@@ -116,7 +117,7 @@ describe('resolveUpdateDecision', () => {
         });
     });
 
-    test('npx-установка видит новую версию, но без кнопки pull', () => {
+    test(t('tests:msg_a7dd4c16'), () => {
         expect(resolveUpdateDecision({
             ...base,
             hasGit: false,
@@ -133,7 +134,7 @@ describe('resolveUpdateDecision', () => {
         });
     });
 
-    test('локальные правки не блокируют кнопку', () => {
+    test(t('tests:msg_5b8c94de'), () => {
         expect(resolveUpdateDecision({ ...base, dirty: true })).toEqual({
             updateAvailable: true,
             canUpdate: true,
@@ -141,7 +142,7 @@ describe('resolveUpdateDecision', () => {
         });
     });
 
-    test('фича-ветка не обновляется автоматически', () => {
+    test(t('tests:msg_3a58e4e3'), () => {
         expect(resolveUpdateDecision({ ...base, branch: 'feat/foo' })).toEqual({
             updateAvailable: true,
             canUpdate: false,
@@ -149,7 +150,7 @@ describe('resolveUpdateDecision', () => {
         });
     });
 
-    test('разошедшаяся история не делает ff-only', () => {
+    test(t('tests:msg_fa859cc9'), () => {
         expect(resolveUpdateDecision({
             ...base,
             compareStatus: 'diverged',
@@ -161,14 +162,14 @@ describe('resolveUpdateDecision', () => {
         });
     });
 
-    test('Linux PM2 перезапускается через pm2 restart', () => {
+    test(t('tests:msg_0a07bd81'), () => {
         expect(resolveRestartMethod({ NODE_ENV: 'production', pm_id: '0' })).toBe('pm2');
         expect(getPm2Target({ pm_id: '0', name: 'redstonemind' })).toBe('0');
         expect(resolveRestartMethod({ NODE_ENV: 'production' })).toBe('spawn');
         expect(resolveRestartMethod({ NODE_ENV: 'development' })).toBe('nodemon');
     });
 
-    test('оффлайн GitHub не предлагает обновление', () => {
+    test(t('tests:success_4e4be835'), () => {
         expect(resolveUpdateDecision({
             ...base,
             remoteSha: '',

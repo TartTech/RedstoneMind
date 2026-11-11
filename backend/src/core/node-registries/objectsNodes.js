@@ -3,84 +3,85 @@ const { GRAPH_TYPES } = require('../../core/constants/graphTypes');
 const objectsNodes = [
   {
     type: 'object:create',
-    label: '🏗️ Создать объект',
-    category: 'Объект',
-    description: 'Создает объект из пар ключ-значение.',
+    label: t('nodes:msg_58e36241'),
+    category: t('nodes:msg_4c243872'),
+    description: t('nodes:msg_188e9da9'),
     graphType: GRAPH_TYPES.ALL,
     evaluator: require('../../core/nodes/objects/create').evaluate,
     computeInputs: () => [],
     computeOutputs: () => [
-      { id: 'object', name: 'Объект', type: 'Object' }
+      { id: 'object', name: t('nodes:msg_4c243872'), type: 'Object' }
     ],
     defaultData: {},
     theme: { headerColor: '#8b5cf6', accentColor: '#a78bfa' }
   },
   {
     type: 'object:get',
-    label: '📤 Получить значение',
-    category: 'Объект',
-    description: 'Получает значение по ключу из объекта.',
+    label: t('nodes:msg_4384df04'),
+    category: t('nodes:msg_4c243872'),
+    description: t('nodes:msg_901b36d5'),
     graphType: GRAPH_TYPES.ALL,
     evaluator: require('../../core/nodes/objects/get').evaluate,
     computeInputs: (data) => [
-      { id: 'object', name: 'Объект', type: 'Object', required: true },
-      { id: 'key', name: 'Ключ', type: 'String', required: true, inlineField: true, placeholder: 'key...' }
+      { id: 'object', name: t('nodes:msg_4c243872'), type: 'Object', required: true },
+      { id: 'key', name: t('nodes:msg_62527274'), type: 'String', required: true, inlineField: true, placeholder: 'key...' }
     ],
     computeOutputs: () => [
-      { id: 'value', name: 'Значение', type: 'Any' }
+      { id: 'value', name: t('nodes:msg_7b46d8cc'), type: 'Any' }
     ],
     defaultData: { key: '' },
     theme: { headerColor: '#8b5cf6', accentColor: '#a78bfa' }
   },
   {
     type: 'object:set',
-    label: '➕ Добавить/Изменить ключ',
-    category: 'Объект',
-    description: 'Добавляет или изменяет значение по ключу в объекте.',
+    label: t('nodes:msg_2fbdd15d'),
+    category: t('nodes:msg_4c243872'),
+    description: t('nodes:msg_9ad99f23'),
     graphType: GRAPH_TYPES.ALL,
     evaluator: require('../../core/nodes/objects/set').evaluate,
     computeInputs: (data) => [
-      { id: 'object', name: 'Объект', type: 'Object', required: true },
-      { id: 'key', name: 'Ключ', type: 'String', required: true, inlineField: true, placeholder: 'key...' },
-      { id: 'value', name: 'Значение', type: 'Any', required: true }
+      { id: 'object', name: t('nodes:msg_4c243872'), type: 'Object', required: true },
+      { id: 'key', name: t('nodes:msg_62527274'), type: 'String', required: true, inlineField: true, placeholder: 'key...' },
+      { id: 'value', name: t('nodes:msg_7b46d8cc'), type: 'Any', required: true }
     ],
     computeOutputs: () => [
-      { id: 'new_object', name: 'Новый объект', type: 'Object' }
+      { id: 'new_object', name: t('nodes:msg_ab2d6350'), type: 'Object' }
     ],
     defaultData: { key: '' },
     theme: { headerColor: '#8b5cf6', accentColor: '#a78bfa' }
   },
   {
     type: 'object:delete',
-    label: '➖ Удалить ключ',
-    category: 'Объект',
-    description: 'Удаляет ключ из объекта.',
+    label: t('nodes:msg_1d245402'),
+    category: t('nodes:msg_4c243872'),
+    description: t('nodes:msg_b00ebd8c'),
     graphType: GRAPH_TYPES.ALL,
     evaluator: require('../../core/nodes/objects/delete').evaluate,
     computeInputs: (data) => [
-      { id: 'object', name: 'Объект', type: 'Object', required: true },
-      { id: 'key', name: 'Ключ', type: 'String', required: true, inlineField: true, placeholder: 'key...' }
+      { id: 'object', name: t('nodes:msg_4c243872'), type: 'Object', required: true },
+      { id: 'key', name: t('nodes:msg_62527274'), type: 'String', required: true, inlineField: true, placeholder: 'key...' }
     ],
     computeOutputs: () => [
-      { id: 'new_object', name: 'Новый объект', type: 'Object' }
+      { id: 'new_object', name: t('nodes:msg_ab2d6350'), type: 'Object' }
     ],
     defaultData: { key: '' },
     theme: { headerColor: '#8b5cf6', accentColor: '#a78bfa' }
   },
   {
     type: 'object:has_key',
-    label: '🔍 Проверить ключ',
-    category: 'Объект',
-    description: 'Проверяет наличие ключа в объекте и возвращает значение.',
+    label: t('nodes:msg_5c3af5c5'),
+    category: t('nodes:msg_4c243872'),
+    description: t('nodes:msg_6fc83c64'),
     graphType: GRAPH_TYPES.ALL,
     evaluator: require('../../core/nodes/objects/has_key').evaluate,
+const { t } = require('../../i18n');
     computeInputs: (data) => [
-      { id: 'object', name: 'Объект', type: 'Object', required: true },
-      { id: 'key', name: 'Ключ', type: 'String', required: true, inlineField: true, placeholder: 'key...' }
+      { id: 'object', name: t('nodes:msg_4c243872'), type: 'Object', required: true },
+      { id: 'key', name: t('nodes:msg_62527274'), type: 'String', required: true, inlineField: true, placeholder: 'key...' }
     ],
     computeOutputs: () => [
-      { id: 'result', name: 'Найден', type: 'Boolean' },
-      { id: 'value', name: 'Значение', type: 'Any' }
+      { id: 'result', name: t('nodes:msg_bcccb922'), type: 'Boolean' },
+      { id: 'value', name: t('nodes:msg_7b46d8cc'), type: 'Any' }
     ],
     defaultData: { key: '' },
     theme: { headerColor: '#8b5cf6', accentColor: '#a78bfa' }

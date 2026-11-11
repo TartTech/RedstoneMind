@@ -4,21 +4,22 @@ const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 const prisma = require('../../lib/prisma');
 const { authenticate, authenticateUniversal } = require('../middleware/auth');
+const { t } = require('../../i18n');
 
 /**
- * Генерация случайного API ключа
+ * Generation случайного API key
  */
 function generateApiKey() {
     return 'pk_' + crypto.randomBytes(32).toString('hex');
 }
 
 /**
- * Проверяет, что запрошенные scope являются подмножеством прав создателя ключа.
- * Пользователь не может выпустить ключ с правами, которых у него самого нет.
+ * Checks, что запрошенные scope являются подмножеством прав создателя key.
+ * User not can выпустить key with permissions, которых у него самого no.
  */
 function validateCustomScopes(requested, ownerPermissions) {
     if (requested === undefined || requested === null) return { ok: true, value: null };
-    if (!Array.isArray(requested)) return { ok: false, error: 'customScopes должен быть массивом строк' };
+    if (!Array.isArray(requested)) return { ok: false, error: t('panel:validation_31b9497e') };
     const owner = Array.isArray(ownerPermissions) ? ownerPermissions : [];
     if (owner.includes('*')) return { ok: true, value: requested };
     const invalid = requested.filter((s) => typeof s !== 'string' || s === '*' || !owner.includes(s));
@@ -30,7 +31,7 @@ function validateCustomScopes(requested, ownerPermissions) {
 
 /**
  * GET /api/panel/api-keys
- * Получить список API ключей пользователя
+ * Получить list API ключей user
  */
 router.get('/', authenticateUniversal, async (req, res) => {
     try {
@@ -61,21 +62,21 @@ router.get('/', authenticateUniversal, async (req, res) => {
             }))
         });
     } catch (error) {
-        console.error('Ошибка при получении списка API ключей:', error);
-        res.status(500).json({ error: 'Не удалось получить список API ключей' });
+        console.error(t('panel:error_8c41637f'), error);
+        res.status(500).json({ error: t('panel:error_536ca6fc') });
     }
 });
 
 /**
  * POST /api/panel/api-keys
- * Создать новый API ключ
+ * Создать new API key
  */
 router.post('/', authenticateUniversal, async (req, res) => {
     try {
         const { name, customScopes, expiresAt } = req.body;
 
         if (!name || typeof name !== 'string' || name.trim().length === 0) {
-            return res.status(400).json({ error: 'Имя ключа обязательно' });
+            return res.status(400).json({ error: t('panel:validation_071159a9') });
         }
 
         const scopeCheck = validateCustomScopes(customScopes, req.user.permissions);
@@ -100,7 +101,7 @@ router.post('/', authenticateUniversal, async (req, res) => {
 
         res.json({
             success: true,
-            message: 'API ключ успешно создан',
+            message: t('panel:success_5140f095'),
             key: {
                 id: newKey.id,
                 name: newKey.name,
@@ -112,14 +113,14 @@ router.post('/', authenticateUniversal, async (req, res) => {
             }
         });
     } catch (error) {
-        console.error('Ошибка при создании API ключа:', error);
-        res.status(500).json({ error: 'Не удалось создать API ключ' });
+        console.error(t('panel:error_d7fce7ef'), error);
+        res.status(500).json({ error: t('panel:error_6085626b') });
     }
 });
 
 /**
  * PATCH /api/panel/api-keys/:id
- * Обновить API ключ (название, статус, срок действия)
+ * Обновить API key (название, status, срок действия)
  */
 router.patch('/:id', authenticateUniversal, async (req, res) => {
     try {
@@ -134,7 +135,7 @@ router.patch('/:id', authenticateUniversal, async (req, res) => {
         });
 
         if (!existingKey) {
-            return res.status(404).json({ error: 'API ключ не найден' });
+            return res.status(404).json({ error: t('panel:msg_c4e0ad23') });
         }
 
         const updateData = {};
@@ -149,7 +150,7 @@ router.patch('/:id', authenticateUniversal, async (req, res) => {
 
         res.json({
             success: true,
-            message: 'API ключ успешно обновлён',
+            message: t('panel:success_63c30d95'),
             key: {
                 id: updatedKey.id,
                 name: updatedKey.name,
@@ -159,14 +160,14 @@ router.patch('/:id', authenticateUniversal, async (req, res) => {
             }
         });
     } catch (error) {
-        console.error('Ошибка при обновлении API ключа:', error);
-        res.status(500).json({ error: 'Не удалось обновить API ключ' });
+        console.error(t('panel:error_628f3993'), error);
+        res.status(500).json({ error: t('panel:error_e095471a') });
     }
 });
 
 /**
  * DELETE /api/panel/api-keys/:id
- * Удалить (отозвать) API ключ
+ * Удалить (отозвать) API key
  */
 router.delete('/:id', authenticateUniversal, async (req, res) => {
     try {
@@ -180,7 +181,7 @@ router.delete('/:id', authenticateUniversal, async (req, res) => {
         });
 
         if (!existingKey) {
-            return res.status(404).json({ error: 'API ключ не найден' });
+            return res.status(404).json({ error: t('panel:msg_c4e0ad23') });
         }
 
         await prisma.panelApiKey.delete({
@@ -189,11 +190,11 @@ router.delete('/:id', authenticateUniversal, async (req, res) => {
 
         res.json({
             success: true,
-            message: 'API ключ успешно удалён'
+            message: t('panel:success_30c88110')
         });
     } catch (error) {
-        console.error('Ошибка при удалении API ключа:', error);
-        res.status(500).json({ error: 'Не удалось удалить API ключ' });
+        console.error(t('panel:error_f79a4ae7'), error);
+        res.status(500).json({ error: t('panel:error_472ddcaf') });
     }
 });
 

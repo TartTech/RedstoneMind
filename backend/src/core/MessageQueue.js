@@ -112,15 +112,15 @@ class MessageQueue {
                 let fullMessage;
                 const typeConfig = this.chatTypes[task.chatType];
 
-                // Для private/whisper добавляем username
+                // For private/whisper добавляем username
                 if ((task.chatType === 'private' || task.chatType === 'whisper') && task.username) {
                     fullMessage = `/msg ${task.username} ${task.message}`;
                 }
-                // Для остальных типов используем prefix из конфига
+                // For остальных типов используем prefix from конфига
                 else if (typeConfig && typeConfig.prefix) {
                     fullMessage = `${typeConfig.prefix}${task.message}`;
                 }
-                // Если нет prefix (command, chat) - отправляем как есть
+                // If no prefix (command, chat) - отправляем как есть
                 else {
                     fullMessage = task.message;
                 }

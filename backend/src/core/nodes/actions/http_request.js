@@ -1,12 +1,13 @@
 /**
- * @param {object} node - Экземпляр узла из графа.
- * @param {object} context - Контекст выполнения графа.
- * @param {object} helpers - Вспомогательные функции движка.
- * @param {function} helpers.resolvePinValue - Функция для получения значения с входного пина.
- * @param {function} helpers.traverse - Функция для перехода к следующему узлу.
- * @param {Map} helpers.memo - Карта для мемоизации значений.
+ * @param {object} node - Instance node from graph.
+ * @param {object} context - Context execution graph.
+ * @param {object} helpers - Helper functions engine.
+ * @param {function} helpers.resolvePinValue - Function for getting values with входного pin.
+ * @param {function} helpers.traverse - Function for transitioning to next node.
+ * @param {Map} helpers.memo - Карта for мемоизации значений.
  */
 const { safeFetch } = require('../../utils/ssrfGuard');
+const { t } = require('../../../i18n');
 
 async function execute(node, context, helpers) {
     const { resolvePinValue, traverse, memo } = helpers;
@@ -30,7 +31,7 @@ async function execute(node, context, helpers) {
             });
             url = urlObj.toString();
         } catch (e) {
-            console.error('[HTTP Request] Ошибка обработки query params:', e);
+            console.error(t('nodes:error_049f7f7a'), e);
         }
     }
 
@@ -41,7 +42,7 @@ async function execute(node, context, helpers) {
                 ? JSON.parse(headersInput)
                 : headersInput;
         } catch (e) {
-            console.error('[HTTP Request] Ошибка парсинга headers:', e);
+            console.error(t('nodes:error_27c13af3'), e);
             headers = {};
         }
     }
@@ -56,7 +57,7 @@ async function execute(node, context, helpers) {
                 const parsed = JSON.parse(body);
                 requestBody = JSON.stringify(parsed);
             } catch {
-                // Если не JSON, отправляем как есть
+                // If not JSON, отправляем как есть
                 requestBody = body;
             }
         } else {
@@ -102,7 +103,7 @@ async function execute(node, context, helpers) {
 
         await traverse(node, 'exec');
     } catch (error) {
-        console.error('[HTTP Request] Ошибка запроса:', error);
+        console.error(t('nodes:error_c788fa83'), error);
 
         memo.set(`${node.id}:status`, 0);
         memo.set(`${node.id}:response`, null);

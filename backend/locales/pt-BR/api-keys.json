@@ -1,0 +1,20 @@
+{
+  "error_065d6587": "[API Keys] Erro obtenção количества клиентов:",
+  "error_46cfe0ab": "Erro ao obter logs",
+  "error_508c0567": "Erro ao получении количества клиентов",
+  "error_7d6598e1": "[API Keys] Erro exclusão chave:",
+  "error_821b25a8": "[API Keys] Erro obtenção логов:",
+  "error_86b08df0": "Valor de permissions inválido",
+  "error_8bd24ab6": "Erro ao обновлении chave",
+  "error_9e3f7884": "[API Keys] Erro criação chave:",
+  "error_b38d6d70": "Erro ao удалении chave",
+  "error_b6ad1e83": "[API Keys] Erro atualização chave:",
+  "error_c0874f09": "[API Keys] Erro obtenção списка ключей:",
+  "error_d301814b": "Erro ao создании chave",
+  "error_ebf23142": "Erro ao получении ключей",
+  "msg_c82b4016": "Chave não encontrada",
+  "msg_dc2abbfe": "Нечего atualizar",
+  "success_6ee89242": "Chave atualizado",
+  "success_92e69113": "Chave excluído",
+  "validation_6eedfe63": "Название chave é obrigatório"
+}

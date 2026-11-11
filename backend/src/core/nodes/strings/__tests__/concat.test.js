@@ -63,7 +63,7 @@ describe('strings:concat node', () => {
 
         const result = await stringConcat.evaluate(node, 'result', {}, helpers);
 
-        // null и undefined заменяются на пустые строки в текущей реализации
+        // null и undefined заменяются on пустые string in текущей реализации
         expect(result).toBe('Value:  | ');
     });
 

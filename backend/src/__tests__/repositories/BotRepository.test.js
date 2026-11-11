@@ -1,4 +1,5 @@
 const BotRepository = require('../../repositories/BotRepository');
+const { t } = require('../../i18n');
 
 describe('BotRepository', () => {
     let repository;
@@ -21,7 +22,7 @@ describe('BotRepository', () => {
     });
 
     describe('findByIdWithServer', () => {
-        test('должен найти бота с сервером по ID', async () => {
+        test(t('tests:validation_a79ded7c'), async () => {
             const mockBot = {
                 id: 1,
                 username: 'TestBot',
@@ -40,7 +41,7 @@ describe('BotRepository', () => {
     });
 
     describe('findAllWithServer', () => {
-        test('должен найти всех ботов с серверами', async () => {
+        test(t('tests:validation_58e9b66c'), async () => {
             const mockBots = [
                 { id: 1, username: 'Bot1', sortOrder: 0 },
                 { id: 2, username: 'Bot2', sortOrder: 1 }
@@ -56,7 +57,7 @@ describe('BotRepository', () => {
             expect(results).toEqual(mockBots);
         });
 
-        test('должен принять дополнительные опции', async () => {
+        test(t('tests:validation_c6655e2f'), async () => {
             mockPrisma.bot.findMany.mockResolvedValue([]);
 
             await repository.findAllWithServer({ take: 5 });
@@ -70,7 +71,7 @@ describe('BotRepository', () => {
     });
 
     describe('findByUsername', () => {
-        test('должен найти бота по username', async () => {
+        test(t('tests:validation_0234374a'), async () => {
             const mockBot = { id: 1, username: 'TestBot' };
             mockPrisma.bot.findUnique.mockResolvedValue(mockBot);
 
@@ -84,7 +85,7 @@ describe('BotRepository', () => {
     });
 
     describe('findByServerId', () => {
-        test('должен найти всех ботов на сервере', async () => {
+        test(t('tests:validation_e8dfe83f'), async () => {
             const mockBots = [
                 { id: 1, serverId: 5, sortOrder: 0 },
                 { id: 2, serverId: 5, sortOrder: 1 }
@@ -102,7 +103,7 @@ describe('BotRepository', () => {
     });
 
     describe('updateSortOrder', () => {
-        test('должен обновить sortOrder бота', async () => {
+        test(t('tests:validation_152179bb'), async () => {
             const mockBot = { id: 1, sortOrder: 10 };
             mockPrisma.bot.update.mockResolvedValue(mockBot);
 

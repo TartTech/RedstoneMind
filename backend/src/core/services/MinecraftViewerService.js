@@ -165,14 +165,14 @@ class MinecraftViewerService {
                         resolve: (state) => {
                             const currentPos = state.position;
 
-                            // Проверяем изменения в nearbyPlayers
+                            // Проверяем изменения in nearbyPlayers
                             let playersChanged = false;
                             if (state.nearbyPlayers) {
                                 // Проверяем количество
                                 if (state.nearbyPlayers.length !== lastSentPlayers.size) {
                                     playersChanged = true;
                                 } else {
-                                    // Проверяем каждого игрока
+                                    // Проверяем каждого player
                                     for (const player of state.nearbyPlayers) {
                                         const last = lastSentPlayers.get(player.username);
                                         if (!last ||
@@ -188,7 +188,7 @@ class MinecraftViewerService {
                                 }
                             }
 
-                            // Отправляем если позиция бота изменилась, игроки изменились, или пора отправлять блоки
+                            // Отправляем if position bot изменилась, игроки изменились, or пора отправлять блоки
                             const shouldSend = shouldSendBlocks || playersChanged || !lastSentPosition ||
                                 Math.abs(currentPos?.x - lastSentPosition.x) > 0.1 ||
                                 Math.abs(currentPos?.y - lastSentPosition.y) > 0.1 ||
@@ -198,7 +198,7 @@ class MinecraftViewerService {
                                 this.viewerNamespace.to(`bot:${botId}`).emit('viewer:update', state);
                                 lastSentPosition = currentPos ? { ...currentPos } : null;
 
-                                // Обновляем кэш игроков
+                                // Обновляем cache игроков
                                 lastSentPlayers.clear();
                                 if (state.nearbyPlayers) {
                                     state.nearbyPlayers.forEach(player => {
@@ -213,7 +213,7 @@ class MinecraftViewerService {
                                 }
                             }
 
-                            // Обновляем lastPosition для блоков
+                            // Обновляем lastPosition for блоков
                             if (shouldSendBlocks || !lastPosition ||
                                 Math.abs(currentPos?.x - lastPosition.x) > 8 ||
                                 Math.abs(currentPos?.y - lastPosition.y) > 8 ||

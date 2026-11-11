@@ -3,6 +3,7 @@ const { execute: findBlock } = require('../find_block');
 const { execute: dig } = require('../dig');
 const { execute: place } = require('../place');
 const { execute: attack } = require('../attack');
+const { t } = require('../../../../i18n');
 
 function run(execute, node, context) {
   const memo = new Map();
@@ -34,7 +35,7 @@ function position(x, y, z) {
 }
 
 describe('world nodes', () => {
-  it('регистрирует ноды мира и шаг', () => {
+  it(t('nodes:msg_d34a929d'), () => {
     expect(registry.hasNodeType('world:find_block')).toBe(true);
     expect(registry.hasNodeType('world:dig')).toBe(true);
     expect(registry.hasNodeType('world:place')).toBe(true);
@@ -44,7 +45,7 @@ describe('world nodes', () => {
     expect(face.inlineFieldOptions.map((option) => option.value)).toEqual(['up', 'down', 'north', 'south', 'east', 'west']);
   });
 
-  it('находит спелую пшеницу и пропускает молодую', async () => {
+  it(t('nodes:msg_ab12fe36'), async () => {
     const wheat = {
       name: 'wheat',
       position: { x: 3, y: 64, z: 4 },
@@ -67,7 +68,7 @@ describe('world nodes', () => {
     expect(result.memo.get('find:block')).toEqual({ x: 3, y: 64, z: 4, name: 'wheat', age: 7 });
   });
 
-  it('ломает блок рядом и подходит, если он далеко', async () => {
+  it(t('nodes:msg_ac3c0460'), async () => {
     const block = { name: 'wheat', diggable: true, position: { x: 8, y: 64, z: 0 } };
     let near = false;
     const digBlock = jest.fn(async () => {});
@@ -93,7 +94,7 @@ describe('world nodes', () => {
     expect(result.traversed).toEqual(['exec']);
   });
 
-  it('ставит семена на верхнюю грань', async () => {
+  it(t('nodes:msg_a591c3b9'), async () => {
     const reference = { name: 'farmland', position: { x: 0, y: 63, z: 0 } };
     const item = { name: 'wheat_seeds' };
     const placeBlock = jest.fn(async () => {});
@@ -116,7 +117,7 @@ describe('world nodes', () => {
     expect(result.traversed).toEqual(['exec']);
   });
 
-  it('бьёт сущность рядом и не идёт к ней', async () => {
+  it(t('nodes:msg_b1f10238'), async () => {
     const target = { id: 5, position: { x: 1, y: 64, z: 0 } };
     const attackEntity = jest.fn();
     const bot = {
@@ -136,7 +137,7 @@ describe('world nodes', () => {
     expect(result.traversed).toEqual(['exec']);
   });
 
-  it('подходит к дальней сущности и бьёт её', async () => {
+  it(t('nodes:msg_d7a2d20d'), async () => {
     const target = { id: 9, position: { x: 12, y: 64, z: 0 } };
     const bot = {
       entity: { position: position(0, 64, 0) },

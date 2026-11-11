@@ -4,6 +4,7 @@ const path = require('path');
 const os = require('os');
 const { authenticate, authenticateUniversal, authorize } = require('../middleware/auth');
 const config = require('../../config');
+const { t } = require('../../i18n');
 
 const router = express.Router();
 
@@ -12,7 +13,7 @@ const CONFIG_PATH = path.join(DATA_DIR, 'config.json');
 
 /**
  * @route   GET /api/panel/settings
- * @desc    Получить текущие глобальные настройки
+ * @desc    Получить текущие глобальные settings
  * @access  Private (Admin only)
  */
 router.get('/settings', authenticateUniversal, authorize('panel:settings:view'), (req, res) => {
@@ -29,7 +30,7 @@ router.get('/settings', authenticateUniversal, authorize('panel:settings:view'),
 
 /**
  * @route   PUT /api/panel/settings
- * @desc    Обновить глобальные настройки
+ * @desc    Обновить глобальные settings
  * @access  Private (Admin only)
  */
 router.put('/settings', authenticateUniversal, authorize('panel:settings:edit'), async (req, res) => {
@@ -41,7 +42,7 @@ router.put('/settings', authenticateUniversal, authorize('panel:settings:edit'),
         if (typeof allowExternalAccess === 'boolean') {
             currentConfig.server.allowExternalAccess = allowExternalAccess;
             currentConfig.server.host = allowExternalAccess ? '0.0.0.0' : '127.0.0.1';
-            console.log(`[Config Update] Внешний доступ ${allowExternalAccess ? 'ВКЛЮЧЕН' : 'ВЫКЛЮЧЕН'}. Хост изменен на ${currentConfig.server.host}`);
+            console.log(`[Config Update] Внешний доступ ${allowExternalAccess ? t('panel:msg_c82ee80f') : t('panel:msg_09f8bbfc')}. Хост изменен на ${currentConfig.server.host}`);
         }
         
         if (typeof telemetryEnabled === 'boolean') {
@@ -54,13 +55,13 @@ router.put('/settings', authenticateUniversal, authorize('panel:settings:edit'),
         await fs.writeFile(CONFIG_PATH, JSON.stringify(currentConfig, null, 2), 'utf-8');
 
         res.json({ 
-            message: 'Настройки сохранены. Для применения требуется перезапуск панели.',
+            message: t('panel:success_0b43a1a1'),
             requiresRestart: true 
         });
 
     } catch (error) {
-        console.error("Ошибка обновления файла конфигурации:", error);
-        res.status(500).json({ error: 'Не удалось сохранить настройки.' });
+        console.error(t('panel:error_ac0eb8e7'), error);
+        res.status(500).json({ error: t('panel:error_77bc33f6') });
     }
 });
 

@@ -1,32 +1,33 @@
+const { t } = require('../../../i18n');
 /**
- * Нода: Отправить ответ в WebSocket
- * Отправляет данные обратно клиенту, вызвавшему граф через WebSocket API
+ * Нода: Отправить response in WebSocket
+ * Sends data обратно клиенту, вызвавшему graph through WebSocket API
  *
- * @param {object} node - Экземпляр узла из графа.
- * @param {object} context - Контекст выполнения графа.
- * @param {object} helpers - Вспомогательные функции движка.
- * @param {function} helpers.resolvePinValue - Функция для получения значения с пина.
- * @param {function} helpers.traverse - Функция для перехода к следующему узлу.
+ * @param {object} node - Instance node from graph.
+ * @param {object} context - Context execution graph.
+ * @param {object} helpers - Helper functions engine.
+ * @param {function} helpers.resolvePinValue - Function for getting values with pin.
+ * @param {function} helpers.traverse - Function for transitioning to next node.
  */
 async function execute(node, context, helpers) {
     const data = await helpers.resolvePinValue(node, 'data', null);
 
-    // Проверяем, что граф был вызван через WebSocket API
+    // Проверяем, что graph was вызван through WebSocket API
     if (!context.sendResponse || typeof context.sendResponse !== 'function') {
-        console.warn('[WebSocket Response] Нода может использоваться только в графах, вызванных через WebSocket API');
+        console.warn(t('nodes:log_bd8d608e'));
         await helpers.traverse(node, 'exec');
         return;
     }
 
-    // Отправляем ответ клиенту
+    // Отправляем response клиенту
     try {
         context.sendResponse(data);
-        console.log('[WebSocket Response] Ответ отправлен клиенту:', data);
+        console.log(t('nodes:log_6ef6921d'), data);
     } catch (error) {
-        console.error('[WebSocket Response] Ошибка отправки ответа:', error);
+        console.error(t('nodes:error_b04a9fcd'), error);
     }
 
-    // Продолжаем выполнение графа
+    // Продолжаем выполнение graph
     await helpers.traverse(node, 'exec');
 }
 

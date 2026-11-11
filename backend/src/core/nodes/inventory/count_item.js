@@ -1,5 +1,5 @@
 /**
- * inventory:count_item - Подсчитать общее количество предмета в инвентаре
+ * inventory:count_item - Подсчитать общее количество item in инвентаре
  */
 async function evaluate(node, pinId, context, helpers) {
   const bot = context.bot;
@@ -9,7 +9,7 @@ async function evaluate(node, pinId, context, helpers) {
     return 0;
   }
 
-  // Ищем все предметы с таким именем и суммируем количество
+  // Ищем all предметы with таким именем and суммируем количество
   const searchName = itemName.toLowerCase().replace('minecraft:', '');
   const totalCount = bot.inventory.items()
     .filter(i =>

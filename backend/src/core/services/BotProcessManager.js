@@ -1,6 +1,7 @@
 const { fork } = require('child_process');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
+const { t } = require('../../i18n');
 
 class BotProcessManager {
     constructor({ logger }) {
@@ -97,7 +98,7 @@ class BotProcessManager {
         const pluginSubscribers = botSubscriptions.get(pluginName);
 
         pluginSubscribers.add(socket);
-        this.logger.info(`Socket ${socket.id} подписался на ${pluginName} для бота ${botId}. Всего: ${pluginSubscribers.size}`);
+        this.logger.info(t('services:msg_76a59e0c', { socket: socket.id, pluginName: pluginName, botId: botId, pluginSubscribers: pluginSubscribers.size }));
 
         this.sendMessage(botId, { type: 'plugin:ui:start-updates', pluginName });
     }
@@ -110,7 +111,7 @@ class BotProcessManager {
         if (!pluginSubscribers) return;
 
         pluginSubscribers.delete(socket);
-        this.logger.info(`Socket ${socket.id} отписался от ${pluginName} для бота ${botId}. Осталось: ${pluginSubscribers.size}`);
+        this.logger.info(t('services:msg_0df58369', { socket: socket.id, pluginName: pluginName, botId: botId, pluginSubscribers: pluginSubscribers.size }));
 
         if (pluginSubscribers.size === 0) {
             this.sendMessage(botId, { type: 'plugin:ui:stop-updates', pluginName });

@@ -1,7 +1,7 @@
 /**
- * container:deposit - Положить предмет в контейнер
+ * container:deposit - Положить item in контейнер
  *
- * Executor для action ноды с exec пинами.
+ * Executor for action ноды with exec пинами.
  */
 async function execute(node, context, helpers) {
   const { resolvePinValue, traverse, memo } = helpers;
@@ -28,7 +28,7 @@ async function execute(node, context, helpers) {
   try {
     const searchName = itemName.toLowerCase().replace('minecraft:', '');
 
-    // Ищем предметы в инвентаре бота
+    // Ищем предметы in инвентаре bot
     const items = bot.inventory.items().filter(item =>
       item.name.toLowerCase().includes(searchName) ||
       item.displayName?.toLowerCase().includes(searchName)
@@ -70,7 +70,7 @@ async function execute(node, context, helpers) {
 }
 
 /**
- * Evaluator для data пинов (success, deposited)
+ * Evaluator for data пинов (success, deposited)
  */
 async function evaluate(node, pinId, context, helpers) {
   const { memo } = helpers;

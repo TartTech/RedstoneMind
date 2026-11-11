@@ -1,12 +1,13 @@
 const prismaService = require('../../PrismaService');
 const { tryGraphWrite } = require('../../graphServices');
+const { t } = require('../../../i18n');
 const prisma = prismaService.getClient();
 
 /**
- * Обновляет существующую команду
- * @param {object} node - Экземпляр узла из графа
- * @param {object} context - Контекст выполнения графа
- * @param {object} helpers - Вспомогательные функции движка
+ * Updates существующую команду
+ * @param {object} node - Instance node from graph
+ * @param {object} context - Context execution graph
+ * @param {object} helpers - Helper functions engine
  */
 async function execute(node, context, helpers) {
     const { resolvePinValue, traverse, memo } = helpers;
@@ -26,7 +27,7 @@ async function execute(node, context, helpers) {
                 const normalizedString = aliases.replace(/'/g, '"');
                 aliases = JSON.parse(normalizedString);
             } catch (e) {
-                console.warn('[update_command] Не удалось распарсить aliases:', e);
+                console.warn(t('nodes:error_62d34b20'), e);
                 aliases = null; 
             }
         }
@@ -36,13 +37,13 @@ async function execute(node, context, helpers) {
                 const normalizedString = allowedChatTypes.replace(/'/g, '"');
                 allowedChatTypes = JSON.parse(normalizedString);
             } catch (e) {
-                console.warn('[update_command] Не удалось распарсить allowedChatTypes:', e);
+                console.warn(t('nodes:error_c5526dc4'), e);
                 allowedChatTypes = null; 
             }
         }
 
         if (!commandName) {
-            console.error('[update_command] Имя команды обязательно');
+            console.error(t('nodes:validation_7cd81c76'));
             memo.set(`${node.id}:success`, false);
             await traverse(node, 'exec');
             return;
@@ -129,7 +130,7 @@ async function execute(node, context, helpers) {
 
         memo.set(`${node.id}:success`, true);
     } catch (error) {
-        console.error('[update_command] Ошибка обновления команды:', error);
+        console.error(t('nodes:error_2c7ce2e7'), error);
         memo.set(`${node.id}:success`, false);
     }
 

@@ -1,14 +1,14 @@
 /**
  * container:close - Закрыть открытый контейнер
  *
- * Executor для action ноды с exec пинами.
+ * Executor for action ноды with exec пинами.
  */
 async function execute(node, context, helpers) {
   const { traverse } = helpers;
   const bot = context.bot;
 
   try {
-    // Закрываем текущий открытый контейнер
+    // Закрываем current открытый контейнер
     if (context.openContainer) {
       context.openContainer.close();
       context.openContainer = null;
@@ -18,7 +18,7 @@ async function execute(node, context, helpers) {
 
     await traverse(node, 'exec');
   } catch (error) {
-    // Даже при ошибке продолжаем выполнение
+    // Даже when ошибке продолжаем выполнение
     await traverse(node, 'exec');
   }
 }

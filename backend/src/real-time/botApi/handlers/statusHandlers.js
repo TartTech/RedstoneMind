@@ -1,7 +1,7 @@
 const { botManager } = require('../../../core/services');
 
 /**
- * action:get_status - Получить текущий статус бота
+ * action:get_status - Получить current status bot
  */
 function handleGetStatus(socket) {
     const isOnline = botManager.isBotRunning(socket.botId);

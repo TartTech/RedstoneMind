@@ -1,0 +1,19 @@
+{
+  "error_0de38e09": "Falha ao obter прокси",
+  "error_0f3d4452": "[API /api/proxies/:id] Erro obtenção прокси:",
+  "error_1bbf8144": "Falha ao atualizar прокси",
+  "error_3273cdac": "Falha ao obter список прокси",
+  "error_8181f4d9": "[API /api/proxies] Erro criação прокси:",
+  "error_85f24da5": "Falha ao criar прокси",
+  "error_88b2b88f": "[API /api/proxies] Erro exclusão прокси:",
+  "error_99b32394": "Falha ao excluir прокси",
+  "error_ba69cc29": "[API /api/proxies] Erro obtenção списка прокси:",
+  "error_d2c2b498": "[API /api/proxies] Erro atualização прокси:",
+  "error_f89d55f7": "Некорректный ID прокси",
+  "msg_6f634bc7": "Não é possível excluir прокси, так как он é usado {{botsUsingProxy}} ботом(ами).",
+  "msg_7a8bb01b": "Proxy não encontrado",
+  "msg_e713e25d": "Um proxy com este nome já existe",
+  "validation_67710bc0": "A porta deve estar no intervalo 1..65535",
+  "validation_d9eabe1e": "Nome, хост e порт прокси é obrigatório",
+  "validation_f2be6209": "O tipo de proxy deve ser socks5 ou http"
+}

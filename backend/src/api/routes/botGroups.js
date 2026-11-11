@@ -4,6 +4,7 @@ const { authenticateUniversal, authorize } = require('../middleware/auth');
 const { checkBotAccess } = require('../middleware/botAccess');
 const { botManager } = require('../../core/services');
 const UserService = require('../../core/UserService');
+const { t } = require('../../i18n');
 
 const router = express.Router();
 
@@ -35,7 +36,7 @@ router.get('/:botId/groups', authenticateUniversal, authorize('management:view')
         });
     } catch (error) {
         console.error('[API Error] GET /bots/:botId/groups:', error);
-        res.status(500).json({ error: 'Не удалось получить список групп' });
+        res.status(500).json({ error: t('bots:error_3efc5396') });
     }
 });
 
@@ -50,13 +51,13 @@ router.get('/:botId/groups/:groupId', authenticateUniversal, authorize('manageme
         });
 
         if (!group) {
-            return res.status(404).json({ error: 'Группа не найдена' });
+            return res.status(404).json({ error: t('bots:msg_7d233798') });
         }
 
         res.json(group);
     } catch (error) {
         console.error('[API Error] GET /bots/:botId/groups/:groupId:', error);
-        res.status(500).json({ error: 'Не удалось получить группу' });
+        res.status(500).json({ error: t('bots:error_a5443bc6') });
     }
 });
 
@@ -68,12 +69,12 @@ router.post('/:botId/groups/:groupId/permissions', authenticateUniversal, author
 
         const group = await prisma.group.findFirst({ where: { id: groupId, botId } });
         if (!group) {
-            return res.status(404).json({ error: 'Группа не найдена' });
+            return res.status(404).json({ error: t('bots:msg_7d233798') });
         }
 
         const permission = await prisma.permission.findFirst({ where: { id: permissionId, botId } });
         if (!permission) {
-            return res.status(404).json({ error: 'Право не найдено' });
+            return res.status(404).json({ error: t('bots:msg_0657020d') });
         }
 
         await prisma.groupPermission.upsert({
@@ -87,7 +88,7 @@ router.post('/:botId/groups/:groupId/permissions', authenticateUniversal, author
         res.json({ success: true });
     } catch (error) {
         console.error('[API Error] POST /bots/:botId/groups/:groupId/permissions:', error);
-        res.status(500).json({ error: 'Не удалось добавить право в группу' });
+        res.status(500).json({ error: t('bots:error_224825d8') });
     }
 });
 
@@ -99,7 +100,7 @@ router.delete('/:botId/groups/:groupId/permissions/:permissionId', authenticateU
 
         const group = await prisma.group.findFirst({ where: { id: groupId, botId } });
         if (!group) {
-            return res.status(404).json({ error: 'Группа не найдена' });
+            return res.status(404).json({ error: t('bots:msg_7d233798') });
         }
 
         await prisma.groupPermission.deleteMany({
@@ -111,7 +112,7 @@ router.delete('/:botId/groups/:groupId/permissions/:permissionId', authenticateU
         res.json({ success: true });
     } catch (error) {
         console.error('[API Error] DELETE /bots/:botId/groups/:groupId/permissions/:permissionId:', error);
-        res.status(500).json({ error: 'Не удалось удалить право из группы' });
+        res.status(500).json({ error: t('bots:error_c4243af2') });
     }
 });
 
@@ -123,7 +124,7 @@ router.post('/:botId/groups/:groupId/users', authenticateUniversal, authorize('m
 
         const group = await prisma.group.findFirst({ where: { id: groupId, botId } });
         if (!group) {
-            return res.status(404).json({ error: 'Группа не найдена' });
+            return res.status(404).json({ error: t('bots:msg_7d233798') });
         }
 
         let user = await prisma.user.findFirst({ where: { botId, username } });
@@ -145,7 +146,7 @@ router.post('/:botId/groups/:groupId/users', authenticateUniversal, authorize('m
         res.json({ success: true });
     } catch (error) {
         console.error('[API Error] POST /bots/:botId/groups/:groupId/users:', error);
-        res.status(500).json({ error: 'Не удалось добавить пользователя в группу' });
+        res.status(500).json({ error: t('bots:error_d30c6d7d') });
     }
 });
 
@@ -157,12 +158,12 @@ router.delete('/:botId/groups/:groupId/users/:username', authenticateUniversal, 
 
         const group = await prisma.group.findFirst({ where: { id: groupId, botId } });
         if (!group) {
-            return res.status(404).json({ error: 'Группа не найдена' });
+            return res.status(404).json({ error: t('bots:msg_7d233798') });
         }
 
         const user = await prisma.user.findFirst({ where: { botId, username } });
         if (!user) {
-            return res.status(404).json({ error: 'Пользователь не найден' });
+            return res.status(404).json({ error: t('auth:msg_a7518766') });
         }
 
         await prisma.userGroup.deleteMany({
@@ -175,7 +176,7 @@ router.delete('/:botId/groups/:groupId/users/:username', authenticateUniversal, 
         res.json({ success: true });
     } catch (error) {
         console.error('[API Error] DELETE /bots/:botId/groups/:groupId/users/:username:', error);
-        res.status(500).json({ error: 'Не удалось удалить пользователя из группы' });
+        res.status(500).json({ error: t('bots:error_46b8da40') });
     }
 });
 

@@ -1,11 +1,12 @@
 
 const semver = require('semver');
+const { t } = require('../i18n');
 
 class DependencyService {
     /**
-     * Анализирует плагины, разрешает зависимости и возвращает отсортированный список и информацию о проблемах.
-     * @param {Array} enabledPlugins - Массив включенных плагинов (записи из БД).
-     * @param {Array} allBotPlugins - Массив всех плагинов, установленных для бота.
+     * Анализирует plugins, разрешает dependencies and returns отсортированный list and информацию о проблемах.
+     * @param {Array} enabledPlugins - Array включенных плагинов (records from БД).
+     * @param {Array} allBotPlugins - Array всех плагинов, установленных for bot.
      * @returns {{sortedPlugins: Array, pluginInfo: Object, hasCriticalIssues: boolean}}
      */
     resolveDependencies(enabledPlugins, allBotPlugins) {
@@ -37,7 +38,7 @@ class DependencyService {
                 } else if (!enabledPluginSet.has(depName)) {
                     issue = { type: 'disabled_dependency', message: `Требуемый плагин "${depName}" отключен.` };
                 } else if (!semver.satisfies(dependency.version, depVersion)) {
-                    issue = { type: 'version_mismatch', message: `Требуется версия "${depVersion}" для "${depName}", но найдена v${dependency.version}.` };
+                    issue = { type: 'version_mismatch', message: `Требуется версия "${depVersion}t('core:msg_7d38d327')${depName}", но найдена v${dependency.version}.` };
                     hasCriticalIssues = true;
                 }
                 if (issue) info.issues.push(issue);
@@ -55,7 +56,7 @@ class DependencyService {
                 const cyclePath = Array.from(visiting).join(' -> ') + ` -> ${pluginName}`;
                 for (const p of enabledPlugins) {
                     if (visiting.has(p.name)) {
-                        pluginInfo[p.id].issues.push({ type: 'circular_dependency', message: `Обнаружена циклическая зависимость: ${cyclePath}` });
+                        pluginInfo[p.id].issues.push({ type: 'circular_dependency', message: t('core:msg_bf05d652', { cyclePath: cyclePath }) });
                     }
                 }
                 return;

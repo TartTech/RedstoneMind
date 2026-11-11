@@ -1,5 +1,6 @@
 const semver = require('semver');
 const { isGroupedSettings } = require('./secretsFilter');
+const { t } = require('../../i18n');
 
 function pluginDependencySatisfied(installedVersion, range) {
     if (!range || range === '*') return true;
@@ -83,7 +84,7 @@ async function ensureDeclaredPermissions(prisma, botId, pluginName, manifest) {
                 },
             });
         } catch (error) {
-            console.error(`[Plugin] Не удалось создать право ${permission.name} для ${pluginName}:`, error.message);
+            console.error(t('core:error_fdf000d5', { permission: permission.name, pluginName: pluginName }), error.message);
         }
     }
 }

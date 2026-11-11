@@ -1,6 +1,6 @@
 /**
- * Базовый класс для определения ноды в визуальном редакторе.
- * Используется как единый формат для всех нод - и backend и frontend.
+ * Base class for определения ноды in визуальном редакторе.
+ * Используется как единый format for всех нод - and backend и frontend.
  */
 class NodeDefinition {
   constructor(config) {
@@ -9,16 +9,16 @@ class NodeDefinition {
     this.label = config.label || config.type;
     this.description = config.description || '';
 
-    // Функции для вычисления пинов динамически (поддержка conditional pins)
+    // Functions for вычисления пинов динамически (поддержка conditional pins)
     this.computeInputs = config.computeInputs || (() => []);
     this.computeOutputs = config.computeOutputs || (() => []);
 
-    // Статичные пиньи (fallback для обратной совместимости)
+    // Статичные пиньи (fallback for обратной совместимости)
     this.pins = config.pins || { inputs: [], outputs: [] };
 
     // Исполнители ноды
-    // executor - для action нод с exec пинами (асинхронный)
-    // evaluator - для data пинов (вычисление значений)
+    // executor - for action нод with exec пинами (asynchronous)
+    // evaluator - for data пинов (вычисление значений)
     this.executor = config.executor || null;
     this.evaluator = config.evaluator || null;
     this.dynamicPins = Boolean(config.dynamicPins);
@@ -29,16 +29,16 @@ class NodeDefinition {
     this.icon = config.icon || null;
     this.graphType = config.graphType || 'ALL'; // 'COMMAND', 'EVENT', 'ALL'
 
-    // Валидация
+    // Validation
     if (!this.type) {
       throw new Error('NodeDefinition: type is required');
     }
   }
 
   /**
-   * Получить входные пиньи для данного состояния ноды
-   * @param {object} data - данные ноды (для условных пиннов)
-   * @returns {Array} массив описаний входных пиннов
+   * Получить входные пиньи for данного state ноды
+   * @param {object} data - data ноды (for условных пиннов)
+   * @returns {Array} array описаний входных пиннов
    */
   getInputs(data = {}) {
     if (typeof this.computeInputs === 'function') {
@@ -48,9 +48,9 @@ class NodeDefinition {
   }
 
   /**
-   * Получить выходные пиньи для данного состояния ноды
-   * @param {object} data - данные ноды (для условных пиннов)
-   * @returns {Array} массив описаний выходных пиннов
+   * Получить выходные пиньи for данного state ноды
+   * @param {object} data - data ноды (for условных пиннов)
+   * @returns {Array} array описаний выходных пиннов
    */
   getOutputs(data = {}) {
     if (typeof this.computeOutputs === 'function') {
@@ -60,7 +60,7 @@ class NodeDefinition {
   }
 
   /**
-   * Проверить, является ли нода action-нодой (с exec пинами)
+   * Проверить, является ли нода action-нодой (with exec пинами)
    */
   isActionNode() {
     const inputs = this.getInputs();
@@ -68,7 +68,7 @@ class NodeDefinition {
   }
 
   /**
-   * Проверить, является ли нода data-нодой (только вычисляемые значения)
+   * Проверить, является ли нода data-нодой (only вычисляемые values)
    */
   isDataNode() {
     return !this.isActionNode();
@@ -89,8 +89,8 @@ class NodeDefinition {
   }
 
   /**
-   * Конвертировать в JSON-сериализуемый формат
-   * Используется для отправки в frontend
+   * Конвертировать in JSON-сериализуемый format
+   * Используется for отправки in frontend
    */
   toJSON() {
     const data = this.defaultData || {};
@@ -119,9 +119,9 @@ class NodeDefinition {
   }
 
   /**
-   * Получить пин по ID
-   * @param {string} pinId - ID пина
-   * @param {string} direction - 'input' или 'output'
+   * Получить пин by ID
+   * @param {string} pinId - ID pin
+   * @param {string} direction - 'input' or 'output'
    */
   getPin(pinId, direction) {
     const pins = direction === 'input' ? this.pins.inputs : this.pins.outputs;
@@ -138,7 +138,7 @@ class NodeDefinition {
 }
 
 /**
- * Создать определение ноды с билдером
+ * Создать определение ноды with билдером
  */
 function createNodeDefinition(config) {
   return new NodeDefinition(config);

@@ -19,7 +19,7 @@ const SYSTEM_LOG_PATTERNS = [
 async function ensurePluginDependencies(installedPlugins = [], sendLog = console.log) {
     if (!installedPlugins.length) return;
 
-    sendLog(`[PluginLoader] Проверка зависимостей ${installedPlugins.length} плагинов...`);
+    sendLog(t('core:log_ff89924a', { installedPlugins: installedPlugins.length }));
 
     for (const plugin of installedPlugins) {
         if (!plugin?.path) continue;
@@ -34,15 +34,15 @@ async function ensurePluginDependencies(installedPlugins = [], sendLog = console
             const nodeModulesPath = path.join(plugin.path, 'node_modules');
             if (fssync.existsSync(nodeModulesPath)) continue;
 
-            sendLog(`[PluginLoader] Установка зависимостей для ${plugin.name}...`);
+            sendLog(t('core:log_1c3b97f5', { plugin: plugin.name }));
             await installDependencies(plugin.path, { sendLog });
-            sendLog(`[PluginLoader] ✓ Зависимости установлены для ${plugin.name}`);
+            sendLog(t('core:success_07eeac99', { plugin: plugin.name }));
         } catch (error) {
-            sendLog(`[PluginLoader] [WARN] Не удалось проверить зависимости для ${plugin.name}: ${error.message}`);
+            sendLog(t('core:error_09de9ed8', { plugin: plugin.name, error: error.message }));
         }
     }
 
-    sendLog(`[PluginLoader] Проверка зависимостей завершена`);
+    sendLog(t('core:log_f7447384'));
 }
 
 function createPluginConsole(botId, pluginName, originalConsole) {
@@ -142,7 +142,7 @@ async function invokePluginEntry(pluginModule, bot, pluginOptions, plugin, sendL
     } else if (pluginModule?.default && typeof pluginModule.default.onLoad === 'function') {
         result = pluginModule.default.onLoad(bot, pluginOptions);
     } else {
-        sendLog(`[PluginLoader] [ERROR] ${plugin.name} не экспортирует функцию или объект с методом onLoad.`);
+        sendLog(t('core:log_5d6e2c4d', { plugin: plugin.name }));
     }
 
     if (pluginModule?.exports && typeof pluginModule.exports === 'object' && bot.pluginRegistry) {
@@ -207,7 +207,7 @@ async function runPluginCleanup(bot, cleanup, prisma) {
             });
         }
     } catch (error) {
-        sendLog(`[PluginLoader] [WARN] Ошибка onUnload для ${cleanup.name}: ${error.message}`);
+        sendLog(t('core:error_bc06fb7e', { cleanup: cleanup.name, error: error.message }));
     }
     if (bot.pluginRegistry && cleanup.name) {
         try {
@@ -251,12 +251,12 @@ function isFilePathLikeModule(name) {
 }
 
 async function tryAutoInstallAndReload({ plugin, missingModule, pluginRequire, loadAndInit, sendLog }) {
-    sendLog(`[PluginLoader] [WARN] Модуль ${missingModule} не найден для плагина ${plugin.name}. Пытаюсь установить автоматически...`);
+    sendLog(t('core:log_38ce50cd', { missingModule: missingModule, plugin: plugin.name }));
 
     try {
         await installDependencies(plugin.path, { sendLog });
     } catch (error) {
-        sendLog(`[PluginLoader] [ERROR] Не удалось установить зависимости: ${error.message}`);
+        sendLog(t('core:error_10df6041', { error: error.message }));
         return false;
     }
 
@@ -267,16 +267,16 @@ async function tryAutoInstallAndReload({ plugin, missingModule, pluginRequire, l
         await loadAndInit();
         return true;
     } catch {
-        sendLog(`[PluginLoader] [DEBUG] ${missingModule} всё ещё не резолвится после общего npm install.`);
+        sendLog(t('core:log_7b9ff62f', { missingModule: missingModule }));
     }
 
     if (!isValidPackageName(missingModule)) {
-        sendLog(`[PluginLoader] [ERROR] Некорректное имя пакета: ${missingModule}`);
+        sendLog(t('core:error_a63be3d1', { missingModule: missingModule }));
         return false;
     }
 
     try {
-        sendLog(`[PluginLoader] [WARN] Адресная установка ${missingModule}...`);
+        sendLog(t('core:log_15b14afb', { missingModule: missingModule }));
         installSinglePackage(missingModule, plugin.path, { sendLog });
         clearRequireCacheForPath(plugin.path);
 
@@ -287,7 +287,7 @@ async function tryAutoInstallAndReload({ plugin, missingModule, pluginRequire, l
                 try {
                     installSinglePackage(peer, plugin.path, { sendLog, legacyPeerDeps: true });
                 } catch (peerError) {
-                    sendLog(`[PluginLoader] [WARN] Не удалось установить peer ${peer}: ${peerError.message}`);
+                    sendLog(t('core:error_f547cb0e', { peer: peer, peerError: peerError.message }));
                 }
             }
         }
@@ -296,7 +296,7 @@ async function tryAutoInstallAndReload({ plugin, missingModule, pluginRequire, l
         await loadAndInit();
         return true;
     } catch (installError) {
-        sendLog(`[PluginLoader] [ERROR] Адресная установка ${missingModule} не удалась: ${installError.message}`);
+        sendLog(t('core:log_cf4e9cdc', { missingModule: missingModule, installError: installError.message }));
         return false;
     }
 }
@@ -328,7 +328,7 @@ async function loadInstalledPlugin(bot, plugin, prisma) {
             await invokePluginEntry(pluginModule, bot, pluginOptions, plugin, sendLog);
         };
 
-        sendLog(`[PluginLoader] Загрузка: ${plugin.name} (v${plugin.version})`);
+        sendLog(t('core:log_9fd65428', { plugin: plugin.name, plugin1: plugin.version }));
         await ensureDeclaredPermissions(prisma, bot.config.id, plugin.name, manifest);
 
         if (!Array.isArray(bot.__pluginCleanups)) bot.__pluginCleanups = [];
@@ -344,11 +344,11 @@ async function loadInstalledPlugin(bot, plugin, prisma) {
 
                 const missingModule = extractMissingModule(error.message);
                 if (!missingModule) {
-                    sendLog(`[PluginLoader] [ERROR] Не удалось определить отсутствующий модуль для плагина ${plugin.name}.`);
+                    sendLog(t('core:error_009f2ff0', { plugin: plugin.name }));
                     throw error;
                 }
                 if (isFilePathLikeModule(missingModule)) {
-                    sendLog(`[PluginLoader] [ERROR] Файл не найден: ${missingModule}`);
+                    sendLog(t('core:log_6dc706d4', { missingModule: missingModule }));
                     throw error;
                 }
 
@@ -369,7 +369,7 @@ async function loadInstalledPlugin(bot, plugin, prisma) {
     } catch (error) {
         bot.__activePluginCleanup = null;
         const message = error?.stack || error?.message || String(error);
-        sendLog(`[PluginLoader] [FATAL] Не удалось загрузить плагин ${plugin.name}: ${message}`);
+        sendLog(t('core:error_838d3b11', { plugin: plugin.name, message: message }));
         reportPluginLoadState(bot, plugin.name, message);
         return;
     }
@@ -402,7 +402,7 @@ async function initializePlugins(bot, installedPlugins = [], prisma) {
 
     if (!installedPlugins.length) return;
 
-    sendLog(`[PluginLoader] Загрузка ${installedPlugins.length} плагинов...`);
+    sendLog(t('core:log_93b44a8f', { installedPlugins: installedPlugins.length }));
 
     for (const plugin of installedPlugins) {
         await loadInstalledPlugin(bot, plugin, prisma);
@@ -412,6 +412,7 @@ async function initializePlugins(bot, installedPlugins = [], prisma) {
 function emitLoadSuccess(bot, plugin) {
     try {
         const { getIOSafe } = require('../real-time/socketHandler');
+const { t } = require('../i18n');
         const io = getIOSafe();
         if (!io) return;
         const room = `plugin-logs:${bot.config.id}:${plugin.name}`;
@@ -419,7 +420,7 @@ function emitLoadSuccess(bot, plugin) {
             botId: bot.config.id,
             pluginName: plugin.name,
             level: 'success',
-            message: `✓ Плагин ${plugin.name} v${plugin.version} успешно загружен`,
+            message: t('core:success_ea31679a', { plugin: plugin.name, plugin1: plugin.version }),
             source: 'system',
             timestamp: Date.now(),
         });

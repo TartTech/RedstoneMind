@@ -47,10 +47,10 @@ async function readExportedSettings(pluginDir) {
     try {
         parsed = JSON.parse(raw);
     } catch {
-        throw httpError('Файл настроек в архиве повреждён.', 400);
+        throw httpError(t('plugins:msg_1ddc6782'), 400);
     }
     if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
-        throw httpError('Файл настроек в архиве должен быть объектом.', 400);
+        throw httpError(t('plugins:validation_70d4c565'), 400);
     }
     await fse.remove(settingsPath);
     return JSON.stringify(parsed);
@@ -110,13 +110,13 @@ function reportPluginDownload(pluginName) {
     })
         .then((res) => {
             if (!res.ok) {
-                console.error(`[Telemetry] Сервер статистики вернул ошибку для плагина ${pluginName}: ${res.statusText}`);
+                console.error(t('plugins:log_a08fc9b6', { pluginName: pluginName, res: res.statusText }));
             }
         })
         .catch((error) => {
             const { isConnectTimeout } = require('./utils/networkError');
             if (isConnectTimeout(error)) return;
-            console.error(`[Telemetry] Не удалось отправить статистику по плагину ${pluginName}: ${error.message}`);
+            console.error(t('plugins:error_3b69c7ef', { pluginName: pluginName, error: error.message }));
         });
 }
 
@@ -127,7 +127,7 @@ async function safeRemove(targetPath) {
             await fse.remove(targetPath);
         }
     } catch (error) {
-        console.warn(`[PluginManager] Не удалось удалить ${targetPath}: ${error.message}`);
+        console.warn(t('plugins:error_bfeb53da', { targetPath: targetPath, error: error.message }));
     }
 }
 
@@ -160,13 +160,13 @@ class PluginManager {
 
         for (const [depName, depVersion] of Object.entries(pluginDeps)) {
             if (!installedMap.has(depName)) {
-                result.missing.push(`${depName} (требуется ${depVersion})`);
+                result.missing.push(t('plugins:msg_b8b97175', { depName: depName, depVersion: depVersion }));
                 result.isValid = false;
                 continue;
             }
             const installedVersion = installedMap.get(depName);
             if (!pluginDependencySatisfied(installedVersion, depVersion)) {
-                result.missing.push(`${depName} (установлена ${installedVersion}, требуется ${depVersion})`);
+                result.missing.push(t('plugins:success_bdd5782f', { depName: depName, installedVersion: installedVersion, depVersion: depVersion }));
                 result.isValid = false;
             }
         }
@@ -181,8 +181,8 @@ class PluginManager {
                 onWait: hooks.onWait,
             });
         } catch (error) {
-            console.error(`[PluginManager] Ошибка при установке зависимостей в ${pluginPath}:`, error);
-            throw new Error('Не удалось установить зависимости плагина.');
+            console.error(t('plugins:error_71430b6a', { pluginPath: pluginPath }), error);
+            throw new Error(t('plugins:error_4aec358f'));
         }
     }
 
@@ -190,36 +190,36 @@ class PluginManager {
         const depCheck = await this.checkPluginDependencies(botId, packageJson);
         if (!depCheck.isValid) {
             const missingList = depCheck.missing.join(', ');
-            console.warn(`[PluginManager] Плагин ${packageJson.name} требует: ${missingList}`);
-            console.warn('[PluginManager] Плагин будет установлен, но может работать некорректно без зависимостей.');
+            console.warn(t('plugins:log_4f3c79ea', { packageJson: packageJson.name, missingList: missingList }));
+            console.warn(t('plugins:error_6245b61a'));
         }
         depCheck.warnings.forEach((w) => console.warn(`[PluginManager] ${w}`));
     }
 
     async installFromLocalPath(botId, directoryPath, settingsJson = null) {
         if (typeof directoryPath !== 'string' || !directoryPath.trim()) {
-            throw new Error('Не указан путь к директории плагина.');
+            throw new Error(t('plugins:msg_aea1f623'));
         }
 
         let realSource;
         try {
             realSource = await fse.realpath(directoryPath);
         } catch (e) {
-            throw new Error('Директория плагина не найдена.');
+            throw new Error(t('plugins:msg_f91320c0'));
         }
 
         const stat = await fse.stat(realSource);
         if (!stat.isDirectory()) {
-            throw new Error('Указанный путь не является директорией.');
+            throw new Error(t('plugins:msg_519b1ebc'));
         }
 
         const packageJsonPath = path.join(realSource, 'package.json');
         if (!await fse.pathExists(packageJsonPath)) {
-            throw new Error('В указанной директории отсутствует package.json.');
+            throw new Error(t('plugins:msg_b771e474'));
         }
         const packageJson = JSON.parse(await fse.readFile(packageJsonPath, 'utf-8'));
         if (!packageJson.name || !packageJson.version) {
-            throw new Error('package.json не содержит обязательных полей name и version.');
+            throw new Error(t('plugins:validation_9cefa9ff'));
         }
 
         await this._logDependencyWarnings(botId, packageJson);
@@ -261,7 +261,7 @@ class PluginManager {
         try {
             reportPluginDownload(packageJson.name);
         } catch (e) {
-            console.error('Не удалось отправить статистику по локальному плагину', e?.message);
+            console.error(t('plugins:error_2eb90939'), e?.message);
         }
 
         try {
@@ -287,25 +287,25 @@ class PluginManager {
     async getInstalledPluginDirectory(botId, pluginId) {
         const plugin = await this.prisma.installedPlugin.findUnique({ where: { id: Number(pluginId) } });
         if (!plugin || plugin.botId !== Number(botId)) {
-            throw httpError('Плагин не найден', 404);
+            throw httpError(t('api:msg_07a06551'), 404);
         }
 
         let realPath;
         try {
             realPath = await fse.realpath(plugin.path);
         } catch {
-            throw httpError('Файлы плагина не найдены', 404);
+            throw httpError(t('plugins:msg_5419060b'), 404);
         }
 
         const stat = await fse.stat(realPath);
         if (!stat.isDirectory()) {
-            throw httpError('Файлы плагина не найдены', 404);
+            throw httpError(t('plugins:msg_5419060b'), 404);
         }
 
         const botDir = path.join(PLUGINS_BASE_DIR, `bot_${Number(botId)}`);
         const realBotDir = await fse.realpath(botDir);
         if (!isPathInside(realBotDir, realPath)) {
-            throw httpError('Файлы плагина недоступны', 400);
+            throw httpError(t('plugins:msg_5b562d64'), 400);
         }
 
         return {
@@ -331,14 +331,14 @@ class PluginManager {
 
     async installFromZipBuffer(botId, buffer) {
         if (!Buffer.isBuffer(buffer) || buffer.length < 4 || buffer[0] !== 0x50 || buffer[1] !== 0x4b) {
-            throw httpError('Файл не похож на zip-архив.', 400);
+            throw httpError(t('plugins:msg_df807b6c'), 400);
         }
 
         let zip;
         try {
             zip = new AdmZip(buffer);
         } catch {
-            throw httpError('Не удалось прочитать zip-архив.', 400);
+            throw httpError(t('plugins:error_c12477b2'), 400);
         }
 
         try {
@@ -354,7 +354,7 @@ class PluginManager {
             zip.extractAllTo(tempDir, true);
             const pluginDir = await findPluginRoot(tempDir);
             if (!pluginDir) {
-                throw httpError('В архиве нет package.json плагина.', 400);
+                throw httpError(t('plugins:msg_ff2194c1'), 400);
             }
             const settingsJson = await readExportedSettings(pluginDir);
             return await this.installFromLocalPath(botId, pluginDir, settingsJson);
@@ -374,7 +374,7 @@ class PluginManager {
         const zip = new AdmZip(Buffer.from(buffer));
         const zipEntries = zip.getEntries();
         if (zipEntries.length === 0) {
-            throw new Error('Скачанный архив плагина пуст.');
+            throw new Error(t('plugins:msg_b56342c5'));
         }
         const rootFolderName = zipEntries[0].entryName.split('/')[0];
         await fse.mkdir(destinationDir, { recursive: true });
@@ -382,7 +382,7 @@ class PluginManager {
         zip.extractAllTo(destinationDir, true);
         const extractedPath = path.join(destinationDir, rootFolderName);
         if (!await fse.pathExists(extractedPath)) {
-            throw new Error('Архив плагина имеет неожиданную структуру.');
+            throw new Error(t('plugins:msg_c6b30cd1'));
         }
         return extractedPath;
     }
@@ -406,7 +406,7 @@ class PluginManager {
                 return { extracted, tempDir, sourceRef: ref };
             } catch (err) {
                 if (!tag && !repoInfo && ref !== 'master') {
-                    console.log(`[PluginManager] Ветка '${ref}' не найдена для ${repoUrl}, пробую 'master'...`);
+                    console.log(`[PluginManager] Ветка '${ref}t('plugins:msg_891eacac')master'...`);
                     const extracted = await this._downloadAndExtract(repoUrl, 'master', tempDir);
                     return { extracted, tempDir, sourceRef: 'master' };
                 }
@@ -428,7 +428,7 @@ class PluginManager {
 
         if (!isUpdate) {
             const existing = await prisma.installedPlugin.findFirst({ where: { botId, sourceUri: normalizedRepoUrl } });
-            if (existing) throw new Error(`Плагин из ${normalizedRepoUrl} уже установлен.`);
+            if (existing) throw new Error(t('plugins:success_28a50da1', { normalizedRepoUrl: normalizedRepoUrl }));
         }
 
         const botPluginsDir = path.join(PLUGINS_BASE_DIR, `bot_${botId}`);
@@ -447,9 +447,9 @@ class PluginManager {
         } catch (err) {
             const message = err?.message || String(err);
             if (/fetch|AbortError|timed out/i.test(message)) {
-                throw new Error(`Не удалось подключиться к GitHub или репозиторий не найден. Проверьте ссылку и ваше интернет-соединение.`);
+                throw new Error(t('plugins:error_b2468dcf'));
             }
-            throw new Error(`Не удалось скачать архив плагина: ${message}`);
+            throw new Error(t('plugins:error_da81c8fe', { message: message }));
         }
 
         const localPath = path.join(botPluginsDir, ownerRepo.repo);
@@ -458,11 +458,11 @@ class PluginManager {
         try {
             const packageJsonPath = path.join(extractedPath, 'package.json');
             if (!await fse.pathExists(packageJsonPath)) {
-                throw new Error('В архиве плагина отсутствует package.json.');
+                throw new Error(t('plugins:msg_e0418ea7'));
             }
             const packageJson = JSON.parse(await fse.readFile(packageJsonPath, 'utf-8'));
             if (!packageJson.name || !packageJson.version) {
-                throw new Error('package.json не содержит обязательных полей name и version.');
+                throw new Error(t('plugins:validation_9cefa9ff'));
             }
 
             await this._logDependencyWarnings(botId, packageJson);
@@ -509,11 +509,11 @@ class PluginManager {
         try {
             packageJson = JSON.parse(await fse.readFile(packageJsonPath, 'utf-8'));
         } catch (e) {
-            throw new Error(`Не удалось прочитать или распарсить package.json в плагине по пути: ${directoryPath}`);
+            throw new Error(t('plugins:error_f20836b9', { directoryPath: directoryPath }));
         }
 
         if (!packageJson.name || !packageJson.version) {
-            throw new Error('package.json не содержит обязательных полей name и version');
+            throw new Error(t('plugins:validation_7f46b85f'));
         }
 
         const pluginData = {
@@ -569,6 +569,7 @@ class PluginManager {
         const processManager = this.botManager?.processManager;
         if (!processManager?.isRunning?.(botId)) return;
         const { v4: uuidv4 } = require('uuid');
+const { t } = require('../i18n');
         const requestId = uuidv4();
         const pending = processManager.waitForPluginUnload(requestId);
         const sent = processManager.sendMessage(botId, {
@@ -582,15 +583,15 @@ class PluginManager {
 
     async deletePlugin(pluginId) {
         const plugin = await this.prisma.installedPlugin.findUnique({ where: { id: pluginId } });
-        if (!plugin) throw new Error('Плагин не найден');
+        if (!plugin) throw new Error(t('api:msg_07a06551'));
 
         const pluginOwnerId = `plugin:${plugin.name}`;
-        console.log(`[PluginManager] Удаление плагина ${plugin.name} (ID: ${plugin.id})`);
+        console.log(t('plugins:success_72ad1c57', { plugin: plugin.name, plugin1: plugin.id }));
 
         try {
             await this._unloadInBotProcess(plugin.botId, plugin.name);
         } catch (error) {
-            console.error(`[PluginManager] Ошибка onUnload в процессе бота для ${plugin.name}:`, error);
+            console.error(t('plugins:error_3f8dc09d', { plugin: plugin.name }), error);
         }
 
         try {
@@ -602,8 +603,8 @@ class PluginManager {
                 await tx.installedPlugin.delete({ where: { id: pluginId } });
             });
         } catch (dbError) {
-            console.error(`[PluginManager] Ошибка при очистке БД для плагина ${plugin.name}:`, dbError);
-            throw new Error('Ошибка при удалении данных плагина из БД. Файлы не были удалены.');
+            console.error(t('plugins:error_57883dc7', { plugin: plugin.name }), dbError);
+            throw new Error(t('plugins:error_569b579f'));
         }
 
         if (plugin.path && plugin.path.startsWith(PLUGINS_BASE_DIR)) {
@@ -700,7 +701,7 @@ class PluginManager {
                     });
                 }
             } catch (error) {
-                console.error(`[PluginManager] Ошибка проверки обновлений для ${plugin.name}:`, error.message);
+                console.error(t('plugins:error_15fa8c07', { plugin: plugin.name }), error.message);
             }
         }
         return updatesAvailable;
@@ -709,7 +710,7 @@ class PluginManager {
     async updatePlugin(pluginId, targetTag = null, targetRepoUrl = null) {
         const plugin = await this.prisma.installedPlugin.findUnique({ where: { id: pluginId } });
         if (!plugin || plugin.sourceType !== 'GITHUB') {
-            throw new Error('Плагин не найден или не является GitHub-плагином.');
+            throw new Error(t('plugins:msg_13597949'));
         }
 
         const repoUrl = targetRepoUrl || plugin.sourceUri;
@@ -729,7 +730,7 @@ class PluginManager {
             try {
                 await fse.move(oldPath, backupPath, { overwrite: true });
             } catch (moveError) {
-                console.warn(`[PluginManager] Не удалось создать резервную копию ${oldPath}: ${moveError.message}`);
+                console.warn(t('plugins:error_d12e6b9a', { oldPath: oldPath, moveError: moveError.message }));
                 backupPath = null;
             }
         }
@@ -765,9 +766,9 @@ class PluginManager {
                     if (this.botManager) {
                         await this.botManager.reloadPlugins(botId);
                     }
-                    console.warn(`[PluginManager] Обновление ${plugin.name} провалилось, восстановлена прежняя версия ${oldVersion}.`);
+                    console.warn(t('plugins:success_aa650e34', { plugin: plugin.name, oldVersion: oldVersion }));
                 } catch (restoreError) {
-                    console.error(`[PluginManager] Не удалось восстановить плагин ${plugin.name} после неудачного обновления:`, restoreError);
+                    console.error(t('plugins:error_8f428f3a', { plugin: plugin.name }), restoreError);
                 }
             }
             throw installError;
@@ -796,7 +797,7 @@ class PluginManager {
                     },
                 });
             } catch (settingsError) {
-                console.error(`[PluginManager] Не удалось восстановить настройки для ${plugin.name}:`, settingsError);
+                console.error(t('plugins:error_0dee7000', { plugin: plugin.name }), settingsError);
             }
         }
 
@@ -804,7 +805,7 @@ class PluginManager {
             const pluginHooks = new PluginHooks({ prisma: this.prisma });
             await pluginHooks.callOnUpdate(newPlugin.id, oldVersion, newPlugin.version);
         } catch (hookError) {
-            console.error(`[PluginManager] Ошибка выполнения хука onUpdate для ${plugin.name}:`, hookError);
+            console.error(t('plugins:error_a028506a', { plugin: plugin.name }), hookError);
         }
 
         return newPlugin;
@@ -813,7 +814,7 @@ class PluginManager {
     async loadPluginGraphs(botId, pluginId, pluginPath) {
         const plugin = await this.prisma.installedPlugin.findUnique({ where: { id: pluginId } });
         if (!plugin) {
-            console.error(`[PluginManager] Плагин с ID ${pluginId} не найден`);
+            console.error(t('plugins:log_39f3dfe8', { pluginId: pluginId }));
             return;
         }
 
@@ -845,7 +846,7 @@ class PluginManager {
                             data: {
                                 botId,
                                 name: graphName,
-                                description: graphData.command || `Команда ${graphName}`,
+                                description: graphData.command || t('plugins:msg_5dca5459', { graphName: graphName }),
                                 graphJson: JSON.stringify(graphData),
                                 isEnabled: true,
                                 pluginOwnerId: pluginId,
@@ -869,21 +870,21 @@ class PluginManager {
                             },
                         });
                     } else {
-                        console.warn(`[PluginManager] Неизвестный тип графа в файле ${fileName}, пропускаем`);
+                        console.warn(t('plugins:log_2bbcc0d0', { fileName: fileName }));
                     }
                 } catch (error) {
-                    console.error(`[PluginManager] Ошибка загрузки графа ${fileName}:`, error);
+                    console.error(t('plugins:error_d360bce6', { fileName: fileName }), error);
                 }
             }
         } catch (error) {
-            console.error(`[PluginManager] Ошибка загрузки графов плагина:`, error);
+            console.error(t('plugins:error_dc26c1b0'), error);
         }
     }
 
     async clearPluginData(pluginId) {
         const plugin = await this.prisma.installedPlugin.findUnique({ where: { id: pluginId } });
         if (!plugin) {
-            throw new Error('Плагин не найден.');
+            throw new Error(t('plugins:msg_7ab2db23'));
         }
 
         const { count } = await this.prisma.pluginDataStore.deleteMany({
@@ -895,23 +896,23 @@ class PluginManager {
 
     async reloadLocalPlugin(pluginId) {
         const plugin = await this.prisma.installedPlugin.findUnique({ where: { id: pluginId } });
-        if (!plugin) throw new Error('Плагин не найден.');
+        if (!plugin) throw new Error(t('plugins:msg_7ab2db23'));
 
         if (plugin.sourceType !== 'LOCAL' && plugin.sourceType !== 'LOCAL_IDE') {
-            throw new Error('Перезагрузка доступна только для локальных плагинов.');
+            throw new Error(t('plugins:msg_e1dd9ab6'));
         }
 
         const pluginPath = plugin.path;
         const packageJsonPath = path.join(pluginPath, 'package.json');
         if (!await fse.pathExists(packageJsonPath)) {
-            throw new Error(`package.json не найден: ${packageJsonPath}`);
+            throw new Error(t('plugins:msg_a539d45a', { packageJsonPath: packageJsonPath }));
         }
 
         let packageJson;
         try {
             packageJson = JSON.parse(await fse.readFile(packageJsonPath, 'utf-8'));
         } catch (e) {
-            throw new Error(`Не удалось прочитать package.json: ${e.message}`);
+            throw new Error(t('plugins:error_9a559b2a', { e: e.message }));
         }
 
         const manifest = packageJson.botpanel || {};

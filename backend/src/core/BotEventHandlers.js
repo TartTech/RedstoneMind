@@ -1,5 +1,6 @@
 const { EventTypes, MessageTypes } = require('./ipc/ipcMessageTypes');
 const { Vec3 } = require('vec3');
+const { t } = require('../i18n');
 
 const entityMoveThrottles = new Map();
 
@@ -123,18 +124,18 @@ function attachBotEvents(bot, handlers) {
         } else {
             reasonText = String(reason);
         }
-        sendLog(`[Event: kicked] Меня кикнули. Причина: ${reasonText}. Перезапуск.`);
+        sendLog(t('core:log_5c71e8d8', { reasonText: reasonText }));
         process.exit(1);
     });
 
     bot.on('error', (err) => {
-        sendLog(`[Event: error] Произошла ошибка: ${err.stack || err.message}`);
+        sendLog(t('core:error_9b227cf6', { err: err.stack || err.message }));
     });
 
     bot.on('end', (reason) => {
         const restartableReasons = ['socketClosed', 'keepAliveError'];
         const exitCode = restartableReasons.includes(reason) ? 1 : 0;
-        sendLog(`[Event: end] Отключен от сервера. Причина: ${reason}`);
+        sendLog(t('core:log_daea6970', { reason: reason }));
         process.exit(exitCode);
     });
 

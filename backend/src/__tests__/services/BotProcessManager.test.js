@@ -1,4 +1,5 @@
 const BotProcessManager = require('../../core/services/BotProcessManager');
+const { t } = require('../../i18n');
 
 describe('BotProcessManager', () => {
     let processManager;
@@ -16,18 +17,18 @@ describe('BotProcessManager', () => {
     });
 
     describe('isRunning', () => {
-        test('должен вернуть false если процесс не существует', () => {
+        test(t('tests:validation_387ca7d6'), () => {
             expect(processManager.isRunning(1)).toBe(false);
         });
 
-        test('должен вернуть false если процесс убит', () => {
+        test(t('tests:validation_4392ce8e'), () => {
             const mockChild = { killed: true };
             processManager.processes.set(1, mockChild);
 
             expect(processManager.isRunning(1)).toBe(false);
         });
 
-        test('должен вернуть true если процесс запущен', () => {
+        test(t('tests:validation_e6f4c69e'), () => {
             const mockChild = { killed: false };
             processManager.processes.set(1, mockChild);
 
@@ -36,7 +37,7 @@ describe('BotProcessManager', () => {
     });
 
     describe('getProcess', () => {
-        test('должен вернуть процесс по ID', () => {
+        test(t('tests:validation_3f8b90f9'), () => {
             const mockChild = { pid: 123 };
             processManager.processes.set(1, mockChild);
 
@@ -45,7 +46,7 @@ describe('BotProcessManager', () => {
             expect(result).toBe(mockChild);
         });
 
-        test('должен вернуть undefined для несуществующего процесса', () => {
+        test(t('tests:validation_3200e395'), () => {
             const result = processManager.getProcess(999);
 
             expect(result).toBeUndefined();
@@ -53,7 +54,7 @@ describe('BotProcessManager', () => {
     });
 
     describe('getAllProcesses', () => {
-        test('должен вернуть Map всех процессов', () => {
+        test(t('tests:validation_afd9897a'), () => {
             const mockChild1 = { pid: 123 };
             const mockChild2 = { pid: 456 };
 
@@ -70,7 +71,7 @@ describe('BotProcessManager', () => {
     });
 
     describe('sendMessage', () => {
-        test('должен отправить сообщение процессу', () => {
+        test(t('tests:validation_ff635e7b'), () => {
             const mockChild = {
                 killed: false,
                 send: jest.fn()
@@ -84,13 +85,13 @@ describe('BotProcessManager', () => {
             expect(result).toBe(true);
         });
 
-        test('должен вернуть false если процесс не существует', () => {
+        test(t('tests:validation_387ca7d6'), () => {
             const result = processManager.sendMessage(999, { type: 'test' });
 
             expect(result).toBe(false);
         });
 
-        test('должен вернуть false если процесс убит', () => {
+        test(t('tests:validation_4392ce8e'), () => {
             const mockChild = {
                 killed: true,
                 send: jest.fn()
@@ -105,7 +106,7 @@ describe('BotProcessManager', () => {
     });
 
     describe('kill', () => {
-        test('должен убить процесс', () => {
+        test(t('tests:validation_4388df8a'), () => {
             const mockChild = {
                 killed: false,
                 kill: jest.fn()
@@ -118,7 +119,7 @@ describe('BotProcessManager', () => {
             expect(result).toBe(true);
         });
 
-        test('должен убить процесс с указанным сигналом', () => {
+        test(t('tests:validation_13cd4d89'), () => {
             const mockChild = {
                 killed: false,
                 kill: jest.fn()
@@ -130,7 +131,7 @@ describe('BotProcessManager', () => {
             expect(mockChild.kill).toHaveBeenCalledWith('SIGKILL');
         });
 
-        test('должен вернуть false если процесс не существует', () => {
+        test(t('tests:validation_387ca7d6'), () => {
             const result = processManager.kill(999);
 
             expect(result).toBe(false);
@@ -138,7 +139,7 @@ describe('BotProcessManager', () => {
     });
 
     describe('remove', () => {
-        test('должен удалить процесс из Map', () => {
+        test(t('tests:validation_066e39e9'), () => {
             const mockChild = { pid: 123 };
             processManager.processes.set(1, mockChild);
 
@@ -159,7 +160,7 @@ describe('BotProcessManager', () => {
         });
 
         describe('subscribeToPluginUi', () => {
-            test('должен подписать сокет на плагин', () => {
+            test(t('tests:validation_86a5d9f2'), () => {
                 const mockChild = {
                     killed: false,
                     send: jest.fn()
@@ -177,7 +178,7 @@ describe('BotProcessManager', () => {
                 });
             });
 
-            test('должен работать даже если процесс не запущен', () => {
+            test(t('tests:validation_e34a6677'), () => {
                 processManager.subscribeToPluginUi(1, 'test-plugin', mockSocket);
 
                 const subscribers = processManager.getPluginSubscribers(1, 'test-plugin');
@@ -186,7 +187,7 @@ describe('BotProcessManager', () => {
         });
 
         describe('unsubscribeFromPluginUi', () => {
-            test('должен отписать сокет от плагина', () => {
+            test(t('tests:validation_ca583908'), () => {
                 const mockChild = {
                     killed: false,
                     send: jest.fn()
@@ -202,7 +203,7 @@ describe('BotProcessManager', () => {
                 });
             });
 
-            test('должен удалить плагин если нет подписчиков', () => {
+            test(t('tests:validation_45e68df7'), () => {
                 processManager.subscribeToPluginUi(1, 'test-plugin', mockSocket);
                 processManager.unsubscribeFromPluginUi(1, 'test-plugin', mockSocket);
 
@@ -212,7 +213,7 @@ describe('BotProcessManager', () => {
         });
 
         describe('handleSocketDisconnect', () => {
-            test('должен отписать сокет от всех плагинов', () => {
+            test(t('tests:validation_3dc9216e'), () => {
                 const mockChild = {
                     killed: false,
                     send: jest.fn()
@@ -233,7 +234,7 @@ describe('BotProcessManager', () => {
     });
 
     describe('Pending requests', () => {
-        test('addPlayerListRequest должен добавить запрос', () => {
+        test(t('tests:validation_c800714f'), () => {
             const handler = { resolve: jest.fn(), timeout: {} };
 
             processManager.addPlayerListRequest('req-123', handler);
@@ -241,7 +242,7 @@ describe('BotProcessManager', () => {
             expect(processManager.pendingPlayerListRequests.has('req-123')).toBe(true);
         });
 
-        test('resolvePlayerListRequest должен вызвать resolve', () => {
+        test(t('tests:validation_d94726df'), () => {
             const handler = {
                 resolve: jest.fn(),
                 timeout: setTimeout(() => {}, 1000)
@@ -254,7 +255,7 @@ describe('BotProcessManager', () => {
             expect(processManager.pendingPlayerListRequests.has('req-123')).toBe(false);
         });
 
-        test('addCommandRequest должен добавить запрос', () => {
+        test(t('tests:validation_07766e04'), () => {
             const handler = { resolve: jest.fn(), reject: jest.fn() };
 
             processManager.addCommandRequest('cmd-123', handler);
@@ -262,7 +263,7 @@ describe('BotProcessManager', () => {
             expect(processManager.pendingCommandRequests.has('cmd-123')).toBe(true);
         });
 
-        test('resolveCommandRequest должен вызвать resolve при успехе', () => {
+        test(t('tests:validation_74936a2c'), () => {
             const handler = { resolve: jest.fn(), reject: jest.fn() };
             processManager.addCommandRequest('cmd-123', handler);
 
@@ -272,7 +273,7 @@ describe('BotProcessManager', () => {
             expect(handler.reject).not.toHaveBeenCalled();
         });
 
-        test('resolveCommandRequest должен вызвать reject при ошибке', () => {
+        test(t('tests:validation_9d98983e'), () => {
             const handler = { resolve: jest.fn(), reject: jest.fn() };
             processManager.addCommandRequest('cmd-123', handler);
 

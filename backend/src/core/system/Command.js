@@ -1,3 +1,4 @@
+const { t } = require('../../i18n');
 class Command {
     constructor({
         name,
@@ -20,22 +21,22 @@ class Command {
     }
 
     onInsufficientPermissions(bot, typeChat, user) {
-        bot.api.sendMessage(typeChat, `У вас нет прав для выполнения команды ${this.name}.`, user.username);
+        bot.api.sendMessage(typeChat, t('core:msg_f9bf622a', { this: this.name }), user.username);
     }
 
     onWrongChatType(bot, typeChat, user) {
-        bot.api.sendMessage('private', `Команду ${this.name} нельзя использовать в этом типе чата - ${typeChat}.`, user.username);
+        bot.api.sendMessage('private', t('core:msg_a3c5143d', { this: this.name, typeChat: typeChat }), user.username);
     }
     
     onCooldown(bot, typeChat, user, timeLeft) {
-        bot.api.sendMessage(typeChat, `Команду ${this.name} можно будет использовать через ${timeLeft} сек.`, user.username);
+        bot.api.sendMessage(typeChat, t('core:msg_7150371f', { this: this.name, timeLeft: timeLeft }), user.username);
     }
 
     onBlacklisted(bot, typeChat, user) {
     }
 
     async handler(bot, typeChat, user, args) {
-        throw new Error(`Handler не реализован для команды ${this.name}`);
+        throw new Error(t('core:msg_ebdbff24', { this: this.name }));
     }
 }
 

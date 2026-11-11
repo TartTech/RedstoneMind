@@ -1,14 +1,14 @@
 /**
- * @param {object} node - Экземпляр узла из графа.
- * @param {object} context - Контекст выполнения графа.
- * @param {object} helpers - Вспомогательные функции движка.
- * @param {function} helpers.resolvePinValue - Функция для получения значения с пина.
- * @param {function} helpers.traverse - Функция для перехода к следующему узлу.
+ * @param {object} node - Instance node from graph.
+ * @param {object} context - Context execution graph.
+ * @param {object} helpers - Helper functions engine.
+ * @param {function} helpers.resolvePinValue - Function for getting values with pin.
+ * @param {function} helpers.traverse - Function for transitioning to next node.
  */
 async function execute(node, context, helpers) {
     let message = await helpers.resolvePinValue(node, 'message', '');
 
-    // Если сообщение - это объект или массив, форматируем как JSON
+    // If message - это object or array, форматируем как JSON
     if (typeof message === 'object' && message !== null) {
         message = JSON.stringify(message, null, 2);
     }

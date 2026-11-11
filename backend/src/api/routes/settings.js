@@ -3,6 +3,7 @@ const { authenticate, authorize } = require('../middleware/auth');
 const router = express.Router();
 const { PrismaClient } = require('@prisma/client');
 const PluginService = require('../../core/PluginService');
+const { t } = require('../../i18n');
 
 const prisma = new PrismaClient();
 
@@ -16,7 +17,7 @@ router.get('/plugin-directories', async (req, res) => {
         });
         res.json(setting?.value || []);
     } catch (error) {
-        res.status(500).json({ error: 'Не удалось получить настройки директорий' });
+        res.status(500).json({ error: t('api:error_75f442d0') });
     }
 });
 
@@ -24,7 +25,7 @@ router.post('/plugin-directories', async (req, res) => {
     try {
         const { directories } = req.body;
         if (!Array.isArray(directories)) {
-            return res.status(400).json({ error: 'Ожидался массив директорий' });
+            return res.status(400).json({ error: t('api:msg_c47816b2') });
         }
 
         const updatedSetting = await prisma.setting.upsert({
@@ -37,7 +38,7 @@ router.post('/plugin-directories', async (req, res) => {
 
         res.json(updatedSetting);
     } catch (error) {
-        res.status(500).json({ error: 'Не удалось сохранить настройки директорий' });
+        res.status(500).json({ error: t('api:error_b81ba731') });
     }
 });
 

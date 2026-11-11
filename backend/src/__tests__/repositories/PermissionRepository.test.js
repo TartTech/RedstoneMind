@@ -1,4 +1,5 @@
 const PermissionRepository = require('../../repositories/PermissionRepository');
+const { t } = require('../../i18n');
 
 describe('PermissionRepository', () => {
     let repository;
@@ -21,7 +22,7 @@ describe('PermissionRepository', () => {
     });
 
     describe('findByBotId', () => {
-        test('должен найти все права бота', async () => {
+        test(t('tests:validation_1deb431d'), async () => {
             const mockPermissions = [
                 { id: 1, botId: 1, name: 'admin.*' },
                 { id: 2, botId: 1, name: 'user.say' }
@@ -39,7 +40,7 @@ describe('PermissionRepository', () => {
     });
 
     describe('findByName', () => {
-        test('должен найти право по имени', async () => {
+        test(t('tests:validation_880032e8'), async () => {
             const mockPermission = {
                 id: 1,
                 botId: 1,
@@ -59,17 +60,17 @@ describe('PermissionRepository', () => {
     });
 
     describe('upsertPermission', () => {
-        test('должен создать новое право', async () => {
+        test(t('tests:validation_a8c8a128'), async () => {
             const newPermission = {
                 id: 1,
                 botId: 1,
                 name: 'user.fly',
-                description: 'Разрешение на полет'
+                description: t('tests:msg_9f960af8')
             };
             mockPrisma.permission.upsert.mockResolvedValue(newPermission);
 
             const result = await repository.upsertPermission(1, 'user.fly', {
-                description: 'Разрешение на полет',
+                description: t('tests:msg_9f960af8'),
                 owner: 'plugin'
             });
 
@@ -78,30 +79,30 @@ describe('PermissionRepository', () => {
                     botId_name: { botId: 1, name: 'user.fly' }
                 },
                 update: {
-                    description: 'Разрешение на полет',
+                    description: t('tests:msg_9f960af8'),
                     owner: 'plugin'
                 },
                 create: {
                     botId: 1,
                     name: 'user.fly',
-                    description: 'Разрешение на полет',
+                    description: t('tests:msg_9f960af8'),
                     owner: 'plugin'
                 }
             });
             expect(result).toEqual(newPermission);
         });
 
-        test('должен обновить существующее право', async () => {
+        test(t('tests:validation_55fda64d'), async () => {
             const updatedPermission = {
                 id: 1,
                 botId: 1,
                 name: 'admin.*',
-                description: 'Обновленное описание'
+                description: t('tests:success_d9548cc4')
             };
             mockPrisma.permission.upsert.mockResolvedValue(updatedPermission);
 
             const result = await repository.upsertPermission(1, 'admin.*', {
-                description: 'Обновленное описание'
+                description: t('tests:success_d9548cc4')
             });
 
             expect(result).toEqual(updatedPermission);
@@ -109,7 +110,7 @@ describe('PermissionRepository', () => {
     });
 
     describe('findSystemPermissions', () => {
-        test('должен найти системные права', async () => {
+        test(t('tests:validation_0aacaaca'), async () => {
             const mockPermissions = [
                 { id: 1, botId: 1, name: 'admin.*', owner: 'system' },
                 { id: 2, botId: 1, name: 'user.*', owner: 'system' }

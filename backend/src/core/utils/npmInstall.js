@@ -1,6 +1,7 @@
 const { execSync, spawn } = require('child_process');
 const fse = require('fs-extra');
 const path = require('path');
+const { t } = require('../../i18n');
 
 const NPM_PACKAGE_NAME_PATTERN = /^(@[a-z0-9][\w.-]*\/)?[a-z0-9][\w.-]*$/i;
 const DEFAULT_TIMEOUT_MS = 5 * 60 * 1000;
@@ -53,7 +54,7 @@ function runCommand(cmd, cwd, { timeoutMs = DEFAULT_TIMEOUT_MS, sendLog = consol
         const stderr = error?.stderr?.toString?.() || '';
         const stdout = error?.stdout?.toString?.() || '';
         const detail = stderr || stdout || error.message;
-        sendLog(`[npm] Команда '${cmd}' завершилась с ошибкой: ${detail.split('\n').slice(-3).join(' | ')}`);
+        sendLog(`[npm] Команда '${cmd}t('core:msg_040b399e')\n').slice(-3).join(' | ')}`);
         return { ok: false, error, detail };
     }
 }
@@ -67,7 +68,7 @@ async function installDependencies(pluginPath, options = {}) {
     try {
         packageJson = await fse.readJson(packageJsonPath);
     } catch (error) {
-        sendLog(`[npm] Не удалось прочитать package.json: ${error.message}`);
+        sendLog(t('core:error_612e7e3c', { error: error.message }));
         return { installed: false, reason: 'invalid-package-json' };
     }
 
@@ -120,12 +121,12 @@ async function installDependencies(pluginPath, options = {}) {
         }
     }
 
-    throw new Error('Не удалось установить зависимости плагина стандартными способами.');
+    throw new Error(t('core:error_b97eb24d'));
 }
 
 function installSinglePackage(packageName, pluginPath, options = {}) {
     if (!isValidPackageName(packageName)) {
-        throw new Error(`Некорректное имя пакета: ${packageName}`);
+        throw new Error(t('core:error_f684019a', { packageName: packageName }));
     }
     const { sendLog = console.log, timeoutMs = DEFAULT_TIMEOUT_MS, legacyPeerDeps = false } = options;
     const flags = legacyPeerDeps ? '--omit=dev --legacy-peer-deps --no-audit --no-fund --ignore-scripts' : '--omit=dev --no-audit --no-fund --ignore-scripts';
@@ -135,7 +136,7 @@ function installSinglePackage(packageName, pluginPath, options = {}) {
         return installSinglePackage(packageName, pluginPath, { ...options, legacyPeerDeps: true });
     }
     if (!result.ok) {
-        throw result.error || new Error(`Не удалось установить пакет ${packageName}.`);
+        throw result.error || new Error(t('core:error_7ddd18d6', { packageName: packageName }));
     }
     return result;
 }

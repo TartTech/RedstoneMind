@@ -3,9 +3,9 @@ const prisma = new PrismaClient();
 
 class User {
     /**
-     * Конструктор не должен вызываться напрямую. Используйте статический метод User.getUser().
-     * @param {object} userInstance - Полный объект пользователя из Prisma.
-     * @param {object} botConfig - Полный объект конфигурации бота.
+     * Конструктор not must вызываться напрямую. Используйте static method User.getUser().
+     * @param {object} userInstance - Полный object user from Prisma.
+     * @param {object} botConfig - Полный object configuration bot.
      */
     constructor(userInstance, botConfig = {}) {
         this.user = userInstance;
@@ -76,7 +76,7 @@ class User {
 
     async addGroup(groupName) {
         const group = await prisma.group.findUnique({ where: { botId_name: { botId: this.user.botId, name: groupName } } });
-        if (!group) throw new Error(`Группа ${groupName} не найдена`);
+        if (!group) throw new Error(t('core:msg_48939043', { groupName: groupName }));
 
         const existingLink = await prisma.userGroup.findUnique({
             where: {
@@ -96,7 +96,7 @@ class User {
 
     async removeGroup(groupName) {
         const group = await prisma.group.findUnique({ where: { botId_name: { botId: this.user.botId, name: groupName } } });
-        if (!group) throw new Error(`Группа ${groupName} не найдена`);
+        if (!group) throw new Error(t('core:msg_48939043', { groupName: groupName }));
         await prisma.userGroup.delete({ where: { userId_groupId: { userId: this.id, groupId: group.id } } });
         const remainingGroups = await prisma.userGroup.count({ where: { userId: this.id } });
         if (remainingGroups === 0) {
@@ -132,7 +132,7 @@ class User {
     
     static async getUser(username, botId, botConfig = null) {
         if (!username || !botId) {
-            throw new Error("Имя пользователя и ID бота обязательны.");
+            throw new Error(t('tests:validation_74db81a7'));
         }
         const lowerUsername = username.toLowerCase();
         const cacheKey = `${botId}:${lowerUsername}`;
@@ -166,6 +166,7 @@ class User {
 
         if (!userInstance) {
             const { isGraphTestMode } = require('./services/testModeGuard');
+const { t } = require('../i18n');
             if (isGraphTestMode()) {
                 return null;
             }

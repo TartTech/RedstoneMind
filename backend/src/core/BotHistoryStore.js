@@ -1,8 +1,9 @@
 const prisma = require('../lib/prisma');
+const { t } = require('../i18n');
 
 /**
- * In-memory хранилище истории чатов и команд ботов
- * Хранит последние N сообщений/команд для каждого бота
+ * In-memory хранилище истории чатов and команд ботов
+ * Хранит последние N сообщений/команд for каждого bot
  */
 
 class BotHistoryStore {
@@ -15,7 +16,7 @@ class BotHistoryStore {
     }
 
     /**
-     * Добавить сообщение чата
+     * Добавить message chat
      */
     addChatMessage(botId, data) {
         if (!this.chatHistory.has(botId)) {
@@ -39,7 +40,7 @@ class BotHistoryStore {
     }
 
     /**
-     * Получить историю чата с фильтрами
+     * Получить историю chat with фильтрами
      */
     getChatHistory(botId, filters = {}) {
         const messages = this.chatHistory.get(botId) || [];
@@ -79,7 +80,7 @@ class BotHistoryStore {
     }
 
     /**
-     * Добавить лог команды
+     * Добавить лог commands
      */
     addCommandLog(botId, data) {
         if (!this.commandLogs.has(botId)) {
@@ -119,10 +120,10 @@ class BotHistoryStore {
                     createdAt: new Date(entry.timestamp),
                 },
             }).catch((error) => {
-                console.error('[CommandHistory] Не удалось записать вызов:', error.message);
+                console.error(t('core:error_cbec99e2'), error.message);
             });
         } catch (error) {
-            console.error('[CommandHistory] Не удалось записать вызов:', error.message);
+            console.error(t('core:error_cbec99e2'), error.message);
         }
     }
 
@@ -161,7 +162,7 @@ class BotHistoryStore {
     }
 
     /**
-     * Получить логи команд с фильтрами
+     * Получить логи команд with фильтрами
      */
     getCommandLogs(botId, filters = {}) {
         const logs = this.commandLogs.get(botId) || [];
@@ -201,7 +202,7 @@ class BotHistoryStore {
     }
 
     /**
-     * Очистить историю бота
+     * Очистить историю bot
      */
     clearBot(botId) {
         this.chatHistory.delete(botId);

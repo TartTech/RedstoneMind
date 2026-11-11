@@ -1,0 +1,6 @@
+{
+  "error_a1ceabd8": "[API] Erro salvamento grafo eventos em pasta plugin:",
+  "msg_387b89f4": "${name} (cópia)",
+  "msg_9a18bd58": "{{originalGraph}} (cópia)",
+  "success_f004a8ea": "[API] Grafo eventos {{updatedGraph}} salvo em {{graphFile}}"
+}

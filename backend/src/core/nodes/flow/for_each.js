@@ -1,13 +1,13 @@
 const BreakLoopSignal = require('../../BreakLoopSignal');
 
 /**
- * @param {object} node - Экземпляр узла из графа.
- * @param {object} context - Контекст выполнения графа.
- * @param {object} helpers - Вспомогательные функции движка.
- * @param {function} helpers.resolvePinValue - Функция для получения значения с пина.
- * @param {function} helpers.traverse - Функция для перехода к следующему узлу.
- * @param {Map} helpers.memo - Карта для мемоизации значений в рамках одного выполнения графа.
- * @param {function} helpers.clearLoopBodyMemo - Функция для очистки мемоизации внутри тела цикла.
+ * @param {object} node - Instance node from graph.
+ * @param {object} context - Context execution graph.
+ * @param {object} helpers - Helper functions engine.
+ * @param {function} helpers.resolvePinValue - Function for getting values with pin.
+ * @param {function} helpers.traverse - Function for transitioning to next node.
+ * @param {Map} helpers.memo - Карта for мемоизации значений in рамках одного execution graph.
+ * @param {function} helpers.clearLoopBodyMemo - Function for очистки мемоизации внутри body цикла.
  */
 async function execute(node, context, helpers) {
     const { resolvePinValue, traverse, memo, clearLoopBodyMemo } = helpers;
@@ -24,9 +24,9 @@ async function execute(node, context, helpers) {
             }
         } catch (e) {
             if (e instanceof BreakLoopSignal) {
-                // Цикл был прерван узлом Break, это ожидаемое поведение.
+                // Цикл was прерван узлом Break, это ожидаемое поведение.
             } else {
-                // Перебрасываем другие, неожиданные ошибки.
+                // Перебрасываем другие, неожиданные errors.
                 throw e;
             }
         }

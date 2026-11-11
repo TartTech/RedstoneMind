@@ -10,7 +10,7 @@ const path = require('path');
 const prisma = new PrismaClient();
 const router = express.Router({ mergeParams: true });
 
-// Все роуты требуют аутентификации
+// All роуты требуют authentication
 router.use(authenticate);
 
 router.get('/', 
@@ -86,7 +86,7 @@ router.post('/',
                 eventTypes = [...new Set(eventNodes.map(node => node.type.split(':')[1]))];
             }
         } catch (error) {
-            console.warn('[API] Не удалось извлечь типы событий из графа:', error.message);
+            console.warn(t('bots:error_08b1206f'), error.message);
         }
 
         const newGraph = await prisma.eventGraph.create({
@@ -231,10 +231,10 @@ router.put('/:graphId',
             
             const graphFile = path.join(graphDir, `${updatedGraph.name}.json`);
             await fse.writeJson(graphFile, JSON.parse(graphJson), { spaces: 2 });
-            console.log(`[API] Граф события ${updatedGraph.name} сохранен в ${graphFile}`);
+            console.log(t('graphs:success_f004a8ea', { updatedGraph: updatedGraph.name, graphFile: graphFile }));
           }
         } catch (error) {
-          console.error(`[API] Ошибка сохранения графа события в папку плагина:`, error);
+          console.error(t('graphs:error_a1ceabd8'), error);
         }
       }
 
@@ -372,7 +372,7 @@ router.post('/import',
       const newGraph = await prisma.eventGraph.create({
         data: {
           botId: parseInt(botId),
-          name: `${name} (копия)`,
+          name: t('graphs:msg_387b89f4', { name: name }),
           graphJson: newGraphJson,
           variables: variables || '[]',
           isEnabled: false,
@@ -385,7 +385,7 @@ router.post('/import',
       res.status(201).json(newGraph);
     } catch (error) {
       if (error.code === 'P2002') {
-          return res.status(409).json({ error: `Event graph with name "${name} (копия)" already exists.` });
+          return res.status(409).json({ error: `Event graph with name t('graphs:msg_387b89f4') already exists.` });
       }
       console.error("Failed to import event graph:", error);
       res.status(500).json({ error: 'Failed to import event graph' });
@@ -450,7 +450,7 @@ router.post('/:graphId/duplicate',
       graph.connections = updatedConnections;
 
       const newGraphJson = JSON.stringify(graph);
-      const newName = `${originalGraph.name} (копия)`;
+      const newName = t('graphs:msg_9a18bd58', { originalGraph: originalGraph.name });
 
       const newGraph = await prisma.eventGraph.create({
         data: {
@@ -498,6 +498,7 @@ router.post('/run-node/:graphId/:nodeId',
   async (req, res) => {
     try {
       const { runOwnedNode } = require('../../core/services/GraphTestRunner');
+const { t } = require('../../i18n');
       const result = await runOwnedNode({
         kind: 'event',
         botId: parseInt(req.params.botId, 10),

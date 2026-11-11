@@ -1,4 +1,5 @@
 const CommandRepository = require('../../repositories/CommandRepository');
+const { t } = require('../../i18n');
 
 describe('CommandRepository', () => {
     let repository;
@@ -21,7 +22,7 @@ describe('CommandRepository', () => {
     });
 
     describe('findByBotId', () => {
-        test('должен найти все команды бота', async () => {
+        test(t('tests:validation_1339814a'), async () => {
             const mockCommands = [
                 { id: 1, botId: 1, name: 'test' },
                 { id: 2, botId: 1, name: 'help' }
@@ -39,7 +40,7 @@ describe('CommandRepository', () => {
     });
 
     describe('findEnabledByBotId', () => {
-        test('должен найти только включенные команды', async () => {
+        test(t('tests:validation_899b304b'), async () => {
             const mockCommands = [
                 { id: 1, botId: 1, name: 'test', isEnabled: true }
             ];
@@ -59,7 +60,7 @@ describe('CommandRepository', () => {
     });
 
     describe('findByName', () => {
-        test('должен найти команду по имени', async () => {
+        test(t('tests:validation_4e90cd3d'), async () => {
             const mockCommand = { id: 1, botId: 1, name: 'test' };
             mockPrisma.command.findFirst.mockResolvedValue(mockCommand);
 
@@ -73,7 +74,7 @@ describe('CommandRepository', () => {
     });
 
     describe('findByNameOrAlias', () => {
-        test('должен найти команду по имени', async () => {
+        test(t('tests:validation_4e90cd3d'), async () => {
             const mockCommands = [
                 { id: 1, name: 'test', aliases: '[]', isEnabled: true }
             ];
@@ -84,7 +85,7 @@ describe('CommandRepository', () => {
             expect(result).toEqual(mockCommands[0]);
         });
 
-        test('должен найти команду по алиасу', async () => {
+        test(t('tests:validation_20389df5'), async () => {
             const mockCommands = [
                 { id: 1, name: 'help', aliases: '["h", "?"]', isEnabled: true }
             ];
@@ -95,7 +96,7 @@ describe('CommandRepository', () => {
             expect(result).toEqual(mockCommands[0]);
         });
 
-        test('должен вернуть undefined если команда не найдена', async () => {
+        test(t('tests:validation_c4608bfe'), async () => {
             mockPrisma.command.findMany.mockResolvedValue([]);
 
             const result = await repository.findByNameOrAlias(1, 'nonexistent');
@@ -103,7 +104,7 @@ describe('CommandRepository', () => {
             expect(result).toBeUndefined();
         });
 
-        test('должен обработать невалидный JSON в aliases', async () => {
+        test(t('tests:validation_ab15f210'), async () => {
             const mockCommands = [
                 { id: 1, name: 'test', aliases: 'invalid json', isEnabled: true }
             ];
@@ -116,7 +117,7 @@ describe('CommandRepository', () => {
     });
 
     describe('updateEnabled', () => {
-        test('должен обновить статус isEnabled', async () => {
+        test(t('tests:validation_7d654a48'), async () => {
             const mockCommand = { id: 1, isEnabled: false };
             mockPrisma.command.update.mockResolvedValue(mockCommand);
 

@@ -6,7 +6,7 @@ const { handleCallGraph } = require('./graphWebSocketHandlers');
 const { handleExecuteCommand } = require('./commandHandlers');
 
 /**
- * Регистрирует все обработчики действий для сокета
+ * Регистрирует all обработчики действий for socket
  */
 function registerActionHandlers(socket) {
     socket.on('action:get_status', () => {

@@ -7,10 +7,10 @@ const { checkBotAccess } = require('../middleware/botAccess');
 
 const router = express.Router({ mergeParams: true });
 
-// Middleware для проверки доступа к боту
+// Middleware for verification access to боту
 router.use(authenticate, checkBotAccess);
 
-// GET /api/bots/:botId/api-keys/connected - Получить количество подключенных клиентов (ДОЛЖЕН БЫТЬ ПЕРЕД /:keyId)
+// GET /api/bots/:botId/api-keys/connected - Получить количество подключенных клиентов (Must БЫТЬ Before /:keyId)
 router.get('/connected', authorize('bot:update'), async (req, res) => {
     try {
         const botId = parseInt(req.params.botId, 10);
@@ -23,12 +23,12 @@ router.get('/connected', authorize('bot:update'), async (req, res) => {
 
         res.json({ success: true, count });
     } catch (error) {
-        console.error('[API Keys] Ошибка получения количества клиентов:', error);
-        res.status(500).json({ success: false, message: 'Ошибка при получении количества клиентов' });
+        console.error(t('api-keys:error_065d6587'), error);
+        res.status(500).json({ success: false, message: t('api-keys:error_508c0567') });
     }
 });
 
-// GET /api/bots/:botId/api-keys/logs - Получить логи подключений (ДОЛЖЕН БЫТЬ ПЕРЕД /:keyId)
+// GET /api/bots/:botId/api-keys/logs - Получить логи подключений (Must БЫТЬ Before /:keyId)
 router.get('/logs', authorize('bot:update'), async (req, res) => {
     try {
         const botId = parseInt(req.params.botId, 10);
@@ -42,12 +42,12 @@ router.get('/logs', authorize('bot:update'), async (req, res) => {
 
         res.json({ success: true, logs });
     } catch (error) {
-        console.error('[API Keys] Ошибка получения логов:', error);
-        res.status(500).json({ success: false, message: 'Ошибка при получении логов' });
+        console.error(t('api-keys:error_821b25a8'), error);
+        res.status(500).json({ success: false, message: t('api-keys:error_46cfe0ab') });
     }
 });
 
-// GET /api/bots/:botId/api-keys - Получить список всех API ключей
+// GET /api/bots/:botId/api-keys - Получить list всех API ключей
 router.get('/', authorize('bot:update'), async (req, res) => {
     try {
         const botId = parseInt(req.params.botId, 10);
@@ -67,26 +67,26 @@ router.get('/', authorize('bot:update'), async (req, res) => {
 
         res.json({ success: true, keys });
     } catch (error) {
-        console.error('[API Keys] Ошибка получения списка ключей:', error);
-        res.status(500).json({ success: false, message: 'Ошибка при получении ключей' });
+        console.error(t('api-keys:error_c0874f09'), error);
+        res.status(500).json({ success: false, message: t('api-keys:error_ebf23142') });
     }
 });
 
-// POST /api/bots/:botId/api-keys - Создать новый API ключ
+// POST /api/bots/:botId/api-keys - Создать new API key
 router.post('/', authorize('bot:update'), async (req, res) => {
     try {
         const botId = parseInt(req.params.botId, 10);
         const { name, permissions = 'ReadWrite' } = req.body;
 
         if (!name || name.trim().length === 0) {
-            return res.status(400).json({ success: false, message: 'Название ключа обязательно' });
+            return res.status(400).json({ success: false, message: t('api-keys:validation_6eedfe63') });
         }
 
         if (!['Read', 'Write', 'ReadWrite'].includes(permissions)) {
-            return res.status(400).json({ success: false, message: 'Недопустимое значение permissions' });
+            return res.status(400).json({ success: false, message: t('api-keys:error_86b08df0') });
         }
 
-        // Генерируем уникальный ключ: bk_<32 байта hex>
+        // Генерируем уникальный key: bk_<32 байта hex>
         const rawKey = `bk_${crypto.randomBytes(32).toString('hex')}`;
         const keyPrefix = rawKey.substring(0, 11); // "bk_" + 8 символов
         const keyHash = await bcrypt.hash(rawKey, 10);
@@ -101,7 +101,7 @@ router.post('/', authorize('bot:update'), async (req, res) => {
             },
         });
 
-        // Возвращаем полный ключ ТОЛЬКО ОДИН РАЗ
+        // Возвращаем полный key Only ОДИН РАЗ
         res.json({
             success: true,
             key: rawKey, // Полный ключ
@@ -114,12 +114,12 @@ router.post('/', authorize('bot:update'), async (req, res) => {
             },
         });
     } catch (error) {
-        console.error('[API Keys] Ошибка создания ключа:', error);
-        res.status(500).json({ success: false, message: 'Ошибка при создании ключа' });
+        console.error(t('api-keys:error_9e3f7884'), error);
+        res.status(500).json({ success: false, message: t('api-keys:error_d301814b') });
     }
 });
 
-// PUT /api/bots/:botId/api-keys/:keyId - Обновить имя или права ключа
+// PUT /api/bots/:botId/api-keys/:keyId - Обновить name or permissions key
 router.put('/:keyId', authorize('bot:update'), async (req, res) => {
     try {
         const botId = parseInt(req.params.botId, 10);
@@ -132,13 +132,13 @@ router.put('/:keyId', authorize('bot:update'), async (req, res) => {
         }
         if (permissions !== undefined) {
             if (!['Read', 'Write', 'ReadWrite'].includes(permissions)) {
-                return res.status(400).json({ success: false, message: 'Недопустимое значение permissions' });
+                return res.status(400).json({ success: false, message: t('api-keys:error_86b08df0') });
             }
             updateData.permissions = permissions;
         }
 
         if (Object.keys(updateData).length === 0) {
-            return res.status(400).json({ success: false, message: 'Нечего обновлять' });
+            return res.status(400).json({ success: false, message: t('api-keys:msg_dc2abbfe') });
         }
 
         const apiKey = await prisma.botApiKey.updateMany({
@@ -147,23 +147,24 @@ router.put('/:keyId', authorize('bot:update'), async (req, res) => {
         });
 
         if (apiKey.count === 0) {
-            return res.status(404).json({ success: false, message: 'Ключ не найден' });
+            return res.status(404).json({ success: false, message: t('api-keys:msg_c82b4016') });
         }
 
-        res.json({ success: true, message: 'Ключ обновлен' });
+        res.json({ success: true, message: t('api-keys:success_6ee89242') });
     } catch (error) {
-        console.error('[API Keys] Ошибка обновления ключа:', error);
-        res.status(500).json({ success: false, message: 'Ошибка при обновлении ключа' });
+        console.error(t('api-keys:error_b6ad1e83'), error);
+        res.status(500).json({ success: false, message: t('api-keys:error_8bd24ab6') });
     }
 });
 
-// DELETE /api/bots/:botId/api-keys/:keyId - Удалить (отозвать) API ключ
+// DELETE /api/bots/:botId/api-keys/:keyId - Удалить (отозвать) API key
 router.delete('/:keyId', authorize('bot:update'), async (req, res) => {
     try {
         const botId = parseInt(req.params.botId, 10);
         const keyId = parseInt(req.params.keyId, 10);
 
         const { getIO } = require('../../real-time/socketHandler');
+const { t } = require('../../i18n');
 
         const io = getIO();
 
@@ -176,13 +177,13 @@ router.delete('/:keyId', authorize('bot:update'), async (req, res) => {
         });
 
         if (result.count === 0) {
-            return res.status(404).json({ success: false, message: 'Ключ не найден' });
+            return res.status(404).json({ success: false, message: t('api-keys:msg_c82b4016') });
         }
 
-        res.json({ success: true, message: 'Ключ удален' });
+        res.json({ success: true, message: t('api-keys:success_92e69113') });
     } catch (error) {
-        console.error('[API Keys] Ошибка удаления ключа:', error);
-        res.status(500).json({ success: false, message: 'Ошибка при удалении ключа' });
+        console.error(t('api-keys:error_7d6598e1'), error);
+        res.status(500).json({ success: false, message: t('api-keys:error_b38d6d70') });
     }
 });
 

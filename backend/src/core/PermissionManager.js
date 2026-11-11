@@ -1,16 +1,17 @@
 const { PrismaClient } = require('@prisma/client');
+const { t } = require('../i18n');
 const prisma = new PrismaClient();
 
 class PermissionManager {
     /**
-     * Регистрирует одно или несколько прав для КОНКРЕТНОГО бота.
-     * @param {number} botId - ID бота, для которого регистрируются права.
-     * @param {Array<object>} permissions - Массив объектов прав.
+     * Регистрирует одно or несколько прав for КОНКРЕТНОГО bot.
+     * @param {number} botId - ID bot, for которого регистрируются permissions.
+     * @param {Array<object>} permissions - Array объектов прав.
      */
     async registerPermissions(botId, permissions) {
         for (const perm of permissions) {
             if (!perm.name || !perm.owner) {
-                console.warn('[PermissionManager] Пропущено право без имени или владельца:', perm);
+                console.warn(t('core:log_6a02dbae'), perm);
                 continue;
             }
             await prisma.permission.upsert({
@@ -28,10 +29,10 @@ class PermissionManager {
 
 
     /**
-     * Добавляет права к уже существующей группе.
-     * @param {number} botId - ID бота.
-     * @param {string} groupName - Имя группы, которую нужно обновить.
-     * @param {Array<string>} permissionNames - Массив имен прав для добавления.
+     * Добавляет permissions to already существующей группе.
+     * @param {number} botId - ID bot.
+     * @param {string} groupName - Name groups, которую need обновить.
+     * @param {Array<string>} permissionNames - Array имен прав for добавления.
      */
     async addPermissionsToGroup(botId, groupName, permissionNames) {
         const group = await prisma.group.findUnique({
@@ -55,19 +56,19 @@ class PermissionManager {
                     create: { groupId: group.id, permissionId: permission.id },
                 });
             } else {
-                console.warn(`[PermissionManager] Право "${permName}" не найдено для бота ID ${botId} при добавлении в группу "${groupName}".`);
+                console.warn(`[PermissionManager] Право "${permName}t('core:msg_6087c904')${groupName}".`);
             }
         }
     }
 
     /**
-     * Регистрирует группу для КОНКРЕТНОГО бота и привязывает к ней права.
-     * @param {number} botId - ID бота, для которого регистрируется группа.
-     * @param {object} groupConfig - Конфигурация группы.
+     * Регистрирует группу for КОНКРЕТНОГО bot and привязывает to ней permissions.
+     * @param {number} botId - ID bot, for которого регистрируется group.
+     * @param {object} groupConfig - Configuration groups.
      */
     async registerGroup(botId, groupConfig) {
         if (!groupConfig.name || !groupConfig.owner) {
-            console.warn('[PermissionManager] Пропущена группа без имени или владельца:', groupConfig);
+            console.warn(t('core:log_f469eddf'), groupConfig);
             return;
         }
 
@@ -87,7 +88,7 @@ class PermissionManager {
                         create: { groupId: group.id, permissionId: permission.id },
                     });
                 } else {
-                    console.warn(`[PermissionManager] Право "${permName}" не найдено для бота ID ${botId} при привязке к группе "${groupConfig.name}".`);
+                    console.warn(`[PermissionManager] Право "${permName}t('core:msg_bab428c6')${groupConfig.name}".`);
                 }
             }
         }

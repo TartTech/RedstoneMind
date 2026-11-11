@@ -4,6 +4,7 @@ const { createRequire } = require('module');
 const { pathToFileURL } = require('url');
 const PluginStore = require('../plugins/PluginStore');
 const { resolvePluginSettings, parseManifest } = require('./utils/pluginSettings');
+const { t } = require('../i18n');
 
 class PluginHooks {
     constructor({ prisma } = {}) {
@@ -44,7 +45,7 @@ class PluginHooks {
     async _invokeHook(pluginId, hookName, payloadExtras = {}) {
         const plugin = await this.prisma.installedPlugin.findUnique({ where: { id: pluginId } });
         if (!plugin) {
-            console.error(`[PluginHooks] Плагин ${pluginId} не найден`);
+            console.error(t('core:log_68dbe946', { pluginId: pluginId }));
             return false;
         }
 
@@ -70,7 +71,7 @@ class PluginHooks {
 
             return true;
         } catch (error) {
-            console.error(`[PluginHooks] Ошибка выполнения ${hookName} для плагина ${plugin?.name}:`, error);
+            console.error(t('core:error_2ce130a1', { hookName: hookName, plugin_: plugin?.name }), error);
             return false;
         } finally {
             this._clearRequireCache(plugin.path);

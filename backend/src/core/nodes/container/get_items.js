@@ -1,7 +1,7 @@
 /**
  * container:get_items - Получить содержимое контейнера
  *
- * Data нода (без exec пинов) - использует только evaluator.
+ * Data нода (without exec пинов) - использует only evaluator.
  */
 async function evaluate(node, pinId, context, helpers) {
   const { resolvePinValue } = helpers;

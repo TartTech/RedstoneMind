@@ -1,0 +1,6 @@
+{
+  "error_a1ceabd8": "[API] Error saving graph events in folder plugin:",
+  "msg_387b89f4": "${name} (copy)",
+  "msg_9a18bd58": "{{originalGraph}} (copy)",
+  "success_f004a8ea": "[API] Graph events {{updatedGraph}} saved in {{graphFile}}"
+}

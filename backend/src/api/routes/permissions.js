@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { PrismaClient } = require('@prisma/client');
 const { authenticate, authorize } = require('../middleware/auth');
+const { t } = require('../../i18n');
 const prisma = new PrismaClient();
 
 router.use(authenticate);
@@ -40,13 +41,13 @@ router.put('/groups/:id', authorize('panel:role:edit'), async (req, res) => {
             }
         });
         res.status(200).send();
-    } catch (error) { res.status(500).json({ error: 'Не удалось обновить группу' }); }
+    } catch (error) { res.status(500).json({ error: t('permissions:error_488ecd75') }); }
 });
 router.delete('/groups/:id', authorize('panel:role:edit'), async (req, res) => {
     try {
         await prisma.group.delete({ where: { id: parseInt(req.params.id) } });
         res.status(204).send();
-    } catch (error) { res.status(500).json({ error: 'Не удалось удалить группу' }); }
+    } catch (error) { res.status(500).json({ error: t('permissions:error_74181683') }); }
 });
 
 router.get('/all', authorize('panel:role:view'), async (req, res) => {
@@ -60,7 +61,7 @@ router.get('/users/:username', authorize('panel:user:view'), async (req, res) =>
         where: { username: req.params.username },
         include: { groups: { include: { group: true } } }
     });
-    if (!user) return res.status(404).json({ error: 'Пользователь не найден' });
+    if (!user) return res.status(404).json({ error: t('auth:msg_a7518766') });
     res.json(user);
 });
 

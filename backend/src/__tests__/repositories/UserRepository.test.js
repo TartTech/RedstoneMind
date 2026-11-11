@@ -1,4 +1,5 @@
 const UserRepository = require('../../repositories/UserRepository');
+const { t } = require('../../i18n');
 
 describe('UserRepository', () => {
     let repository;
@@ -22,7 +23,7 @@ describe('UserRepository', () => {
     });
 
     describe('findByUsername', () => {
-        test('должен найти пользователя по botId и username', async () => {
+        test(t('tests:validation_fa70ca35'), async () => {
             const mockUser = {
                 id: 1,
                 botId: 1,
@@ -42,7 +43,7 @@ describe('UserRepository', () => {
     });
 
     describe('findByBotId', () => {
-        test('должен найти всех пользователей бота', async () => {
+        test(t('tests:validation_938f75a9'), async () => {
             const mockUsers = [
                 { id: 1, botId: 1, username: 'User1' },
                 { id: 2, botId: 1, username: 'User2' }
@@ -60,7 +61,7 @@ describe('UserRepository', () => {
     });
 
     describe('upsertUser', () => {
-        test('должен создать нового пользователя', async () => {
+        test(t('tests:validation_4b1626dd'), async () => {
             const newUser = {
                 id: 1,
                 botId: 1,
@@ -87,7 +88,7 @@ describe('UserRepository', () => {
             expect(result).toEqual(newUser);
         });
 
-        test('должен обновить существующего пользователя', async () => {
+        test(t('tests:validation_4b38c80e'), async () => {
             const updatedUser = {
                 id: 1,
                 botId: 1,
@@ -105,7 +106,7 @@ describe('UserRepository', () => {
     });
 
     describe('updateBlacklist', () => {
-        test('должен обновить статус черного списка', async () => {
+        test(t('tests:validation_9bdd0189'), async () => {
             const updatedUser = {
                 id: 1,
                 botId: 1,

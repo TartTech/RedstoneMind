@@ -2,12 +2,13 @@ const prismaService = require('../../PrismaService');
 const { tryGraphWrite } = require('../../graphServices');
 const prisma = prismaService.getClient();
 const { getRuntimeCommandRegistry } = require('../../system/RuntimeCommandRegistry');
+const { t } = require('../../../i18n');
 
 /**
- * Удаляет существующую команду
- * @param {object} node - Экземпляр узла из графа
- * @param {object} context - Контекст выполнения графа
- * @param {object} helpers - Вспомогательные функции движка
+ * Deletes существующую команду
+ * @param {object} node - Instance node from graph
+ * @param {object} context - Context execution graph
+ * @param {object} helpers - Helper functions engine
  */
 async function execute(node, context, helpers) {
     const { resolvePinValue, traverse, memo } = helpers;
@@ -17,7 +18,7 @@ async function execute(node, context, helpers) {
         const commandName = await resolvePinValue(node, 'commandName');
 
         if (!commandName) {
-            console.error('[delete_command] Имя команды обязательно');
+            console.error(t('nodes:validation_0735c330'));
             memo.set(`${node.id}:success`, false);
             await traverse(node, 'exec');
             return;
@@ -88,7 +89,7 @@ async function execute(node, context, helpers) {
 
         memo.set(`${node.id}:success`, true);
     } catch (error) {
-        console.error('[delete_command] Ошибка удаления команды:', error);
+        console.error(t('nodes:error_32651000'), error);
         memo.set(`${node.id}:success`, false);
     }
 

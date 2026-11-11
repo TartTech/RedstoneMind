@@ -12,7 +12,7 @@ async function evaluate(node, pinId, context, helpers) {
                 return typeof value === 'number' && !isNaN(value);
             
             case 'numeric_string':
-                // Проверяет, является ли значение строкой, которую можно преобразовать в число
+                // Checks, является ли value строкой, которую можно преобразовать in number
                 if (typeof value !== 'string') return false;
                 const trimmed = value.trim();
                 if (trimmed === '') return false;
@@ -37,7 +37,7 @@ async function evaluate(node, pinId, context, helpers) {
     }
 
     if (pinId === 'type_name') {
-        // Возвращает строковое название типа
+        // Returns строковое название type
         if (value === null) return 'null';
         if (value === undefined) return 'undefined';
         if (Array.isArray(value)) return 'array';

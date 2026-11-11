@@ -1,5 +1,6 @@
 const { relativeOffset } = require('../relativeOffset');
 const { execute } = require('../step');
+const { t } = require('../../../../i18n');
 
 function run(node, context) {
   const memo = new Map();
@@ -20,7 +21,7 @@ function run(node, context) {
 }
 
 describe('relativeOffset', () => {
-  it('при взгляде на север вперёд уменьшает Z, вправо увеличивает X', () => {
+  it(t('nodes:msg_4770963b'), () => {
     const forward = relativeOffset(0, 'forward', 5);
     const right = relativeOffset(0, 'right', 5);
     const left = relativeOffset(0, 'left', 5);
@@ -35,7 +36,7 @@ describe('relativeOffset', () => {
 });
 
 describe('navigation:step', () => {
-  it('идёт вперёд на 5 блоков от текущей позиции', async () => {
+  it(t('nodes:msg_4c9c0aa0'), async () => {
     const goto = jest.fn(async () => {});
     const result = await run({
       id: 'step',
@@ -55,7 +56,7 @@ describe('navigation:step', () => {
     expect(result.memo.get('step:z')).toBeCloseTo(15);
   });
 
-  it('без pathfinder уходит в неудачу', async () => {
+  it(t('nodes:msg_03ed7bc1'), async () => {
     const result = await run({
       id: 'step',
       data: { direction: 'left', distance: 2 },

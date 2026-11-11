@@ -3,6 +3,7 @@ const { createProxySocket } = require('./createProxySocket');
 const { Vec3 } = require('vec3');
 const EventEmitter = require('events');
 const MessageQueue = require('./MessageQueue');
+const { t } = require('../i18n');
 
 let connectionTimeout = null;
 let botReadySent = false;
@@ -51,16 +52,16 @@ function createBotConnection(config, sendLog) {
         const botOptions = buildBotOptions(config);
 
         if (config.proxyHost && config.proxyPort) {
-            sendLog(`[System] Используется прокси: ${config.proxyHost}:${config.proxyPort}`);
+            sendLog(t('core:log_49b1137f', { config: config.proxyHost, config1: config.proxyPort }));
         } else {
-            sendLog(`[System] Прокси не настроен, используется прямое подключение.`);
+            sendLog(t('core:log_cafb5871'));
         }
 
         const bot = mineflayer.createBot(botOptions);
 
         connectionTimeout = setTimeout(() => {
             if (bot && !bot.player) {
-                sendLog('[System] Таймаут подключения к серверу (30 секунд). Завершение работы...');
+                sendLog(t('core:log_e60171b5'));
                 process.exit(1);
             }
         }, 30000);
@@ -70,7 +71,7 @@ function createBotConnection(config, sendLog) {
                 clearTimeout(connectionTimeout);
                 connectionTimeout = null;
             }
-            sendLog('[Event: login] Успешно залогинился!');
+            sendLog(t('core:success_4a36adbb'));
             if (process.send && !botReadySent) {
                 process.send({ type: 'bot_ready' });
                 process.send({ type: 'status', status: 'running' });
@@ -83,7 +84,7 @@ function createBotConnection(config, sendLog) {
                 clearTimeout(connectionTimeout);
                 connectionTimeout = null;
             }
-            sendLog(`[Event: error] Произошла ошибка: ${err.stack || err.message}`);
+            sendLog(t('core:error_9b227cf6', { err: err.stack || err.message }));
             reject(err);
         });
 
@@ -94,7 +95,7 @@ function createBotConnection(config, sendLog) {
             }
             const restartableReasons = ['socketClosed', 'keepAliveError'];
             const exitCode = restartableReasons.includes(reason) ? 1 : 0;
-            sendLog(`[Event: end] Отключен от сервера. Причина: ${reason}`);
+            sendLog(t('core:log_daea6970', { reason: reason }));
             process.exit(exitCode);
         });
 

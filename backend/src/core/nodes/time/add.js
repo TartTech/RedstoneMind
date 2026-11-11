@@ -1,4 +1,5 @@
 const { add } = require('date-fns');
+const { t } = require('../../../i18n');
 
 /**
  * @param {object} node
@@ -19,10 +20,10 @@ async function evaluate(node, pinId, context, helpers) {
                 return add(date, duration);
             } catch (error) {
                 // Либо пробросить ошибку, либо вернуть null
-                throw new Error(`Ошибка добавления продолжительности: ${error.message}`);
+                throw new Error(t('nodes:error_68f7d929', { error: error.message }));
             }
         }
-        throw new Error('Невалидная входная дата');
+        throw new Error(t('nodes:msg_fef19b00'));
     }
 
     return null;

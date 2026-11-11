@@ -1,8 +1,9 @@
 const EventEmitter = require('events');
 const { attachPathfinder, walkingMovements } = require('../attachPathfinder');
+const { t } = require('../../i18n');
 
 describe('attachPathfinder', () => {
-  it('подключает pathfinder, когда реестр блоков готов', () => {
+  it(t('tests:msg_f72dd019'), () => {
     const bot = new EventEmitter();
     bot.loadPlugin = jest.fn();
     attachPathfinder(bot);
@@ -11,7 +12,7 @@ describe('attachPathfinder', () => {
     expect(typeof bot.loadPlugin.mock.calls[0][0]).toBe('function');
   });
 
-  it('не подключает pathfinder второй раз', () => {
+  it(t('tests:msg_25631e29'), () => {
     const bot = new EventEmitter();
     bot.pathfinder = {};
     bot.loadPlugin = jest.fn();
@@ -20,7 +21,7 @@ describe('attachPathfinder', () => {
     expect(bot.loadPlugin).not.toHaveBeenCalled();
   });
 
-  it('ходит без копания и без установки блоков', () => {
+  it(t('tests:msg_8dc16bd9'), () => {
     class FakeMovements {
       constructor() {
         this.canDig = true;
@@ -32,7 +33,7 @@ describe('attachPathfinder', () => {
     expect(movements.scafoldingBlocks).toEqual([]);
   });
 
-  it('оставляет бота живым, если плагин не встал', () => {
+  it(t('tests:msg_a03af4e2'), () => {
     const bot = new EventEmitter();
     bot.loadPlugin = jest.fn(() => {
       throw new Error('no registry');

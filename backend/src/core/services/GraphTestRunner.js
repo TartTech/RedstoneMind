@@ -19,20 +19,20 @@ function normalizeGraph(graph) {
     let parsed = graph;
     if (typeof parsed === 'string') {
         if (!parsed || parsed === 'null') {
-            throw fail(400, 'В графе нет данных');
+            throw fail(400, t('services:msg_29691ac1'));
         }
         try {
             parsed = JSON.parse(parsed);
         } catch {
-            throw fail(400, 'Граф повреждён');
+            throw fail(400, t('services:msg_cfbfa84c'));
         }
     }
 
     if (!parsed || typeof parsed !== 'object' || !Array.isArray(parsed.nodes)) {
-        throw fail(400, 'В графе нет нод');
+        throw fail(400, t('services:msg_c1d50bad'));
     }
     if (parsed.nodes.length > MAX_NODES) {
-        throw fail(400, 'В графе слишком много нод');
+        throw fail(400, t('services:msg_cf779af1'));
     }
 
     let connections = parsed.connections;
@@ -47,7 +47,7 @@ function normalizeGraph(graph) {
     }
     if (!Array.isArray(connections)) connections = [];
     if (connections.length > MAX_CONNECTIONS) {
-        throw fail(400, 'В графе слишком много связей');
+        throw fail(400, t('services:msg_f9a46de3'));
     }
 
     return {
@@ -75,7 +75,7 @@ function normalizeGraph(graph) {
 
 async function loadOwnedGraph(kind, botId, graphId) {
     if (!Number.isInteger(botId) || !Number.isInteger(graphId)) {
-        throw fail(400, 'Некорректный идентификатор');
+        throw fail(400, t('services:error_b364827d'));
     }
 
     if (kind === 'command') {
@@ -83,7 +83,7 @@ async function loadOwnedGraph(kind, botId, graphId) {
             where: { id: graphId, botId },
         });
         if (!command || !command.isVisual) {
-            throw fail(404, 'Визуальная команда не найдена');
+            throw fail(404, t('services:msg_75a292bd'));
         }
         const permission = command.permissionId
             ? await prisma.permission.findUnique({ where: { id: command.permissionId }, select: { name: true } })
@@ -106,7 +106,7 @@ async function loadOwnedGraph(kind, botId, graphId) {
         where: { id: graphId, botId },
     });
     if (!eventGraph) {
-        throw fail(404, 'Граф события не найден');
+        throw fail(404, t('bots:msg_923a7f98'));
     }
     return { name: eventGraph.name, graphJson: eventGraph.graphJson };
 }
@@ -139,17 +139,17 @@ async function launchGraphTest({ kind, botId, graphId, graph, commandName, body 
     try {
         validation = GraphValidation.validateGraphForExecution(graph, 'GraphTestRunner');
     } catch {
-        throw fail(400, 'Граф не прошёл проверку');
+        throw fail(400, t('services:msg_786f799e'));
     }
     if (validation.shouldSkip) {
-        throw fail(400, 'Граф не прошёл проверку');
+        throw fail(400, t('services:msg_786f799e'));
     }
 
     const startNode = GraphValidation.findStartNode(validation.graph, eventType);
     if (!startNode) {
         throw fail(400, kind === 'command'
-            ? 'В графе нет стартовой ноды команды'
-            : 'В графе нет стартовой ноды события');
+            ? t('services:msg_c29572d5')
+            : t('services:msg_bc00747c'));
     }
 
     const { getGlobalDebugManager } = require('./DebugSessionManager');
@@ -210,8 +210,8 @@ function gateEffects(gate) {
     const effects = [];
     if (gate.reason === 'disabled' || gate.reason === 'chat') {
         const gateSummary = gate.reason === 'disabled'
-            ? 'Команда выключена'
-            : 'Этот тип чата для команды не разрешён';
+            ? t('services:msg_ecc7d2a3')
+            : t('services:msg_9afbceb5');
         effects.push({
             id: randomUUID(),
             at: Date.now(),
@@ -294,7 +294,7 @@ function sanitizeStoredTests(value) {
     if (!Array.isArray(list)) return [];
     return list.slice(0, 30).map((test) => ({
         id: String(test?.id || randomUUID()).slice(0, 64),
-        name: String(test?.name || 'Проверка').slice(0, 80),
+        name: String(test?.name || t('services:msg_25baf624')).slice(0, 80),
         username: sanitizeUsername(test?.username),
         typeChat: sanitizeTypeChat(test?.typeChat),
         asOwner: Boolean(test?.asOwner),
@@ -376,17 +376,18 @@ async function runOwnedNode({ kind, botId, graphId, nodeId, body }) {
         : stored;
 
     if (!node) {
-        throw fail(404, 'Нода не найдена в графе');
+        throw fail(404, t('services:msg_51936763'));
     }
 
     const nodeRegistry = require('../NodeRegistry');
     const nodeConfig = nodeRegistry.getNodeConfig(node.type);
     if (!nodeConfig) {
-        throw fail(400, `Неизвестный тип ноды: ${node.type}`);
+        throw fail(400, t('services:msg_b9ef25d9', { node: node.type }));
     }
 
     const { recordEffect, effects } = createEffectRecorder(graphId, { broadcast: false });
     const GraphExecutionEngine = require('../GraphExecutionEngine');
+const { t } = require('../../i18n');
     const engine = new GraphExecutionEngine(nodeRegistry, null);
     const inputs = body?.inputs && typeof body.inputs === 'object' ? body.inputs : {};
     const variablesInput = body?.variables;

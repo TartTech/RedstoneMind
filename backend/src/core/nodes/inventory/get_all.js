@@ -1,5 +1,5 @@
 /**
- * inventory:get_all - Получить весь инвентарь бота
+ * inventory:get_all - Получить весь inventory bot
  */
 async function evaluate(node, pinId, context, helpers) {
   const bot = context.bot;
@@ -10,9 +10,9 @@ async function evaluate(node, pinId, context, helpers) {
     return null;
   }
 
-  // Получаем все непустые слоты
+  // Получаем all непустые слоты
   const items = bot.inventory.items().map(item => {
-    // Извлекаем прочность из NBT
+    // Извлекаем прочность from NBT
     const damage = item.nbt?.value?.Damage?.value ?? 0;
     const maxDurability = item.maxDurability ?? null;
     const durability = maxDurability ? maxDurability - damage : null;

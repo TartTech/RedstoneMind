@@ -48,7 +48,7 @@ function runGit(args, options = {}) {
 
 router.use(authenticate);
 
-// Debug middleware для логирования всех запросов
+// Debug middleware for логирования всех запросов
 router.use((req, res, next) => {
     console.log('[Plugin IDE] Request:', req.method, req.path, 'Params:', req.params);
     next();
@@ -58,7 +58,7 @@ const resolvePluginPath = async (req, res, next) => {
     try {
         const { botId, pluginName } = req.params;
         if (!pluginName) {
-            return res.status(400).json({ error: 'Имя плагина обязательно в пути.' });
+            return res.status(400).json({ error: t('plugins:validation_d372c97a') });
         }
 
         const plugin = await prisma.installedPlugin.findFirst({
@@ -69,13 +69,13 @@ const resolvePluginPath = async (req, res, next) => {
         });
 
         if (!plugin) {
-            return res.status(404).json({ error: 'Плагин не найден в базе данных.' });
+            return res.status(404).json({ error: t('plugins:msg_77d8945c') });
         }
 
         const pluginPath = plugin.path;
 
         if (!await fse.pathExists(pluginPath)) {
-            return res.status(404).json({ error: 'Директория плагина не найдена в файловой системе.' });
+            return res.status(404).json({ error: t('plugins:msg_4ef5e821') });
         }
 
         const realPluginPath = await fse.realpath(pluginPath);
@@ -86,7 +86,7 @@ const resolvePluginPath = async (req, res, next) => {
             realBase = PLUGINS_BASE_DIR;
         }
         if (realPluginPath !== realBase && !realPluginPath.startsWith(realBase + path.sep)) {
-            return res.status(403).json({ error: 'Путь плагина находится вне разрешённой директории.' });
+            return res.status(403).json({ error: t('plugins:msg_473f3ea8') });
         }
 
         req.pluginPath = realPluginPath;
@@ -94,7 +94,7 @@ const resolvePluginPath = async (req, res, next) => {
         next();
     } catch (error) {
         console.error('[Plugin IDE Middleware Error]', error);
-        res.status(500).json({ error: 'Не удалось определить путь к плагину.' });
+        res.status(500).json({ error: t('plugins:error_040c3aca') });
     }
 };
 
@@ -110,7 +110,7 @@ router.post('/create', async (req, res) => {
         } = req.body;
 
         if (!name) {
-            return res.status(400).json({ error: 'Имя плагина обязательно.' });
+            return res.status(400).json({ error: t('plugins:validation_3edb1610') });
         }
 
         const pluginNameSlug = slugify(name, { lower: true, strict: true });
@@ -145,9 +145,9 @@ router.post('/create', async (req, res) => {
                 settings: {
                     "helloMessage": {
                         "type": "string",
-                        "label": "Сообщение приветствия",
-                        "description": "Используйте {targetUser} и {user.username} для подстановок.",
-                        "default": "Привет, {targetUser}, от {user.username}!"
+                        "label": t('plugins:msg_f39a976f'),
+                        "description": t('plugins:msg_b4e36ca8'),
+                        "default": t('plugins:msg_5eb9ff4b')
                     }
                 }
             }
@@ -164,8 +164,8 @@ router.post('/create', async (req, res) => {
         constructor(settings) {
             super({
                 name: 'hello',
-                description: 'Тестовая команда с расширенными параметрами',
-                aliases: ['hi', 'привет'],
+                description: t('plugins:msg_af527778'),
+                aliases: ['hi', t('mcp:msg_608333ad')],
                 permissions: '${pluginNameSlug}.use',
                 owner: 'plugin:${pluginNameSlug}',
                 cooldown: 10,
@@ -174,13 +174,13 @@ router.post('/create', async (req, res) => {
                     {
                         name: 'targetUser',
                         type: 'string',
-                        description: 'Имя игрока, которого нужно поприветствовать.',
+                        description: t('plugins:msg_78889be5'),
                         required: true
                     },
                     {
                         name: 'repeat',
                         type: 'number',
-                        description: 'Количество повторений приветствия.',
+                        description: t('plugins:msg_f0985954'),
                         required: false,
                         default: 1
                     }
@@ -193,8 +193,8 @@ router.post('/create', async (req, res) => {
         async handler(bot, typeChat, user, args) {
             const { targetUser, repeat } = args;
 
-            // Используем сообщение из настроек, или значение по-умолчанию, если оно не найдено
-            const messageTemplate = this.settings?.helloMessage || 'Привет, {targetUser}, от {user.username}!';
+            // Используем message from настроек, or value by-умолчанию, if оно not найдено
+            const messageTemplate = this.settings?.helloMessage || t('plugins:msg_5eb9ff4b');
             
             const message = messageTemplate
                 .replace('{targetUser}', targetUser)
@@ -222,14 +222,14 @@ async function onLoad(bot, options) {
     try {
         const HelloCommand = createHelloCommand(bot);
 
-        // Регистрация прав. 
-        // Если право, указанное в команде, не будет найдено, 
-        // система создаст его автоматически.
-        // Эта регистрация нужна для того, чтобы задать правам описание.
+        // Registration прав. 
+        // If право, указанное in команде, not will найдено, 
+        // система создаст его automatically.
+        // Эта registration нужна for того, чтобы задать правам description.
         await bot.api.registerPermissions([
           { 
               name: PERMISSION_NAME + '.use', 
-              description: 'Доступ к команде hello из плагина ${pluginNameSlug}', 
+              description: t('plugins:perm_eea64793'), 
               owner: PLUGIN_OWNER_ID 
           }
         ]);
@@ -238,7 +238,7 @@ async function onLoad(bot, options) {
         
         log(\`[\${PLUGIN_OWNER_ID}] Команда 'hello' успешно загружена.\`);
     } catch (error) {
-        log(\`[\${PLUGIN_OWNER_ID}] Ошибка при загрузке: \${error.message}\`);
+        log(\t('plugins:error_9068a3d6', { PLUGIN_OWNER_ID: PLUGIN_OWNER_ID, error: error.message }));
     }
 }
 
@@ -246,9 +246,9 @@ async function onUnload({ botId, prisma }) {
     try {
         await prisma.command.deleteMany({ where: { botId, owner: PLUGIN_OWNER_ID } });
         await prisma.permission.deleteMany({ where: { botId, owner: PLUGIN_OWNER_ID } });
-        console.log(\`[\${PLUGIN_OWNER_ID}] Ресурсы для бота ID \${botId} успешно удалены.\`);
+        console.log(\t('plugins:success_7d692812', { PLUGIN_OWNER_ID: PLUGIN_OWNER_ID, botId: botId }));
     } catch (error) {
-        console.error(\`[\${PLUGIN_OWNER_ID}] Ошибка при очистке ресурсов:\`, error);
+        console.error(\t('plugins:error_781caa51', { PLUGIN_OWNER_ID: PLUGIN_OWNER_ID }), error);
     }
 }
 
@@ -287,7 +287,7 @@ module.exports = {
 
     } catch (error) {
         console.error('[Plugin IDE Error] /create:', error);
-        res.status(500).json({ error: 'Не удалось создать плагин.' });
+        res.status(500).json({ error: t('plugins:error_3bbe9490') });
     }
 });
 
@@ -320,7 +320,7 @@ const readDirectoryRecursive = async (basePath, currentPath = '') => {
 
 router.get('/:pluginName/structure', resolvePluginPath, async (req, res) => {
     try {
-        // Автоматическая инициализация Git если есть repository URL
+        // Автоматическая initialization Git if есть repository URL
         const packageJsonPath = path.join(req.pluginPath, 'package.json');
         const gitPath = path.join(req.pluginPath, '.git');
         const gitignorePath = path.join(req.pluginPath, '.gitignore');
@@ -344,12 +344,12 @@ router.get('/:pluginName/structure', resolvePluginPath, async (req, res) => {
                     console.log(`[Plugin IDE] Initialized git repository for ${req.params.pluginName} with remote: ${cleanUrl}`);
                 }
             } catch (gitError) {
-                // Не критично, продолжаем без git
+                // Not критично, продолжаем without git
                 console.warn(`[Plugin IDE] Failed to auto-init git for ${req.params.pluginName}:`, gitError.message);
             }
         }
 
-        // Автоматическое создание .gitignore если его нет
+        // Автоматическое creation .gitignore if его no
         if (!await fse.pathExists(gitignorePath)) {
             const defaultGitignore = `# Dependencies
 node_modules/
@@ -395,12 +395,12 @@ router.get('/:pluginName/file', resolvePluginPath, async (req, res) => {
     try {
         const filePath = resolveWithin(req.pluginPath, req.query.path);
         if (!filePath) {
-            return res.status(403).json({ error: 'Доступ запрещен.' });
+            return res.status(403).json({ error: t('plugins:error_ab6fef40') });
         }
         const content = await fse.readFile(filePath, 'utf-8');
         res.send(content);
     } catch (error) {
-        res.status(500).json({ error: 'Не удалось прочитать файл.' });
+        res.status(500).json({ error: t('bots:error_14311c27') });
     }
 });
 
@@ -414,7 +414,7 @@ router.post('/:pluginName/file', resolvePluginPath, async (req, res) => {
         const safePath = resolveWithin(req.pluginPath, relativePath);
 
         if (!safePath) {
-            return res.status(403).json({ error: 'Доступ запрещен.' });
+            return res.status(403).json({ error: t('plugins:error_ab6fef40') });
         }
 
         await fse.writeFile(safePath, content, 'utf-8');
@@ -443,7 +443,7 @@ router.post('/:pluginName/file', resolvePluginPath, async (req, res) => {
                     });
 
                     if (conflictingPlugin) {
-                        console.warn(`[Plugin IDE] Конфликт имени плагина: ${newName} уже существует для бота ${req.params.botId}`);
+                        console.warn(t('plugins:log_d7fcdf5b', { newName: newName, req: req.params.botId }));
                         await prisma.installedPlugin.update({
                             where: { id: existingPlugin.id },
                             data: {
@@ -453,18 +453,18 @@ router.post('/:pluginName/file', resolvePluginPath, async (req, res) => {
                             }
                         });
                     } else {
-                        // Если имя изменилось, переименовать папку плагина
+                        // If name изменилось, переименовать папку plugin
                         if (oldName !== newName) {
                             if (typeof newName !== 'string' || /[\\/]/.test(newName) || newName === '.' || newName === '..' || path.isAbsolute(newName)) {
-                                return res.status(400).json({ error: 'Недопустимое имя плагина в package.json.' });
+                                return res.status(400).json({ error: t('plugins:error_ae1afba1') });
                             }
                             const oldPath = req.pluginPath;
                             const pluginsDir = path.dirname(oldPath);
                             const newPath = path.join(pluginsDir, newName);
 
-                            // Проверка что новая папка не существует
+                            // Check что новая папка not существует
                             if (await fse.pathExists(newPath)) {
-                                console.error(`[Plugin IDE] Папка ${newName} уже существует. Переименование невозможно.`);
+                                console.error(t('plugins:error_7afd7b44', { newName: newName }));
                                 return res.status(400).json({
                                     error: `Папка с именем "${newName}" уже существует. Переименование невозможно.`
                                 });
@@ -473,9 +473,9 @@ router.post('/:pluginName/file', resolvePluginPath, async (req, res) => {
                             try {
                                 // Переименовать папку
                                 await fse.rename(oldPath, newPath);
-                                console.log(`[Plugin IDE] Папка плагина переименована: ${oldName} -> ${newName}`);
+                                console.log(t('plugins:log_c82d13bf', { oldName: oldName, newName: newName }));
 
-                                // Обновить БД с новым именем и путём
+                                // Обновить БД with новым именем and путём
                                 await prisma.installedPlugin.update({
                                     where: { id: existingPlugin.id },
                                     data: {
@@ -487,23 +487,23 @@ router.post('/:pluginName/file', resolvePluginPath, async (req, res) => {
                                     }
                                 });
 
-                                console.log(`[Plugin IDE] БД обновлена для плагина ${oldName} -> ${newName}`);
+                                console.log(t('plugins:success_f46a73c5', { oldName: oldName, newName: newName }));
 
                                 // Вернуть информацию о переименовании
                                 return res.status(200).json({
-                                    message: 'Файл успешно сохранен.',
+                                    message: t('plugins:success_6ea1eebf'),
                                     renamed: true,
                                     oldName: oldName,
                                     newName: newName
                                 });
                             } catch (renameError) {
-                                console.error(`[Plugin IDE] Ошибка переименования папки плагина:`, renameError);
+                                console.error(t('plugins:error_b1208d19'), renameError);
                                 return res.status(500).json({
-                                    error: `Не удалось переименовать папку плагина: ${renameError.message}`
+                                    error: t('plugins:error_fc72f3d8', { renameError: renameError.message })
                                 });
                             }
                         } else {
-                            // Имя не изменилось, только обновляем метаданные
+                            // Name not изменилось, only обновляем метаданные
                             await prisma.installedPlugin.update({
                                 where: { id: existingPlugin.id },
                                 data: {
@@ -514,18 +514,18 @@ router.post('/:pluginName/file', resolvePluginPath, async (req, res) => {
                             });
                         }
                     }
-                    console.log(`[Plugin IDE] Manifest обновлен для плагина ${req.params.pluginName} после сохранения package.json`);
+                    console.log(t('plugins:success_9d172314', { req: req.params.pluginName }));
                 }
             } catch (manifestError) {
-                console.error(`[Plugin IDE] Ошибка обновления manifest для ${req.params.pluginName}:`, manifestError);
+                console.error(t('plugins:error_5e7b67a1', { req: req.params.pluginName }), manifestError);
             }
         }
 
-        res.status(200).json({ message: 'Файл успешно сохранен.' });
+        res.status(200).json({ message: t('plugins:success_6ea1eebf') });
 
     } catch (error) {
         console.error(`[Plugin IDE Error] /file POST for ${req.params.pluginName}:`, error);
-        res.status(500).json({ error: 'Не удалось сохранить файл.' });
+        res.status(500).json({ error: t('plugins:error_c92f5293') });
     }
 });
 
@@ -614,7 +614,7 @@ router.get('/:pluginName/manifest', resolvePluginPath, async (req, res) => {
         const packageJson = await fse.readJson(packageJsonPath);
         res.json(packageJson);
     } catch (error) {
-        res.status(500).json({ error: 'Не удалось прочитать package.json.' });
+        res.status(500).json({ error: t('plugins:error_6bc7005a') });
     }
 });
 
@@ -662,7 +662,7 @@ router.post('/:pluginName/manifest', resolvePluginPath, async (req, res) => {
             });
 
             if (conflictingPlugin) {
-                console.warn(`[Plugin IDE] Конфликт имени плагина: ${newManifest.name} уже существует для бота ${req.params.botId}`);
+                console.warn(t('plugins:log_4064deb0', { newManifest: newManifest.name, req: req.params.botId }));
                 await prisma.installedPlugin.update({
                     where: { id: existingPlugin.id },
                     data: {
@@ -684,11 +684,11 @@ router.post('/:pluginName/manifest', resolvePluginPath, async (req, res) => {
             }
         }
 
-        res.status(200).json({ message: 'package.json успешно обновлен.' });
+        res.status(200).json({ message: t('plugins:success_6848af34') });
     } catch (error) {
         console.error(`[Plugin IDE Error] /manifest POST for ${req.params.pluginName}:`, error);
-        // Файл уже сохранен, поэтому возвращаем успех даже если есть ошибка с БД
-        res.status(200).json({ message: 'package.json обновлен (возможны проблемы с синхронизацией БД).' });
+        // File already сохранен, поэтому возвращаем успех даже if есть error with БД
+        res.status(200).json({ message: t('plugins:success_6a214603') });
     }
 });
 
@@ -700,10 +700,10 @@ router.post('/:pluginName/fork', resolvePluginPath, async (req, res) => {
         });
 
         if (!currentPlugin || currentPlugin.sourceType !== 'GITHUB') {
-            return res.status(400).json({ error: 'Превратить в локальный можно только плагины из GitHub.' });
+            return res.status(400).json({ error: t('plugins:msg_0ef85b4d') });
         }
 
-        // Просто меняем sourceType на LOCAL_IDE, без копирования
+        // Просто меняем sourceType on LOCAL_IDE, without копирования
         const updatedPlugin = await prisma.installedPlugin.update({
             where: { id: currentPlugin.id },
             data: {
@@ -712,12 +712,12 @@ router.post('/:pluginName/fork', resolvePluginPath, async (req, res) => {
             }
         });
 
-        console.log(`[Plugin IDE] Плагин ${pluginName} превращен в локальный`);
+        console.log(t('plugins:log_ff9f844c', { pluginName: pluginName }));
         res.status(200).json(updatedPlugin);
 
     } catch (error) {
         console.error(`[Plugin IDE Error] /fork POST for ${req.params.pluginName}:`, error);
-        res.status(500).json({ error: 'Не удалось превратить плагин в локальный.' });
+        res.status(500).json({ error: t('plugins:error_678d72ff') });
     }
 });
 
@@ -726,19 +726,19 @@ router.post('/:pluginName/create-pr', resolvePluginPath, async (req, res) => {
     const { token, branch = 'contribution', commitMessage = 'Changes from RedstoneMind IDE', prTitle, prBody } = req.body;
 
     if (!token) {
-        return res.status(400).json({ error: 'GitHub токен обязателен.' });
+        return res.status(400).json({ error: t('plugins:msg_030e897d') });
     }
     if (!branch) {
-        return res.status(400).json({ error: 'Название ветки обязательно.' });
+        return res.status(400).json({ error: t('plugins:validation_27ceec24') });
     }
     if (!branch.match(/^[\w\-.\/]+$/)) {
-        return res.status(400).json({ error: 'Некорректное имя ветки.' });
+        return res.status(400).json({ error: t('plugins:error_dfd4ae30') });
     }
 
     try {
         cp.execSync('git --version');
     } catch (e) {
-        return res.status(400).json({ error: 'Git не установлен на этой системе.' });
+        return res.status(400).json({ error: t('plugins:success_22f70c25') });
     }
 
     try {
@@ -748,7 +748,7 @@ router.post('/:pluginName/create-pr', resolvePluginPath, async (req, res) => {
         let originalRepo = packageJson.repository?.url || packageJson.repository;
 
         if (!originalRepo) {
-            return res.status(400).json({ error: 'URL репозитория не указан в package.json.' });
+            return res.status(400).json({ error: t('plugins:msg_4fd2a1e8') });
         }
         const cleanRepoUrl = originalRepo.replace(/^git\+/, '');
 
@@ -759,7 +759,7 @@ router.post('/:pluginName/create-pr', resolvePluginPath, async (req, res) => {
 
         const repoInfo = parseRepo(cleanRepoUrl);
         if (!repoInfo) {
-            return res.status(400).json({ error: 'Неверный формат URL репозитория.' });
+            return res.status(400).json({ error: t('plugins:error_5508469b') });
         }
 
         const octokit = new Octokit({ auth: githubToken });
@@ -768,9 +768,9 @@ router.post('/:pluginName/create-pr', resolvePluginPath, async (req, res) => {
         const { data: user } = await octokit.users.getAuthenticated();
         const myUsername = user.login;
 
-        console.log(`[Plugin IDE] Создание PR для ${repoInfo.owner}/${repoInfo.repo} от пользователя ${myUsername}`);
+        console.log(t('plugins:success_6eb05579', { repoInfo: repoInfo.owner, repoInfo1: repoInfo.repo, myUsername: myUsername }));
 
-        // Проверяем, есть ли уже форк
+        // Проверяем, есть ли already форк
         let forkInfo;
         try {
             const { data: existingFork } = await octokit.repos.get({
@@ -781,15 +781,15 @@ router.post('/:pluginName/create-pr', resolvePluginPath, async (req, res) => {
             // Проверяем что это действительно форк нужного репо
             if (existingFork.fork && existingFork.parent?.full_name === `${repoInfo.owner}/${repoInfo.repo}`) {
                 forkInfo = existingFork;
-                console.log(`[Plugin IDE] Используем существующий форк: ${myUsername}/${repoInfo.repo}`);
+                console.log(t('plugins:log_96f2c8cf', { myUsername: myUsername, repoInfo: repoInfo.repo }));
             }
         } catch (e) {
-            // Форк не найден
+            // Форк not найден
         }
 
-        // Создаём форк если нет
+        // Создаём форк if no
         if (!forkInfo) {
-            console.log(`[Plugin IDE] Создаём форк ${repoInfo.owner}/${repoInfo.repo}...`);
+            console.log(t('plugins:log_a869525e', { repoInfo: repoInfo.owner, repoInfo1: repoInfo.repo }));
             const { data: newFork } = await octokit.repos.createFork({
                 owner: repoInfo.owner,
                 repo: repoInfo.repo
@@ -798,7 +798,7 @@ router.post('/:pluginName/create-pr', resolvePluginPath, async (req, res) => {
 
             // Ждём пока форк создастся
             await new Promise(resolve => setTimeout(resolve, 3000));
-            console.log(`[Plugin IDE] Форк создан: ${myUsername}/${repoInfo.repo}`);
+            console.log(t('plugins:success_e0b9b84c', { myUsername: myUsername, repoInfo: repoInfo.repo }));
         }
 
         const cwd = req.pluginPath;
@@ -806,7 +806,7 @@ router.post('/:pluginName/create-pr', resolvePluginPath, async (req, res) => {
 
         try {
             if (!validateGitUrl(cleanRepoUrl)) {
-                return res.status(400).json({ error: 'Недопустимый URL репозитория.' });
+                return res.status(400).json({ error: t('plugins:error_13c412b1') });
             }
 
             const forkUrl = `https://${githubToken}@github.com/${myUsername}/${repoInfo.repo}.git`;
@@ -829,7 +829,7 @@ router.post('/:pluginName/create-pr', resolvePluginPath, async (req, res) => {
                 runGit(['reset', '--hard', `upstream/${defaultBranch}`], { stdio: 'pipe', cwd: tempDir });
             }
 
-            // Копируем файлы из плагина
+            // Копируем файлы from plugin
             const files = await fse.readdir(req.pluginPath);
             for (const file of files) {
                 if (file !== '.git') {
@@ -845,16 +845,16 @@ router.post('/:pluginName/create-pr', resolvePluginPath, async (req, res) => {
                 runGit(['commit', '-m', commitMessage], { stdio: 'pipe', cwd: tempDir });
             } catch (e) {
                 if (e.message.includes('nothing to commit')) {
-                    return res.status(400).json({ error: 'Нет изменений для коммита.' });
+                    return res.status(400).json({ error: t('plugins:msg_0f679328') });
                 }
                 throw e;
             }
 
-            // Пушим в свой форк
+            // Пушим in свой форк
             runGit(['push', 'origin', branch, '--force'], { stdio: 'pipe', cwd: tempDir });
-            console.log(`[Plugin IDE] Изменения запушены в ${myUsername}/${repoInfo.repo}:${branch}`);
+            console.log(t('plugins:log_8b3fb0b5', { myUsername: myUsername, repoInfo: repoInfo.repo, branch: branch }));
 
-            // Создаём Pull Request через API
+            // Создаём Pull Request through API
             let prData;
             try {
                 const { data: pr } = await octokit.pulls.create({
@@ -866,9 +866,9 @@ router.post('/:pluginName/create-pr', resolvePluginPath, async (req, res) => {
                     base: defaultBranch
                 });
                 prData = pr;
-                console.log(`[Plugin IDE] PR создан: ${pr.html_url}`);
+                console.log(t('plugins:success_30d58720', { pr: pr.html_url }));
             } catch (prError) {
-                // PR может уже существовать
+                // PR can already существовать
                 if (prError.status === 422) {
                     // Ищем существующий PR
                     const { data: existingPRs } = await octokit.pulls.list({
@@ -880,7 +880,7 @@ router.post('/:pluginName/create-pr', resolvePluginPath, async (req, res) => {
 
                     if (existingPRs.length > 0) {
                         prData = existingPRs[0];
-                        console.log(`[Plugin IDE] PR уже существует: ${prData.html_url}`);
+                        console.log(t('plugins:log_44e9b6f6', { prData: prData.html_url }));
                     } else {
                         throw prError;
                     }
@@ -893,7 +893,7 @@ router.post('/:pluginName/create-pr', resolvePluginPath, async (req, res) => {
                 success: true,
                 prUrl: prData.html_url,
                 prNumber: prData.number,
-                message: 'Pull Request создан успешно'
+                message: t('plugins:success_c234f51c')
             });
 
         } finally {
@@ -906,7 +906,7 @@ router.post('/:pluginName/create-pr', resolvePluginPath, async (req, res) => {
 
     } catch (error) {
         console.error('[Plugin IDE Error] /create-pr:', error);
-        res.status(500).json({ error: 'Не удалось создать PR: ' + error.message });
+        res.status(500).json({ error: t('plugins:error_4ad6efd6') + error.message });
     }
 });
 
@@ -1140,7 +1140,7 @@ router.post('/:pluginName/clone', resolvePluginPath, async (req, res) => {
         }
 
         if (!validateGitUrl(gitUrl)) {
-            return res.status(400).json({ error: 'Недопустимый Git URL. Разрешены только https:// адреса.' });
+            return res.status(400).json({ error: t('plugins:error_b5c36c5a') });
         }
 
         const files = await fse.readdir(req.pluginPath);
@@ -1216,7 +1216,7 @@ router.post('/:pluginName/github/create', resolvePluginPath, async (req, res) =>
 
         const octokit = new Octokit({ auth: token });
 
-        // Читаем package.json для получения description
+        // Читаем package.json for getting description
         const packageJsonPath = path.join(req.pluginPath, 'package.json');
         let description = 'RedstoneMind plugin for Minecraft bots';
         if (await fse.pathExists(packageJsonPath)) {
@@ -1237,7 +1237,7 @@ router.post('/:pluginName/github/create', resolvePluginPath, async (req, res) =>
 
         console.log(`[Plugin IDE] Repository created: ${repo.html_url}`);
 
-        // Добавляем topics (теги) для поиска на GitHub
+        // Добавляем topics (теги) for поиска on GitHub
         try {
             await octokit.repos.replaceAllTopics({
                 owner: repo.owner.login,
@@ -1251,7 +1251,7 @@ router.post('/:pluginName/github/create', resolvePluginPath, async (req, res) =>
 
         await uploadFilesToGitHub(octokit, repo.owner.login, repo.name, req.pluginPath);
 
-        // Обновляем package.json с URL репозитория и keywords
+        // Обновляем package.json с URL репозитория and keywords
         if (await fse.pathExists(packageJsonPath)) {
             const packageJson = await fse.readJson(packageJsonPath);
             packageJson.repository = {
@@ -1259,7 +1259,7 @@ router.post('/:pluginName/github/create', resolvePluginPath, async (req, res) =>
                 url: repo.html_url
             };
 
-            // Добавляем keywords для npm (если будет публиковаться)
+            // Добавляем keywords for npm (if will публиковаться)
             if (!packageJson.keywords) {
                 packageJson.keywords = [];
             }
@@ -1431,26 +1431,26 @@ router.post('/:pluginName/github/release', resolvePluginPath, async (req, res) =
         const [, owner, repo] = match;
         const octokit = new Octokit({ auth: token });
 
-        // Проверяем, имеет ли пользователь права на запись в этот репозиторий
+        // Проверяем, имеет ли user permissions on record in этот репозиторий
         const { data: user } = await octokit.users.getAuthenticated();
         const myUsername = user.login;
 
-        // Проверяем права доступа
+        // Проверяем permissions access
         try {
             const { data: repoInfo } = await octokit.repos.get({ owner, repo });
 
-            // Если не владелец и не имеет прав push
+            // If not владелец and not имеет прав push
             if (repoInfo.permissions && !repoInfo.permissions.push) {
                 return res.status(403).json({
-                    error: `У вас нет прав на создание релиза в репозитории ${owner}/${repo}. Используйте "Создать Pull Request" для внесения изменений в чужие плагины.`,
+                    error: `У вас нет прав на создание релиза в репозитории ${owner}/${repo}. Используйте t('plugins:msg_561709f4') для внесения изменений в чужие плагины.`,
                     suggestPR: true
                 });
             }
         } catch (permError) {
-            // Если не можем получить инфо о репо, скорее всего нет доступа
+            // If not можем получить инфо о репо, скорее всего no access
             if (permError.status === 404) {
                 return res.status(403).json({
-                    error: `Репозиторий ${owner}/${repo} не найден или у вас нет доступа. Для внесения изменений в чужие плагины используйте "Создать Pull Request".`,
+                    error: `Репозиторий ${owner}/${repo} не найден или у вас нет доступа. Для внесения изменений в чужие плагины используйте t('plugins:msg_561709f4').`,
                     suggestPR: true
                 });
             }
@@ -1567,14 +1567,14 @@ router.get('/:pluginName/git/status', resolvePluginPath, async (req, res) => {
                 encoding: 'utf8'
             }).trim();
         } catch (branchError) {
-            // Если HEAD не существует (нет коммитов), пытаемся получить дефолтную ветку
+            // If HEAD not существует (no коммитов), пытаемся получить дефолтную ветку
             try {
                 branch = execSync('git branch --show-current', {
                     cwd: req.pluginPath,
                     encoding: 'utf8'
                 }).trim() || 'master';
             } catch {
-                // Если и это не работает, остается 'main'
+                // If and это not работает, остается 'main'
             }
         }
 
@@ -1776,13 +1776,13 @@ router.post('/:pluginName/git/sync', resolvePluginPath, async (req, res) => {
 
         res.json({
             success: true,
-            message: `Синхронизировано с GitHub (ветка: ${mainBranch})`,
+            message: t('plugins:msg_e9bfb88e', { mainBranch: mainBranch }),
             branch: mainBranch
         });
     } catch (error) {
         console.error(`[Plugin IDE Error] /git/sync:`, error);
         res.status(500).json({
-            error: error.message || 'Не удалось синхронизировать с GitHub.'
+            error: error.message || t('plugins:error_7ee1bdd3')
         });
     }
 });
@@ -1799,7 +1799,7 @@ router.get('/:pluginName/git/log', resolvePluginPath, async (req, res) => {
                 encoding: 'utf8'
             });
         } catch (logError) {
-            // Если нет коммитов, возвращаем пустой массив
+            // If no коммитов, возвращаем empty array
             if (logError.message.includes('does not have any commits yet') ||
                 logError.message.includes('bad default revision')) {
                 return res.json({ commits: [] });
@@ -1830,6 +1830,7 @@ router.get('/:pluginName/git/log', resolvePluginPath, async (req, res) => {
 router.get('/:pluginName/git/diff', resolvePluginPath, async (req, res) => {
     try {
         const { execSync } = require('child_process');
+const { t } = require('../../i18n');
         const { path: filePath, staged, status } = req.query;
 
         if (!filePath) {
@@ -2010,7 +2011,7 @@ router.post('/:pluginName/unlist', resolvePluginPath, async (req, res) => {
     } catch (error) {
         const status = error.statusCode || error.status || 500;
         res.status(status >= 400 && status < 600 ? status : 500).json({
-            error: error.message || 'Не удалось убрать плагин из списка.',
+            error: error.message || t('plugins:error_f10faf77'),
         });
     }
 });
@@ -2018,11 +2019,11 @@ router.post('/:pluginName/unlist', resolvePluginPath, async (req, res) => {
 router.get('/:pluginName/publish-info', resolvePluginPath, async (req, res) => {
     try {
         if (req.pluginData.sourceType !== 'LOCAL' && req.pluginData.sourceType !== 'LOCAL_IDE') {
-            return res.status(400).json({ error: 'Одной кнопкой публикуется только локальный плагин.' });
+            return res.status(400).json({ error: t('plugins:msg_19fab5d9') });
         }
         res.json(await inspectLocalPublish(req.pluginPath));
     } catch (error) {
-        res.status(500).json({ error: error.message || 'Не удалось прочитать плагин.' });
+        res.status(500).json({ error: error.message || t('plugins:error_aace8599') });
     }
 });
 
@@ -2056,7 +2057,7 @@ router.post('/:pluginName/publish', resolvePluginPath, async (req, res) => {
         const status = error.statusCode || error.status || 500;
         console.error('[Plugin IDE Error] /publish:', error.message);
         res.status(status >= 400 && status < 600 ? status : 500).json({
-            error: error.message || 'Не удалось опубликовать плагин.',
+            error: error.message || t('plugins:error_82a1c455'),
         });
     }
 });
@@ -2065,7 +2066,7 @@ router.post('/:pluginName/submit-to-official-list', resolvePluginPath, async (re
     try {
         const { token, pluginDisplayName, icon } = req.body || {};
         if (!pluginDisplayName || !icon) {
-            return res.status(400).json({ error: 'Нужны название и иконка.' });
+            return res.status(400).json({ error: t('plugins:msg_6834aa9b') });
         }
         const result = await submitListedRelease({
             token,
@@ -2077,14 +2078,14 @@ router.post('/:pluginName/submit-to-official-list', resolvePluginPath, async (re
             success: true,
             ...result,
             message: result.prSkipped
-                ? 'Плагин уже в официальном разделе. Версию списка меняют вручную.'
-                : 'Pull Request в неофициальный раздел создан.',
+                ? t('plugins:msg_744127e8')
+                : t('plugins:success_0d08eabe'),
         });
     } catch (error) {
         const status = error.statusCode || error.status || 500;
         console.error('[Plugin IDE Error] /submit-to-official-list:', error.message);
         res.status(status >= 400 && status < 600 ? status : 500).json({
-            error: error.message || 'Не удалось отправить плагин в список.',
+            error: error.message || t('plugins:error_966103f1'),
         });
     }
 });

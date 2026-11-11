@@ -1,10 +1,11 @@
+const { t } = require('../../../i18n');
 /**
- * @param {object} node - Экземпляр узла из графа.
- * @param {string} pinId - Идентификатор выходного пина, значение которого нужно вычислить.
- * @param {object} context - Контекст выполнения графа.
- * @param {object} helpers - Вспомогательные функции движка.
- * @param {function} helpers.resolvePinValue - Функция для получения значения с входного пина.
- * @returns {Promise<any>} - Вычисленное значение для выходного пина.
+ * @param {object} node - Instance node from graph.
+ * @param {string} pinId - Идентификатор выходного pin, value которого need вычислить.
+ * @param {object} context - Context execution graph.
+ * @param {object} helpers - Helper functions engine.
+ * @param {function} helpers.resolvePinValue - Function for getting values with входного pin.
+ * @returns {Promise<any>} - Вычисленное value for выходного pin.
  */
 async function evaluate(node, pinId, context, helpers) {
     const { resolvePinValue } = helpers;
@@ -14,7 +15,7 @@ async function evaluate(node, pinId, context, helpers) {
             try {
                 return JSON.parse(node.data.jsonValue || '{}');
             } catch (e) {
-                console.error('Ошибка парсинга JSON в object:create:', e);
+                console.error(t('nodes:error_082c4832'), e);
                 return {};
             }
         } else {

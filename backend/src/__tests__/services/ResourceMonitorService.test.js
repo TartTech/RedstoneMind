@@ -1,4 +1,5 @@
 const ResourceMonitorService = require('../../core/services/ResourceMonitorService');
+const { t } = require('../../i18n');
 
 describe('ResourceMonitorService', () => {
     let resourceMonitor;
@@ -24,7 +25,7 @@ describe('ResourceMonitorService', () => {
     });
 
     describe('startMonitoring', () => {
-        test('должен запустить мониторинг', () => {
+        test(t('tests:validation_2b97e71a'), () => {
             jest.useFakeTimers();
 
             resourceMonitor.startMonitoring(1000);
@@ -36,7 +37,7 @@ describe('ResourceMonitorService', () => {
             jest.useRealTimers();
         });
 
-        test('должен очистить предыдущий интервал', () => {
+        test(t('tests:validation_98386a3e'), () => {
             jest.useFakeTimers();
 
             resourceMonitor.startMonitoring(1000);
@@ -52,7 +53,7 @@ describe('ResourceMonitorService', () => {
     });
 
     describe('stopMonitoring', () => {
-        test('должен остановить мониторинг', () => {
+        test(t('tests:validation_599386fa'), () => {
             jest.useFakeTimers();
 
             resourceMonitor.startMonitoring(1000);
@@ -65,19 +66,19 @@ describe('ResourceMonitorService', () => {
     });
 
     describe('updateFromIPC', () => {
-        test('должен сохранить статистику для бота', () => {
+        test(t('tests:validation_140d448a'), () => {
             const usage = resourceMonitor.updateFromIPC(1, { cpu: 12.345, memory: 50.678 });
 
             expect(usage).toEqual({ botId: 1, cpu: 12.3, memory: 50.7 });
             expect(resourceMonitor.getResourceUsage(1)).toEqual({ botId: 1, cpu: 12.3, memory: 50.7 });
         });
 
-        test('должен игнорировать вызов без botId', () => {
+        test(t('tests:validation_9b14b50d'), () => {
             resourceMonitor.updateFromIPC(null, { cpu: 1, memory: 2 });
             expect(resourceMonitor.getAllResourceUsage()).toEqual([]);
         });
 
-        test('должен приводить нечисловые значения к 0', () => {
+        test(t('tests:validation_0ff7b1b2'), () => {
             const usage = resourceMonitor.updateFromIPC(2, { cpu: 'foo', memory: 'bar' });
             expect(usage.cpu).toBeNaN();
             expect(usage.memory).toBeNaN();
@@ -85,7 +86,7 @@ describe('ResourceMonitorService', () => {
     });
 
     describe('updateAllResourceUsage', () => {
-        test('должен вернуть пустой массив если нет процессов и нет данных', async () => {
+        test(t('tests:validation_92d879d3'), async () => {
             mockProcessManager.getAllProcesses.mockReturnValue(new Map());
 
             const result = await resourceMonitor.updateAllResourceUsage();
@@ -93,7 +94,7 @@ describe('ResourceMonitorService', () => {
             expect(result).toEqual([]);
         });
 
-        test('должен вернуть актуальные сохранённые значения', async () => {
+        test(t('tests:validation_abb3ff44'), async () => {
             const processes = new Map([
                 [1, { pid: 1234 }],
                 [2, { pid: 5678 }]
@@ -110,7 +111,7 @@ describe('ResourceMonitorService', () => {
             expect(results).toContainEqual({ botId: 2, cpu: 8.2, memory: 30 });
         });
 
-        test('должен очистить запись несуществующего бота', async () => {
+        test(t('tests:validation_7729f696'), async () => {
             const processes = new Map([
                 [1, { pid: 1234 }]
             ]);
@@ -126,7 +127,7 @@ describe('ResourceMonitorService', () => {
             expect(resourceMonitor.getResourceUsage(99)).toBeUndefined();
         });
 
-        test('должен очистить все записи если ни одного процесса не запущено', async () => {
+        test(t('tests:validation_6898091f'), async () => {
             mockProcessManager.getAllProcesses.mockReturnValue(new Map());
 
             resourceMonitor.updateFromIPC(1, { cpu: 10, memory: 50 });
@@ -139,7 +140,7 @@ describe('ResourceMonitorService', () => {
     });
 
     describe('getBotIdByPid', () => {
-        test('должен найти botId по PID', () => {
+        test(t('tests:validation_927e6550'), () => {
             const mockChild1 = { pid: 1234 };
             const mockChild2 = { pid: 5678 };
 
@@ -153,7 +154,7 @@ describe('ResourceMonitorService', () => {
             expect(botId).toBe(2);
         });
 
-        test('должен вернуть null если PID не найден', () => {
+        test(t('tests:validation_bd697a79'), () => {
             mockProcessManager.getAllProcesses.mockReturnValue(new Map());
 
             const botId = resourceMonitor.getBotIdByPid(9999);
@@ -163,7 +164,7 @@ describe('ResourceMonitorService', () => {
     });
 
     describe('getResourceUsage', () => {
-        test('должен вернуть статистику для бота', () => {
+        test(t('tests:validation_327fc9c4'), () => {
             resourceMonitor.resourceUsage.set(1, {
                 botId: 1,
                 cpu: 10.5,
@@ -179,7 +180,7 @@ describe('ResourceMonitorService', () => {
             });
         });
 
-        test('должен вернуть undefined для несуществующего бота', () => {
+        test(t('tests:validation_69dbac4d'), () => {
             const usage = resourceMonitor.getResourceUsage(999);
 
             expect(usage).toBeUndefined();
@@ -187,7 +188,7 @@ describe('ResourceMonitorService', () => {
     });
 
     describe('getAllResourceUsage', () => {
-        test('должен вернуть массив всей статистики', () => {
+        test(t('tests:validation_c1ba2f41'), () => {
             resourceMonitor.resourceUsage.set(1, { botId: 1, cpu: 10, memory: 50 });
             resourceMonitor.resourceUsage.set(2, { botId: 2, cpu: 5, memory: 30 });
 
@@ -200,7 +201,7 @@ describe('ResourceMonitorService', () => {
     });
 
     describe('clearResourceUsage', () => {
-        test('должен очистить статистику для бота', () => {
+        test(t('tests:validation_66b1cfe6'), () => {
             resourceMonitor.resourceUsage.set(1, { botId: 1, cpu: 10, memory: 50 });
 
             resourceMonitor.clearResourceUsage(1);

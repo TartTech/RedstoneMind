@@ -1,4 +1,5 @@
 const { format } = require('date-fns');
+const { t } = require('../../../i18n');
 
 /**
  * @param {object} node
@@ -18,10 +19,10 @@ async function evaluate(node, pinId, context, helpers) {
             try {
                 return format(date, formatString);
             } catch (error) {
-                throw new Error(`Ошибка форматирования: ${error.message}`);
+                throw new Error(t('nodes:error_1c4230f2', { error: error.message }));
             }
         }
-        throw new Error('Ошибка: невалидная дата');
+        throw new Error(t('nodes:error_ac2dc29d'));
     }
 
     return null;

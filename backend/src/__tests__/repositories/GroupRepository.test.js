@@ -1,4 +1,5 @@
 const GroupRepository = require('../../repositories/GroupRepository');
+const { t } = require('../../i18n');
 
 describe('GroupRepository', () => {
     let repository;
@@ -25,7 +26,7 @@ describe('GroupRepository', () => {
     });
 
     describe('findByBotId', () => {
-        test('должен найти все группы бота с правами', async () => {
+        test(t('tests:validation_e28250cf'), async () => {
             const mockGroups = [
                 {
                     id: 1,
@@ -62,7 +63,7 @@ describe('GroupRepository', () => {
     });
 
     describe('findByName', () => {
-        test('должен найти группу по имени', async () => {
+        test(t('tests:validation_a0ca6fa3'), async () => {
             const mockGroup = {
                 id: 1,
                 botId: 1,
@@ -90,7 +91,7 @@ describe('GroupRepository', () => {
     });
 
     describe('upsertGroup', () => {
-        test('должен создать новую группу', async () => {
+        test(t('tests:validation_38590474'), async () => {
             const newGroup = {
                 id: 1,
                 botId: 1,
@@ -119,7 +120,7 @@ describe('GroupRepository', () => {
     });
 
     describe('addPermissionToGroup', () => {
-        test('должен добавить право в группу', async () => {
+        test(t('tests:validation_fbf122cd'), async () => {
             const mockResult = {
                 groupId: 1,
                 permissionId: 5
@@ -140,7 +141,7 @@ describe('GroupRepository', () => {
     });
 
     describe('removePermissionFromGroup', () => {
-        test('должен удалить право из группы', async () => {
+        test(t('tests:validation_da23565b'), async () => {
             const mockResult = { count: 1 };
             mockPrisma.groupPermission.deleteMany.mockResolvedValue(mockResult);
 

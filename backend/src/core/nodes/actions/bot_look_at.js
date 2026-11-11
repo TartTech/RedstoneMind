@@ -1,9 +1,9 @@
 /**
- * @param {object} node - Экземпляр узла из графа.
- * @param {object} context - Контекст выполнения графа.
- * @param {object} helpers - Вспомогательные функции движка.
- * @param {function} helpers.resolvePinValue - Функция для получения значения с пина.
- * @param {function} helpers.traverse - Функция для перехода к следующему узлу.
+ * @param {object} node - Instance node from graph.
+ * @param {object} context - Context execution graph.
+ * @param {object} helpers - Helper functions engine.
+ * @param {function} helpers.resolvePinValue - Function for getting values with pin.
+ * @param {function} helpers.traverse - Function for transitioning to next node.
  */
 async function execute(node, context, helpers) {
     const { resolvePinValue, traverse } = helpers;
@@ -13,11 +13,11 @@ async function execute(node, context, helpers) {
 
     if (target && context.bot?.lookAt) {
         let finalPosition;
-        // Если цель - это сущность, у которой есть позиция
+        // If цель - это entity, у которой есть position
         if (target.position) {
             finalPosition = { ...target.position };
         }
-        // Если цель - это объект с координатами
+        // If цель - это object with координатами
         else if (target.x !== undefined && target.y !== undefined && target.z !== undefined) {
             finalPosition = { ...target };
         }

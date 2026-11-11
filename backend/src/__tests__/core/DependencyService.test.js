@@ -1,8 +1,9 @@
 const DependencyService = require('../../core/DependencyService');
+const { t } = require('../../i18n');
 
 describe('DependencyService', () => {
     describe('resolveDependencies', () => {
-        test('должен вернуть пустой список для пустого массива плагинов', () => {
+        test(t('tests:validation_c057d60f'), () => {
             const result = DependencyService.resolveDependencies([], []);
 
             expect(result.sortedPlugins).toEqual([]);
@@ -10,7 +11,7 @@ describe('DependencyService', () => {
             expect(result.hasCriticalIssues).toBe(false);
         });
 
-        test('должен обработать плагины без зависимостей', () => {
+        test(t('tests:validation_e9fe2b77'), () => {
             const allPlugins = [
                 {
                     id: 1,
@@ -36,7 +37,7 @@ describe('DependencyService', () => {
             expect(result.pluginInfo[2].issues).toEqual([]);
         });
 
-        test('должен отсортировать плагины по зависимостям (A зависит от B)', () => {
+        test(t('tests:validation_85a0361e'), () => {
             const allPlugins = [
                 {
                     id: 1,
@@ -60,13 +61,13 @@ describe('DependencyService', () => {
 
             const result = DependencyService.resolveDependencies(enabledPlugins, allPlugins);
 
-            // pluginB должен быть первым, т.к. pluginA зависит от него
+            // pluginB must быть первым, т.to. pluginA зависит от него
             expect(result.sortedPlugins[0].name).toBe('pluginB');
             expect(result.sortedPlugins[1].name).toBe('pluginA');
             expect(result.hasCriticalIssues).toBe(false);
         });
 
-        test('должен обработать цепочку зависимостей (A -> B -> C)', () => {
+        test(t('tests:validation_60a5849c'), () => {
             const allPlugins = [
                 {
                     id: 1,
@@ -103,7 +104,7 @@ describe('DependencyService', () => {
             expect(result.hasCriticalIssues).toBe(false);
         });
 
-        test('должен обнаружить отсутствующую зависимость', () => {
+        test(t('tests:validation_435a3b82'), () => {
             const allPlugins = [
                 {
                     id: 1,
@@ -125,7 +126,7 @@ describe('DependencyService', () => {
             expect(result.pluginInfo[1].issues[0].message).toContain('nonExistentPlugin');
         });
 
-        test('должен обнаружить отключенную зависимость', () => {
+        test(t('tests:validation_affed80d'), () => {
             const allPlugins = [
                 {
                     id: 1,
@@ -143,7 +144,7 @@ describe('DependencyService', () => {
                 },
             ];
 
-            // pluginB существует, но не включен
+            // pluginB существует, но not включен
             const enabledPlugins = [allPlugins[0]];
 
             const result = DependencyService.resolveDependencies(enabledPlugins, allPlugins);
@@ -154,7 +155,7 @@ describe('DependencyService', () => {
             expect(result.pluginInfo[1].issues[0].message).toContain('pluginB');
         });
 
-        test('должен обнаружить несовместимость версий', () => {
+        test(t('tests:validation_ea7d6d9d'), () => {
             const allPlugins = [
                 {
                     id: 1,
@@ -183,7 +184,7 @@ describe('DependencyService', () => {
             expect(result.pluginInfo[1].issues[0].message).toContain('1.5.0');
         });
 
-        test('должен обнаружить циклическую зависимость (A -> B -> A)', () => {
+        test(t('tests:validation_cd237753'), () => {
             const allPlugins = [
                 {
                     id: 1,
@@ -209,7 +210,7 @@ describe('DependencyService', () => {
 
             expect(result.hasCriticalIssues).toBe(true);
 
-            // Один из плагинов должен иметь ошибку циклической зависимости
+            // Один from плагинов must иметь ошибку циклической dependencies
             const hasCircularError =
                 result.pluginInfo[1].issues.some(i => i.type === 'circular_dependency') ||
                 result.pluginInfo[2].issues.some(i => i.type === 'circular_dependency');
@@ -217,7 +218,7 @@ describe('DependencyService', () => {
             expect(hasCircularError).toBe(true);
         });
 
-        test('должен обработать плагины без manifest', () => {
+        test(t('tests:validation_bea62071'), () => {
             const allPlugins = [
                 {
                     id: 1,
@@ -236,7 +237,7 @@ describe('DependencyService', () => {
             expect(result.hasCriticalIssues).toBe(false);
         });
 
-        test('должен правильно помечать включенные/выключенные плагины', () => {
+        test(t('tests:validation_a9e91158'), () => {
             const allPlugins = [
                 {
                     id: 1,
@@ -252,7 +253,7 @@ describe('DependencyService', () => {
                 },
             ];
 
-            // Только pluginA включен
+            // Only pluginA включен
             const enabledPlugins = [allPlugins[0]];
 
             const result = DependencyService.resolveDependencies(enabledPlugins, allPlugins);
@@ -261,7 +262,7 @@ describe('DependencyService', () => {
             expect(result.pluginInfo[2].isEnabled).toBe(false);
         });
 
-        test('должен обработать сложный граф зависимостей', () => {
+        test(t('tests:validation_caeef7a3'), () => {
             const allPlugins = [
                 {
                     id: 1,
@@ -291,16 +292,16 @@ describe('DependencyService', () => {
 
             const result = DependencyService.resolveDependencies(enabledPlugins, allPlugins);
 
-            // utils должен быть первым (ни от кого не зависит)
+            // utils must быть первым (ни от кого not зависит)
             expect(result.sortedPlugins[0].name).toBe('utils');
-            // core зависит только от utils
+            // core зависит only от utils
             expect(result.sortedPlugins[1].name).toBe('core');
             // ui зависит от core и utils
             expect(result.sortedPlugins[2].name).toBe('ui');
             expect(result.hasCriticalIssues).toBe(false);
         });
 
-        test('должен обработать множественные проблемы одновременно', () => {
+        test(t('tests:validation_e32609dd'), () => {
             const allPlugins = [
                 {
                     id: 1,

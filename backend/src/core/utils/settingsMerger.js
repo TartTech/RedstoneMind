@@ -1,8 +1,8 @@
 /**
  * Глубокое объединение объектов настроек
- * @param {Object} defaultSettings - Настройки по умолчанию
- * @param {Object} savedSettings - Сохраненные настройки
- * @returns {Object} Объединенные настройки
+ * @param {Object} defaultSettings - Settings by умолчанию
+ * @param {Object} savedSettings - Сохраненные settings
+ * @returns {Object} Объединенные settings
  */
 const FORBIDDEN_KEYS = new Set(['__proto__', 'constructor', 'prototype']);
 

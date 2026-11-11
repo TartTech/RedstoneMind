@@ -97,15 +97,15 @@ router.post('/:id/restart', conditionalRestartAuth, authenticateUniversal, check
         const botId = parseInt(req.params.id, 10);
         const botConfig = await prisma.bot.findUnique({ where: { id: botId }, include: { server: true, proxy: true } });
         if (!botConfig) {
-            return res.status(404).json({ success: false, message: 'Бот не найден' });
+            return res.status(404).json({ success: false, message: t('bots:msg_13215f66') });
         }
-        res.status(202).json({ success: true, message: 'Команда на перезапуск отправлена.' });
+        res.status(202).json({ success: true, message: t('bots:msg_f914bb97') });
         botManager.restartBot(botId, botConfig).catch((error) => {
-            console.error(`[API] Ошибка перезапуска бота ${botId}:`, error);
+            console.error(t('bots:error_d001b3ae', { botId: botId }), error);
         });
     } catch (error) {
-        console.error(`[API] Ошибка перезапуска бота ${req.params.id}:`, error);
-        res.status(500).json({ success: false, message: 'Ошибка при перезапуске бота: ' + error.message });
+        console.error(t('bots:error_0a8ba571', { req: req.params.id }), error);
+        res.status(500).json({ success: false, message: t('bots:error_80a0a92f') + error.message });
     }
 });
 
@@ -113,11 +113,11 @@ router.post('/:id/chat', conditionalChatAuth, authenticateUniversal, checkBotAcc
     try {
         const botId = parseInt(req.params.id, 10);
         const { message } = req.body;
-        if (!message) return res.status(400).json({ error: 'Сообщение не может быть пустым' });
+        if (!message) return res.status(400).json({ error: t('bots:msg_0dec48ad') });
         const result = botManager.sendMessageToBot(botId, message);
         if (result.success) res.json({ success: true });
         else res.status(404).json(result);
-    } catch (error) { res.status(500).json({ error: 'Внутренняя ошибка сервера: ' + error.message }); }
+    } catch (error) { res.status(500).json({ error: t('bots:error_39cdf0c4') + error.message }); }
 });
 
 router.post('/:id/start', conditionalStartStopAuth, authenticateUniversal, checkBotAccess, async (req, res) => {
@@ -125,13 +125,13 @@ router.post('/:id/start', conditionalStartStopAuth, authenticateUniversal, check
         const botId = parseInt(req.params.id, 10);
         const botConfig = await prisma.bot.findUnique({ where: { id: botId }, include: { server: true, proxy: true } });
         if (!botConfig) {
-            return res.status(404).json({ success: false, message: 'Бот не найден' });
+            return res.status(404).json({ success: false, message: t('bots:msg_13215f66') });
         }
         botManager.startBot(botConfig);
-        res.status(202).json({ success: true, message: 'Команда на запуск отправлена.' });
+        res.status(202).json({ success: true, message: t('bots:msg_dfb558d7') });
     } catch (error) {
-        console.error(`[API] Ошибка запуска бота ${req.params.id}:`, error);
-        res.status(500).json({ success: false, message: 'Ошибка при запуске бота: ' + error.message });
+        console.error(t('bots:error_ad3e49fc', { req: req.params.id }), error);
+        res.status(500).json({ success: false, message: t('bots:error_68558261') + error.message });
     }
 });
 
@@ -139,10 +139,10 @@ router.post('/:id/stop', conditionalStartStopAuth, authenticateUniversal, checkB
     try {
         const botId = parseInt(req.params.id, 10);
         botManager.stopBot(botId);
-        res.status(202).json({ success: true, message: 'Команда на остановку отправлена.' });
+        res.status(202).json({ success: true, message: t('bots:msg_98308238') });
     } catch (error) {
-        console.error(`[API] Ошибка остановки бота ${req.params.id}:`, error);
-        res.status(500).json({ success: false, message: 'Ошибка при остановке бота: ' + error.message });
+        console.error(t('bots:error_7953def5', { req: req.params.id }), error);
+        res.status(500).json({ success: false, message: t('bots:error_07923cdc') + error.message });
     }
 });
 
@@ -172,11 +172,11 @@ router.get('/state', conditionalListAuth, async (req, res) => {
             }
         }
         res.json(state);
-    } catch (error) { res.status(500).json({ error: 'Не удалось получить состояние ботов' }); }
+    } catch (error) { res.status(500).json({ error: t('bots:error_84b76440') }); }
 });
 
 router.get('/', conditionalListAuth, async (req, res) => {
-    console.log('[API /api/bots GET] Запрос получен, user:', req.user?.username, 'permissions:', req.user?.permissions?.slice(0, 3));
+    console.log(t('bots:log_1e84d6a7'), req.user?.username, 'permissions:', req.user?.permissions?.slice(0, 3));
     try {
         const botsWithoutSortOrder = await prisma.bot.findMany({
             where: { sortOrder: null },
@@ -184,7 +184,7 @@ router.get('/', conditionalListAuth, async (req, res) => {
         });
         
         if (botsWithoutSortOrder.length > 0) {
-            console.log(`[API] Обновляем sortOrder для ${botsWithoutSortOrder.length} ботов`);
+            console.log(t('bots:log_58668bba', { botsWithoutSortOrder: botsWithoutSortOrder.length }));
             
             const maxSortOrder = await prisma.bot.aggregate({
                 _max: { sortOrder: true }
@@ -197,7 +197,7 @@ router.get('/', conditionalListAuth, async (req, res) => {
                     where: { id: bot.id },
                     data: { sortOrder: nextSortOrder }
                 });
-                console.log(`[API] Установлен sortOrder ${nextSortOrder} для бота ${bot.id}`);
+                console.log(t('bots:success_71c8e6f1', { nextSortOrder: nextSortOrder, bot: bot.id }));
                 nextSortOrder++;
             }
         }
@@ -219,11 +219,11 @@ router.get('/', conditionalListAuth, async (req, res) => {
             include: { server: true },
             orderBy: { sortOrder: 'asc' }
         });
-        console.log(`[API /api/bots GET] Отправляем ${bots.length} ботов, status: 200`);
+        console.log(t('bots:log_e67eefad', { bots: bots.length }));
         res.json(bots);
     } catch (error) {
-        console.error("[API /api/bots] Ошибка получения списка ботов:", error);
-        res.status(500).json({ error: 'Не удалось получить список ботов' });
+        console.error(t('bots:error_45dffd00'), error);
+        res.status(500).json({ error: t('bots:error_a8c837d4') });
     }
 });
 
@@ -237,7 +237,7 @@ router.get('/:id', conditionalListAuth, checkBotAccess, async (req, res) => {
         });
 
         if (!bot) {
-            return res.status(404).json({ error: 'Бот не найден' });
+            return res.status(404).json({ error: t('bots:msg_13215f66') });
         }
 
         if (bot.proxy && bot.proxy.password) {
@@ -246,8 +246,8 @@ router.get('/:id', conditionalListAuth, checkBotAccess, async (req, res) => {
 
         res.json(bot);
     } catch (error) {
-        console.error(`[API /api/bots/:id] Ошибка получения бота:`, error);
-        res.status(500).json({ error: 'Не удалось получить бота' });
+        console.error(t('bots:error_e57e92df'), error);
+        res.status(500).json({ error: t('bots:error_cd0c13c8') });
     }
 });
 
@@ -387,8 +387,8 @@ router.get('/:id/logs', conditionalListAuth, authenticateUniversal, checkBotAcce
             }
         });
     } catch (error) { 
-        console.error(`[API] Ошибка получения логов бота ${req.params.id}:`, error);
-        res.status(500).json({ error: 'Не удалось получить логи бота' }); 
+        console.error(t('bots:error_ba59520e', { req: req.params.id }), error);
+        res.status(500).json({ error: t('bots:error_72c336f2') }); 
     }
 });
 
@@ -407,19 +407,19 @@ router.post('/:botId/plugins/install/zip', authenticateUniversal, checkBotAccess
     upload.single('file')(req, res, async (uploadError) => {
         if (uploadError) {
             const message = uploadError.code === 'LIMIT_FILE_SIZE'
-                ? 'Архив больше 50 МБ.'
-                : (uploadError.message || 'Не удалось прочитать файл.');
+                ? t('bots:msg_e37c7eae')
+                : (uploadError.message || t('bots:error_14311c27'));
             return res.status(400).json({ error: message });
         }
 
         try {
             if (!req.file) {
-                return res.status(400).json({ error: 'Выберите zip-архив.' });
+                return res.status(400).json({ error: t('bots:msg_a5261a65') });
             }
             const newPlugin = await pluginManager.installFromZipBuffer(parseInt(req.params.botId, 10), req.file.buffer);
             res.status(201).json(newPlugin);
         } catch (error) {
-            res.status(error.statusCode || 500).json({ error: error.message || 'Не удалось установить плагин из архива' });
+            res.status(error.statusCode || 500).json({ error: error.message || t('bots:error_4615e610') });
         }
     });
 });
@@ -435,7 +435,7 @@ router.get('/:botId/plugins/:pluginId/download', authenticateUniversal, checkBot
         await pluginManager.writePluginZip(located.directory, res, settingsJson);
     } catch (error) {
         if (res.headersSent) return;
-        res.status(error.statusCode || 500).json({ error: error.message || 'Не удалось скачать плагин' });
+        res.status(error.statusCode || 500).json({ error: error.message || t('bots:error_3e2849fb') });
     }
 });
 
@@ -447,7 +447,7 @@ router.use('/:botId/api-keys', apiKeysRouter);
 router.post('/', authorize('bot:create'), async (req, res) => {
     try {
         const { username, password, prefix, serverId, note, proxyId, proxyHost, proxyPort, proxyUsername, proxyPassword } = req.body;
-        if (!username || !serverId) return res.status(400).json({ error: 'Имя и сервер обязательны' });
+        if (!username || !serverId) return res.status(400).json({ error: t('bots:validation_8b3a46bc') });
 
         const maxSortOrder = await prisma.bot.aggregate({
             _max: { sortOrder: true }
@@ -475,9 +475,9 @@ router.post('/', authorize('bot:create'), async (req, res) => {
         await setupDefaultPermissionsForBot(newBot.id);
         res.status(201).json(newBot);
     } catch (error) {
-        if (error.code === 'P2002') return res.status(409).json({ error: 'Бот с таким именем уже существует' });
+        if (error.code === 'P2002') return res.status(409).json({ error: t('bots:msg_209b76d4') });
         console.error("[API Error] /bots POST:", error);
-        res.status(500).json({ error: 'Не удалось создать бота' });
+        res.status(500).json({ error: t('bots:error_3e9497d5') });
     }
 });
 
@@ -526,28 +526,28 @@ router.put('/:id', authenticateUniversal, checkBotAccess, authorize('bot:update'
             const proxyIdValue = dataToUpdate.proxyId;
             delete dataToUpdate.proxyId;
             if (proxyIdValue) {
-                // Используем прокси из списка - очищаем кастомные поля
+                // Используем proxy from list - очищаем кастомные fields
                 dataToUpdate.proxy = { connect: { id: proxyIdValue } };
                 dataToUpdate.proxyHost = null;
                 dataToUpdate.proxyPort = null;
                 dataToUpdate.proxyUsername = null;
                 dataToUpdate.proxyPassword = null;
             } else if (!dataToUpdate.proxyHost) {
-                // Отключаем прокси только если нет кастомного proxyHost
+                // Отключаем proxy only if no кастомного proxyHost
                 dataToUpdate.proxy = { disconnect: true };
                 dataToUpdate.proxyHost = null;
                 dataToUpdate.proxyPort = null;
                 dataToUpdate.proxyUsername = null;
                 dataToUpdate.proxyPassword = null;
             } else {
-                // Кастомный прокси: отключаем связь с proxy, но сохраняем кастомные поля
+                // Кастомный proxy: отключаем связь with proxy, но сохраняем кастомные fields
                 dataToUpdate.proxy = { disconnect: true };
             }
         }
 
         const botId = parseInt(req.params.id, 10);
         if (isNaN(botId)) {
-            return res.status(400).json({ message: 'Неверный ID бота.' });
+            return res.status(400).json({ message: t('bots:error_a9995818') });
         }
 
         if (dataToUpdate.username) {
@@ -581,7 +581,7 @@ router.put('/:id', authenticateUniversal, checkBotAccess, authorize('bot:update'
         res.json(updatedBot);
     } catch (error) {
         console.error("[API Error] /bots PUT:", error);
-        res.status(500).json({ error: 'Не удалось обновить бота' });
+        res.status(500).json({ error: t('bots:error_9c0f3048') });
     }
 });
 
@@ -590,11 +590,11 @@ router.put('/:id/sort-order', authenticateUniversal, checkBotAccess, authorize('
         const { newPosition, oldIndex, newIndex } = req.body;
         const botId = parseInt(req.params.id, 10);
         
-        console.log(`[API] Запрос на изменение порядка бота ${botId}: oldIndex=${oldIndex}, newIndex=${newIndex}, newPosition=${newPosition}`);
+        console.log(t('bots:log_4fdafa6d', { botId: botId, oldIndex: oldIndex, newIndex: newIndex, newPosition: newPosition }));
         
         if (isNaN(botId)) {
-            console.log(`[API] Неверный botId: ${botId}`);
-            return res.status(400).json({ error: 'Неверный ID бота' });
+            console.log(t('bots:error_9769e8f0', { botId: botId }));
+            return res.status(400).json({ error: t('bots:error_c013e095') });
         }
 
         const allBots = await prisma.bot.findMany({
@@ -602,27 +602,27 @@ router.put('/:id/sort-order', authenticateUniversal, checkBotAccess, authorize('
             select: { id: true, sortOrder: true }
         });
 
-        console.log(`[API] Всего ботов: ${allBots.length}`);
+        console.log(t('bots:log_f348f6c3', { allBots: allBots.length }));
         const currentBotIndex = allBots.findIndex(bot => bot.id === botId);
         if (currentBotIndex === -1) {
-            console.log(`[API] Бот ${botId} не найден`);
-            return res.status(404).json({ error: 'Бот не найден' });
+            console.log(t('bots:log_85a63781', { botId: botId }));
+            return res.status(404).json({ error: t('bots:msg_13215f66') });
         }
 
         if (newIndex < 0 || newIndex >= allBots.length) {
-            console.log(`[API] Неверная новая позиция: ${newIndex}`);
-            return res.status(400).json({ error: 'Неверная позиция' });
+            console.log(t('bots:error_183f1415', { newIndex: newIndex }));
+            return res.status(400).json({ error: t('bots:error_992f1220') });
         }
 
         if (currentBotIndex === newIndex) {
-            console.log(`[API] Позиция не изменилась для бота ${botId}`);
-            return res.json({ success: true, message: 'Позиция не изменилась' });
+            console.log(t('bots:log_6aa07de6', { botId: botId }));
+            return res.json({ success: true, message: t('bots:msg_088e9857') });
         }
         const reorderedBots = [...allBots];
         const [movedBot] = reorderedBots.splice(currentBotIndex, 1);
         reorderedBots.splice(newIndex, 0, movedBot);
 
-        console.log(`[API] Обновляем порядок для всех ботов`);
+        console.log(t('bots:log_70120a39'));
         for (let i = 0; i < reorderedBots.length; i++) {
             const bot = reorderedBots[i];
             const newSortOrder = i + 1; // 1-based позиции
@@ -632,25 +632,25 @@ router.put('/:id/sort-order', authenticateUniversal, checkBotAccess, authorize('
                     where: { id: bot.id },
                     data: { sortOrder: newSortOrder }
                 });
-                console.log(`[API] Обновлен бот ${bot.id}: sortOrder ${bot.sortOrder} -> ${newSortOrder}`);
+                console.log(t('bots:success_ee7cdeca', { bot: bot.id, bot1: bot.sortOrder, newSortOrder: newSortOrder }));
             }
         }
 
-        console.log(`[API] Успешно обновлен порядок бота ${botId}`);
-        res.json({ success: true, message: 'Порядок ботов обновлен' });
+        console.log(t('bots:success_1ccffff9', { botId: botId }));
+        res.json({ success: true, message: t('bots:success_e634b6d4') });
     } catch (error) {
         console.error("[API Error] /bots sort-order PUT:", error);
-        res.status(500).json({ error: 'Не удалось обновить порядок ботов' });
+        res.status(500).json({ error: t('bots:error_3cbf9bb0') });
     }
 });
 
 router.delete('/:id', authenticateUniversal, checkBotAccess, authorize('bot:delete'), async (req, res) => {
     try {
         const botId = parseInt(req.params.id, 10);
-        if (botManager.bots.has(botId)) return res.status(400).json({ error: 'Нельзя удалить запущенного бота' });
+        if (botManager.bots.has(botId)) return res.status(400).json({ error: t('bots:msg_fe28998f') });
         await prisma.bot.delete({ where: { id: botId } });
         res.status(204).send();
-    } catch (error) { res.status(500).json({ error: 'Не удалось удалить бота' }); }
+    } catch (error) { res.status(500).json({ error: t('bots:error_75b963ac') }); }
 });
 
 router.get('/servers', authorize('bot:list'), async (req, res) => {
@@ -658,8 +658,8 @@ router.get('/servers', authorize('bot:list'), async (req, res) => {
         const servers = await prisma.server.findMany();
         res.json(servers);
     } catch (error) {
-        console.error("[API /api/bots] Ошибка получения списка серверов:", error);
-        res.status(500).json({ error: 'Не удалось получить список серверов' });
+        console.error(t('bots:error_26daeea1'), error);
+        res.status(500).json({ error: t('bots:error_f4f43448') });
     }
 });
 
@@ -668,7 +668,7 @@ router.get('/:botId/plugins', authenticateUniversal, checkBotAccess, authorize('
         const botId = parseInt(req.params.botId);
         const plugins = await prisma.installedPlugin.findMany({ where: { botId } });
         res.json(plugins);
-    } catch (error) { res.status(500).json({ error: 'Не удалось получить плагины бота' }); }
+    } catch (error) { res.status(500).json({ error: t('bots:error_ea836e5d') }); }
 });
 
 async function loadManifestReview(botId, owner, repo, ref) {
@@ -778,7 +778,7 @@ router.post('/:botId/plugins/install/github', githubInstallLimiter, authenticate
         if (isFloatingLatest(installTag)) {
             installTag = await fetchLatestGithubVersionTag(normalizedRepoUrl);
             if (!installTag) {
-                return res.status(404).json({ message: `У ${normalizedRepoUrl} нет релиза, хотя в списке стоит latest.` });
+                return res.status(404).json({ message: t('bots:msg_a0c8aa56', { normalizedRepoUrl: normalizedRepoUrl }) });
             }
         }
         const newPlugin = await pluginManager.installFromGithub(parseInt(botId), normalizedRepoUrl, prisma, false, installTag);
@@ -823,14 +823,14 @@ router.get('/:botId/plugins/:pluginId/settings', authenticateUniversal, checkBot
 	try {
 		const pluginId = parseInt(req.params.pluginId);
 		const plugin = await prisma.installedPlugin.findUnique({ where: { id: pluginId } });
-		if (!plugin) return res.status(404).json({ error: 'Установленный плагин не найден' });
+		if (!plugin) return res.status(404).json({ error: t('bots:success_832e4e1c') });
 
 		const savedSettings = plugin.settings ? JSON.parse(plugin.settings) : {};
 		const defaultSettings = {};
 		const manifest = plugin.manifest ? JSON.parse(plugin.manifest) : {};
 		const manifestSettings = manifest.settings || {};
 
-		// Определяем тип настроек (обычные или группированные)
+		// Определяем type настроек (обычные or группированные)
 		const isGrouped = isGroupedSettings(manifestSettings);
 
 		const processSetting = async (settingKey, config) => {
@@ -842,7 +842,7 @@ router.get('/:botId/plugins/:pluginId/settings', authenticateUniversal, checkBot
 					const fileContent = await fs.readFile(configFilePath, 'utf-8');
 					defaultSettings[settingKey] = JSON.parse(fileContent);
 				} catch (e) {
-					console.error(`[API Settings] Не удалось прочитать defaultPath ${config.defaultPath} для плагина ${plugin.name}: ${e.message}`);
+					console.error(t('bots:error_a9d2b700', { config: config.defaultPath, plugin: plugin.name, e: e.message }));
 					defaultSettings[settingKey] = {};
 				}
 			} else if (config.default !== undefined) {
@@ -870,13 +870,13 @@ router.get('/:botId/plugins/:pluginId/settings', authenticateUniversal, checkBot
 
 		const finalSettings = deepMergeSettings(defaultSettings, savedSettings);
 		
-		// Фильтруем секретные значения перед отправкой на фронтенд
+		// Фильтруем секретные values before отправкой on фронтенд
 		const filteredSettings = filterSecretSettings(finalSettings, manifestSettings, isGrouped);
 		
 		res.json(filteredSettings);
 	} catch (error) {
 		console.error("[API Error] /settings GET:", error);
-		res.status(500).json({ error: 'Не удалось получить настройки плагина' });
+		res.status(500).json({ error: t('bots:error_22604e2f') });
 	}
 });
 
@@ -884,7 +884,7 @@ router.get('/:botId/plugins/:pluginId/data', authenticateUniversal, checkBotAcce
     try {
         const pluginId = parseInt(req.params.pluginId);
         const plugin = await prisma.installedPlugin.findUnique({ where: { id: pluginId } });
-        if (!plugin) return res.status(404).json({ error: 'Установленный плагин не найден' });
+        if (!plugin) return res.status(404).json({ error: t('bots:success_832e4e1c') });
 
         const rows = await prisma.pluginDataStore.findMany({
             where: { botId: plugin.botId, pluginName: plugin.name },
@@ -897,7 +897,7 @@ router.get('/:botId/plugins/:pluginId/data', authenticateUniversal, checkBotAcce
             return { key: r.key, value, createdAt: r.createdAt, updatedAt: r.updatedAt };
         });
         res.json(result);
-    } catch (error) { res.status(500).json({ error: 'Не удалось получить данные плагина' }); }
+    } catch (error) { res.status(500).json({ error: t('bots:error_57121bb5') }); }
 });
 
 router.get('/:botId/plugins/:pluginId/data/:key', authenticateUniversal, checkBotAccess, authorize('plugin:settings:view'), async (req, res) => {
@@ -905,7 +905,7 @@ router.get('/:botId/plugins/:pluginId/data/:key', authenticateUniversal, checkBo
         const pluginId = parseInt(req.params.pluginId);
         const { key } = req.params;
         const plugin = await prisma.installedPlugin.findUnique({ where: { id: pluginId } });
-        if (!plugin) return res.status(404).json({ error: 'Установленный плагин не найден' });
+        if (!plugin) return res.status(404).json({ error: t('bots:success_832e4e1c') });
 
         const row = await prisma.pluginDataStore.findUnique({
             where: {
@@ -916,10 +916,10 @@ router.get('/:botId/plugins/:pluginId/data/:key', authenticateUniversal, checkBo
                 }
             }
         });
-        if (!row) return res.status(404).json({ error: 'Ключ не найден' });
+        if (!row) return res.status(404).json({ error: t('api-keys:msg_c82b4016') });
         let value; try { value = JSON.parse(row.value); } catch { value = row.value; }
         res.json({ key: row.key, value, createdAt: row.createdAt, updatedAt: row.updatedAt });
-    } catch (error) { res.status(500).json({ error: 'Не удалось получить значение по ключу' }); }
+    } catch (error) { res.status(500).json({ error: t('bots:error_5e6b5841') }); }
 });
 
 router.put('/:botId/plugins/:pluginId/data/:key', authenticateUniversal, checkBotAccess, authorize('plugin:settings:edit'), async (req, res) => {
@@ -928,7 +928,7 @@ router.put('/:botId/plugins/:pluginId/data/:key', authenticateUniversal, checkBo
         const { key } = req.params;
         const { value } = req.body;
         const plugin = await prisma.installedPlugin.findUnique({ where: { id: pluginId } });
-        if (!plugin) return res.status(404).json({ error: 'Установленный плагин не найден' });
+        if (!plugin) return res.status(404).json({ error: t('bots:success_832e4e1c') });
 
         const jsonValue = JSON.stringify(value ?? null);
         const upserted = await prisma.pluginDataStore.upsert({
@@ -944,7 +944,7 @@ router.put('/:botId/plugins/:pluginId/data/:key', authenticateUniversal, checkBo
         });
         let parsed; try { parsed = JSON.parse(upserted.value); } catch { parsed = upserted.value; }
         res.json({ key: upserted.key, value: parsed, createdAt: upserted.createdAt, updatedAt: upserted.updatedAt });
-    } catch (error) { res.status(500).json({ error: 'Не удалось сохранить значение' }); }
+    } catch (error) { res.status(500).json({ error: t('bots:error_da67f37b') }); }
 });
 
 router.delete('/:botId/plugins/:pluginId/data/:key', authenticateUniversal, checkBotAccess, authorize('plugin:settings:edit'), async (req, res) => {
@@ -952,7 +952,7 @@ router.delete('/:botId/plugins/:pluginId/data/:key', authenticateUniversal, chec
         const pluginId = parseInt(req.params.pluginId);
         const { key } = req.params;
         const plugin = await prisma.installedPlugin.findUnique({ where: { id: pluginId } });
-        if (!plugin) return res.status(404).json({ error: 'Установленный плагин не найден' });
+        if (!plugin) return res.status(404).json({ error: t('bots:success_832e4e1c') });
 
         await prisma.pluginDataStore.delete({
             where: {
@@ -964,7 +964,7 @@ router.delete('/:botId/plugins/:pluginId/data/:key', authenticateUniversal, chec
             }
         });
         res.status(204).send();
-    } catch (error) { res.status(500).json({ error: 'Не удалось удалить значение' }); }
+    } catch (error) { res.status(500).json({ error: t('bots:error_b3204056') }); }
 });
 
 router.put('/:botId/plugins/:pluginId', authenticateUniversal, checkBotAccess, authorize('plugin:settings:edit'), async (req, res) => {
@@ -973,9 +973,9 @@ router.put('/:botId/plugins/:pluginId', authenticateUniversal, checkBotAccess, a
         const { isEnabled, settings } = req.body;
         const dataToUpdate = {};
 
-        // Получаем текущий плагин для проверки изменения статуса
+        // Получаем current plugin for verification изменения статуса
         const plugin = await prisma.installedPlugin.findUnique({ where: { id: pluginId } });
-        if (!plugin) return res.status(404).json({ error: 'Плагин не найден' });
+        if (!plugin) return res.status(404).json({ error: t('api:msg_07a06551') });
 
         const wasEnabled = plugin.isEnabled;
 
@@ -986,32 +986,32 @@ router.put('/:botId/plugins/:pluginId', authenticateUniversal, checkBotAccess, a
             const existingSettings = plugin.settings ? JSON.parse(plugin.settings) : {};
             const manifestSettings = manifest.settings || {};
 
-            // Определяем тип настроек (обычные или группированные)
+            // Определяем type настроек (обычные or группированные)
             const isGrouped = isGroupedSettings(manifestSettings);
 
-            // Подготавливаем настройки для сохранения (сохраняем существующие значения для замаскированных секретов)
+            // Подготавливаем settings for сохранения (сохраняем существующие values for замаскированных секретов)
             const settingsToSave = prepareSettingsForSave(settings, existingSettings, manifestSettings, isGrouped);
 
-            // Валидация структуры settingsToSave
+            // Validation структуры settingsToSave
             if (!settingsToSave || typeof settingsToSave !== 'object' || Array.isArray(settingsToSave)) {
-                console.error("[Validation Error] prepareSettingsForSave вернул некорректную структуру:", settingsToSave);
-                return res.status(400).json({ error: "Некорректная структура настроек для сохранения" });
+                console.error(t('bots:error_706de579'), settingsToSave);
+                return res.status(400).json({ error: t('bots:error_4b67ac1d') });
             }
 
             dataToUpdate.settings = JSON.stringify(settingsToSave);
         }
 
-        if (Object.keys(dataToUpdate).length === 0) return res.status(400).json({ error: "Нет данных для обновления" });
+        if (Object.keys(dataToUpdate).length === 0) return res.status(400).json({ error: t('bots:success_86a8d712') });
         const updated = await prisma.installedPlugin.update({ where: { id: pluginId }, data: dataToUpdate });
 
-        // Вызываем хуки onEnable/onDisable если статус изменился
+        // Вызываем хуки onEnable/onDisable if status изменился
         if (typeof isEnabled === 'boolean' && wasEnabled !== isEnabled) {
             const pluginHooks = new PluginHooks({ prisma });
             if (isEnabled) {
-                // Плагин был включён
+                // Plugin was включён
                 await pluginHooks.callOnEnable(pluginId);
             } else {
-                // Плагин был выключен
+                // Plugin was выключен
                 await pluginHooks.callOnDisable(pluginId);
             }
         }
@@ -1019,14 +1019,14 @@ router.put('/:botId/plugins/:pluginId', authenticateUniversal, checkBotAccess, a
         res.json(updated);
     } catch (error) {
         console.error("[API Error] /plugins/:pluginId PUT:", error);
-        res.status(500).json({ error: 'Не удалось обновить плагин' });
+        res.status(500).json({ error: t('bots:error_f4780de1') });
     }
 });
 
 router.get('/:botId/management-data', authenticateUniversal, checkBotAccess, authorize('management:view'), async (req, res) => {
     try {
         const botId = parseInt(req.params.botId, 10);
-        if (isNaN(botId)) return res.status(400).json({ error: 'Неверный ID бота' });
+        if (isNaN(botId)) return res.status(400).json({ error: t('bots:error_c013e095') });
 
         const page = parseInt(req.query.page) || 1;
         const pageSize = parseInt(req.query.pageSize) || 100;
@@ -1046,7 +1046,7 @@ router.get('/:botId/management-data', authenticateUniversal, checkBotAccess, aut
             };
         }
 
-        // Определяем сортировку (для groups сортируем после получения данных)
+        // Определяем сортировку (for groups сортируем after getting data)
         let orderBy = { username: sortDir };
         if (sortBy === 'isBlacklisted') {
             orderBy = { isBlacklisted: sortDir };
@@ -1062,7 +1062,7 @@ router.get('/:botId/management-data', authenticateUniversal, checkBotAccess, aut
         let usersCount;
 
         if (sortByGroups) {
-            // Для сортировки по группам получаем всех пользователей, сортируем, потом пагинируем
+            // For сортировки by группам получаем всех пользователей, сортируем, потом пагинируем
             const allUsers = await prisma.user.findMany({
                 where: whereClause,
                 include: { groups: { include: { group: true } } },
@@ -1111,11 +1111,11 @@ router.get('/:botId/management-data', authenticateUniversal, checkBotAccess, aut
                 if (template.permissions) {
                     const permission = await prisma.permission.upsert({
                         where: { botId_name: { botId, name: template.permissions } },
-                        update: { description: `Авто-создано для команды ${template.name}` },
+                        update: { description: t('bots:success_7e0dceb4', { template: template.name }) },
                         create: {
                             botId,
                             name: template.permissions,
-                            description: `Авто-создано для команды ${template.name}`,
+                            description: t('bots:success_7e0dceb4', { template: template.name }),
                             owner: template.owner || 'system',
                         }
                     });
@@ -1200,7 +1200,7 @@ router.get('/:botId/management-data', authenticateUniversal, checkBotAccess, aut
         
     } catch (error) {
         console.error(`[API Error] /management-data for bot ${req.params.botId}:`, error);
-        res.status(500).json({ error: 'Не удалось загрузить данные управления' });
+        res.status(500).json({ error: t('bots:error_c06c7449') });
     }
 });
 
@@ -1242,10 +1242,10 @@ router.put('/:botId/commands/:commandId', authorize('management:edit'), async (r
                     
                     const graphFile = path.join(graphDir, `${updatedCommand.name}.json`);
                     await fse.writeJson(graphFile, JSON.parse(graphJson), { spaces: 2 });
-                    console.log(`[API] Граф команды ${updatedCommand.name} сохранен в ${graphFile}`);
+                    console.log(t('bots:success_6fc281b6', { updatedCommand: updatedCommand.name, graphFile: graphFile }));
                 }
             } catch (error) {
-                console.error(`[API] Ошибка сохранения графа в папку плагина:`, error);
+                console.error(t('bots:error_883a25d3'), error);
             }
         }
 
@@ -1260,7 +1260,7 @@ router.post('/:botId/groups', authorize('management:edit'), async (req, res) => 
     try {
         const botId = parseInt(req.params.botId);
         const { name, permissionIds } = req.body;
-        if (!name) return res.status(400).json({ error: "Имя группы обязательно" });
+        if (!name) return res.status(400).json({ error: t('bots:validation_366e6b38') });
 
         const newGroup = await prisma.group.create({
             data: {
@@ -1275,8 +1275,8 @@ router.post('/:botId/groups', authorize('management:edit'), async (req, res) => 
 
         res.status(201).json(newGroup);
     } catch (error) {
-        if (error.code === 'P2002') return res.status(409).json({ error: 'Группа с таким именем уже существует для этого бота.' });
-        res.status(500).json({ error: 'Не удалось создать группу.' });
+        if (error.code === 'P2002') return res.status(409).json({ error: t('bots:msg_610490dd') });
+        res.status(500).json({ error: t('bots:error_1f8b3381') });
     }
 });
 
@@ -1285,7 +1285,7 @@ router.put('/:botId/groups/:groupId', authorize('management:edit'), async (req, 
         const botId = parseInt(req.params.botId, 10);
         const groupId = parseInt(req.params.groupId);
         const { name, permissionIds } = req.body;
-        if (!name) return res.status(400).json({ error: "Имя группы обязательно" });
+        if (!name) return res.status(400).json({ error: t('bots:validation_366e6b38') });
 
         const usersInGroup = await prisma.user.findMany({
             where: { botId, groups: { some: { groupId } } },
@@ -1310,8 +1310,8 @@ router.put('/:botId/groups/:groupId', authorize('management:edit'), async (req, 
 
         res.status(200).send();
     } catch (error) {
-        if (error.code === 'P2002') return res.status(409).json({ error: 'Группа с таким именем уже существует для этого бота.' });
-        res.status(500).json({ error: 'Не удалось обновить группу.' });
+        if (error.code === 'P2002') return res.status(409).json({ error: t('bots:msg_610490dd') });
+        res.status(500).json({ error: t('bots:error_9365e150') });
     }
 });
 
@@ -1327,14 +1327,14 @@ router.delete('/:botId/groups/:groupId', authorize('management:edit'), async (re
         botManager.reloadBotConfigInRealTime(botId);
 
         res.status(204).send();
-    } catch (error) { res.status(500).json({ error: 'Не удалось удалить группу.' }); }
+    } catch (error) { res.status(500).json({ error: t('bots:error_154d0b1f') }); }
 });
 
 router.post('/:botId/permissions', authorize('management:edit'), async (req, res) => {
     try {
         const botId = parseInt(req.params.botId);
         const { name, description } = req.body;
-        if (!name) return res.status(400).json({ error: 'Имя права обязательно' });
+        if (!name) return res.status(400).json({ error: t('bots:validation_e06f7a7c') });
         const newPermission = await prisma.permission.create({
             data: { name, description, botId, owner: 'admin' }
         });
@@ -1343,8 +1343,8 @@ router.post('/:botId/permissions', authorize('management:edit'), async (req, res
         
         res.status(201).json(newPermission);
     } catch (error) {
-        if (error.code === 'P2002') return res.status(409).json({ error: 'Право с таким именем уже существует для этого бота.' });
-        res.status(500).json({ error: 'Не удалось создать право.' });
+        if (error.code === 'P2002') return res.status(409).json({ error: t('bots:msg_0174ac21') });
+        res.status(500).json({ error: t('bots:error_c4f9c3e6') });
     }
 });
 
@@ -1380,15 +1380,15 @@ router.put('/:botId/users/:userId', authorize('management:edit'), async (req, re
 
     } catch (error) {
         console.error(`[API Error] /users/:userId PUT:`, error);
-        res.status(500).json({ error: 'Не удалось обновить пользователя' });
+        res.status(500).json({ error: t('auth:error_48cd62cc') });
     }
 });
 
 router.post('/start-all', authorize('bot:start_stop'), async (req, res) => {
     try {
-        console.log('[API] Получен запрос на запуск всех ботов.');
+        console.log(t('bots:log_0e1ec293'));
 
-        // Определяем фильтр доступа по ботам для пользователя
+        // Определяем фильтр access by ботам for user
         let whereFilter = {};
         if (req.user && typeof req.user.userId === 'number') {
             const panelUser = await prisma.panelUser.findUnique({
@@ -1412,18 +1412,18 @@ router.post('/start-all', authorize('bot:start_stop'), async (req, res) => {
                 startedCount++;
             }
         }
-        res.json({ success: true, message: `Запущено ${startedCount} ботов.` });
+        res.json({ success: true, message: t('bots:msg_a1c3249e', { startedCount: startedCount }) });
     } catch (error) {
         console.error('[API Error] /start-all:', error);
-        res.status(500).json({ error: 'Произошла ошибка при массовом запуске ботов.' });
+        res.status(500).json({ error: t('bots:error_284db4ba') });
     }
 });
 
 router.post('/stop-all', authorize('bot:start_stop'), async (req, res) => {
     try {
-        console.log('[API] Получен запрос на остановку всех ботов.');
+        console.log(t('bots:log_b8781be3'));
 
-        // Определяем фильтр доступа по ботам для пользователя
+        // Определяем фильтр access by ботам for user
         let allowedBotIds = null;
         if (req.user && typeof req.user.userId === 'number') {
             const panelUser = await prisma.panelUser.findUnique({
@@ -1438,17 +1438,17 @@ router.post('/stop-all', authorize('bot:start_stop'), async (req, res) => {
         const botIds = Array.from(botManager.bots.keys());
         let stoppedCount = 0;
         for (const botId of botIds) {
-            // Если у пользователя есть ограничения, проверяем доступ
+            // If у user есть ограничения, проверяем access
             if (allowedBotIds !== null && !allowedBotIds.has(botId)) {
                 continue;
             }
             botManager.stopBot(botId);
             stoppedCount++;
         }
-        res.json({ success: true, message: `Остановлено ${stoppedCount} ботов.` });
+        res.json({ success: true, message: t('bots:msg_e1272ce5', { stoppedCount: stoppedCount }) });
     } catch (error) {
         console.error('[API Error] /stop-all:', error);
-        res.status(500).json({ error: 'Произошла ошибка при массовой остановке ботов.' });
+        res.status(500).json({ error: t('bots:error_265bfd33') });
     }
 });
 
@@ -1468,7 +1468,7 @@ router.get('/:id/settings/all', authenticateUniversal, checkBotAccess, authorize
         });
 
         if (!bot) {
-            return res.status(404).json({ error: 'Бот не найден' });
+            return res.status(404).json({ error: t('bots:msg_13215f66') });
         }
 
         const allSettings = {
@@ -1513,10 +1513,10 @@ router.get('/:id/settings/all', authenticateUniversal, checkBotAccess, authorize
 
             const mergedSettings = deepMergeSettings(defaultSettings, savedSettings);
             
-            // Определяем тип настроек (обычные или группированные)
+            // Определяем type настроек (обычные or группированные)
             const isGrouped = isGroupedSettings(manifest.settings);
             
-            // Фильтруем секретные значения
+            // Фильтруем секретные values
             const filteredSettings = filterSecretSettings(mergedSettings, manifest.settings, isGrouped);
             
             return {
@@ -1535,7 +1535,7 @@ router.get('/:id/settings/all', authenticateUniversal, checkBotAccess, authorize
 
     } catch (error) {
         console.error("[API Error] /settings/all GET:", error);
-        res.status(500).json({ error: 'Не удалось загрузить все настройки' });
+        res.status(500).json({ error: t('bots:error_53718bfc') });
     }
 });
 
@@ -1669,10 +1669,10 @@ router.put('/:botId/commands/:commandId/visual', authorize('management:edit'), a
                     
                     const graphFile = path.join(graphDir, `${updatedCommand.name}.json`);
                     await fse.writeJson(graphFile, JSON.parse(graphJson), { spaces: 2 });
-                    console.log(`[API] Граф команды ${updatedCommand.name} сохранен в ${graphFile}`);
+                    console.log(t('bots:success_6fc281b6', { updatedCommand: updatedCommand.name, graphFile: graphFile }));
                 }
             } catch (error) {
-                console.error(`[API] Ошибка сохранения графа в папку плагина:`, error);
+                console.error(t('bots:error_883a25d3'), error);
             }
         }
 
@@ -1883,10 +1883,10 @@ router.post('/:botId/commands', authorize('management:edit'), async (req, res) =
                     
                     const graphFile = path.join(graphDir, `${name}.json`);
                     await fse.writeJson(graphFile, JSON.parse(graphJson), { spaces: 2 });
-                    console.log(`[API] Граф команды ${name} сохранен в ${graphFile}`);
+                    console.log(t('bots:success_0dfb8c9b', { name: name, graphFile: graphFile }));
                 }
             } catch (error) {
-                console.error(`[API] Ошибка сохранения графа в папку плагина:`, error);
+                console.error(t('bots:error_883a25d3'), error);
             }
         }
 
@@ -1929,13 +1929,13 @@ router.get('/:botId/event-graphs/:graphId', authorize('management:view'), async 
         });
 
         if (!eventGraph) {
-            return res.status(404).json({ error: 'Граф события не найден' });
+            return res.status(404).json({ error: t('bots:msg_923a7f98') });
         }
 
         res.json(eventGraph);
     } catch (error) {
         console.error(`[API Error] /event-graphs/:graphId GET:`, error);
-        res.status(500).json({ error: 'Не удалось получить граф события' });
+        res.status(500).json({ error: t('bots:error_c9f54b2c') });
     }
 });
 
@@ -1945,7 +1945,7 @@ router.post('/:botId/event-graphs', authorize('management:edit'), async (req, re
         const { name, description, graphJson, variables, eventType, isEnabled = true } = req.body;
 
         if (!name || typeof name !== 'string' || name.trim() === '') {
-            return res.status(400).json({ error: 'Имя графа обязательно и должно быть непустой строкой' });
+            return res.status(400).json({ error: t('bots:validation_6d4a1e5e') });
         }
 
         let graphJsonString;
@@ -1972,7 +1972,7 @@ router.post('/:botId/event-graphs', authorize('management:edit'), async (req, re
                 eventTypes = [...new Set(eventNodes.map(node => node.type.split(':')[1]))];
             }
         } catch (error) {
-            console.warn('[API] Не удалось извлечь типы событий из графа:', error.message);
+            console.warn(t('bots:error_08b1206f'), error.message);
         }
 
         const newEventGraph = await prisma.eventGraph.create({
@@ -1995,10 +1995,10 @@ router.post('/:botId/event-graphs', authorize('management:edit'), async (req, re
         res.status(201).json(newEventGraph);
     } catch (error) {
         if (error.code === 'P2002') {
-            return res.status(409).json({ error: 'Граф событий с таким именем уже существует' });
+            return res.status(409).json({ error: t('bots:msg_3ce61614') });
         }
         console.error(`[API Error] /event-graphs POST:`, error);
-        res.status(500).json({ error: 'Не удалось создать граф событий' });
+        res.status(500).json({ error: t('bots:error_6403ecd9') });
     }
 });
 
@@ -2014,7 +2014,7 @@ router.delete('/:botId/event-graphs/:graphId', authorize('management:edit'), asy
         res.status(204).send();
     } catch (error) {
         console.error(`[API Error] /event-graphs/:graphId DELETE:`, error);
-        res.status(500).json({ error: 'Не удалось удалить граф событий' });
+        res.status(500).json({ error: t('bots:error_4a28cf83') });
     }
 });
 
@@ -2023,11 +2023,11 @@ router.put('/:botId/event-graphs/:graphId', authorize('management:edit'), async 
     const { name, isEnabled, graphJson, variables, pluginOwnerId } = req.body;
 
     if (!name || typeof name !== 'string' || name.trim() === '') {
-        return res.status(400).json({ error: 'Поле name обязательно и должно быть непустой строкой.' });
+        return res.status(400).json({ error: t('bots:validation_1d621534') });
     }
 
     if (typeof isEnabled !== 'boolean') {
-        return res.status(400).json({ error: 'Поле isEnabled должно быть true или false.' });
+        return res.status(400).json({ error: t('bots:validation_0604e964') });
     }
 
     try {
@@ -2056,7 +2056,7 @@ router.put('/:botId/event-graphs/:graphId', authorize('management:edit'), async 
         res.json(updatedGraph);
     } catch (error) {
         console.error(`[API Error] /event-graphs/:graphId PUT:`, error);
-        res.status(500).json({ error: 'Ошибка при обновлении графа событий.' });
+        res.status(500).json({ error: t('bots:error_28b7f2a1') });
     }
 });
 
@@ -2084,13 +2084,13 @@ router.get('/:botId/ui-extensions', authorize('plugin:list'), async (req, res) =
                         });
                     }
                 } catch (e) {
-                    console.error(`Ошибка парсинга манифеста для плагина ${plugin.name}:`, e);
+                    console.error(t('bots:error_f82ebd09', { plugin: plugin.name }), e);
                 }
             }
         }
         res.json(extensions);
     } catch (error) {
-        res.status(500).json({ error: 'Не удалось получить расширения интерфейса' });
+        res.status(500).json({ error: t('bots:error_10c7b8d6') });
     }
 });
 
@@ -2149,14 +2149,14 @@ router.get('/:botId/plugins/:pluginName/ui-content/:path', authorize('plugin:lis
         });
 
         if (content === null) {
-            return res.status(404).json({ error: `Для пути "${uiPath}" не найдено содержимого в плагине "${pluginName}".` });
+            return res.status(404).json({ error: `Для пути "${uiPath}t('bots:msg_41c42b25')${pluginName}".` });
         }
 
         res.json(content);
 
     } catch (error) {
         console.error(`[UI Content] Ошибка при получении контента для плагина "${pluginName}":`, error);
-        res.status(500).json({ error: error.message || 'Внутренняя ошибка сервера.' });
+        res.status(500).json({ error: error.message || t('bots:error_06d5089a') });
     }
 });
 
@@ -2174,7 +2174,7 @@ router.post('/:botId/plugins/:pluginName/action', authorize('plugin:list'), asyn
         const botProcess = botManager.bots.get(numericBotId);
         
         if (!botProcess) {
-            return res.status(404).json({ error: 'Бот не найден или не запущен.' });
+            return res.status(404).json({ error: t('bots:msg_f16030ea') });
         }
 
         const plugin = await prisma.installedPlugin.findFirst({
@@ -2198,7 +2198,7 @@ router.post('/:botId/plugins/:pluginName/action', authorize('plugin:list'), asyn
                         const fileContent = await fs.readFile(configFilePath, 'utf-8');
                         defaultSettings[key] = JSON.parse(fileContent);
                     } catch (e) { 
-                        console.error(`[Action] Не удалось прочитать defaultPath для ${pluginName}: ${e.message}`);
+                        console.error(t('bots:error_b16d606f', { pluginName: pluginName, e: e.message }));
                         defaultSettings[key] = {}; 
                     }
                 } else {
@@ -2217,6 +2217,7 @@ router.post('/:botId/plugins/:pluginName/action', authorize('plugin:list'), asyn
         
         delete require.cache[require.resolve(pluginPath)];
         const pluginModule = require(pluginPath);
+const { t } = require('../../i18n');
 
         if (typeof pluginModule.handleAction !== 'function') {
             return res.status(501).json({ error: `Плагин "${pluginName}" не поддерживает обработку действий.` });
@@ -2230,11 +2231,11 @@ router.post('/:botId/plugins/:pluginName/action', authorize('plugin:list'), asyn
             settings: finalSettings
         });
 
-        res.json({ success: true, message: 'Действие выполнено.', result: result || null });
+        res.json({ success: true, message: t('bots:success_32d2b6b1'), result: result || null });
 
     } catch (error) {
-        console.error(`Ошибка выполнения действия "${actionName}" для плагина "${pluginName}":`, error);
-        res.status(500).json({ error: error.message || 'Внутренняя ошибка сервера.' });
+        console.error(`Ошибка выполнения действия "${actionName}t('bots:msg_95969113')${pluginName}":`, error);
+        res.status(500).json({ error: error.message || t('bots:error_06d5089a') });
     }
 });
 
@@ -2258,10 +2259,10 @@ router.get('/:botId/export', authenticateUniversal, checkBotAccess, authorize('b
         const archive = archiver('zip', { zlib: { level: 9 } });
 
         archive.on('warning', (err) => {
-            console.warn('[Export] Предупреждение архиватора:', err);
+            console.warn(t('bots:log_42add1b4'), err);
         });
         archive.on('error', (err) => {
-            console.error('[Export] Ошибка архивации:', err);
+            console.error(t('bots:error_20da9958'), err);
             if (!res.headersSent) {
                 res.status(500).json({ error: `Failed to export bot: ${err.message}` });
             } else {
@@ -2310,13 +2311,13 @@ router.get('/:botId/export', authenticateUniversal, checkBotAccess, authorize('b
                     }));
                 
                 if (pluginSettings.length > 0) {
-                    console.log(`[Export] Экспорт настроек плагинов для бота ${botId}: ${pluginSettings.length} настроек`);
+                    console.log(t('bots:log_a51788e2', { botId: botId, pluginSettings: pluginSettings.length }));
                     archive.append(JSON.stringify(pluginSettings, null, 2), { name: 'settings.json' });
                 } else {
-                    console.log(`[Export] Нет настроек плагинов для экспорта`);
+                    console.log(t('bots:log_d9f8e8c2'));
                 }
             } catch (error) {
-                console.warn(`[Export] Ошибка при экспорте настроек плагинов:`, error.message);
+                console.warn(t('bots:error_3b4e969d'), error.message);
             }
 
             if (includePluginFiles === 'true') {
@@ -2332,16 +2333,16 @@ router.get('/:botId/export', authenticateUniversal, checkBotAccess, authorize('b
                 }
             }
             if (includePluginDataStore === 'true') {
-                console.log(`[Export] Экспорт PluginDataStore для бота ${botId}`);
+                console.log(t('bots:log_7d134776', { botId: botId }));
                 const pluginDataStore = await prisma.pluginDataStore.findMany({ 
                     where: { botId: parseInt(botId) } 
                 });
-                console.log(`[Export] Найдено записей PluginDataStore: ${pluginDataStore.length}`);
+                console.log(t('bots:log_38322f9d', { pluginDataStore: pluginDataStore.length }));
                 if (pluginDataStore.length > 0) {
                     archive.append(JSON.stringify(pluginDataStore, null, 2), { name: 'plugin_data_store.json' });
-                    console.log(`[Export] Данные PluginDataStore добавлены в архив`);
+                    console.log(t('bots:log_505919b9'));
                 } else {
-                    console.log(`[Export] Нет данных PluginDataStore для экспорта`);
+                    console.log(t('bots:log_cf9194e9'));
                 }
             }
         }
@@ -2385,7 +2386,7 @@ router.post('/import', authorize('bot:create'), upload.single('file'), async (re
     } catch (error) {
         console.error('Failed to import bot:', error);
         if (error.code === 'P2002') {
-            return res.status(409).json({ error: 'Бот с таким именем уже существует' });
+            return res.status(409).json({ error: t('bots:msg_209b76d4') });
         }
         res.status(error.statusCode || 500).json({ error: `Failed to import bot: ${error.message}` });
     }
@@ -2394,7 +2395,7 @@ router.post('/import', authorize('bot:create'), upload.single('file'), async (re
 router.post('/import/preview', authorize('bot:create'), upload.single('file'), async (req, res) => {
     try {
         if (!req.file) {
-            return res.status(400).json({ error: 'Файл не загружен' });
+            return res.status(400).json({ error: t('bots:success_b430269c') });
         }
 
         const zip = parseImportZip(req.file.buffer);
@@ -2432,7 +2433,7 @@ router.post('/import/preview', authorize('bot:create'), upload.single('file'), a
     } catch (error) {
         console.error('[API Error] /bots/import/preview:', error);
         res.status(error.statusCode || 500).json({
-            error: error.statusCode ? error.message : 'Не удалось обработать архив импорта',
+            error: error.statusCode ? error.message : t('bots:error_6c511b29'),
         });
     }
 });
@@ -2442,10 +2443,10 @@ router.post('/import/create', authorize('bot:create'), upload.single('file'), as
         const { username, password, prefix, serverId, note, owners, proxyId, proxyHost, proxyPort, proxyUsername, proxyPassword } = req.body;
 
         if (!username || !serverId) {
-            return res.status(400).json({ error: 'Имя и сервер обязательны' });
+            return res.status(400).json({ error: t('bots:validation_8b3a46bc') });
         }
         if (!req.file) {
-            return res.status(400).json({ error: 'Файл архива обязателен' });
+            return res.status(400).json({ error: t('bots:msg_2eb6fe9b') });
         }
 
         const zip = parseImportZip(req.file.buffer);
@@ -2490,8 +2491,8 @@ router.post('/import/create', authorize('bot:create'), upload.single('file'), as
             res.end();
         } catch (error) {
             const message = error.code === 'P2002'
-                ? 'Бот с таким именем уже существует'
-                : (error.statusCode ? error.message : 'Не удалось создать бота с импортированными данными');
+                ? t('bots:msg_209b76d4')
+                : (error.statusCode ? error.message : t('bots:error_205c71e2'));
             console.error('[API Error] /bots/import/create:', error);
             send({ type: 'error', error: message });
             res.end();
@@ -2499,11 +2500,11 @@ router.post('/import/create', authorize('bot:create'), upload.single('file'), as
     } catch (error) {
         if (res.headersSent) return;
         if (error.code === 'P2002') {
-            return res.status(409).json({ error: 'Бот с таким именем уже существует' });
+            return res.status(409).json({ error: t('bots:msg_209b76d4') });
         }
         console.error('[API Error] /bots/import/create:', error);
         res.status(error.statusCode || 500).json({
-            error: error.statusCode ? error.message : 'Не удалось создать бота с импортированными данными',
+            error: error.statusCode ? error.message : t('bots:error_205c71e2'),
         });
     }
 });

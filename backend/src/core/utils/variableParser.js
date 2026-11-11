@@ -1,13 +1,13 @@
 const { safeJsonParse } = require('./jsonParser');
 
 /**
- * Парсит значение переменной в зависимости от её типа
- * @param {object} variable - Объект переменной с полями type, name, value
- * @param {string} variable.type - Тип переменной ('number', 'boolean', 'array', 'string')
- * @param {string} variable.name - Имя переменной (для логирования)
- * @param {*} variable.value - Исходное значение переменной
- * @param {string} [contextName] - Имя контекста для логирования (например, 'EventGraph ID 123')
- * @returns {*} - Распарсенное значение переменной
+ * Парсит value variable in dependencies от её type
+ * @param {object} variable - Object variable with полями type, name, value
+ * @param {string} variable.type - Type variable ('number', 'boolean', 'array', 'string')
+ * @param {string} variable.name - Name variable (for логирования)
+ * @param {*} variable.value - Исходное value variable
+ * @param {string} [contextName] - Name контекста for логирования (например, 'EventGraph ID 123')
+ * @returns {*} - Распарсенное value variable
  */
 function parseVariableValue(variable, contextName = 'unknown context') {
     const { type, name, value } = variable;
@@ -43,9 +43,9 @@ function parseVariableValue(variable, contextName = 'unknown context') {
 }
 
 /**
- * Возвращает значение по умолчанию для типа переменной
- * @param {string} type - Тип переменной
- * @returns {*} - Значение по умолчанию
+ * Returns value by умолчанию for type variable
+ * @param {string} type - Type variable
+ * @returns {*} - Value by умолчанию
  */
 function getDefaultValueForType(type) {
     switch (type) {
@@ -61,10 +61,10 @@ function getDefaultValueForType(type) {
 }
 
 /**
- * Парсит массив переменных и возвращает объект с распарсенными значениями
- * @param {Array} variables - Массив объектов переменных
- * @param {string} [contextName] - Имя контекста для логирования
- * @returns {object} - Объект с именами переменных в качестве ключей и распарсенными значениями
+ * Парсит array переменных and returns object with распарсенными значениями
+ * @param {Array} variables - Array объектов переменных
+ * @param {string} [contextName] - Name контекста for логирования
+ * @returns {object} - Object with именами переменных in качестве ключей and распарсенными значениями
  */
 function parseVariables(variables, contextName = 'unknown context') {
     if (!Array.isArray(variables)) {

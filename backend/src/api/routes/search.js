@@ -4,7 +4,7 @@ const router = express.Router();
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-// Все роуты требуют аутентификации
+// All роуты требуют authentication
 router.use(authenticate);
 
 router.get('/', async (req, res) => {

@@ -2,6 +2,7 @@ const express = require('express');
 const prisma = require('../../lib/prisma');
 const { authenticateUniversal, authorize } = require('../middleware/auth');
 const { checkBotAccess } = require('../middleware/botAccess');
+const { t } = require('../../i18n');
 
 const router = express.Router();
 
@@ -42,7 +43,7 @@ router.get('/:botId/commands', authenticateUniversal, authorize('management:view
         });
     } catch (error) {
         console.error('[API Error] GET /bots/:botId/commands:', error);
-        res.status(500).json({ error: 'Не удалось получить список команд' });
+        res.status(500).json({ error: t('bots:error_48089e41') });
     }
 });
 
@@ -60,13 +61,13 @@ router.get('/:botId/commands/:commandId', authenticateUniversal, authorize('mana
         });
 
         if (!command) {
-            return res.status(404).json({ error: 'Команда не найдена' });
+            return res.status(404).json({ error: t('bots:msg_9bf659d2') });
         }
 
         res.json(command);
     } catch (error) {
         console.error('[API Error] GET /bots/:botId/commands/:commandId:', error);
-        res.status(500).json({ error: 'Не удалось получить команду' });
+        res.status(500).json({ error: t('bots:error_c38213ba') });
     }
 });
 
@@ -81,7 +82,7 @@ router.patch('/:botId/commands/:commandId', authenticateUniversal, authorize('ma
         });
 
         if (!command) {
-            return res.status(404).json({ error: 'Команда не найдена' });
+            return res.status(404).json({ error: t('bots:msg_9bf659d2') });
         }
 
         const updateData = {};
@@ -103,7 +104,7 @@ router.patch('/:botId/commands/:commandId', authenticateUniversal, authorize('ma
         res.json(updated);
     } catch (error) {
         console.error('[API Error] PATCH /bots/:botId/commands/:commandId:', error);
-        res.status(500).json({ error: 'Не удалось обновить команду' });
+        res.status(500).json({ error: t('bots:error_c008602c') });
     }
 });
 

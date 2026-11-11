@@ -1,4 +1,5 @@
 const EventGraphRepository = require('../../repositories/EventGraphRepository');
+const { t } = require('../../i18n');
 
 describe('EventGraphRepository', () => {
     let repository;
@@ -20,7 +21,7 @@ describe('EventGraphRepository', () => {
     });
 
     describe('findByBotId', () => {
-        test('должен найти все графы бота', async () => {
+        test(t('tests:validation_2cf8d1a9'), async () => {
             const mockGraphs = [
                 { id: 1, botId: 1, name: 'Graph 1' },
                 { id: 2, botId: 1, name: 'Graph 2' }
@@ -38,7 +39,7 @@ describe('EventGraphRepository', () => {
     });
 
     describe('findEnabledByBotId', () => {
-        test('должен найти только включенные графы', async () => {
+        test(t('tests:validation_09c9e31c'), async () => {
             const mockGraphs = [
                 { id: 1, botId: 1, isEnabled: true }
             ];
@@ -57,7 +58,7 @@ describe('EventGraphRepository', () => {
     });
 
     describe('findByEventType', () => {
-        test('должен найти графы по типу события', async () => {
+        test(t('tests:validation_2418ec9e'), async () => {
             const mockGraphs = [
                 { id: 1, botId: 1, eventType: 'chat', isEnabled: true }
             ];
@@ -77,7 +78,7 @@ describe('EventGraphRepository', () => {
     });
 
     describe('updateEnabled', () => {
-        test('должен обновить статус isEnabled', async () => {
+        test(t('tests:validation_7d654a48'), async () => {
             const mockGraph = { id: 1, isEnabled: false };
             mockPrisma.eventGraph.update.mockResolvedValue(mockGraph);
 

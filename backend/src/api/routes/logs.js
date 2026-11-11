@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const os = require('os');
 const { authenticate, authorize } = require('../middleware/auth');
+const { t } = require('../../i18n');
 
 router.use(authenticate);
 
@@ -13,7 +14,7 @@ const debugOnly = (req, res, next) => {
     } else {
         res.status(403).json({
             success: false,
-            error: 'Доступ к логам разрешен только в режиме отладки'
+            error: t('api:perm_52682a87')
         });
     }
 };
@@ -123,10 +124,10 @@ router.get('/', debugOnly, (req, res) => {
         });
         
     } catch (error) {
-        console.error('Ошибка при получении логов:', error);
+        console.error(t('api:error_7c335122'), error);
         res.status(500).json({
             success: false,
-            error: 'Ошибка при получении логов'
+            error: t('api-keys:error_46cfe0ab')
         });
     }
 });
@@ -136,13 +137,13 @@ router.delete('/', debugOnly, (req, res) => {
         logBuffer = [];
         res.json({
             success: true,
-            message: 'Логи очищены'
+            message: t('api:msg_5b180fb8')
         });
     } catch (error) {
-        console.error('Ошибка при очистке логов:', error);
+        console.error(t('api:error_5a388d56'), error);
         res.status(500).json({
             success: false,
-            error: 'Ошибка при очистке логов'
+            error: t('api:error_77390afb')
         });
     }
 });
@@ -169,10 +170,10 @@ router.get('/stats', debugOnly, (req, res) => {
         });
         
     } catch (error) {
-        console.error('Ошибка при получении статистики логов:', error);
+        console.error(t('api:error_907f7574'), error);
         res.status(500).json({
             success: false,
-            error: 'Ошибка при получении статистики логов'
+            error: t('api:error_e198619c')
         });
     }
 });
@@ -214,7 +215,7 @@ function broadcastLog(log) {
             try {
                 handler(log);
             } catch (error) {
-                console.error('Ошибка при отправке лога клиенту:', error);
+                console.error(t('api:error_afe760a6'), error);
             }
         });
     }

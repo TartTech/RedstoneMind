@@ -113,7 +113,7 @@ app.get(/^(?!\/api).*/, (req, res) => {
     if (fs.existsSync(indexPath)) {
         res.sendFile(indexPath);
     } else {
-        console.error(`Критическая ошибка: файл index.html не найден по пути ${indexPath}`);
+        console.error(t('core:error_c203db9a', { indexPath: indexPath }));
         res.status(404).send(
             '<h1>Файлы фронтенда не найдены! Соберите фронтенд командой "npm run build --workspace=frontend"</h1>'
         );
@@ -126,7 +126,7 @@ app.use((err, req, res, next) => {
         return next(err);
     }
     const status = err.status || err.statusCode || 500;
-    res.status(status).json({ error: 'Внутренняя ошибка сервера' });
+    res.status(status).json({ error: t('core:error_64d1d8d2') });
 });
 
 async function runStartupMigrations() {
@@ -144,7 +144,7 @@ async function runStartupMigrations() {
         );
 
         if (result > 0) {
-            console.log(`[Migration] Исправлено ${result} серверов с невалидными портами (порт сброшен на 25565).`);
+            console.log(t('core:log_cf337734', { result: result }));
         }
 
         const adminRole = await prisma.panelRole.findUnique({ where: { name: 'Admin' } });
@@ -162,7 +162,7 @@ async function runStartupMigrations() {
             }
         }
 
-        // Создаем/обновляем роль Viewer
+        // Создаем/обновляем role Viewer
         const viewerRole = await prisma.panelRole.upsert({
             where: { name: 'Viewer' },
             update: { permissions: JSON.stringify(VIEWER_PERMISSIONS) },
@@ -183,7 +183,7 @@ async function runStartupMigrations() {
             }
         }
     } catch (error) {
-        console.error('[Migration] Ошибка во время миграции прав:', error);
+        console.error(t('core:error_78ed9d1f'), error);
     }
 }
 
@@ -191,17 +191,17 @@ async function startServer() {
     await runStartupMigrations();
     return new Promise((resolve) => {
         server.listen(PORT, HOST, async () => {
-            console.log(`\nBackend сервер успешно запущен на http://${HOST}:${PORT}`);
+            console.log(t('core:success_2e355e58', { HOST: HOST, PORT: PORT }));
 
             if (HOST === '0.0.0.0') {
                 const networkInterfaces = os.networkInterfaces();
-                console.log('Доступные адреса:');
+                console.log(t('core:msg_41d93875'));
                 console.log(`  Frontend: http://localhost:5173`);
                 console.log(`  API:      http://localhost:${PORT}`);
                 Object.keys(networkInterfaces).forEach(ifaceName => {
                     networkInterfaces[ifaceName].forEach(iface => {
                         if (iface.family === 'IPv4' && !iface.internal) {
-                            console.log(`  Сеть:    http://${iface.address}:5173`);
+                            console.log(t('core:msg_f7805533', { iface: iface.address }));
                         }
                     });
                 });
@@ -224,31 +224,32 @@ async function startServer() {
 
 
 const gracefulShutdown = async (signal) => {
-    console.log(`[Shutdown] Получен сигнал ${signal}. Начинаем корректное завершение...`);
+    console.log(t('core:log_1f483d27', { signal: signal }));
 
     TaskScheduler.shutdown();
     botManager.cleanup();
 
     const botIds = Array.from(botManager.bots.keys());
     if (botIds.length > 0) {
-        console.log(`[Shutdown] Остановка ${botIds.length} активных ботов...`);
+        console.log(t('core:log_f0fb9168', { botIds: botIds.length }));
         await Promise.all(botIds.map(botId => botManager.stopBot(botId)));
-        console.log('[Shutdown] Все боты остановлены.');
+        console.log(t('core:log_bbababc0'));
     }
 
     const io = require('./real-time/socketHandler').getIO();
     if (io) {
         io.close(async () => {
-            console.log('[Shutdown] WebSocket сервер закрыт.');
+            console.log(t('core:log_1144a31c'));
             
             await new Promise(resolve => server.close(resolve));
-            console.log('[Shutdown] HTTP сервер закрыт.');
+            console.log(t('core:log_09681227'));
 
             const prisma = require('./lib/prisma');
+const { t } = require('./i18n');
             await prisma.$disconnect();
-            console.log('[Shutdown] Соединение с БД закрыто.');
+            console.log(t('core:log_302f60d3'));
 
-            console.log('[Shutdown] Корректное завершение выполнено.');
+            console.log(t('core:success_c5f6333a'));
             process.exit(0);
         });
     }

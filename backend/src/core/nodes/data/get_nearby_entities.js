@@ -1,20 +1,20 @@
 /**
- * Нода для получения списка существ рядом с ботом
- * @param {object} node - Экземпляр узла из графа.
- * @param {string} pinId - Идентификатор выходного пина, значение которого нужно вычислить.
- * @param {object} context - Контекст выполнения графа.
- * @param {object} helpers - Вспомогательные функции движка.
- * @param {function} helpers.resolvePinValue - Функция для получения значения с входного пина.
- * @returns {Promise<any>} - Вычисленное значение для выходного пина.
+ * Нода for getting list существ рядом with ботом
+ * @param {object} node - Instance node from graph.
+ * @param {string} pinId - Идентификатор выходного pin, value которого need вычислить.
+ * @param {object} context - Context execution graph.
+ * @param {object} helpers - Helper functions engine.
+ * @param {function} helpers.resolvePinValue - Function for getting values with входного pin.
+ * @returns {Promise<any>} - Вычисленное value for выходного pin.
  */
 async function evaluate(node, pinId, context, helpers) {
     const { resolvePinValue } = helpers;
 
     if (pinId === 'entities') {
-        // Получаем радиус из входного пина (по умолчанию 32 блока)
+        // Получаем радиус from входного pin (by умолчанию 32 block)
         const radius = await resolvePinValue(node, 'radius', 32);
 
-        // Получаем список существ через botApi
+        // Получаем list существ through botApi
         if (context.bot && context.bot.getNearbyEntities) {
             const entities = await context.bot.getNearbyEntities(null, radius);
             return entities || [];

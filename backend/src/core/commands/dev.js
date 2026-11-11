@@ -2,6 +2,7 @@
 const Command = require('../system/Command');
 const fs = require('fs/promises');
 const path = require('path');
+const { t } = require('../../i18n');
 
 let appVersion = null;
 
@@ -9,7 +10,7 @@ class DevCommand extends Command {
     constructor() {
         super({
             name: 'dev',
-            description: 'Показывает информацию о панели управления и статистику бота.',
+            description: t('core:msg_fc19319f'),
             aliases: ['about', 'version', 'ver'],
             cooldown: 10,
             permissions: 'user.say',
@@ -19,24 +20,24 @@ class DevCommand extends Command {
         });
     }
 
-    // Переопределяем метод для кастомного сообщения при отсутствии прав
+    // Переопределяем method for кастомного messages when отсутствии прав
     onInsufficientPermissions(bot, typeChat, user) {
-        bot.sendMessage(typeChat, `${user.username}, у вас нет прав для этой команды.`, user.username);
+        bot.sendMessage(typeChat, t('core:msg_aa6a5848', { user: user.username }), user.username);
     }
 
-    // Переопределяем метод для неправильного типа чата
+    // Переопределяем method for неправильного type chat
     onWrongChatType(bot, typeChat, user) {
         bot.sendMessage('private', `${user.username}, команду dev нельзя использовать в чате типа "${typeChat}"`, user.username);
     }
 
-    // Переопределяем метод для кулдауна
+    // Переопределяем method for кулдауна
     onCooldown(bot, typeChat, user, timeLeft) {
-        bot.sendMessage(typeChat, `${user.username}, подождите еще ${timeLeft} секунд перед повторным использованием команды.`, user.username);
+        bot.sendMessage(typeChat, t('core:msg_5e79d849', { user: user.username, timeLeft: timeLeft }), user.username);
     }
 
-    // Переопределяем метод для черного списка (по умолчанию ничего не отправляется)
+    // Переопределяем method for черного list (by умолчанию ничего not отправляется)
     onBlacklisted(bot, typeChat, user) {
-        bot.sendMessage(typeChat, `${user.username}, вы находитесь в черном списке.`, user.username);
+        bot.sendMessage(typeChat, t('core:msg_22b69491', { user: user.username }), user.username);
     }
 
     async handler(bot, typeChat, user) {
@@ -46,8 +47,8 @@ class DevCommand extends Command {
                 const packageJsonData = await fs.readFile(packageJsonPath, 'utf-8');
                 appVersion = JSON.parse(packageJsonData).version;
             } catch (error) {
-                bot.sendLog(`[DevCommand] Не удалось прочитать версию: ${error.message}`);
-                appVersion = 'неизвестно';
+                bot.sendLog(t('core:error_c9d56286', { error: error.message }));
+                appVersion = t('core:msg_84649c1e');
             }
         }
 
@@ -59,7 +60,7 @@ class DevCommand extends Command {
         }
         const totalCommandsCount = uniqueCommands.size;
 
-        const message = `Бот создан с помощью - RedstoneMind. Версия: v${appVersion}. Активных плагинов: ${enabledPluginsCount}. Всего команд: ${totalCommandsCount}`;
+        const message = t('core:success_8b6aacbe', { appVersion: appVersion, enabledPluginsCount: enabledPluginsCount, totalCommandsCount: totalCommandsCount });
 
         if (typeChat === 'websocket') {
             return message;

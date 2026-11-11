@@ -1,8 +1,8 @@
 const { randomUUID } = require('crypto');
 
 /**
- * Состояние отладки для конкретного графа
- * Shared state между всеми подключенными пользователями
+ * State отладки for конкретного graph
+ * Shared state between всеми подключенными пользователями
  */
 class GraphDebugState {
   constructor(botId, graphId, io) {
@@ -19,10 +19,10 @@ class GraphDebugState {
     this.pausePromise = null;
     this.resumeCallback = null;
 
-    // Измененные значения во время паузы (what-if)
+    // Измененные values во время паузы (what-if)
     this.pendingOverrides = {}; // Object<key, value>
 
-    // Режим пошагового выполнения (step over)
+    // Режим пошагового execution (step over)
     this.stepMode = false; // Если true, остановится на следующей ноде
     this.stepFromNodeId = null; // ID ноды, с которой начали step over (чтобы её пропустить)
 
@@ -35,14 +35,14 @@ class GraphDebugState {
   }
 
   /**
-   * Получить имя комнаты для этого графа
+   * Получить name комнаты for этого graph
    */
   getRoomName() {
     return `graph:${this.graphId}:debug`;
   }
 
   /**
-   * Broadcast событие всем подключенным пользователям
+   * Broadcast event всем подключенным пользователям
    */
   broadcast(event, data) {
     const room = this.getRoomName();
@@ -56,8 +56,8 @@ class GraphDebugState {
   }
 
   /**
-   * Приостановить выполнение графа
-   * Возвращает Promise, который разрешится когда пользователь нажмет Continue
+   * Приостановить выполнение graph
+   * Returns Promise, который разрешится when user нажмет Continue
    */
   async pause(state) {
     const sessionId = randomUUID();
@@ -79,12 +79,12 @@ class GraphDebugState {
     });
 
 
-    // Создаем Promise, который будет ждать resume
+    // Создаем Promise, который will ждать resume
     this.pausePromise = new Promise((resolve) => {
       this.resumeCallback = resolve;
     });
 
-    // Ждем пока кто-то не вызовет resume
+    // Ждем пока кто-то not вызовет resume
     const overrides = await this.pausePromise;
 
     return overrides;
@@ -93,7 +93,7 @@ class GraphDebugState {
   /**
    * Возобновить выполнение
    * @param {object} overrides - Изменения значений
-   * @param {boolean} stepMode - Если true, остановится на следующей ноде
+   * @param {boolean} stepMode - If true, остановится on следующей ноде
    */
   resume(overrides = null, stepMode = false) {
     const effectiveStepMode = this.runToEnd ? false : (this.testMode ? true : stepMode);
@@ -184,7 +184,7 @@ class GraphDebugState {
   }
 
   /**
-   * Переключить enabled для брейкпоинта
+   * Переключить enabled for брейкпоинта
    */
   toggleBreakpoint(nodeId, enabled) {
     const bp = this.breakpoints.get(nodeId);
@@ -195,7 +195,7 @@ class GraphDebugState {
   }
 
   /**
-   * Очистить все брейкпоинты
+   * Очистить all брейкпоинты
    */
   clearAllBreakpoints() {
     const nodeIds = Array.from(this.breakpoints.keys());
@@ -208,18 +208,18 @@ class GraphDebugState {
   }
 
   /**
-   * Проверить, нужно ли остановиться в step mode
+   * Проверить, need ли остановиться in step mode
    * @param {string} nodeId - ID текущей ноды
    * @returns {boolean}
    */
   shouldStepPause(nodeId) {
     if (this.stepMode) {
-      // Пропускаем ноду, с которой начали step
+      // Пропускаем ноду, with которой начали step
       if (nodeId === this.stepFromNodeId) {
         return false;
       }
 
-      // Останавливаемся на следующей ноде
+      // Останавливаемся on следующей ноде
       this.stepMode = false; // Сбрасываем после остановки
       this.stepFromNodeId = null;
       return true;
@@ -228,7 +228,7 @@ class GraphDebugState {
   }
 
   /**
-   * Установить измененное значение (what-if)
+   * Установить измененное value (what-if)
    */
   setValue(key, value) {
     this.pendingOverrides[key] = value;
@@ -321,7 +321,7 @@ class GraphDebugState {
   }
 
   /**
-   * Получить текущее состояние (для отправки новым пользователям)
+   * Получить текущее state (for отправки новым пользователям)
    */
   getState() {
     return {
@@ -335,14 +335,14 @@ class GraphDebugState {
   }
 
   /**
-   * Добавить пользователя
+   * Добавить user
    */
   addUser(socketId, userInfo) {
     this.connectedUsers.set(socketId, userInfo);
   }
 
   /**
-   * Удалить пользователя
+   * Удалить user
    */
   removeUser(socketId) {
     this.connectedUsers.delete(socketId);
@@ -351,7 +351,7 @@ class GraphDebugState {
 
 /**
  * Менеджер отладочных сессий
- * Управляет состоянием отладки для всех графов (в памяти)
+ * Управляет состоянием отладки for всех графов (in памяти)
  */
 class DebugSessionManager {
   constructor(io) {
@@ -364,7 +364,7 @@ class DebugSessionManager {
   }
 
   /**
-   * Получить или создать состояние отладки для графа
+   * Получить or создать state отладки for graph
    */
   getOrCreate(botId, graphId) {
     if (!this.graphDebugStates.has(graphId)) {
@@ -377,14 +377,14 @@ class DebugSessionManager {
   }
 
   /**
-   * Получить состояние отладки для графа (если существует)
+   * Получить state отладки for graph (if существует)
    */
   get(graphId) {
     return this.graphDebugStates.get(graphId);
   }
 
   /**
-   * Найти состояние по sessionId
+   * Найти state by sessionId
    */
   getBySessionId(sessionId) {
     for (const state of this.graphDebugStates.values()) {
@@ -396,7 +396,7 @@ class DebugSessionManager {
   }
 
   /**
-   * Удалить состояние графа (при необходимости)
+   * Удалить state graph (when необходимости)
    */
   remove(graphId) {
     this.graphDebugStates.delete(graphId);
@@ -404,7 +404,7 @@ class DebugSessionManager {
   }
 
   /**
-   * Очистить все состояния (при перезапуске бота)
+   * Очистить all state (when перезапуске bot)
    */
   clearAll() {
     this.graphDebugStates.clear();
@@ -412,7 +412,7 @@ class DebugSessionManager {
   }
 
   /**
-   * Очистить состояния для конкретного бота
+   * Очистить state for конкретного bot
    */
   clearForBot(botId) {
     for (const [graphId, state] of this.graphDebugStates.entries()) {
@@ -424,7 +424,7 @@ class DebugSessionManager {
   }
 }
 
-// Глобальный инстанс для предотвращения циклических зависимостей
+// Глобальный инстанс for предотвращения циклических зависимостей
 let globalDebugManager = null;
 
 /**

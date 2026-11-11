@@ -1,5 +1,5 @@
 /**
- * inventory:get_slot - Получить предмет в указанном слоте
+ * inventory:get_slot - Получить item in указанном слоте
  */
 async function evaluate(node, pinId, context, helpers) {
   const bot = context.bot;
@@ -11,13 +11,13 @@ async function evaluate(node, pinId, context, helpers) {
     return null;
   }
 
-  // Получаем предмет в слоте
+  // Получаем item in слоте
   const item = bot.inventory.slots[slotNumber];
 
   if (pinId === 'item') {
     if (!item) return null;
 
-    // Извлекаем прочность из NBT
+    // Извлекаем прочность from NBT
     const damage = item.nbt?.value?.Damage?.value ?? 0;
     const maxDurability = item.maxDurability ?? null;
     const durability = maxDurability ? maxDurability - damage : null;

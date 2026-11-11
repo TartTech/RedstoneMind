@@ -21,8 +21,8 @@ class BotIPCMessageRouter {
             try {
                 await this._routeMessage(botId, child, message);
             } catch (error) {
-                this.appendLog(botId, `[SYSTEM-ERROR] Критическая ошибка в обработчике: ${error.stack}`);
-                this.logger.error({ botId, error }, 'Критическая ошибка в обработчике сообщений');
+                this.appendLog(botId, t('services:error_100b560b', { error: error.stack }));
+                this.logger.error({ botId, error }, t('services:error_bb0ae88d'));
             }
         });
 
@@ -144,7 +144,7 @@ class BotIPCMessageRouter {
 
     _handleBotReady(botId) {
         this.crashRestartManager.resetCounter(botId);
-        this.emitStatusUpdate(botId, 'running', 'Бот успешно подключился к серверу.');
+        this.emitStatusUpdate(botId, 'running', t('services:success_1bf78076'));
 
         try {
             const { getIOSafe } = require('../../real-time/socketHandler');
@@ -175,7 +175,7 @@ class BotIPCMessageRouter {
         try {
             const botConfig = child.botConfig;
             const user = await UserService.getUser(targetUsername, botId, botConfig);
-            if (!user) throw new Error(`Пользователь ${targetUsername} не найден.`);
+            if (!user) throw new Error(t('services:msg_d71a0cfc', { targetUsername: targetUsername }));
 
             let result;
             switch (action) {
@@ -185,12 +185,12 @@ class BotIPCMessageRouter {
                 case 'getPermissions': result = Array.from(user.permissionsSet); break;
                 case 'isBlacklisted': result = user.isBlacklisted; break;
                 case 'setBlacklisted': result = await user.setBlacklist(data.value); break;
-                default: throw new Error(`Неизвестное действие: ${action}`);
+                default: throw new Error(t('services:msg_70832112', { action: action }));
             }
 
             child.send({ type: 'user_action_response', requestId, payload: result });
         } catch (error) {
-            this.logger.error({ botId, action, username: targetUsername, error }, 'Ошибка действия пользователя');
+            this.logger.error({ botId, action, username: targetUsername, error }, t('services:error_688c4c85'));
             child.send({ type: 'user_action_response', requestId, error: error.message });
         }
     }
@@ -288,7 +288,7 @@ class BotIPCMessageRouter {
             if (data.password) child.botConfig.password = data.password;
         }
 
-        this.appendLog(botId, `[API] Credentials обновлены: ${username}`);
+        this.appendLog(botId, t('services:success_0a30eea7', { username: username }));
         child.send({ type: 'credentials_operation_response', requestId, payload: { success: true } });
     }
 
@@ -301,7 +301,7 @@ class BotIPCMessageRouter {
     _handleGraphRestart(botId) {
         if (!this.restartBot) return;
         Promise.resolve(this.restartBot(botId)).catch((err) => {
-            this.appendLog(botId, `[API] Ошибка перезапуска: ${err.message}`);
+            this.appendLog(botId, t('services:error_8e52d63f', { err: err.message }));
         });
     }
 
@@ -312,7 +312,7 @@ class BotIPCMessageRouter {
         setTimeout(() => {
             const config = { ...child.botConfig };
             Promise.resolve(this.restartBot(botId, config)).catch((err) => {
-                this.appendLog(botId, `[API] Ошибка перезапуска: ${err.message}`);
+                this.appendLog(botId, t('services:error_8e52d63f', { err: err.message }));
             });
         }, 3000);
     }
@@ -346,12 +346,12 @@ class BotIPCMessageRouter {
         }
 
         const config = { ...child.botConfig };
-        this.appendLog(botId, `[API] Credentials изменены: ${username}, рестарт...`);
+        this.appendLog(botId, t('services:log_ddead7bb', { username: username }));
         child.send({ type: 'credentials_operation_response', requestId, payload: { success: true } });
 
         setTimeout(() => {
             Promise.resolve(this.restartBot(botId, config)).catch((err) => {
-                this.appendLog(botId, `[API] Ошибка перезапуска после смены credentials: ${err.message}`);
+                this.appendLog(botId, t('services:error_c4935abd', { err: err.message }));
             });
         }, 3000);
     }
@@ -367,6 +367,7 @@ class BotIPCMessageRouter {
         try {
             const { getIOSafe } = require('../../real-time/socketHandler');
             const { broadcastBotStatus } = require('../../real-time/botApi');
+const { t } = require('../../i18n');
             broadcastBotStatus(getIOSafe(), botId, false);
         } catch (e) {}
 
@@ -375,7 +376,7 @@ class BotIPCMessageRouter {
             if (shouldRestart) {
                 setTimeout(() => {
                     Promise.resolve(this.restartBot(botId, botConfig)).catch((err) => {
-                        this.appendLog(botId, `[CRASH] Не удалось перезапустить бота: ${err.message}`);
+                        this.appendLog(botId, t('services:error_092ea4ad', { err: err.message }));
                     });
                 }, delay);
             }

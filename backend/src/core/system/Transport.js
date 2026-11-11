@@ -1,5 +1,6 @@
+const { t } = require('../../i18n');
 /**
- * Transport - абстракция для различных способов доставки сообщений
+ * Transport - абстракция for различных способов доставки сообщений
  * Поддерживает: websocket, minecraft (chat/clan/private/command), telegram (будущее)
  */
 class Transport {
@@ -9,17 +10,17 @@ class Transport {
     }
 
     /**
-     * Отправить сообщение через этот транспорт
-     * @param {string} message - Текст сообщения
-     * @param {string} recipient - Получатель (для private/telegram)
-     * @returns {string|void} - Для websocket возвращает message, для остальных void
+     * Отправить message through этот транспорт
+     * @param {string} message - Текст messages
+     * @param {string} recipient - Получатель (for private/telegram)
+     * @returns {string|void} - For websocket returns message, for остальных void
      */
     send(message, recipient = null) {
         if (this.type === 'websocket') {
-            // WebSocket - возвращаем результат как есть
+            // WebSocket - возвращаем result как есть
             return message;
         } else if (this.isMinecraftTransport()) {
-            // Minecraft - отправляем через бота
+            // Minecraft - отправляем through bot
             if (this.bot && this.bot.api) {
                 this.bot.api.sendMessage(this.type, message, recipient);
             }
@@ -27,22 +28,22 @@ class Transport {
     }
 
     /**
-     * Проверка, является ли этот транспорт Minecraft-транспортом
+     * Check, является ли этот транспорт Minecraft-транспортом
      */
     isMinecraftTransport() {
         return ['chat', 'local', 'clan', 'private', 'command'].includes(this.type);
     }
 
     /**
-     * Проверка, является ли этот транспорт универсальным (не требует проверки allowedChatTypes)
+     * Check, является ли этот транспорт универсальным (not требует verification allowedChatTypes)
      */
     isUniversal() {
         return this.type === 'websocket';
     }
 
     /**
-     * Проверка, может ли команда быть выполнена через этот транспорт
-     * @param {Array<string>} allowedTypes - Список разрешенных типов чата из команды
+     * Check, can ли command быть выполнена through этот транспорт
+     * @param {Array<string>} allowedTypes - List разрешенных типов chat from commands
      */
     isAllowedFor(allowedTypes) {
         // Универсальные транспорты всегда разрешены
@@ -50,7 +51,7 @@ class Transport {
             return true;
         }
 
-        // Для остальных проверяем список разрешенных типов
+        // For остальных проверяем list разрешенных типов
         return allowedTypes.includes(this.type);
     }
 
@@ -60,11 +61,11 @@ class Transport {
     getDisplayName() {
         const names = {
             websocket: 'WebSocket API',
-            chat: 'Общий чат',
-            local: 'Локальный чат',
-            clan: 'Клан',
-            private: 'Личное сообщение',
-            command: 'Команда',
+            chat: t('core:msg_b63a061a'),
+            local: t('core:msg_612dda5e'),
+            clan: t('core:msg_d8dafc5d'),
+            private: t('core:msg_72464eb6'),
+            command: t('core:msg_85bd6ff1'),
             telegram: 'Telegram'
         };
         return names[this.type] || this.type;

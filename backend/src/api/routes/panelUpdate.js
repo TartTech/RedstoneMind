@@ -2,6 +2,7 @@ const express = require('express');
 const rateLimit = require('express-rate-limit');
 const { authenticateUniversal, authorize } = require('../middleware/auth');
 const PanelUpdateService = require('../../core/services/PanelUpdateService');
+const { t } = require('../../i18n');
 
 const router = express.Router();
 
@@ -28,7 +29,7 @@ router.get('/check', authenticateUniversal, checkLimiter, async (req, res) => {
         res.json(result);
     } catch (error) {
         console.error('[API /api/panel/update/check]', error);
-        res.status(500).json({ error: 'Не удалось проверить обновления.' });
+        res.status(500).json({ error: t('panel:error_7c3e8d3f') });
     }
 });
 
@@ -43,14 +44,14 @@ router.post('/apply', authenticateUniversal, authorize('panel:settings:edit'), a
     } catch (error) {
         const code = error.code || '';
         if (code === 'update_in_progress') {
-            return res.status(409).json({ error: 'Обновление уже выполняется.', code });
+            return res.status(409).json({ error: t('panel:success_cdade1f2'), code });
         }
         if (code === 'not_git' || code === 'no_git_binary' || code === 'dirty' || code === 'wrong_branch' || code === 'diverged' || code === 'cannot_update' || code === 'invalid_branch' || code === 'offline' || code === 'same' || code === 'ahead') {
-            return res.status(400).json({ error: 'Сейчас нельзя обновить панель.', code });
+            return res.status(400).json({ error: t('panel:msg_9a99eac8'), code });
         }
         console.error('[API /api/panel/update/apply]', error);
         res.status(500).json({
-            error: 'Не удалось обновить панель.',
+            error: t('panel:error_29f1a18e'),
             code: code || 'update_failed',
             detail: error.detail || '',
         });

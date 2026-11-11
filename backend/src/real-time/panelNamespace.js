@@ -1,15 +1,16 @@
 const bcrypt = require('bcryptjs');
 const prisma = require('../lib/prisma');
 const { botManager } = require('../core/services');
+const { t } = require('../i18n');
 
 /**
- * Аутентификация Panel API Key для WebSocket
+ * Authentication Panel API Key for WebSocket
  */
 async function authenticateSocket(socket, next) {
     const token = socket.handshake.auth?.token;
 
     if (!token || typeof token !== 'string') {
-        return next(new Error('API ключ не предоставлен'));
+        return next(new Error(t('api:msg_e0f84354')));
     }
 
     try {
@@ -45,7 +46,7 @@ async function authenticateSocket(socket, next) {
         }
 
         if (!matchedKey) {
-            return next(new Error('Неверный API ключ'));
+            return next(new Error(t('api:error_924d84ca')));
         }
 
         await prisma.panelApiKey.update({
@@ -65,8 +66,8 @@ async function authenticateSocket(socket, next) {
                 permissions = rolePermissions;
             }
         } catch (parseError) {
-            console.error('Ошибка парсинга прав доступа:', parseError);
-            return next(new Error('Ошибка обработки прав доступа'));
+            console.error(t('api:error_f07cb4fd'), parseError);
+            return next(new Error(t('api:error_fe6882aa')));
         }
 
         let availableBots;
@@ -101,13 +102,13 @@ async function authenticateSocket(socket, next) {
 
         next();
     } catch (err) {
-        console.error('Ошибка аутентификации Panel WebSocket:', err);
-        next(new Error('Ошибка аутентификации'));
+        console.error(t('core:error_af76940f'), err);
+        next(new Error(t('api:error_4d82dd6e')));
     }
 }
 
 /**
- * Проверка доступа к боту
+ * Check access to боту
  */
 function canAccessBot(socket, botId) {
     if (socket.user.allBots) return true;
@@ -115,7 +116,7 @@ function canAccessBot(socket, botId) {
 }
 
 /**
- * Проверка прав доступа
+ * Check прав access
  */
 function hasPermission(socket, permission) {
     if (!socket.user || !Array.isArray(socket.user.permissions)) {
@@ -125,7 +126,7 @@ function hasPermission(socket, permission) {
 }
 
 /**
- * Инициализация Panel namespace
+ * Initialization Panel namespace
  */
 function initializePanelNamespace(io) {
     const panelNamespace = io.of('/panel');
@@ -153,11 +154,11 @@ function initializePanelNamespace(io) {
         // ========== SUBSCRIPTIONS ==========
 
         /**
-         * Подписка на каналы событий
+         * Подписка on каналы событий
          */
         socket.on('subscribe', async ({ channel }, callback) => {
             try {
-                // Парсим канал: "bots:status" или "bots:1:events"
+                // Парсим канал: "bots:status" or "bots:1:events"
                 const parts = channel.split(':');
                 const resource = parts[0];
 
@@ -178,7 +179,7 @@ function initializePanelNamespace(io) {
                         if (!canAccessBot(socket, botId)) {
                             if (callback) callback({
                                 success: false,
-                                error: 'Нет доступа к этому боту'
+                                error: t('core:msg_c50246ce')
                             });
                             return;
                         }
@@ -188,7 +189,7 @@ function initializePanelNamespace(io) {
                     }
                 } else if (resource === 'system') {
                     if (!socket.user.allBots) {
-                        if (callback) callback({ success: false, error: 'Нет доступа к системным каналам' });
+                        if (callback) callback({ success: false, error: t('core:msg_c056412f') });
                         return;
                     }
                     socket.join(channel);
@@ -196,11 +197,11 @@ function initializePanelNamespace(io) {
                 } else {
                     if (callback) callback({
                         success: false,
-                        error: 'Неизвестный канал'
+                        error: t('core:msg_f8269f6f')
                     });
                 }
             } catch (error) {
-                console.error('[Panel WS] Ошибка подписки:', error);
+                console.error(t('core:error_988ba267'), error);
                 if (callback) callback({
                     success: false,
                     error: error.message
@@ -219,17 +220,17 @@ function initializePanelNamespace(io) {
         // ========== ACTIONS ==========
 
         /**
-         * Отправка сообщения от бота
+         * Sending messages от bot
          */
         socket.on('action:bot:send_message', async ({ botId, message, chatType, recipient }, callback) => {
             try {
                 if (!canAccessBot(socket, botId)) {
-                    if (callback) callback({ success: false, error: 'Нет доступа к этому боту' });
+                    if (callback) callback({ success: false, error: t('core:msg_c50246ce') });
                     return;
                 }
 
                 if (!hasPermission(socket, 'bot:interact')) {
-                    if (callback) callback({ success: false, error: 'Нет прав: bot:interact' });
+                    if (callback) callback({ success: false, error: t('core:msg_094687e0') });
                     return;
                 }
 
@@ -241,28 +242,28 @@ function initializePanelNamespace(io) {
 
                 if (callback) callback({ success: true });
             } catch (error) {
-                console.error('[Panel WS] Ошибка отправки сообщения:', error);
+                console.error(t('core:error_f5081ab8'), error);
                 if (callback) callback({ success: false, error: error.message });
             }
         });
 
         /**
-         * Выполнение команды
+         * Выполнение commands
          */
         socket.on('action:bot:execute_command', async ({ botId, username, command, args }, callback) => {
             try {
                 if (!canAccessBot(socket, botId)) {
-                    if (callback) callback({ success: false, error: 'Нет доступа к этому боту' });
+                    if (callback) callback({ success: false, error: t('core:msg_c50246ce') });
                     return;
                 }
 
                 if (!hasPermission(socket, 'bot:interact')) {
-                    if (callback) callback({ success: false, error: 'Нет прав: bot:interact' });
+                    if (callback) callback({ success: false, error: t('core:msg_094687e0') });
                     return;
                 }
 
                 if (!username || !command) {
-                    if (callback) callback({ success: false, error: 'Нужны username и command' });
+                    if (callback) callback({ success: false, error: t('core:msg_e336bb29') });
                     return;
                 }
 
@@ -275,23 +276,23 @@ function initializePanelNamespace(io) {
 
                 if (callback) callback({ success: true, result });
             } catch (error) {
-                console.error('[Panel WS] Ошибка выполнения команды:', error);
+                console.error(t('core:error_0efd81b2'), error);
                 if (callback) callback({ success: false, error: error.message });
             }
         });
 
         /**
-         * Запуск бота
+         * Start bot
          */
         socket.on('action:bot:start', async ({ botId }, callback) => {
             try {
                 if (!canAccessBot(socket, botId)) {
-                    if (callback) callback({ success: false, error: 'Нет доступа к этому боту' });
+                    if (callback) callback({ success: false, error: t('core:msg_c50246ce') });
                     return;
                 }
 
                 if (!hasPermission(socket, 'bot:start_stop')) {
-                    if (callback) callback({ success: false, error: 'Нет прав: bot:start_stop' });
+                    if (callback) callback({ success: false, error: t('core:msg_2fd1713f') });
                     return;
                 }
 
@@ -300,7 +301,7 @@ function initializePanelNamespace(io) {
                     include: { server: true, proxy: true },
                 });
                 if (!botConfig) {
-                    if (callback) callback({ success: false, error: 'Бот не найден' });
+                    if (callback) callback({ success: false, error: t('bots:msg_13215f66') });
                     return;
                 }
 
@@ -310,68 +311,68 @@ function initializePanelNamespace(io) {
                     return;
                 }
 
-                if (callback) callback({ success: true, message: 'Бот запущен' });
+                if (callback) callback({ success: true, message: t('core:msg_b6870601') });
             } catch (error) {
-                console.error('[Panel WS] Ошибка запуска бота:', error);
+                console.error(t('core:error_9550d48f'), error);
                 if (callback) callback({ success: false, error: error.message });
             }
         });
 
         /**
-         * Остановка бота
+         * Stop bot
          */
         socket.on('action:bot:stop', async ({ botId }, callback) => {
             try {
                 if (!canAccessBot(socket, botId)) {
-                    if (callback) callback({ success: false, error: 'Нет доступа к этому боту' });
+                    if (callback) callback({ success: false, error: t('core:msg_c50246ce') });
                     return;
                 }
 
                 if (!hasPermission(socket, 'bot:start_stop')) {
-                    if (callback) callback({ success: false, error: 'Нет прав: bot:start_stop' });
+                    if (callback) callback({ success: false, error: t('core:msg_2fd1713f') });
                     return;
                 }
 
                 await botManager.stopBot(botId);
 
-                if (callback) callback({ success: true, message: 'Бот остановлен' });
+                if (callback) callback({ success: true, message: t('core:msg_5a23fdbf') });
             } catch (error) {
-                console.error('[Panel WS] Ошибка остановки бота:', error);
+                console.error(t('core:error_1e5e9796'), error);
                 if (callback) callback({ success: false, error: error.message });
             }
         });
 
         /**
-         * Перезапуск бота
+         * Restart bot
          */
         socket.on('action:bot:restart', async ({ botId }, callback) => {
             try {
                 if (!canAccessBot(socket, botId)) {
-                    if (callback) callback({ success: false, error: 'Нет доступа к этому боту' });
+                    if (callback) callback({ success: false, error: t('core:msg_c50246ce') });
                     return;
                 }
 
                 if (!hasPermission(socket, 'bot:start_stop')) {
-                    if (callback) callback({ success: false, error: 'Нет прав: bot:start_stop' });
+                    if (callback) callback({ success: false, error: t('core:msg_2fd1713f') });
                     return;
                 }
 
                 await botManager.restartBot(botId);
 
-                if (callback) callback({ success: true, message: 'Бот перезапущен' });
+                if (callback) callback({ success: true, message: t('core:msg_9d1d2b5e') });
             } catch (error) {
-                console.error('[Panel WS] Ошибка перезапуска бота:', error);
+                console.error(t('core:error_faf6846c'), error);
                 if (callback) callback({ success: false, error: error.message });
             }
         });
 
         /**
-         * Получение статуса бота
+         * Receiving статуса bot
          */
         socket.on('action:bot:get_status', async ({ botId }, callback) => {
             try {
                 if (!canAccessBot(socket, botId)) {
-                    if (callback) callback({ success: false, error: 'Нет доступа к этому боту' });
+                    if (callback) callback({ success: false, error: t('core:msg_c50246ce') });
                     return;
                 }
 
@@ -386,7 +387,7 @@ function initializePanelNamespace(io) {
                     }
                 });
             } catch (error) {
-                console.error('[Panel WS] Ошибка получения статуса:', error);
+                console.error(t('core:error_eb28380d'), error);
                 if (callback) callback({ success: false, error: error.message });
             }
         });
@@ -402,7 +403,7 @@ function initializePanelNamespace(io) {
 }
 
 /**
- * Broadcast события в Panel namespace
+ * Broadcast events in Panel namespace
  */
 function broadcastToPanelNamespace(io, channel, data, eventName) {
     const panelNamespace = io.of('/panel');

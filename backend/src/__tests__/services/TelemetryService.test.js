@@ -1,6 +1,7 @@
 const TelemetryService = require('../../core/services/TelemetryService');
 const fs = require('fs');
 const path = require('path');
+const { t } = require('../../i18n');
 
 // Mock fs
 jest.mock('fs');
@@ -39,7 +40,7 @@ describe('TelemetryService', () => {
     });
 
     describe('loadInstanceId', () => {
-        test('должен создать новый instance ID если файл не существует', () => {
+        test(t('tests:validation_b63f4585'), () => {
             fs.existsSync.mockReturnValue(false);
 
             telemetryService = new TelemetryService({
@@ -56,7 +57,7 @@ describe('TelemetryService', () => {
             expect(fs.writeFileSync).toHaveBeenCalled();
         });
 
-        test('должен загрузить существующий instance ID', () => {
+        test(t('tests:validation_ab69b2a0'), () => {
             const existingId = 'test-uuid-123';
             fs.existsSync.mockReturnValue(true);
             fs.readFileSync.mockReturnValue(existingId);
@@ -73,7 +74,7 @@ describe('TelemetryService', () => {
             expect(fs.writeFileSync).not.toHaveBeenCalled();
         });
 
-        test('должен обработать ошибку при загрузке', () => {
+        test(t('tests:validation_78ee9bb8'), () => {
             fs.existsSync.mockImplementation(() => {
                 throw new Error('Permission denied');
             });
@@ -103,7 +104,7 @@ describe('TelemetryService', () => {
             });
         });
 
-        test('должен запустить heartbeat если телеметрия включена', () => {
+        test(t('tests:validation_cc6d2817'), () => {
             jest.useFakeTimers();
 
             telemetryService.startHeartbeat(1000);
@@ -113,7 +114,7 @@ describe('TelemetryService', () => {
             jest.useRealTimers();
         });
 
-        test('не должен запускать heartbeat если телеметрия выключена', () => {
+        test(t('tests:validation_10a02678'), () => {
             mockConfig.telemetry.enabled = false;
 
             telemetryService = new TelemetryService({
@@ -140,7 +141,7 @@ describe('TelemetryService', () => {
             });
         });
 
-        test('должен остановить heartbeat', () => {
+        test(t('tests:validation_8ddf9359'), () => {
             jest.useFakeTimers();
 
             telemetryService.startHeartbeat(1000);
@@ -164,7 +165,7 @@ describe('TelemetryService', () => {
             });
         });
 
-        test('должен отложить heartbeat', () => {
+        test(t('tests:validation_35e8a728'), () => {
             jest.useFakeTimers();
 
             telemetryService.triggerHeartbeat();
@@ -174,7 +175,7 @@ describe('TelemetryService', () => {
             jest.useRealTimers();
         });
 
-        test('не должен запускаться если телеметрия выключена', () => {
+        test(t('tests:validation_275658e0'), () => {
             mockConfig.telemetry.enabled = false;
 
             telemetryService = new TelemetryService({
@@ -201,7 +202,7 @@ describe('TelemetryService', () => {
             });
         });
 
-        test('должен отправить heartbeat с запущенными ботами', async () => {
+        test(t('tests:validation_1d8ed852'), async () => {
             const mockBotProcess = {
                 botConfig: {
                     username: 'TestBot',
@@ -234,7 +235,7 @@ describe('TelemetryService', () => {
             expect(mockLogger.debug).toHaveBeenCalled();
         });
 
-        test('не должен отправлять если телеметрия выключена', async () => {
+        test(t('tests:validation_3681c783'), async () => {
             mockConfig.telemetry.enabled = false;
 
             telemetryService = new TelemetryService({
@@ -248,7 +249,7 @@ describe('TelemetryService', () => {
             expect(global.fetch).not.toHaveBeenCalled();
         });
 
-        test('не должен отправлять если нет запущенных ботов', async () => {
+        test(t('tests:validation_82d3071a'), async () => {
             mockProcessManager.getAllProcesses.mockReturnValue(new Map());
 
             await telemetryService.sendHeartbeat();
@@ -256,7 +257,7 @@ describe('TelemetryService', () => {
             expect(global.fetch).not.toHaveBeenCalled();
         });
 
-        test('не показывает пользователю ошибку мёртвого сервера телеметрии', async () => {
+        test(t('tests:msg_c1fd6d1b'), async () => {
             const mockBotProcess = {
                 botConfig: {
                     username: 'TestBot',
@@ -275,7 +276,7 @@ describe('TelemetryService', () => {
             expect(mockLogger.error).not.toHaveBeenCalled();
         });
 
-        test('не пишет в лог таймаут соединения со статистикой', async () => {
+        test(t('tests:msg_0542c28d'), async () => {
             const mockBotProcess = {
                 botConfig: {
                     username: 'TestBot',
@@ -294,7 +295,7 @@ describe('TelemetryService', () => {
     });
 
     describe('getInstanceId', () => {
-        test('должен вернуть instance ID', () => {
+        test(t('tests:validation_3ab02eac'), () => {
             fs.existsSync.mockReturnValue(true);
             fs.readFileSync.mockReturnValue('test-uuid');
 

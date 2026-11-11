@@ -1,9 +1,9 @@
 /**
- * @param {object} node - Экземпляр узла из графа.
- * @param {object} context - Контекст выполнения графа.
- * @param {object} helpers - Вспомогательные функции движка.
- * @param {function} helpers.resolvePinValue - Функция для получения значения с пина.
- * @param {function} helpers.traverse - Функция для перехода к следующему узлу.
+ * @param {object} node - Instance node from graph.
+ * @param {object} context - Context execution graph.
+ * @param {object} helpers - Helper functions engine.
+ * @param {function} helpers.resolvePinValue - Function for getting values with pin.
+ * @param {function} helpers.traverse - Function for transitioning to next node.
  */
 async function execute(node, context, helpers) {
     const { resolvePinValue, traverse } = helpers;
@@ -12,7 +12,7 @@ async function execute(node, context, helpers) {
     const varValue = await resolvePinValue(node, 'value');
     let shouldPersist = await resolvePinValue(node, 'persist', false);
 
-    // В графах команд принудительно отключаем сохранение в БД, чтобы избежать случайных записей
+    // In графах команд принудительно отключаем сохранение in БД, чтобы избежать случайных записей
     if (context.eventType === 'command') {
         shouldPersist = false;
     }

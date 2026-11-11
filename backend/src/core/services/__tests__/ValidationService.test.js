@@ -79,7 +79,7 @@ describe('ValidationService', () => {
                 connections: []
             };
 
-            // В production mode не выбрасывает исключение, а возвращает shouldSkip: true
+            // В production mode not выбрасывает exception, а returns shouldSkip: true
             if (process.env.NODE_ENV === 'production') {
                 const result = validationService.validateGraphStructure(graph, 'test');
 
@@ -87,7 +87,7 @@ describe('ValidationService', () => {
                 expect(result.shouldSkip).toBe(true);
                 expect(result.error).toBeDefined();
             } else {
-                // В dev/test mode выбрасывает исключение
+                // В dev/test mode выбрасывает exception
                 expect(() => {
                     validationService.validateGraphStructure(graph, 'test');
                 }).toThrow('Invalid graph structure');
@@ -119,7 +119,7 @@ describe('ValidationService', () => {
                 // Missing required fields
             };
 
-            // В production mode не выбрасывает исключение, а возвращает shouldSkip: true
+            // В production mode not выбрасывает exception, а returns shouldSkip: true
             if (process.env.NODE_ENV === 'production') {
                 const result = validationService.validateNode(nodeConfig, 'test');
 
@@ -127,7 +127,7 @@ describe('ValidationService', () => {
                 expect(result.shouldSkip).toBe(true);
                 expect(result.error).toBeDefined();
             } else {
-                // В dev/test mode выбрасывает исключение
+                // В dev/test mode выбрасывает exception
                 expect(() => {
                     validationService.validateNode(nodeConfig, 'test');
                 }).toThrow();

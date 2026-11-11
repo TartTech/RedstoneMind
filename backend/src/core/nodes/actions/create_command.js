@@ -3,12 +3,13 @@ const { tryGraphWrite } = require('../../graphServices');
 const prisma = prismaService.getClient();
 const { getRuntimeCommandRegistry } = require('../../system/RuntimeCommandRegistry');
 const Command = require('../../system/Command');
+const { t } = require('../../../i18n');
 
 /**
- * Создает новую команду (временную или постоянную)
- * @param {object} node - Экземпляр узла из графа
- * @param {object} context - Контекст выполнения графа
- * @param {object} helpers - Вспомогательные функции движка
+ * Creates новую команду (временную or постоянную)
+ * @param {object} node - Instance node from graph
+ * @param {object} context - Context execution graph
+ * @param {object} helpers - Helper functions engine
  */
 async function execute(node, context, helpers) {
     const { resolvePinValue, traverse, memo } = helpers;
@@ -28,7 +29,7 @@ async function execute(node, context, helpers) {
                 const normalizedString = aliases.replace(/'/g, '"');
                 aliases = JSON.parse(normalizedString);
             } catch (e) {
-                console.warn('[create_command] Не удалось распарсить aliases:', e);
+                console.warn(t('nodes:error_60053254'), e);
                 aliases = [];
             }
         }
@@ -38,13 +39,13 @@ async function execute(node, context, helpers) {
                 const normalizedString = allowedChatTypes.replace(/'/g, '"');
                 allowedChatTypes = JSON.parse(normalizedString);
             } catch (e) {
-                console.warn('[create_command] Не удалось распарсить allowedChatTypes:', e);
+                console.warn(t('nodes:error_516e12b4'), e);
                 allowedChatTypes = ['chat', 'private'];
             }
         }
 
         if (!name) {
-            console.error('[create_command] Имя команды обязательно');
+            console.error(t('nodes:validation_d7d1d181'));
             memo.set(`${node.id}:success`, false);
             memo.set(`${node.id}:commandId`, null);
             await traverse(node, 'exec');
@@ -95,21 +96,21 @@ async function execute(node, context, helpers) {
             tempCommand.isVisual = false;
 
             tempCommand.handler = () => {
-                // Handler будет вызван через validate_and_run_command в BotProcess
+                // Handler will вызван through validate_and_run_command в BotProcess
             };
 
-            // Регистрируем в runtime registry (для главного процесса)
+            // Регистрируем in runtime registry (for главного process)
             const runtimeRegistry = getRuntimeCommandRegistry();
             runtimeRegistry.register(botId, name, tempCommand);
 
-            // Также регистрируем алиасы в runtime registry
+            // Also регистрируем алиасы in runtime registry
             if (Array.isArray(aliases)) {
                 for (const alias of aliases) {
                     runtimeRegistry.register(botId, alias, tempCommand);
                 }
             }
 
-            // Отправляем IPC сообщение в child process для регистрации команды
+            // Отправляем IPC message in child process for регистрации commands
             if (botManager && botManager.processManager) {
                 botManager.processManager.sendMessage(botId, {
                     type: 'register_temp_command',
@@ -185,7 +186,7 @@ async function execute(node, context, helpers) {
         memo.set(`${node.id}:commandId`, commandId);
         memo.set(`${node.id}:success`, true);
     } catch (error) {
-        console.error('[create_command] Ошибка создания команды:', error);
+        console.error(t('nodes:error_e3e5a4b5'), error);
         memo.set(`${node.id}:success`, false);
         memo.set(`${node.id}:commandId`, null);
     }

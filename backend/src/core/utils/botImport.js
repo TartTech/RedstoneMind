@@ -4,6 +4,7 @@ const fse = require('fs-extra');
 const os = require('os');
 const AdmZip = require('adm-zip');
 const { assertArchiveLimits } = require('./zipSafe');
+const { t } = require('../../i18n');
 
 const PLUGINS_BASE_DIR = path.join(os.homedir(), '.redstonemind', 'storage', 'plugins');
 
@@ -19,7 +20,7 @@ function parseImportZip(buffer) {
         zip = new AdmZip(buffer);
         zip.getEntries();
     } catch (e) {
-        throw httpError('Загруженный файл не является корректным ZIP-архивом', 400);
+        throw httpError(t('core:success_3db2d665'), 400);
     }
     assertArchiveLimits(zip);
     return zip;
@@ -27,21 +28,21 @@ function parseImportZip(buffer) {
 
 function assertSafeUsername(username) {
     if (typeof username !== 'string' || username.trim().length === 0) {
-        throw httpError('Имя бота обязательно', 400);
+        throw httpError(t('core:validation_beb9c3d5'), 400);
     }
     if (/[\\/\0]/.test(username) || username === '.' || username === '..' || username.includes('..')) {
-        throw httpError(`Недопустимое имя бота: ${username}`, 400);
+        throw httpError(t('core:error_516538e0', { username: username }), 400);
     }
 }
 
 function resolveSafePluginDir(botPluginsDir, pluginName) {
     if (typeof pluginName !== 'string' || pluginName.length === 0 || pluginName.includes('\0') || pluginName.includes('\\')) {
-        throw httpError(`Недопустимое имя плагина: ${pluginName}`, 400);
+        throw httpError(t('core:error_ffbba127', { pluginName: pluginName }), 400);
     }
     const root = path.resolve(botPluginsDir);
     const dest = path.resolve(root, pluginName);
     if (dest !== root && !dest.startsWith(root + path.sep)) {
-        throw httpError(`Недопустимое имя плагина (выход за пределы каталога): ${pluginName}`, 400);
+        throw httpError(t('core:error_43136053', { pluginName: pluginName }), 400);
     }
     return dest;
 }
@@ -112,7 +113,7 @@ async function importPermissions(zipEntries, newBotId, prisma, setupDefaultPermi
                 },
             });
         } catch (e) {
-            console.warn(`[Import] Пропущен пользователь ${u.username}: ${e.message}`);
+            console.warn(t('core:log_4d0f7ab2', { u: u.username, e: e.message }));
         }
     }
 
@@ -123,7 +124,7 @@ function resolveBotPluginsDir(username) {
     const baseResolved = path.resolve(PLUGINS_BASE_DIR);
     const botPluginsDir = path.resolve(path.join(PLUGINS_BASE_DIR, username));
     if (botPluginsDir !== baseResolved && !botPluginsDir.startsWith(baseResolved + path.sep)) {
-        throw httpError('Недопустимое имя бота для каталога плагинов', 400);
+        throw httpError(t('core:error_72a9b3cc'), 400);
     }
     return botPluginsDir;
 }
@@ -176,12 +177,12 @@ async function importPlugins(zipEntries, newBot, prisma, pluginManager, botPlugi
                     });
                 }
             } catch (e) {
-                console.warn(`[Import] Не удалось установить зависимости для плагина ${pluginName}: ${e.message}`);
+                console.warn(t('core:error_50b33df5', { pluginName: pluginName, e: e.message }));
             }
             try {
                 newPlugin = await pluginManager.registerPlugin(newBot.id, newPluginPath, 'LOCAL', `local:${pluginName}`, prisma);
             } catch (e) {
-                console.warn(`[Import] registerPlugin не удался для плагина ${pluginName}: ${e.message}`);
+                console.warn(t('core:log_e57364f8', { pluginName: pluginName, e: e.message }));
             }
         }
 
@@ -206,7 +207,7 @@ async function importPlugins(zipEntries, newBot, prisma, pluginManager, botPlugi
                     },
                 });
             } catch (e) {
-                console.warn(`[Import] Не удалось создать запись плагина ${pluginName}: ${e.message}`);
+                console.warn(t('core:error_8a7764e3', { pluginName: pluginName, e: e.message }));
             }
         }
 
@@ -218,7 +219,7 @@ async function importPlugins(zipEntries, newBot, prisma, pluginManager, botPlugi
                         data: { settings: pluginData.settings },
                     });
                 } catch (e) {
-                    console.warn(`[Import] Не удалось применить настройки плагина ${pluginName}: ${e.message}`);
+                    console.warn(t('core:error_ecc66f70', { pluginName: pluginName, e: e.message }));
                 }
             }
             if (oldPluginId != null) pluginMap.set(oldPluginId, newPlugin.id);
@@ -238,7 +239,7 @@ async function importPluginDataStore(zipEntries, newBotId, prisma) {
                 data: { botId: newBotId, pluginName: r.pluginName, key: r.key, value: r.value },
             });
         } catch (e) {
-            console.warn(`[Import] Пропущена запись PluginDataStore ${r.pluginName}/${r.key}: ${e.message}`);
+            console.warn(t('core:log_075a7e90', { r: r.pluginName, r1: r.key, e: e.message }));
         }
     }
 }
@@ -269,7 +270,7 @@ async function importCommands(zipEntries, newBotId, prisma, pMap, pluginMap) {
                 },
             });
         } catch (e) {
-            console.warn(`[Import] Пропущена команда ${c.name}: ${e.message}`);
+            console.warn(t('core:log_76624a71', { c: c.name, e: e.message }));
         }
     }
 }
@@ -290,7 +291,7 @@ async function importEventGraphs(zipEntries, newBotId, prisma, pluginMap) {
                 eventTypes = [...new Set(eventNodes.map(n => n.type.split(':')[1]))];
             }
         } catch (e) {
-            console.warn(`[Import] Не удалось извлечь триггеры графа ${g.name}: ${e.message}`);
+            console.warn(t('core:error_d1c5c06b', { g: g.name, e: e.message }));
         }
 
         try {
@@ -306,7 +307,7 @@ async function importEventGraphs(zipEntries, newBotId, prisma, pluginMap) {
                 },
             });
         } catch (e) {
-            console.warn(`[Import] Пропущен граф событий ${g.name}: ${e.message}`);
+            console.warn(t('core:log_2e93810f', { g: g.name, e: e.message }));
         }
     }
 }
@@ -316,7 +317,7 @@ async function importBotFromZip(zip, { config, prisma, pluginManager, setupDefau
 
     const botData = readJsonEntry(zipEntries, 'bot.json');
     if (!botData) {
-        throw httpError('В архиве отсутствует bot.json', 400);
+        throw httpError(t('core:msg_ba160f9e'), 400);
     }
 
     const baseName = String(config.username || botData.username || '').trim();
@@ -368,13 +369,13 @@ async function importBotFromZip(zip, { config, prisma, pluginManager, setupDefau
             try {
                 await prisma.bot.delete({ where: { id: newBot.id } });
             } catch (cleanupErr) {
-                console.error(`[Import] Не удалось откатить частично созданного бота ${newBot.id}: ${cleanupErr.message}`);
+                console.error(t('core:error_b91f324a', { newBot: newBot.id, cleanupErr: cleanupErr.message }));
             }
             if (botPluginsDir) {
                 try {
                     await fse.remove(botPluginsDir);
                 } catch (cleanupErr) {
-                    console.error(`[Import] Не удалось удалить каталог плагинов ${botPluginsDir}: ${cleanupErr.message}`);
+                    console.error(t('core:error_311d5501', { botPluginsDir: botPluginsDir, cleanupErr: cleanupErr.message }));
                 }
             }
         }

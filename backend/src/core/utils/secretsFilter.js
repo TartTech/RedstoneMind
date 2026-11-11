@@ -1,39 +1,40 @@
+const { t } = require('../../i18n');
 /**
- * Утилита для работы со скрытыми (секретными) значениями настроек плагинов
- * Позволяет маскировать чувствительные данные при отправке на фронтенд
+ * Utility for работы со скрытыми (секретными) значениями настроек плагинов
+ * Позволяет маскировать чувствительные data when отправке on фронтенд
  */
 
 const SECRET_MASK = '********';
 
 /**
- * Создает глубокую копию объекта
- * @param {any} obj - объект для клонирования
- * @returns {any} - глубокая копия объекта
+ * Creates глубокую копию object
+ * @param {any} obj - object for клонирования
+ * @returns {any} - глубокая копия object
  */
 function deepClone(obj) {
-    // Используем structuredClone если доступен (Node.js 17+)
+    // Используем structuredClone if доступен (Node.js 17+)
     if (typeof structuredClone !== 'undefined') {
         try {
             return structuredClone(obj);
         } catch (e) {
-            // Fallback для случаев когда structuredClone не может обработать объект
+            // Fallback for случаев when structuredClone not can обработать object
         }
     }
     
-    // Fallback на JSON parse/stringify
-    // Ограничения: не сохраняет функции, undefined, Symbol, circular references
+    // Fallback on JSON parse/stringify
+    // Ограничения: not saves functions, undefined, Symbol, circular references
     try {
         return JSON.parse(JSON.stringify(obj));
     } catch (e) {
-        console.error('[secretsFilter] Ошибка клонирования объекта:', e);
+        console.error(t('core:error_45af7575'), e);
         return obj;
     }
 }
 
 /**
- * Определяет, использует ли плагин группированные настройки
- * Группированные настройки имеют структуру: { "CategoryName": { label: "...", setting1: {...}, ... } }
- * @param {Object} manifestSettings - настройки из манифеста плагина
+ * Определяет, использует ли plugin группированные settings
+ * Группированные settings имеют структуру: { "CategoryName": { label: "...", setting1: {...}, ... } }
+ * @param {Object} manifestSettings - settings from манифеста plugin
  * @returns {boolean}
  */
 function isGroupedSettings(manifestSettings) {
@@ -48,8 +49,8 @@ function isGroupedSettings(manifestSettings) {
     
     const firstValue = manifestSettings[firstKey];
     
-    // Проверяем, что первое значение - объект с label и без type
-    // (настройки имеют type, группы имеют label)
+    // Проверяем, что первое value - object with label and without type
+    // (settings имеют type, groups имеют label)
     return (
         firstValue &&
         typeof firstValue === 'object' &&
@@ -60,8 +61,8 @@ function isGroupedSettings(manifestSettings) {
 }
 
 /**
- * Определяет, является ли настройка секретной
- * @param {Object} settingConfig - конфигурация настройки из manifest
+ * Определяет, является ли setting секретной
+ * @param {Object} settingConfig - configuration settings from manifest
  * @returns {boolean}
  */
 function isSecretSetting(settingConfig) {
@@ -72,27 +73,27 @@ function isSecretSetting(settingConfig) {
 }
 
 /**
- * Маскирует секретное значение
- * @param {any} value - значение для маскировки
- * @param {Object} settingConfig - конфигурация настройки
- * @returns {any} - замаскированное значение
+ * Маскирует секретное value
+ * @param {any} value - value for маскировки
+ * @param {Object} settingConfig - configuration settings
+ * @returns {any} - замаскированное value
  */
 function maskSecretValue(value, settingConfig) {
     if (!isSecretSetting(settingConfig)) {
         return value;
     }
 
-    // Если значение пустое/null/undefined, возвращаем как есть
+    // If value пустое/null/undefined, возвращаем как есть
     if (value === null || value === undefined || value === '') {
         return value;
     }
 
-    // Для массивов маскируем каждый элемент
+    // For массивов маскируем each element
     if (Array.isArray(value)) {
         return value.map(() => SECRET_MASK);
     }
 
-    // Для объектов маскируем каждое значение
+    // For объектов маскируем каждое value
     if (typeof value === 'object') {
         const masked = {};
         for (const key in value) {
@@ -101,16 +102,16 @@ function maskSecretValue(value, settingConfig) {
         return masked;
     }
 
-    // Для остальных типов просто возвращаем маску
+    // For остальных типов просто возвращаем маску
     return SECRET_MASK;
 }
 
 /**
- * Фильтрует настройки плагина, маскируя секретные значения
- * @param {Object} settings - текущие настройки плагина
- * @param {Object} manifestSettings - описание настроек из manifest
- * @param {boolean} isGrouped - использует ли плагин группированные настройки
- * @returns {Object} - отфильтрованные настройки
+ * Фильтрует settings plugin, маскируя секретные values
+ * @param {Object} settings - текущие settings plugin
+ * @param {Object} manifestSettings - description настроек from manifest
+ * @param {boolean} isGrouped - использует ли plugin группированные settings
+ * @returns {Object} - отфильтрованные settings
  */
 function filterSecretSettings(settings, manifestSettings, isGrouped = false) {
     if (!settings || !manifestSettings) {
@@ -120,7 +121,7 @@ function filterSecretSettings(settings, manifestSettings, isGrouped = false) {
     const filteredSettings = { ...settings };
 
     if (isGrouped) {
-        // Обработка группированных настроек
+        // Processing группированных настроек
         for (const categoryKey in manifestSettings) {
             const categoryConfig = manifestSettings[categoryKey];
             if (typeof categoryConfig !== 'object' || !categoryConfig.label) {
@@ -140,7 +141,7 @@ function filterSecretSettings(settings, manifestSettings, isGrouped = false) {
             }
         }
     } else {
-        // Обработка обычных настроек
+        // Processing обычных настроек
         for (const settingKey in manifestSettings) {
             const settingConfig = manifestSettings[settingKey];
             if (isSecretSetting(settingConfig) && settingKey in filteredSettings) {
@@ -156,8 +157,8 @@ function filterSecretSettings(settings, manifestSettings, isGrouped = false) {
 }
 
 /**
- * Проверяет, является ли значение замаскированным
- * @param {any} value - значение для проверки
+ * Checks, является ли value замаскированным
+ * @param {any} value - value for verification
  * @returns {boolean}
  */
 function isMaskedValue(value) {
@@ -166,7 +167,7 @@ function isMaskedValue(value) {
     }
 
     if (Array.isArray(value)) {
-        // Пустой массив не является замаскированным
+        // Empty array not является замаскированным
         if (value.length === 0) {
             return false;
         }
@@ -175,7 +176,7 @@ function isMaskedValue(value) {
 
     if (typeof value === 'object' && value !== null) {
         const values = Object.values(value);
-        // Пустой объект не является замаскированным
+        // Empty object not является замаскированным
         if (values.length === 0) {
             return false;
         }
@@ -186,20 +187,20 @@ function isMaskedValue(value) {
 }
 
 /**
- * Фильтрует обновления настроек, удаляя замаскированные значения
- * Это предотвращает сохранение маски вместо реального значения
- * @param {Object} newSettings - новые настройки для сохранения
- * @param {Object} existingSettings - существующие настройки
- * @param {Object} manifestSettings - описание настроек из manifest
- * @param {boolean} isGrouped - использует ли плагин группированные настройки
- * @returns {Object} - отфильтрованные настройки для сохранения
+ * Фильтрует обновления настроек, удаляя замаскированные values
+ * Это предотвращает сохранение маски вместо реального values
+ * @param {Object} newSettings - новые settings for сохранения
+ * @param {Object} existingSettings - существующие settings
+ * @param {Object} manifestSettings - description настроек from manifest
+ * @param {boolean} isGrouped - использует ли plugin группированные settings
+ * @returns {Object} - отфильтрованные settings for сохранения
  */
 function prepareSettingsForSave(newSettings, existingSettings, manifestSettings, isGrouped = false) {
     if (!newSettings || !manifestSettings) {
         return newSettings;
     }
 
-    // Используем глубокое клонирование для избежания мутаций и side effects
+    // Используем глубокое клонирование for избежания мутаций and side effects
     const settingsToSave = deepClone(newSettings);
 
     if (isGrouped) {
@@ -214,8 +215,8 @@ function prepareSettingsForSave(newSettings, existingSettings, manifestSettings,
                 
                 const settingConfig = categoryConfig[settingKey];
                 
-                // Если настройка секретная и новое значение является маской,
-                // используем существующее значение
+                // If setting секретная and новое value является маской,
+                // используем существующее value
                 if (isSecretSetting(settingConfig) && 
                     settingKey in settingsToSave && 
                     isMaskedValue(settingsToSave[settingKey])) {
@@ -223,7 +224,7 @@ function prepareSettingsForSave(newSettings, existingSettings, manifestSettings,
                     if (existingSettings && settingKey in existingSettings) {
                         settingsToSave[settingKey] = existingSettings[settingKey];
                     } else {
-                        // Если существующего значения нет, удаляем ключ
+                        // If существующего values no, удаляем key
                         delete settingsToSave[settingKey];
                     }
                 }

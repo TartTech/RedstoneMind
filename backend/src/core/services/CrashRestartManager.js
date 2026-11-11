@@ -1,3 +1,4 @@
+const { t } = require('../../i18n');
 class CrashRestartManager {
     constructor(maxRestarts = 3, restartWindowMs = 60000) {
         this.maxRestarts = maxRestarts;
@@ -20,12 +21,12 @@ class CrashRestartManager {
         const withinWindow = Date.now() - history.firstCrash < this.restartWindowMs;
 
         if (history.count > this.maxRestarts && withinWindow) {
-            appendLog(`[CRASH] Бот превысил лимит рестартов (${this.maxRestarts}). Авто-рестарт отключен.`);
+            appendLog(t('services:log_49f989e4', { this: this.maxRestarts }));
             return { shouldRestart: false, reason: 'max_restarts_exceeded' };
         }
 
         const delay = Math.min(1000 * Math.pow(2, history.count - 1), 30000);
-        appendLog(`[CRASH] Перезапуск через ${delay / 1000} сек... (попытка ${history.count}/${this.maxRestarts})`);
+        appendLog(t('services:log_3907c1e5', { delay___1000: delay / 1000, history: history.count, this: this.maxRestarts }));
 
         return { shouldRestart: true, delay };
     }

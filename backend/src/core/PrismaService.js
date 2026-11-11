@@ -1,8 +1,8 @@
 const { PrismaClient } = require('@prisma/client');
 
 /**
- * Singleton service для PrismaClient
- * Предотвращает утечки памяти используя одно соединение с БД
+ * Singleton service for PrismaClient
+ * Предотвращает утечки памяти используя одно connection with БД
  * Благодаря кешированию require в Node.js это фактический singleton
  */
 class PrismaService {
@@ -13,7 +13,7 @@ class PrismaService {
     }
 
     /**
-     * Получить экземпляр Prisma client
+     * Получить instance Prisma client
      * @returns {PrismaClient}
      */
     getClient() {
@@ -21,7 +21,7 @@ class PrismaService {
     }
 
     /**
-     * Отключиться от БД (вызывать при выключении приложения)
+     * Отключиться от БД (вызывать when выключении приложения)
      */
     async disconnect() {
         await this.prisma.$disconnect();

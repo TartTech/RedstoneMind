@@ -21,7 +21,7 @@ class EventGraphManager {
     }
 
     async loadGraphsForBot(botId) {
-        console.log(`[EventGraphs] Загрузка графов для бота ${botId}...`);
+        console.log(t('core:log_86a3d079', { botId: botId }));
         const botGraphs = await this.prisma.eventGraph.findMany({
             where: { botId, isEnabled: true },
             include: { triggers: true },
@@ -55,12 +55,12 @@ class EventGraphManager {
                     });
                 }
             } catch (e) {
-                console.error(`[EventGraphs] Ошибка парсинга JSON для графа ID ${graph.id}:`, e);
+                console.error(t('core:error_5d0d0755', { graph: graph.id }), e);
             }
         }
 
         this.activeGraphs.set(botId, graphsByEvent);
-        console.log(`[EventGraphs] Загружено ${botGraphs.length} графов, сгруппировано по ${graphsByEvent.size} событиям для бота ${botId}.`);
+        console.log(t('core:success_b4987dbd', { botGraphs: botGraphs.length, graphsByEvent: graphsByEvent.size, botId: botId }));
     }
 
     unloadGraphsForBot(botId) {
@@ -70,7 +70,7 @@ class EventGraphManager {
                 this.graphStates.delete(key);
             }
         }
-        console.log(`[EventGraphs] Графы и их состояния для бота ${botId} выгружены.`);
+        console.log(t('core:log_c6093ab9', { botId: botId }));
     }
 
     async handleEvent(botId, eventType, args) {
@@ -168,6 +168,7 @@ class EventGraphManager {
         try {
             const { getIOSafe } = require('../real-time/socketHandler');
             const { broadcastToApiClients } = require('../real-time/botApi');
+const { t } = require('../i18n');
 
             const io = getIOSafe();
             if (!io) return;

@@ -10,11 +10,12 @@ async function loadCommands() {
     for (const file of files) {
         if (file.endsWith('.js')) {
             const CommandClass = require(path.join(commandsDir, file));
+const { t } = require('../../i18n');
             const commandInstance = new CommandClass();
             commands.set(commandInstance.name, commandInstance);
         }
     }
-    console.log(`[CommandRegistry] Загружено ${commands.size} команд.`);
+    console.log(t('core:success_40ac7134', { commands: commands.size }));
     return commands;
 }
 

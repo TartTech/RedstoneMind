@@ -1,5 +1,6 @@
 const dns = require('dns').promises;
 const net = require('net');
+const { t } = require('../../i18n');
 
 function isPrivateIPv4(ip) {
     const parts = ip.split('.').map(Number);
@@ -37,30 +38,30 @@ async function assertPublicUrl(rawUrl) {
     try {
         parsed = new URL(rawUrl);
     } catch {
-        throw new Error('Некорректный URL');
+        throw new Error(t('core:error_328e5369'));
     }
     if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
-        throw new Error('Разрешены только http/https URL');
+        throw new Error(t('core:msg_d10d34e0'));
     }
     const host = parsed.hostname;
     if (net.isIP(host)) {
-        if (isPrivateIp(host)) throw new Error('Запросы к внутренним/приватным адресам запрещены');
+        if (isPrivateIp(host)) throw new Error(t('core:error_f75afb21'));
         return;
     }
     const lowerHost = host.toLowerCase();
     if (lowerHost === 'localhost' || lowerHost.endsWith('.localhost')) {
-        throw new Error('Запросы к localhost запрещены');
+        throw new Error(t('core:error_befaad09'));
     }
     let addresses;
     try {
         addresses = await dns.lookup(host, { all: true });
     } catch {
-        throw new Error('Не удалось разрешить имя хоста');
+        throw new Error(t('core:error_b0cdbe6d'));
     }
-    if (!addresses.length) throw new Error('Не удалось разрешить имя хоста');
+    if (!addresses.length) throw new Error(t('core:error_b0cdbe6d'));
     for (const a of addresses) {
         if (isPrivateIp(a.address)) {
-            throw new Error('Запросы к внутренним/приватным адресам запрещены');
+            throw new Error(t('core:error_f75afb21'));
         }
     }
 }
@@ -79,7 +80,7 @@ async function safeFetch(rawUrl, options = {}, { maxRedirects = 3 } = {}) {
         }
         return resp;
     }
-    throw new Error('Слишком много редиректов');
+    throw new Error(t('core:msg_930bc225'));
 }
 
 module.exports = { assertPublicUrl, safeFetch, isPrivateIp };

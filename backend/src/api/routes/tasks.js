@@ -6,6 +6,7 @@ const { authenticate, authorize } = require('../middleware/auth');
 
 const { CronExpressionParser } = require('cron-parser');
 const cron = require('node-cron');
+const { t } = require('../../i18n');
 
 const prisma = new PrismaClient();
 
@@ -19,7 +20,7 @@ const normalizeCronPattern = (pattern) => {
 const parseCronOrError = (pattern) => {
     const normalized = normalizeCronPattern(pattern);
     if (!normalized || !cron.validate(normalized)) {
-        return { error: 'Невалидный cron-паттерн' };
+        return { error: t('tasks:msg_0bd22271') };
     }
     return { pattern: normalized };
 };
@@ -33,8 +34,8 @@ router.get('/', authorize('task:list'), async (req, res) => {
         }));
         res.json(normalizedTasks);
     } catch (error) {
-        console.error("[API /tasks] Ошибка получения списка задач:", error);
-        res.status(500).json({ error: 'Не удалось получить список задач' });
+        console.error(t('tasks:error_8bd01234'), error);
+        res.status(500).json({ error: t('tasks:error_2f5274c2') });
     }
 });
 
@@ -59,8 +60,8 @@ router.post('/', authorize('task:create'), async (req, res) => {
         }
         res.status(201).json(newTask);
     } catch (error) {
-        console.error("[API /tasks] Ошибка создания задачи:", error);
-        res.status(500).json({ error: 'Не удалось создать задачу' });
+        console.error(t('tasks:error_c9d8ff0f'), error);
+        res.status(500).json({ error: t('tasks:error_496407a2') });
     }
 });
 
@@ -91,8 +92,8 @@ router.put('/:id', authorize('task:edit'), async (req, res) => {
         await TaskScheduler.updateTask(updatedTask);
         res.json(updatedTask);
     } catch (error) {
-        console.error(`[API /tasks] Ошибка обновления задачи ${taskId}:`, error);
-        res.status(500).json({ error: 'Не удалось обновить задачу' });
+        console.error(t('tasks:error_21ce0d39', { taskId: taskId }), error);
+        res.status(500).json({ error: t('tasks:error_13dfc0b1') });
     }
 });
 
@@ -103,8 +104,8 @@ router.delete('/:id', authorize('task:delete'), async (req, res) => {
         TaskScheduler.unscheduleTask(taskId);
         res.status(204).send();
     } catch (error) {
-        console.error(`[API /tasks] Ошибка удаления задачи ${taskId}:`, error);
-        res.status(500).json({ error: 'Не удалось удалить задачу' });
+        console.error(t('tasks:error_b002d744', { taskId: taskId }), error);
+        res.status(500).json({ error: t('tasks:error_c3ce05af') });
     }
 });
 
@@ -113,7 +114,7 @@ router.post('/describe', authorize('task:list'), (req, res) => {
     const { pattern } = req.body;
 
     if (!pattern) {
-        return res.status(400).json({ error: 'Невалидный cron-паттерн' });
+        return res.status(400).json({ error: t('tasks:msg_0bd22271') });
     }
 
     try {
@@ -125,7 +126,7 @@ router.post('/describe', authorize('task:list'), (req, res) => {
         });
     } catch (error) {
         console.error(`[API /tasks/describe] Ошибка парсинга паттерна "${pattern}":`, error.message);
-        res.status(500).json({ error: 'Ошибка парсинга паттерна' });
+        res.status(500).json({ error: t('tasks:error_e8c760a1') });
     }
 });
 

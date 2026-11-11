@@ -1,5 +1,6 @@
 const crypto = require('crypto');
 const config = require('../../config');
+const { t } = require('../../i18n');
 const ALGORITHM = 'aes-256-gcm';
 const IV_LENGTH = 16;
 
@@ -7,7 +8,7 @@ const IV_LENGTH = 16;
 function getEncryptionKey() {
     const key = config.security.encryptionKey;
     if (!key || key.length !== 64) {
-        throw new Error('[Crypto] Ключ шифрования не настроен или имеет неверную длину в config.json');
+        throw new Error(t('core:error_20465098'));
     }
     return Buffer.from(key, 'hex');
 }
@@ -24,7 +25,7 @@ function encrypt(text) {
         
         return `${iv.toString('hex')}:${authTag.toString('hex')}:${encrypted.toString('hex')}`;
     } catch (error) {
-        throw new Error(`[Crypto] Ошибка шифрования: ${error.message}`);
+        throw new Error(t('core:error_8a5a10d9', { error: error.message }));
     }
 }
 
@@ -47,7 +48,7 @@ function decrypt(hash) {
         const decrypted = Buffer.concat([decipher.update(encrypted), decipher.final()]);
         return decrypted.toString('utf8');
     } catch (error) {
-        throw new Error(`[Crypto] Ошибка дешифрования. Возможно, ключ был изменен или данные повреждены. ${error.message}`);
+        throw new Error(t('core:error_e99cf11a', { error: error.message }));
     }
 }
 

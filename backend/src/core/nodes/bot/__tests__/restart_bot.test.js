@@ -1,4 +1,5 @@
 const { execute } = require('../restart_bot');
+const { t } = require('../../../../i18n');
 
 describe('bot:restart', () => {
     const originalSend = process.send;
@@ -7,7 +8,7 @@ describe('bot:restart', () => {
         process.send = originalSend;
     });
 
-    it('в тестовом режиме не перезапускает бота', async () => {
+    it(t('nodes:msg_82d91f78'), async () => {
         process.send = jest.fn();
         const effects = [];
         await execute({}, {
@@ -18,7 +19,7 @@ describe('bot:restart', () => {
         expect(effects).toEqual([{ kind: 'bot', operation: 'restart' }]);
     });
 
-    it('просит панель перезапустить бота', async () => {
+    it(t('nodes:msg_0ab08b78'), async () => {
         process.send = jest.fn();
         await execute({}, {});
         expect(process.send).toHaveBeenCalledWith({ type: 'restart' });

@@ -3,8 +3,8 @@ const { authenticateApiClient, logConnection } = require('./middleware');
 const { registerActionHandlers } = require('./handlers');
 
 /**
- * Инициализирует namespace /bot-api для WebSocket API
- * @param {Server} io - Socket.IO сервер
+ * Инициализирует namespace /bot-api for WebSocket API
+ * @param {Server} io - Socket.IO server
  */
 function initializeBotApiNamespace(io) {
     const apiNamespace = io.of('/bot-api');
@@ -13,7 +13,7 @@ function initializeBotApiNamespace(io) {
     apiNamespace.use(authenticateApiClient);
 
     apiNamespace.on('connection', async (socket) => {
-        console.log(`[Bot API] Клиент подключился к боту ID: ${socket.botId} (ключ: ${socket.keyPrefix})`);
+        console.log(t('core:log_3cb036f7', { socket: socket.botId, socket1: socket.keyPrefix }));
 
         socket.join(`bot_${socket.botId}`);
         socket.join(`key_${socket.keyId}`);
@@ -26,7 +26,7 @@ function initializeBotApiNamespace(io) {
         registerActionHandlers(socket);
 
         socket.on('disconnect', async () => {
-            console.log(`[Bot API] Клиент отключился от бота ID: ${socket.botId} (ключ: ${socket.keyPrefix})`);
+            console.log(t('core:log_539cffa2', { socket: socket.botId, socket1: socket.keyPrefix }));
             await logConnection(socket, 'disconnect');
         });
     });
@@ -37,4 +37,5 @@ function initializeBotApiNamespace(io) {
 module.exports = {
     initializeBotApiNamespace,
     ...require('./utils'),
+const { t } = require('../../i18n');
 };

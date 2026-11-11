@@ -1,7 +1,7 @@
 /**
- * furnace:take_output - Печка: забрать результат
+ * furnace:take_output - Печка: забрать result
  *
- * Забирает готовый предмет из слота результата печки.
+ * Забирает готовый item from слота result печки.
  */
 async function execute(node, context, helpers) {
   const { traverse, memo } = helpers;
@@ -30,7 +30,7 @@ async function execute(node, context, helpers) {
 
     const countBefore = outputItem.count;
 
-    // Забираем результат
+    // Забираем result
     await furnace.takeOutput();
 
     memo.set(`${node.id}:success`, true);

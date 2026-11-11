@@ -3,9 +3,9 @@ const { GRAPH_TYPES } = require('../../core/constants/graphTypes');
 const logicNodes = [
   {
     type: 'logic:operation',
-    label: '💡 Логика',
-    category: 'Логика',
-    description: 'Выполняет логическую операцию. Для НЕ (NOT) используется только вход А.',
+    label: t('nodes:msg_cd0a3de6'),
+    category: t('nodes:msg_710db0c0'),
+    description: t('nodes:msg_f52045a3'),
     graphType: GRAPH_TYPES.ALL,
     dynamicPins: true,
     evaluator: require('../../core/nodes/logic/operation').evaluate,
@@ -14,15 +14,15 @@ const logicNodes = [
       { id: 'b', name: 'B', type: 'Boolean', required: true, inlineField: true }
     ],
     computeOutputs: () => [
-      { id: 'result', name: 'Результат', type: 'Boolean' }
+      { id: 'result', name: t('nodes:msg_01332819'), type: 'Boolean' }
     ],
     defaultData: {}
   },
   {
     type: 'logic:compare',
-    label: '⎗ Сравнение',
-    category: 'Логика',
-    description: 'Сравнивает два значения.',
+    label: t('nodes:msg_04c05778'),
+    category: t('nodes:msg_710db0c0'),
+    description: t('nodes:msg_e64b93c6'),
     graphType: GRAPH_TYPES.ALL,
     evaluator: require('../../core/nodes/logic/compare').evaluate,
     computeInputs: (data) => [
@@ -30,22 +30,23 @@ const logicNodes = [
       { id: 'b', name: 'B', type: 'Wildcard', required: false, inlineField: true }
     ],
     computeOutputs: () => [
-      { id: 'result', name: 'Результат', type: 'Boolean' }
+      { id: 'result', name: t('nodes:msg_01332819'), type: 'Boolean' }
     ],
     defaultData: {}
   },
   {
     type: 'logic:not',
-    label: '! НЕ',
-    category: 'Логика',
-    description: 'Инвертирует boolean значение (NOT).',
+    label: t('nodes:msg_115a6c5d'),
+    category: t('nodes:msg_710db0c0'),
+    description: t('nodes:msg_557e400d'),
     graphType: GRAPH_TYPES.ALL,
     evaluator: require('../../core/nodes/logic/not').evaluate,
+const { t } = require('../../i18n');
     computeInputs: (data) => [
-      { id: 'value', name: 'Значение', type: 'Boolean', required: false, inlineField: true }
+      { id: 'value', name: t('nodes:msg_7b46d8cc'), type: 'Boolean', required: false, inlineField: true }
     ],
     computeOutputs: () => [
-      { id: 'result', name: 'Результат', type: 'Boolean' }
+      { id: 'result', name: t('nodes:msg_01332819'), type: 'Boolean' }
     ],
     defaultData: { value: false }
   }

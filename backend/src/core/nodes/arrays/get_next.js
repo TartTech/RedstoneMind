@@ -1,5 +1,5 @@
 /**
- * Получает следующий элемент массива по текущему индексу
+ * Gets следующий element array by текущему индексу
  */
 async function evaluate(node, pinId, context, helpers) {
     const { resolvePinValue } = helpers;

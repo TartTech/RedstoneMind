@@ -4,6 +4,7 @@ const { authenticateUniversal, authorize } = require('../middleware/auth');
 const { checkBotAccess } = require('../middleware/botAccess');
 const { botManager } = require('../../core/services');
 const UserService = require('../../core/UserService');
+const { t } = require('../../i18n');
 
 const router = express.Router();
 
@@ -21,13 +22,13 @@ router.get('/:botId/users/:username', authenticateUniversal, authorize('manageme
         });
 
         if (!user) {
-            return res.status(404).json({ error: 'Пользователь не найден' });
+            return res.status(404).json({ error: t('auth:msg_a7518766') });
         }
 
         res.json(user);
     } catch (error) {
         console.error('[API Error] GET /bots/:botId/users/:username:', error);
-        res.status(500).json({ error: 'Не удалось получить пользователя' });
+        res.status(500).json({ error: t('bots:error_332a37a6') });
     }
 });
 
@@ -63,7 +64,7 @@ router.get('/:botId/users', authenticateUniversal, authorize('management:view'),
         });
     } catch (error) {
         console.error('[API Error] GET /bots/:botId/users:', error);
-        res.status(500).json({ error: 'Не удалось получить список пользователей' });
+        res.status(500).json({ error: t('bots:error_9712bea2') });
     }
 });
 
@@ -92,9 +93,9 @@ router.put('/:botId/users/:username', authenticateUniversal, authorize('manageme
             updateData.isBlacklisted = isBlacklisted;
         }
 
-        // Используем транзакцию для атомарного обновления групп
+        // Используем транзакцию for атомарного обновления групп
         const updatedUser = await prisma.$transaction(async (tx) => {
-            // Обновляем основные данные пользователя
+            // Обновляем основные data user
             if (Object.keys(updateData).length > 0) {
                 await tx.user.update({
                     where: { id: user.id },
@@ -102,7 +103,7 @@ router.put('/:botId/users/:username', authenticateUniversal, authorize('manageme
                 });
             }
 
-            // Обновляем группы если переданы
+            // Обновляем groups if переданы
             if (Array.isArray(groupIds)) {
                 // Удаляем старые связи
                 await tx.userGroup.deleteMany({ where: { userId: user.id } });
@@ -118,7 +119,7 @@ router.put('/:botId/users/:username', authenticateUniversal, authorize('manageme
                 }
             }
 
-            // Возвращаем обновлённого пользователя с группами
+            // Возвращаем обновлённого user with группами
             return tx.user.findUnique({
                 where: { id: user.id },
                 include: { groups: { include: { group: true } } }
@@ -131,7 +132,7 @@ router.put('/:botId/users/:username', authenticateUniversal, authorize('manageme
         res.json(updatedUser);
     } catch (error) {
         console.error('[API Error] PUT /bots/:botId/users/:username:', error);
-        res.status(500).json({ error: 'Не удалось обновить пользователя' });
+        res.status(500).json({ error: t('auth:error_48cd62cc') });
     }
 });
 
@@ -145,7 +146,7 @@ router.delete('/:botId/users/:username', authenticateUniversal, authorize('manag
         });
 
         if (!user) {
-            return res.status(404).json({ error: 'Пользователь не найден' });
+            return res.status(404).json({ error: t('auth:msg_a7518766') });
         }
 
         await prisma.userGroup.deleteMany({ where: { userId: user.id } });
@@ -157,7 +158,7 @@ router.delete('/:botId/users/:username', authenticateUniversal, authorize('manag
         res.json({ success: true });
     } catch (error) {
         console.error('[API Error] DELETE /bots/:botId/users/:username:', error);
-        res.status(500).json({ error: 'Не удалось удалить пользователя' });
+        res.status(500).json({ error: t('auth:error_1ee822fd') });
     }
 });
 
@@ -172,13 +173,13 @@ router.get('/:botId/users/:username/groups', authenticateUniversal, authorize('m
         });
 
         if (!user) {
-            return res.status(404).json({ error: 'Пользователь не найден' });
+            return res.status(404).json({ error: t('auth:msg_a7518766') });
         }
 
         res.json({ groupIds: user.groups.map(g => g.groupId) });
     } catch (error) {
         console.error('[API Error] GET /bots/:botId/users/:username/groups:', error);
-        res.status(500).json({ error: 'Не удалось получить группы пользователя' });
+        res.status(500).json({ error: t('bots:error_c4a6f5a6') });
     }
 });
 

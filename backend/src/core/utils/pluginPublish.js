@@ -3,6 +3,7 @@ const path = require('path');
 const { Octokit } = require('@octokit/rest');
 const { tryParseGithubRepoUrl } = require('./github');
 const { asSections, findListing, upsertUnofficial, bumpPatch, tagFor, repoOwner } = require('./pluginCatalog');
+const { t } = require('../../i18n');
 
 const LIST_OWNER = 'TartTech';
 const LIST_REPO = 'official-plugins-list';
@@ -49,7 +50,7 @@ async function collectFiles(dir, baseDir, bucket) {
 async function uploadFiles(octokit, owner, repo, pluginPath) {
     const files = [];
     await collectFiles(pluginPath, pluginPath, files);
-    if (files.length === 0) throw fail('В плагине нет файлов для публикации.');
+    if (files.length === 0) throw fail(t('core:msg_5ae8f040'));
 
     let empty = false;
     try {
@@ -162,7 +163,7 @@ async function ensureFork(octokit, login) {
             await new Promise((resolve) => setTimeout(resolve, 1500));
         }
     }
-    throw fail('Форк списка плагинов ещё не готов. Повторите публикацию через минуту.', 503);
+    throw fail(t('core:msg_a63b2f6b'), 503);
 }
 
 async function commitUnofficialEntry(octokit, entry) {
@@ -256,11 +257,11 @@ async function openUnofficialPullRequest(octokit, entry) {
     const head = `${me.login}:${branch}`;
     const title = `Unofficial: ${entry.displayName || entry.name} ${entry.latestTag}`;
     const body = [
-        `Плагин \`${entry.id}\` отправлен в неофициальный раздел.`,
+        t('core:msg_7e886c63')${entry.id}\t('core:msg_b6b8432f'),
         '',
-        `- Автор: ${entry.author}`,
-        `- Репозиторий: ${entry.repoUrl}`,
-        `- Версия: ${entry.latestTag}`,
+        t('core:msg_4bb6cb70', { entry: entry.author }),
+        t('core:msg_01c81dfa', { entry: entry.repoUrl }),
+        t('core:msg_d5d34a93', { entry: entry.latestTag }),
     ].join('\n');
 
     try {
@@ -325,13 +326,13 @@ async function inspectLocalPublish(pluginPath) {
 }
 
 async function publishLocalPlugin({ token, pluginPath, pluginRecord, fields = {} }) {
-    if (!token) throw fail('Сначала привяжите GitHub.');
+    if (!token) throw fail(t('core:msg_f7a2ffad'));
     if (!pluginRecord || (pluginRecord.sourceType !== 'LOCAL' && pluginRecord.sourceType !== 'LOCAL_IDE')) {
-        throw fail('Одной кнопкой публикуется только локальный плагин.');
+        throw fail(t('plugins:msg_19fab5d9'));
     }
 
     const packageJsonPath = path.join(pluginPath, 'package.json');
-    if (!await fse.pathExists(packageJsonPath)) throw fail('В плагине нет package.json.', 404);
+    if (!await fse.pathExists(packageJsonPath)) throw fail(t('core:msg_03eafcbd'), 404);
 
     const packageJson = await fse.readJson(packageJsonPath);
     const existingRepo = readRepoUrl(packageJson);
@@ -342,8 +343,8 @@ async function publishLocalPlugin({ token, pluginPath, pluginRecord, fields = {}
     const icon = String(fields.icon || '').trim() || 'package';
 
     if (!alreadyPublished) {
-        if (!author) throw fail('Укажите автора.');
-        if (!description) throw fail('Укажите описание.');
+        if (!author) throw fail(t('core:msg_90ae7fd5'));
+        if (!description) throw fail(t('core:msg_a624e889'));
     }
 
     let version = packageJson.version || '1.0.0';
@@ -354,7 +355,7 @@ async function publishLocalPlugin({ token, pluginPath, pluginRecord, fields = {}
 
     if (!alreadyPublished) {
         const repoName = String(packageJson.name || pluginRecord.name || '').trim();
-        if (!repoName) throw fail('У плагина нет имени.');
+        if (!repoName) throw fail(t('core:msg_1046ca90'));
         const { data: created } = await octokit.repos.createForAuthenticatedUser({
             name: repoName,
             description: description.slice(0, 350),
@@ -380,13 +381,13 @@ async function publishLocalPlugin({ token, pluginPath, pluginRecord, fields = {}
         repoUrl = `https://github.com/${owner}/${repo}`;
         const { data: repoInfo } = await octokit.repos.get({ owner, repo });
         if (repoInfo.permissions && !repoInfo.permissions.push) {
-            throw fail(`Нет прав на запись в ${owner}/${repo}.`, 403);
+            throw fail(t('core:msg_3ef3cf46', { owner: owner, repo: repo }), 403);
         }
         let guard = 0;
         while (await tagExists(octokit, owner, repo, tagFor(version))) {
             version = bumpPatch(version);
             guard += 1;
-            if (guard > 30) throw fail('Не удалось подобрать свободную версию.');
+            if (guard > 30) throw fail(t('core:error_ac427d45'));
         }
     }
 
@@ -430,17 +431,17 @@ async function publishLocalPlugin({ token, pluginPath, pluginRecord, fields = {}
 }
 
 async function submitListedRelease({ token, pluginPath, displayName, icon }) {
-    if (!token) throw fail('Сначала привяжите GitHub.');
+    if (!token) throw fail(t('core:msg_f7a2ffad'));
     const packageJsonPath = path.join(pluginPath, 'package.json');
-    if (!await fse.pathExists(packageJsonPath)) throw fail('package.json не найден.', 404);
+    if (!await fse.pathExists(packageJsonPath)) throw fail(t('core:msg_8e0765ee'), 404);
     const packageJson = await fse.readJson(packageJsonPath);
     const repoUrl = readRepoUrl(packageJson);
     const parsed = parseRepo(repoUrl);
-    if (!parsed) throw fail('В package.json нет ссылки на GitHub.');
+    if (!parsed) throw fail(t('core:msg_e02d552e'));
 
     const octokit = new Octokit({ auth: token });
     const { data: tags } = await octokit.repos.listTags({ owner: parsed.owner, repo: parsed.repo, per_page: 1 });
-    if (!tags.length) throw fail('Сначала создайте релиз. У плагина нет тегов.');
+    if (!tags.length) throw fail(t('core:msg_656289e5'));
 
     if (!packageJson.botpanel || typeof packageJson.botpanel !== 'object') packageJson.botpanel = {};
     if (icon && !packageJson.botpanel.icon) {
@@ -463,11 +464,11 @@ async function submitListedRelease({ token, pluginPath, displayName, icon }) {
 }
 
 async function removeOwnUnofficialEntry({ token, pluginId }) {
-    if (!token) throw fail('Сначала подключите GitHub.');
+    if (!token) throw fail(t('api:msg_fe71da7e'));
     const octokit = new Octokit({ auth: token });
     const { data: me } = await octokit.users.getAuthenticated();
     const login = String(me.login || '').toLowerCase();
-    if (!login) throw fail('GitHub не назвал аккаунт.', 403);
+    if (!login) throw fail(t('core:msg_0802171b'), 403);
 
     const { data: repoInfo } = await octokit.repos.get({ owner: LIST_OWNER, repo: LIST_REPO });
     const branch = repoInfo.default_branch;
@@ -482,11 +483,11 @@ async function removeOwnUnofficialEntry({ token, pluginId }) {
     const entry = sections.unofficial.find((item) => item && (item.id === pluginId || item.name === pluginId));
     if (!entry) {
         const official = sections.official.some((item) => item && (item.id === pluginId || item.name === pluginId));
-        if (official) throw fail('Официальный плагин из списка убирают вручную.', 403);
-        throw fail('Этого плагина нет в неофициальном списке.', 404);
+        if (official) throw fail(t('core:msg_cffb5509'), 403);
+        throw fail(t('core:msg_f3e1e181'), 404);
     }
     if (repoOwner(entry.repoUrl) !== login) {
-        throw fail('Это не ваш плагин.', 403);
+        throw fail(t('core:msg_524d6aa5'), 403);
     }
 
     const next = {
@@ -549,7 +550,7 @@ async function removeOwnUnofficialEntry({ token, pluginId }) {
         title: `Remove unofficial ${entry.id}`,
         head,
         base: branch,
-        body: `Владелец репозитория убирает \`${entry.id}\` из неофициального списка.`,
+        body: t('core:msg_1be2f605')${entry.id}\t('core:msg_ac0f07e3'),
     });
     return { direct: false, removed: true, prUrl: pr.html_url, prNumber: pr.number, login: me.login };
 }

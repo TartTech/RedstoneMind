@@ -1,4 +1,5 @@
 const ServerRepository = require('../../repositories/ServerRepository');
+const { t } = require('../../i18n');
 
 describe('ServerRepository', () => {
     let repository;
@@ -20,7 +21,7 @@ describe('ServerRepository', () => {
     });
 
     describe('findByHost', () => {
-        test('должен найти сервер по хосту и порту', async () => {
+        test(t('tests:validation_f693d087'), async () => {
             const mockServer = {
                 id: 1,
                 host: 'mc.example.com',
@@ -36,7 +37,7 @@ describe('ServerRepository', () => {
             expect(result).toEqual(mockServer);
         });
 
-        test('должен вернуть null если сервер не найден', async () => {
+        test(t('tests:validation_793d1921'), async () => {
             mockPrisma.server.findFirst.mockResolvedValue(null);
 
             const result = await repository.findByHost('nonexistent.com', 25565);
@@ -46,7 +47,7 @@ describe('ServerRepository', () => {
     });
 
     describe('findAllWithBots', () => {
-        test('должен найти все серверы с ботами', async () => {
+        test(t('tests:validation_5a29bc20'), async () => {
             const mockServers = [
                 {
                     id: 1,

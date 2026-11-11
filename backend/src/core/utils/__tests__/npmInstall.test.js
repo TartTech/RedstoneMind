@@ -2,9 +2,10 @@ const os = require('os');
 const path = require('path');
 const fse = require('fs-extra');
 const { installDependencies } = require('../npmInstall');
+const { t } = require('../../../i18n');
 
 describe('installDependencies', () => {
-    it('не запускает npm, если node_modules уже есть', async () => {
+    it(t('tests:msg_386aec3c'), async () => {
         const dir = await fse.mkdtemp(path.join(os.tmpdir(), 'bm-npm-'));
         const logs = [];
         try {

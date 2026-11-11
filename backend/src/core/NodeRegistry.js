@@ -122,6 +122,7 @@ class NodeRegistry {
       for (const file of files) {
         try {
           const registry = require(path.join(registriesDir, file));
+const { t } = require('../i18n');
 
           if (typeof registry.registerNodes === 'function') {
             registry.registerNodes(this);
@@ -137,19 +138,19 @@ class NodeRegistry {
           } else if (typeof registry.createNodeDefinitions === 'function' ||
                      typeof registry.getNodesByCategory === 'function' ||
                      typeof registry.getAllNodeTypes === 'function') {
-            // Это служебный модуль (index.js), не содержит нод напрямую
-            // Пропускаем без варнинга
+            // Это служебный module (index.js), not содержит нод напрямую
+            // Пропускаем without варнинга
           } else {
-            console.warn(`NodeRegistry: Файл ${file} не экспортирует registerNodes, массив нод или registerNodeDefinitions`);
+            console.warn(t('core:msg_488f218f', { file: file }));
           }
         } catch (error) {
-          console.error(`NodeRegistry: Ошибка загрузки реестра из ${file}:`, error.message);
+          console.error(t('core:error_7db40ca5', { file: file }), error.message);
         }
       }
 
       console.log(`NodeRegistry: Registered ${this.nodes.size} base nodes from ${files.length} registries`);
     } catch (error) {
-      console.error('NodeRegistry: Ошибка чтения директории node-registries:', error.message);
+      console.error(t('core:error_ff35a94b'), error.message);
     }
   }
 

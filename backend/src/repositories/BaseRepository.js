@@ -1,7 +1,7 @@
 class BaseRepository {
     constructor({ prisma }) {
         this.prisma = prisma;
-        // modelName устанавливается в дочерних классах
+        // modelName устанавливается in дочерних классах
     }
 
     get model() {

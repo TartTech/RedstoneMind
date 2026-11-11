@@ -60,8 +60,8 @@ class BotLifecycleService {
         const botId = botConfig.id;
 
         if (this.processManager.isRunning(botId) || this.startingBots.has(botId)) {
-            this.appendLog(botId, `[SYSTEM-ERROR] Попытка повторного запуска. Запуск отменен.`);
-            return { success: false, message: 'Бот уже запущен или запускается.' };
+            this.appendLog(botId, t('services:log_a08f3f41'));
+            return { success: false, message: t('services:msg_6d93313a') };
         }
 
         this.startingBots.add(botId);
@@ -76,7 +76,7 @@ class BotLifecycleService {
         const { sortedPlugins, hasCriticalIssues, pluginInfo } = dependencyResolver.resolve(enabledPluginsForBot, allPluginsForBot);
 
         if (hasCriticalIssues) {
-            this.appendLog(botId, '[DependencyManager] Обнаружены критические проблемы с зависимостями, запуск отменен.');
+            this.appendLog(botId, t('services:error_a1c8a0c5'));
 
             const criticalIssueTypes = new Set(['missing_dependency', 'version_mismatch', 'circular_dependency']);
 
@@ -95,8 +95,8 @@ class BotLifecycleService {
                 }
             }
 
-            this.emitStatusUpdate(botId, 'stopped', 'Ошибка зависимостей плагинов.');
-            return { success: false, message: 'Критические ошибки в зависимостях плагинов.' };
+            this.emitStatusUpdate(botId, 'stopped', t('services:error_a2d9e31e'));
+            return { success: false, message: t('services:error_62fc5479') };
         }
 
         const decryptedConfig = { ...botConfig };
@@ -157,13 +157,13 @@ class BotLifecycleService {
             try {
                 child.send({ type: 'stop' });
             } catch (error) {
-                this.logger.error({ botId, error }, 'Не удалось отправить stop');
+                this.logger.error({ botId, error }, t('services:error_50c0e0a4'));
             }
 
             this.cache.clearBotCache(botId);
             return { success: true, stopped };
         }
-        return { success: false, message: 'Бот не найден или уже остановлен' };
+        return { success: false, message: t('services:msg_aada76ac') };
     }
 
     _whenChildStops(child, botId) {
@@ -186,11 +186,11 @@ class BotLifecycleService {
                     finish();
                     return;
                 }
-                this.logger.warn({ botId }, 'Принудительное завершение процесса');
+                this.logger.warn({ botId }, t('services:msg_4a52b524'));
                 try {
                     child.kill('SIGKILL');
                 } catch (error) {
-                    this.logger.error({ botId, error }, 'Ошибка принудительного завершения');
+                    this.logger.error({ botId, error }, t('services:error_fde83268'));
                 }
                 if (typeof child.once !== 'function') finish();
             }, 5000);
@@ -216,7 +216,7 @@ class BotLifecycleService {
     }
 
     async loadConfigForBot(botId) {
-        this.logger.info({ botId }, 'Загрузка конфигурации');
+        this.logger.info({ botId }, t('services:msg_4ffb5c49'));
 
         try {
             const [commands, permissions] = await Promise.all([
@@ -238,10 +238,10 @@ class BotLifecycleService {
             }
 
             this.cache.setBotConfig(botId, config);
-            this.logger.info({ botId }, 'Конфигурация загружена');
+            this.logger.info({ botId }, t('services:success_370ec895'));
             return config;
         } catch (error) {
-            this.logger.error({ botId, error }, 'Ошибка загрузки конфигурации');
+            this.logger.error({ botId, error }, t('services:error_51525a07'));
             const handled = errorHandler.handle(error, { botId });
             throw new Error(`Failed to load/cache bot configuration for botId ${botId}: ${error.message}`);
         }
@@ -250,7 +250,7 @@ class BotLifecycleService {
     invalidateConfigCache(botId) {
         if (this.cache.getBotConfig(botId)) {
             this.cache.deleteBotConfig(botId);
-            this.logger.debug({ botId }, 'Кеш конфигурации инвалидирован');
+            this.logger.debug({ botId }, t('services:msg_07d294cc'));
         }
     }
 
@@ -259,21 +259,21 @@ class BotLifecycleService {
         this.invalidateConfigCache(botId);
 
         if (this.processManager.sendMessage(botId, { type: 'config:reload' })) {
-            this.logger.info({ botId }, 'Отправлен config:reload');
+            this.logger.info({ botId }, t('services:msg_87a00eb5'));
             getIOSafe().emit('bot:config_reloaded', { botId });
         }
     }
 
     async _syncSystemPermissions(botId) {
         const systemPermissions = [
-            { name: "admin.*", description: "Все права администратора", owner: "system" },
-            { name: "admin.cooldown.bypass", description: "Обход кулдауна для админ-команд", owner: "system" },
-            { name: "user.*", description: "Все права обычного пользователя", owner: "system" },
-            { name: "user.say", description: "Доступ к простым командам", owner: "system" },
-            { name: "user.cooldown.bypass", description: "Обход кулдауна для юзер-команд", owner: "system" },
+            { name: "admin.*", description: t('tests:perm_87b060b3'), owner: "system" },
+            { name: "admin.cooldown.bypass", description: t('services:msg_8e581741'), owner: "system" },
+            { name: "user.*", description: t('services:perm_9b091116'), owner: "system" },
+            { name: "user.say", description: t('services:perm_a22ada6c'), owner: "system" },
+            { name: "user.cooldown.bypass", description: t('services:msg_c72d67c6'), owner: "system" },
         ];
 
-        this.logger.debug({ botId }, 'Синхронизация системных прав');
+        this.logger.debug({ botId }, t('services:msg_e41f7e4b'));
 
         try {
             for (const perm of systemPermissions) {
@@ -293,9 +293,9 @@ class BotLifecycleService {
                     });
                 }
             }
-            this.logger.debug({ botId }, 'Системные права синхронизированы');
+            this.logger.debug({ botId }, t('services:msg_e4979cb7'));
         } catch (error) {
-            this.logger.error({ botId, error }, 'Ошибка синхронизации системных прав');
+            this.logger.error({ botId, error }, t('services:error_35cbdf9b'));
         }
     }
 
@@ -361,14 +361,14 @@ class BotLifecycleService {
             child.api.sendMessage(chatType, message, username);
             return { success: true };
         }
-        return { success: false, message: 'Бот не найден или не запущен' };
+        return { success: false, message: t('services:msg_f833d35c') };
     }
 
     lookAt(botId, position) {
         if (this.processManager.sendMessage(botId, { type: 'action', name: 'lookAt', payload: { position } })) {
             return { success: true };
         }
-        this.logger.error({ botId }, 'Не удалось выполнить lookAt');
+        this.logger.error({ botId }, t('services:error_87b4971b'));
         return { success: false };
     }
 
@@ -376,12 +376,12 @@ class BotLifecycleService {
         const payload = { type: 'plugins:reload' };
         if (pluginName) payload.pluginName = pluginName;
         if (this.processManager.sendMessage(botId, payload)) {
-            this.logger.info({ botId, pluginName }, 'Отправлен plugins:reload');
+            this.logger.info({ botId, pluginName }, t('services:msg_d3c8d994'));
             const { getIOSafe } = require('../../real-time/socketHandler');
             getIOSafe().emit('bot:plugins_reloaded', { botId });
-            return { success: true, message: 'Команда на перезагрузку плагинов отправлена.' };
+            return { success: true, message: t('services:msg_134cd667') };
         }
-        return { success: false, message: 'Бот не запущен.' };
+        return { success: false, message: t('services:msg_d1cea085') };
     }
 
     sendServerCommandToBot(botId, command) {
@@ -450,6 +450,7 @@ class BotLifecycleService {
 
         return new Promise((resolve) => {
             const { v4: uuidv4 } = require('uuid');
+const { t } = require('../../i18n');
             const requestId = uuidv4();
 
             const timeout = setTimeout(() => {
@@ -485,7 +486,7 @@ class BotLifecycleService {
             }
         }
 
-        this.logger.info({ botId }, 'Кеш пользователей очищен');
+        this.logger.info({ botId }, t('services:msg_3771ec27'));
         this.processManager.sendMessage(botId, { type: 'invalidate_all_user_cache' });
 
         return { success: true };

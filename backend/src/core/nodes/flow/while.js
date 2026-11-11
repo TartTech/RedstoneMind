@@ -1,13 +1,14 @@
 const BreakLoopSignal = require('../../BreakLoopSignal');
+const { t } = require('../../../i18n');
 
 /**
- * @param {object} node - Экземпляр узла из графа.
- * @param {object} context - Контекст выполнения графа.
- * @param {object} helpers - Вспомогательные функции движка.
- * @param {function} helpers.resolvePinValue - Функция для получения значения с входного пина.
- * @param {function} helpers.traverse - Функция для перехода к следующему узлу.
- * @param {function} helpers.clearLoopBodyMemo - Функция для очистки мемоизации тела цикла.
- * @param {Map} helpers.memo - Map для хранения мемоизированных значений.
+ * @param {object} node - Instance node from graph.
+ * @param {object} context - Context execution graph.
+ * @param {object} helpers - Helper functions engine.
+ * @param {function} helpers.resolvePinValue - Function for getting values with входного pin.
+ * @param {function} helpers.traverse - Function for transitioning to next node.
+ * @param {function} helpers.clearLoopBodyMemo - Function for очистки мемоизации body цикла.
+ * @param {Map} helpers.memo - Map for хранения мемоизированных значений.
  */
 async function execute(node, context, helpers) {
     const { resolvePinValue, traverse, clearLoopBodyMemo, memo } = helpers;
@@ -27,7 +28,7 @@ async function execute(node, context, helpers) {
         }
 
         if (iteration >= maxIterations) {
-            console.warn(`[GraphExecutionEngine] Цикл while достиг максимального количества итераций (${maxIterations})`);
+            console.warn(t('nodes:log_a72d8cf8', { maxIterations: maxIterations }));
         }
     } catch (e) {
         if (e instanceof BreakLoopSignal) {
@@ -41,12 +42,12 @@ async function execute(node, context, helpers) {
 }
 
 /**
- * @param {object} node - Экземпляр узла из графа.
- * @param {string} pinId - Идентификатор выходного пина, значение которого нужно вычислить.
- * @param {object} context - Контекст выполнения графа.
- * @param {object} helpers - Вспомогательные функции движка.
- * @param {Map} helpers.memo - Map для хранения мемоизированных значений.
- * @returns {Promise<any>} - Вычисленное значение для выходного пина.
+ * @param {object} node - Instance node from graph.
+ * @param {string} pinId - Идентификатор выходного pin, value которого need вычислить.
+ * @param {object} context - Context execution graph.
+ * @param {object} helpers - Helper functions engine.
+ * @param {Map} helpers.memo - Map for хранения мемоизированных значений.
+ * @returns {Promise<any>} - Вычисленное value for выходного pin.
  */
 async function evaluate(node, pinId, context, helpers) {
     const { memo } = helpers;

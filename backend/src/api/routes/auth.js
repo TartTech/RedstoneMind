@@ -9,6 +9,7 @@ const { authenticate, authorize } = require('../middleware/auth');
 const { authenticatePanelApiKey } = require('../middleware/panelApiAuth');
 const path = require('path');
 const os = require('os');
+const { t } = require('../../i18n');
 
 const router = express.Router();
 const prisma = new PrismaClient();
@@ -18,7 +19,7 @@ const authLimiter = rateLimit({
     max: 10,
     standardHeaders: true,
     legacyHeaders: false,
-    message: { error: 'Слишком много попыток. Повторите позже.' },
+    message: { error: t('auth:msg_7c776934') },
 });
 
 const JWT_SECRET = config.security.jwtSecret;
@@ -27,51 +28,51 @@ const JWT_EXPIRES_IN = '7d';
 const activeResetTokens = new Map();
 
 const ALL_PERMISSIONS = [
-    { id: '*', label: 'Все права (Администратор)' },
-    { id: 'bot:list', label: 'Просмотр ботов' },
-    { id: 'bot:create', label: 'Создание ботов' },
-    { id: 'bot:update', label: 'Редактирование ботов' },
-    { id: 'bot:delete', label: 'Удаление ботов' },
-    { id: 'bot:start_stop', label: 'Запуск/остановка ботов' },
-    { id: 'bot:interact', label: 'Взаимодействие с ботом (консоль)' },
-    { id: 'bot:export', label: 'Экспорт ботов' },
-    { id: 'bot:import', label: 'Импорт ботов' },
-    { id: 'bot:history:view', label: 'Просмотр истории чата и команд' },
-    { id: 'bot:history:manage', label: 'Управление историей (очистка)' },
-    { id: 'management:view', label: 'Просмотр вкладки "Управление" у бота' },
-    { id: 'management:edit', label: 'Редактирование на вкладке "Управление" у бота' },
-    { id: 'plugin:list', label: 'Просмотр плагинов' },
-    { id: 'plugin:install', label: 'Установка плагинов' },
-    { id: 'plugin:delete', label: 'Удаление плагинов' },
-    { id: 'plugin:update', label: 'Обновление плагинов' },
-    { id: 'plugin:settings:view', label: 'Просмотр настроек плагинов' },
-    { id: 'plugin:settings:edit', label: 'Редактирование настроек плагинов' },
-    { id: 'plugin:browse', label: 'Просмотр каталога плагинов' },
-    { id: 'plugin:develop', label: 'Разработка и редактирование плагинов (IDE)' },
-    { id: 'server:list', label: 'Просмотр серверов' },
-    { id: 'server:create', label: 'Создание серверов' },
-    { id: 'server:delete', label: 'Удаление серверов' },
-    { id: 'proxy:list', label: 'Просмотр прокси' },
-    { id: 'proxy:create', label: 'Создание и редактирование прокси' },
-    { id: 'proxy:delete', label: 'Удаление прокси' },
-    { id: 'task:list', label: 'Просмотр задач' },
-    { id: 'task:create', label: 'Создание задач' },
-    { id: 'task:edit', label: 'Редактирование задач' },
-    { id: 'task:delete', label: 'Удаление задач' },
-    { id: 'panel:user:list', label: 'Просмотр пользователей панели' },
-    { id: 'panel:user:create', label: 'Создание пользователей панели' },
-    { id: 'panel:user:edit', label: 'Редактирование пользователей панели' },
-    { id: 'panel:user:delete', label: 'Удаление пользователей панели' },
-    { id: 'panel:role:list', label: 'Просмотр ролей панели' },
-    { id: 'panel:role:create', label: 'Создание ролей панели' },
-    { id: 'panel:role:edit', label: 'Редактирование ролей панели' },
-    { id: 'panel:role:delete', label: 'Удаление ролей панели' },
-    { id: 'panel:settings:view', label: 'Просмотр глобальных настроек' },
-    { id: 'panel:settings:edit', label: 'Редактирование глобальных настроек' },
-    { id: 'graph:read', label: 'Просмотр магазина графов' },
-    { id: 'graph:download', label: 'Скачивание графов из магазина' },
-    { id: 'graph:like', label: 'Лайки графов в магазине' },
-    { id: 'graph:publish', label: 'Публикация графов в магазин' },
+    { id: '*', label: t('auth:perm_e85cdf95') },
+    { id: 'bot:list', label: t('auth:perm_14be8f07') },
+    { id: 'bot:create', label: t('auth:success_5d58bcba') },
+    { id: 'bot:update', label: t('auth:perm_919efd61') },
+    { id: 'bot:delete', label: t('auth:success_d4a3b01a') },
+    { id: 'bot:start_stop', label: t('auth:msg_1f219ce1') },
+    { id: 'bot:interact', label: t('auth:msg_62bad898') },
+    { id: 'bot:export', label: t('auth:msg_0efa7d3b') },
+    { id: 'bot:import', label: t('auth:msg_ff4d1294') },
+    { id: 'bot:history:view', label: t('auth:perm_61e6c674') },
+    { id: 'bot:history:manage', label: t('auth:perm_b174eb47') },
+    { id: 'management:view', label: 'Просмотр вкладки t('auth:msg_6fdd7d3a') у бота' },
+    { id: 'management:edit', label: 'Редактирование на вкладке t('auth:msg_6fdd7d3a') у бота' },
+    { id: 'plugin:list', label: t('auth:perm_fa468ef1') },
+    { id: 'plugin:install', label: t('auth:msg_69518fc5') },
+    { id: 'plugin:delete', label: t('auth:success_01edfd9e') },
+    { id: 'plugin:update', label: t('auth:success_0f2d1a3c') },
+    { id: 'plugin:settings:view', label: t('auth:perm_3975b0e9') },
+    { id: 'plugin:settings:edit', label: t('auth:perm_4dea6036') },
+    { id: 'plugin:browse', label: t('auth:perm_03c524a3') },
+    { id: 'plugin:develop', label: t('auth:perm_665a5197') },
+    { id: 'server:list', label: t('auth:perm_9e447f9d') },
+    { id: 'server:create', label: t('auth:success_f27c3380') },
+    { id: 'server:delete', label: t('auth:success_d00debf8') },
+    { id: 'proxy:list', label: t('auth:perm_59344eba') },
+    { id: 'proxy:create', label: t('auth:success_e80faeeb') },
+    { id: 'proxy:delete', label: t('auth:success_7864f401') },
+    { id: 'task:list', label: t('auth:perm_1c4b9d3c') },
+    { id: 'task:create', label: t('auth:success_db9621cd') },
+    { id: 'task:edit', label: t('auth:perm_f710a0fd') },
+    { id: 'task:delete', label: t('auth:success_314a21f4') },
+    { id: 'panel:user:list', label: t('auth:perm_51d1acee') },
+    { id: 'panel:user:create', label: t('auth:success_220ff8e2') },
+    { id: 'panel:user:edit', label: t('auth:perm_609e4a33') },
+    { id: 'panel:user:delete', label: t('auth:success_cc802e44') },
+    { id: 'panel:role:list', label: t('auth:perm_10dd28b2') },
+    { id: 'panel:role:create', label: t('auth:success_c8bb4b2d') },
+    { id: 'panel:role:edit', label: t('auth:perm_6ea9c1a8') },
+    { id: 'panel:role:delete', label: t('auth:success_26618b71') },
+    { id: 'panel:settings:view', label: t('auth:perm_73f8323d') },
+    { id: 'panel:settings:edit', label: t('auth:perm_cae2f6b8') },
+    { id: 'graph:read', label: t('auth:perm_82319668') },
+    { id: 'graph:download', label: t('auth:msg_862f51d0') },
+    { id: 'graph:like', label: t('auth:msg_3bd01e06') },
+    { id: 'graph:publish', label: t('auth:msg_4cf545e4') },
 ];
 
 const VIEWER_PERMISSIONS = [
@@ -101,16 +102,16 @@ async function getOwnerUserId() {
 async function ownerOnly(req, res, next) {
     try {
         if (req.user && req.user.userId === await getOwnerUserId()) return next();
-        return res.status(403).json({ error: 'Только владелец может изменять права пользователей и роли.' });
+        return res.status(403).json({ error: t('auth:msg_70c38050') });
     } catch (error) {
         console.error('[OwnerOnly Error]', error);
-        return res.status(500).json({ error: 'Ошибка проверки прав владельца' });
+        return res.status(500).json({ error: t('auth:error_d9b04519') });
     }
 }
 
 /**
  * @route   GET /api/auth/status
- * @desc    Проверяет, была ли произведена первоначальная настройка (создан админ)
+ * @desc    Checks, была ли произведена первоначальная setting (создан админ)
  * @access  Public
  */
 router.get('/status', async (req, res) => {
@@ -119,13 +120,13 @@ router.get('/status', async (req, res) => {
         res.json({ needsSetup: userCount === 0 });
     } catch (error) {
         console.error('[Auth Status Error]', error);
-        res.status(500).json({ error: 'Не удалось проверить статус сервера' });
+        res.status(500).json({ error: t('auth:error_748f75f0') });
     }
 });
 
 /**
  * @route   GET /api/auth/config-path
- * @desc    Получить путь к конфигурационному файлу
+ * @desc    Получить path to конфигурационному файлу
  * @access  Public
  */
 router.get('/config-path', (req, res) => {
@@ -135,19 +136,19 @@ router.get('/config-path', (req, res) => {
 
 /**
  * @route   POST /api/auth/setup
- * @desc    Создает первого пользователя с ролью администратора
- * @access  Public (только если нет других пользователей)
+ * @desc    Creates первого user with ролью администратора
+ * @access  Public (only if no других пользователей)
  */
 router.post('/setup', authLimiter, async (req, res) => {
     try {
         const userCount = await prisma.panelUser.count();
         if (userCount > 0) {
-            return res.status(403).json({ error: 'Настройка уже произведена.' });
+            return res.status(403).json({ error: t('auth:msg_f3fd9a4f') });
         }
 
         const { username, password } = req.body;
         if (!username || !password || password.length < 4) {
-            return res.status(400).json({ error: 'Имя пользователя и пароль (минимум 4 символа) обязательны.' });
+            return res.status(400).json({ error: t('auth:validation_ae62dc2a') });
         }
 
         const hashedPassword = await bcrypt.hash(password, 12);
@@ -200,16 +201,16 @@ router.post('/setup', authLimiter, async (req, res) => {
 
     } catch (error) {
         if (error.code === 'P2002') {
-             return res.status(409).json({ error: 'Пользователь с таким именем уже существует.' });
+             return res.status(409).json({ error: t('auth:msg_7790cb1e') });
         }
         console.error('[Setup Error]', error);
-        res.status(500).json({ error: 'Не удалось создать администратора' });
+        res.status(500).json({ error: t('auth:error_5fb084ef') });
     }
 });
 
 /**
  * @route   POST /api/auth/recovery/verify
- * @desc    Проверка кода восстановления
+ * @desc    Check кода восстановления
  * @access  Public
  */
 router.post('/recovery/verify', authLimiter, async (req, res) => {
@@ -217,12 +218,12 @@ router.post('/recovery/verify', authLimiter, async (req, res) => {
         const { recoveryCode } = req.body;
         
         if (!recoveryCode) {
-            return res.status(400).json({ error: 'Код восстановления обязателен' });
+            return res.status(400).json({ error: t('auth:msg_0f706d14') });
         }
         
         if (recoveryCode !== config.security.adminRecoveryCode) {
             await new Promise(resolve => setTimeout(resolve, 1000));
-            return res.status(401).json({ error: 'Неверный код восстановления' });
+            return res.status(401).json({ error: t('auth:error_c7142d7c') });
         }
         
         const rootUser = await prisma.panelUser.findFirst({
@@ -231,7 +232,7 @@ router.post('/recovery/verify', authLimiter, async (req, res) => {
         });
         
         if (!rootUser) {
-            return res.status(404).json({ error: 'В системе нет ни одного пользователя. Выполните первоначальную настройку.' });
+            return res.status(404).json({ error: t('auth:msg_d401586e') });
         }
         
         const tokenId = crypto.randomBytes(16).toString('hex');
@@ -264,25 +265,25 @@ router.post('/recovery/verify', authLimiter, async (req, res) => {
         
     } catch (error) {
         console.error('[Recovery Verify Error]', error);
-        res.status(500).json({ error: 'Ошибка при проверке кода восстановления' });
+        res.status(500).json({ error: t('auth:error_2a8aced1') });
     }
 });
 
 /**
  * @route   POST /api/auth/recovery/reset
- * @desc    Сброс пароля с использованием токена
- * @access  Public (с валидным токеном сброса)
+ * @desc    Сброс password with использованием token
+ * @access  Public (with валидным токеном сброса)
  */
 router.post('/recovery/reset', authLimiter, async (req, res) => {
     try {
         const { resetToken, newPassword } = req.body;
         
         if (!resetToken || !newPassword) {
-            return res.status(400).json({ error: 'Токен и новый пароль обязательны' });
+            return res.status(400).json({ error: t('auth:validation_fe8a3553') });
         }
         
         if (newPassword.length < 4) {
-            return res.status(400).json({ error: 'Пароль должен быть не менее 4 символов' });
+            return res.status(400).json({ error: t('auth:validation_f750868a') });
         }
         
         let decoded;
@@ -306,7 +307,7 @@ router.post('/recovery/reset', authLimiter, async (req, res) => {
             }
             
         } catch (err) {
-            return res.status(401).json({ error: 'Недействительный или истекший токен' });
+            return res.status(401).json({ error: t('auth:msg_b27693de') });
         }
         
         const hashedPassword = await bcrypt.hash(newPassword, 12);
@@ -322,26 +323,26 @@ router.post('/recovery/reset', authLimiter, async (req, res) => {
         activeResetTokens.delete(decoded.tokenId);
         
         res.json({ 
-            message: 'Пароль успешно сброшен', 
+            message: t('auth:success_0c1d64be'), 
             username: updatedUser.username 
         });
         
     } catch (error) {
         console.error('[Recovery Reset Error]', error);
-        res.status(500).json({ error: 'Ошибка при сбросе пароля' });
+        res.status(500).json({ error: t('auth:error_e7b05505') });
     }
 });
 
 /**
  * @route   POST /api/auth/login
- * @desc    Аутентифицирует пользователя и возвращает токен
+ * @desc    Аутентифицирует user and returns token
  * @access  Public
  */
 router.post('/login', authLimiter, async (req, res) => {
     try {
         const { username, password } = req.body;
         if (!username || !password) {
-            return res.status(400).json({ error: 'Имя пользователя и пароль обязательны' });
+            return res.status(400).json({ error: t('auth:validation_bd4545b5') });
         }
 
         const user = await prisma.panelUser.findUnique({
@@ -350,12 +351,12 @@ router.post('/login', authLimiter, async (req, res) => {
         });
 
         if (!user) {
-            return res.status(401).json({ error: 'Неверные учетные данные' });
+            return res.status(401).json({ error: t('auth:error_7a485588') });
         }
 
         const isMatch = await bcrypt.compare(password, user.passwordHash);
         if (!isMatch) {
-            return res.status(401).json({ error: 'Неверные учетные данные' });
+            return res.status(401).json({ error: t('auth:error_7a485588') });
         }
 
         let permissions = JSON.parse(user.role.permissions || '[]');
@@ -383,7 +384,7 @@ router.post('/login', authLimiter, async (req, res) => {
 
     } catch (error) {
         console.error('[Login Error]', error);
-        res.status(500).json({ error: 'Ошибка входа в систему' });
+        res.status(500).json({ error: t('auth:error_83942dba') });
     }
 });
 
@@ -412,7 +413,7 @@ router.get('/validate', authenticatePanelApiKey, async (req, res) => {
 
 /**
  * @route   GET /api/auth/me
- * @desc    Получить данные текущего пользователя по токену
+ * @desc    Получить data current user by токену
  * @access  Private
  */
 router.get('/me', authenticate, async (req, res) => {
@@ -423,7 +424,7 @@ router.get('/me', authenticate, async (req, res) => {
         });
 
         if (!user) {
-            return res.status(404).json({ error: "Пользователь не найден." });
+            return res.status(404).json({ error: t('auth:msg_6133e62a') });
         }
 
         let permissions = JSON.parse(user.role.permissions || '[]');
@@ -438,14 +439,14 @@ router.get('/me', authenticate, async (req, res) => {
             permissions
         });
     } catch (error) {
-        res.status(500).json({ error: "Ошибка сервера" });
+        res.status(500).json({ error: t('auth:error_21630e3f') });
     }
 });
 
 
 /**
  * @route   GET /api/auth/users
- * @desc    Получить всех пользователей и их роли
+ * @desc    Получить всех пользователей and их roles
  * @access  Private (Admin only)
  */
 router.get('/users', authenticate, authorize('panel:user:list'), async (req, res) => {
@@ -459,22 +460,22 @@ router.get('/users', authenticate, authorize('panel:user:list'), async (req, res
             botAccess: u.botAccess.map(a => ({ botId: a.botId, bot: a.bot }))
         })));
     } catch (error) {
-        res.status(500).json({ error: 'Не удалось получить пользователей' });
+        res.status(500).json({ error: t('auth:error_1c09b5e6') });
     }
 });
 
 /**
  * @route   POST /api/auth/users
- * @desc    Создать нового пользователя
+ * @desc    Создать new user
  * @access  Private (Admin only)
  */
 router.post('/users', authenticate, ownerOnly, authorize('panel:user:create'), async (req, res) => {
     const { username, password, roleId, allBots = true, botIds = [] } = req.body;
     if (!username || !password || !roleId) {
-        return res.status(400).json({ error: 'Имя, пароль и роль обязательны' });
+        return res.status(400).json({ error: t('auth:validation_019279b8') });
     }
      if (password.length < 4) {
-        return res.status(400).json({ error: 'Пароль должен быть не менее 4 символов' });
+        return res.status(400).json({ error: t('auth:validation_f750868a') });
     }
 
     try {
@@ -495,16 +496,16 @@ router.post('/users', authenticate, ownerOnly, authorize('panel:user:create'), a
         res.status(201).json(userToReturn);
     } catch (error) {
         if (error.code === 'P2002') {
-            return res.status(409).json({ error: 'Пользователь с таким именем уже существует' });
+            return res.status(409).json({ error: t('auth:msg_638c28d5') });
         }
-        res.status(500).json({ error: 'Не удалось создать пользователя' });
+        res.status(500).json({ error: t('auth:error_cd350cac') });
     }
 });
 
 
 /**
  * @route   GET /api/auth/roles
- * @desc    Получить все роли
+ * @desc    Получить all roles
  * @access  Private (Admin only)
  */
 router.get('/roles', authenticate, authorize('panel:role:list'), async (req, res) => {
@@ -516,14 +517,14 @@ router.get('/roles', authenticate, authorize('panel:role:list'), async (req, res
         }));
         res.json(rolesWithParsedPermissions);
     } catch (error) {
-        res.status(500).json({ error: 'Не удалось получить роли' });
+        res.status(500).json({ error: t('auth:error_7f88f708') });
     }
 });
 
 
 /**
  * @route   GET /api/auth/permissions
- * @desc    Получить список всех возможных прав в системе
+ * @desc    Получить list всех возможных прав in системе
  * @access  Private
  */
 router.get('/permissions', authenticate, (req, res) => {
@@ -533,7 +534,7 @@ router.get('/permissions', authenticate, (req, res) => {
 
 /**
  * @route   PUT /api/auth/users/:id
- * @desc    Обновить пользователя (роль, пароль)
+ * @desc    Обновить user (role, password)
  * @access  Private (Admin only)
  */
 router.put('/users/:id', authenticate, ownerOnly, authorize('panel:user:edit'), async (req, res) => {
@@ -546,7 +547,7 @@ router.put('/users/:id', authenticate, ownerOnly, authorize('panel:user:edit'), 
 
         const updateData = {};
         if (password) {
-            if (password.length < 4) return res.status(400).json({ error: 'Пароль должен быть не менее 4 символов' });
+            if (password.length < 4) return res.status(400).json({ error: t('auth:validation_f750868a') });
             updateData.passwordHash = await bcrypt.hash(password, 12);
         }
         if (roleId) {
@@ -575,46 +576,46 @@ router.put('/users/:id', authenticate, ownerOnly, authorize('panel:user:edit'), 
         res.json(userToReturn);
 
     } catch (error) {
-        res.status(500).json({ error: 'Не удалось обновить пользователя' });
+        res.status(500).json({ error: t('auth:error_48cd62cc') });
     }
 });
 
 /**
  * @route   DELETE /api/auth/users/:id
- * @desc    Удалить пользователя
+ * @desc    Удалить user
  * @access  Private (Admin only)
  */
 router.delete('/users/:id', authenticate, ownerOnly, authorize('panel:user:delete'), async (req, res) => {
     const userId = parseInt(req.params.id, 10);
     
     if (req.user.userId === userId) {
-        return res.status(403).json({ error: 'Вы не можете удалить свою собственную учетную запись.' });
+        return res.status(403).json({ error: t('auth:msg_0eb2c73b') });
     }
 
     try {
         const owner = await prisma.panelUser.findFirst({ orderBy: { id: 'asc' } });
         if (owner && owner.id === userId) {
-            return res.status(403).json({ error: 'Нельзя удалить владельца системы.' });
+            return res.status(403).json({ error: t('auth:msg_cde95b82') });
         }
         await prisma.panelUser.delete({ where: { id: userId } });
         res.status(204).send();
     } catch (error) {
         if (error.code === 'P2025') {
-            return res.status(404).json({ error: 'Пользователь не найден' });
+            return res.status(404).json({ error: t('auth:msg_a7518766') });
         }
-        res.status(500).json({ error: 'Не удалось удалить пользователя' });
+        res.status(500).json({ error: t('auth:error_1ee822fd') });
     }
 });
 
 /**
  * @route   POST /api/auth/roles
- * @desc    Создать новую роль
+ * @desc    Создать новую role
  * @access  Private (Admin only)
  */
 router.post('/roles', authenticate, ownerOnly, authorize('panel:role:create'), async (req, res) => {
     const { name, permissions } = req.body;
     if (!name || !Array.isArray(permissions)) {
-        return res.status(400).json({ error: 'Имя и массив прав обязательны' });
+        return res.status(400).json({ error: t('auth:validation_84e7790a') });
     }
     try {
         const newRole = await prisma.panelRole.create({
@@ -629,22 +630,22 @@ router.post('/roles', authenticate, ownerOnly, authorize('panel:role:create'), a
         });
     } catch (error) {
         if (error.code === 'P2002') {
-            return res.status(409).json({ error: 'Роль с таким именем уже существует' });
+            return res.status(409).json({ error: t('auth:msg_466e7d2a') });
         }
-        res.status(500).json({ error: 'Не удалось создать роль' });
+        res.status(500).json({ error: t('auth:error_fa52aa69') });
     }
 });
 
 /**
  * @route   PUT /api/auth/roles/:id
- * @desc    Обновить роль (имя и права)
+ * @desc    Обновить role (name and permissions)
  * @access  Private (Admin only)
  */
 router.put('/roles/:id', authenticate, ownerOnly, authorize('panel:role:edit'), async (req, res) => {
     const roleId = parseInt(req.params.id, 10);
     const { name, permissions } = req.body;
     if (!name || !Array.isArray(permissions)) {
-        return res.status(400).json({ error: 'Имя и массив прав обязательны' });
+        return res.status(400).json({ error: t('auth:validation_84e7790a') });
     }
     try {
         const role = await prisma.panelRole.findUnique({ where: { id: roleId } });
@@ -665,32 +666,32 @@ router.put('/roles/:id', authenticate, ownerOnly, authorize('panel:role:edit'), 
         });
     } catch (error) {
          if (error.code === 'P2002') {
-            return res.status(409).json({ error: 'Роль с таким именем уже существует' });
+            return res.status(409).json({ error: t('auth:msg_466e7d2a') });
         }
-        res.status(500).json({ error: 'Не удалось обновить роль' });
+        res.status(500).json({ error: t('auth:error_44a74c39') });
     }
 });
 
 /**
  * @route   DELETE /api/auth/roles/:id
- * @desc    Удалить роль
+ * @desc    Удалить role
  * @access  Private (Admin only)
  */
 router.delete('/roles/:id', authenticate, ownerOnly, authorize('panel:role:delete'), async (req, res) => {
     const roleId = parseInt(req.params.id, 10);
     try {
         const role = await prisma.panelRole.findUnique({ where: { id: roleId }, include: { users: true } });
-        if (!role) return res.status(404).json({ error: 'Роль не найдена' });
+        if (!role) return res.status(404).json({ error: t('auth:msg_dbb96d79') });
         if (role.name === 'Admin') {
             return res.status(403).json({ error: 'Удаление роли "Admin" запрещено.' });
         }
         if (role.users.length > 0) {
-            return res.status(400).json({ error: 'Нельзя удалить роль, которая назначена пользователям.' });
+            return res.status(400).json({ error: t('auth:msg_8c82e6f4') });
         }
         await prisma.panelRole.delete({ where: { id: roleId } });
         res.status(204).send();
     } catch (error) {
-        res.status(500).json({ error: 'Не удалось удалить роль' });
+        res.status(500).json({ error: t('auth:error_79b26cf5') });
     }
 });
 

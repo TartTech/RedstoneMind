@@ -25,7 +25,7 @@ async function socketCanAccessBot(socket, botId) {
     }
 }
 
-// Буфер логов для каждого плагина (последние 100 логов)
+// Буфер логов for каждого plugin (последние 100 логов)
 const pluginLogsBuffer = new Map(); // key: 'botId:pluginName', value: array of logs
 const MAX_LOGS_PER_PLUGIN = 100;
 
@@ -88,7 +88,7 @@ function initializeSocket(httpServer) {
         socket.on('disconnect', () => {
             botManager.handleSocketDisconnect(socket);
 
-            // Удаляем пользователя из всех debug комнат
+            // Удаляем user from всех debug комнат
             const debugManager = getGlobalDebugManager();
             for (const [graphId, debugState] of debugManager.graphDebugStates) {
                 if (debugState.connectedUsers.has(socket.id)) {
@@ -158,11 +158,11 @@ function initializeSocket(httpServer) {
             const room = debugState.getRoomName();
             debugState.removeUser(socket.id);
 
-            // Если это был последний пользователь - очищаем breakpoints
+            // If это was last user - очищаем breakpoints
             if (debugState.connectedUsers.size === 0) {
                 debugState.clearAllBreakpoints();
 
-                // Если есть активное выполнение на паузе - останавливаем его
+                // If есть активное выполнение on паузе - останавливаем его
                 if (debugState.activeExecution) {
                     debugState.stop();
                 }
@@ -262,10 +262,10 @@ function initializeSocket(httpServer) {
 
             console.log(`[Debug] Value updated by ${socket.decoded?.username || 'Unknown'}: ${key} =`, value);
 
-            // Сохраняем изменение в pendingOverrides
+            // Сохраняем change in pendingOverrides
             debugState.setValue(key, value);
 
-            // Транслируем изменение всем подключенным пользователям
+            // Транслируем change всем подключенным пользователям
             debugState.broadcast('debug:value-updated', {
                 key,
                 value,
@@ -273,7 +273,7 @@ function initializeSocket(httpServer) {
             });
         });
 
-        // Hot reload графов при сохранении
+        // Hot reload графов when сохранении
         socket.on('graph:updated', async ({ botId, graphId }) => {
             if (!await socketCanAccessBot(socket, botId)) return;
 
@@ -281,11 +281,11 @@ function initializeSocket(httpServer) {
                 const eventGraphManager = botManager.eventGraphManager;
 
                 if (eventGraphManager) {
-                    // Перезагружаем графы для бота
+                    // Перезагружаем графы for bot
                     await eventGraphManager.loadGraphsForBot(botId);
 
 
-                    // Уведомляем всех пользователей о перезагрузке через collaboration manager
+                    // Уведомляем всех пользователей о перезагрузке through collaboration manager
                     const collabManager = getGlobalCollaborationManager();
                     collabManager.broadcastGraphReloaded(botId, graphId);
                 } else {
@@ -298,7 +298,7 @@ function initializeSocket(httpServer) {
 
         // ========== COLLABORATIVE EDITING EVENTS ==========
 
-        // Присоединение к графу для совместного редактирования
+        // Присоединение to графу for совместного редактирования
         socket.on('collab:join', ({ botId, graphId, debugMode }) => {
             try {
                 const collabManager = getGlobalCollaborationManager();
@@ -311,7 +311,7 @@ function initializeSocket(httpServer) {
             }
         });
 
-        // Покидание графа
+        // Покидание graph
         socket.on('collab:leave', ({ botId, graphId }) => {
             try {
                 const collabManager = getGlobalCollaborationManager();
@@ -321,7 +321,7 @@ function initializeSocket(httpServer) {
             }
         });
 
-        // Обновление позиции курсора
+        // Update position курсора
         socket.on('collab:cursor', ({ botId, graphId, x, y }) => {
             try {
                 const collabManager = getGlobalCollaborationManager();
@@ -331,7 +331,7 @@ function initializeSocket(httpServer) {
             }
         });
 
-        // Обновление выбранных нод
+        // Update выбранных нод
         socket.on('collab:selection', ({ botId, graphId, nodeIds }) => {
             try {
                 const collabManager = getGlobalCollaborationManager();
@@ -341,7 +341,7 @@ function initializeSocket(httpServer) {
             }
         });
 
-        // Изменение режима отладки
+        // Change режима отладки
         socket.on('collab:mode-change', ({ botId, graphId, debugMode }) => {
             try {
                 const collabManager = getGlobalCollaborationManager();
@@ -351,7 +351,7 @@ function initializeSocket(httpServer) {
             }
         });
 
-        // Инициализация состояния графа (вызывается первым пользователем после загрузки)
+        // Initialization state graph (вызывается первым пользователем after загрузки)
         socket.on('collab:init-graph-state', ({ botId, graphId, nodes, edges, variables }) => {
             try {
                 const collabManager = getGlobalCollaborationManager();
@@ -361,7 +361,7 @@ function initializeSocket(httpServer) {
             }
         });
 
-        // Изменение нод (движение, создание, удаление, обновление)
+        // Change нод (движение, creation, deletion, update)
         socket.on('collab:nodes', ({ botId, graphId, type, data }) => {
             try {
                 const collabManager = getGlobalCollaborationManager();
@@ -371,7 +371,7 @@ function initializeSocket(httpServer) {
             }
         });
 
-        // Изменение связей (создание, удаление)
+        // Change связей (creation, deletion)
         socket.on('collab:edges', ({ botId, graphId, type, data }) => {
             try {
                 const collabManager = getGlobalCollaborationManager();
@@ -381,7 +381,7 @@ function initializeSocket(httpServer) {
             }
         });
 
-        // Начало создания соединения (пользователь начал тянуть линию)
+        // Start создания connection (user начал тянуть линию)
         socket.on('collab:connection-start', ({ botId, graphId, fromX, fromY, fromNodeId, fromHandleId }) => {
             try {
                 const collabManager = getGlobalCollaborationManager();
@@ -391,7 +391,7 @@ function initializeSocket(httpServer) {
             }
         });
 
-        // Обновление позиции соединения (пользователь двигает мышью с зажатой линией)
+        // Update position connection (user двигает мышью with зажатой линией)
         socket.on('collab:connection-update', ({ botId, graphId, toX, toY }) => {
             try {
                 const collabManager = getGlobalCollaborationManager();
@@ -401,7 +401,7 @@ function initializeSocket(httpServer) {
             }
         });
 
-        // Завершение создания соединения (пользователь отпустил линию)
+        // Завершение создания connection (user отпустил линию)
         socket.on('collab:connection-end', ({ botId, graphId }) => {
             try {
                 const collabManager = getGlobalCollaborationManager();
@@ -411,13 +411,13 @@ function initializeSocket(httpServer) {
             }
         });
 
-        // Plugin Logs - подписка на логи плагина
+        // Plugin Logs - подписка on логи plugin
         socket.on('subscribe-plugin-logs', async ({ botId, pluginName }) => {
             if (!await socketCanAccessBot(socket, botId)) return;
             const room = `plugin-logs:${botId}:${pluginName}`;
             socket.join(room);
 
-            // Отправляем буфер логов при подключении (одним массивом)
+            // Отправляем буфер логов when подключении (одним массивом)
             const bufferKey = `${botId}:${pluginName}`;
             const bufferedLogs = pluginLogsBuffer.get(bufferKey) || [];
 
@@ -425,19 +425,19 @@ function initializeSocket(httpServer) {
             socket.emit('plugin-logs-buffer', bufferedLogs);
         });
 
-        // Plugin Logs - отписка от логов плагина
+        // Plugin Logs - отписка от логов plugin
         socket.on('unsubscribe-plugin-logs', ({ botId, pluginName }) => {
             const room = `plugin-logs:${botId}:${pluginName}`;
             socket.leave(room);
         });
 
-        // Plugin Logs - очистка буфера логов плагина
+        // Plugin Logs - очистка буфера логов plugin
         socket.on('clear-plugin-logs', ({ botId, pluginName }) => {
             const bufferKey = `${botId}:${pluginName}`;
             pluginLogsBuffer.delete(bufferKey);
         });
 
-        // При отключении удаляем пользователя из всех комнат
+        // When отключении удаляем user from всех комнат
         socket.on('disconnect', () => {
             try {
                 const collabManager = getGlobalCollaborationManager();

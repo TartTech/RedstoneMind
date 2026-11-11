@@ -3,7 +3,7 @@ const Vec3 = require('vec3');
 /**
  * furnace:open - Печка: открыть
  *
- * Открывает печку по координатам.
+ * Открывает печку by координатам.
  * Поддерживает: furnace, blast_furnace, smoker
  */
 async function execute(node, context, helpers) {
@@ -62,13 +62,13 @@ async function execute(node, context, helpers) {
       }
     }
 
-    // Закрываем текущее окно если есть
+    // Закрываем текущее окно if есть
     if (bot.currentWindow) {
       bot.closeWindow(bot.currentWindow);
       await new Promise(r => setTimeout(r, 300));
     }
 
-    // Смотрим на печку
+    // Смотрим on печку
     const blockCenter = block.position.offset(0.5, 0.5, 0.5);
     await bot.lookAt(blockCenter);
     await new Promise(r => setTimeout(r, 100));
@@ -80,7 +80,7 @@ async function execute(node, context, helpers) {
       throw new Error('Furnace is null');
     }
 
-    // Сохраняем печку в контексте
+    // Сохраняем печку in контексте
     context.openFurnace = furnace;
 
     memo.set(`${node.id}:success`, true);

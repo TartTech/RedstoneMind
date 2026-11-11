@@ -1,10 +1,11 @@
 const { botManager } = require('../../../core/services');
+const { t } = require('../../../i18n');
 
 /**
- * action:send_message - Отправить сообщение от имени бота
+ * action:send_message - Отправить message от name bot
  */
 function handleSendMessage(socket, payload) {
-    // Проверяем права
+    // Проверяем permissions
     if (socket.permissions === 'Read') {
         return socket.emit('error', {
             action: 'send_message',
@@ -22,7 +23,7 @@ function handleSendMessage(socket, payload) {
             });
         }
 
-        // Для private чата нужен recipient
+        // For private chat нужен recipient
         if (chatType === 'private' && !recipient) {
             return socket.emit('error', {
                 action: 'send_message',
@@ -30,7 +31,7 @@ function handleSendMessage(socket, payload) {
             });
         }
 
-        // Проверяем, что бот онлайн
+        // Проверяем, что bot онлайн
         if (!botManager.isBotRunning(socket.botId)) {
             return socket.emit('error', {
                 action: 'send_message',
@@ -38,7 +39,7 @@ function handleSendMessage(socket, payload) {
             });
         }
 
-        // Отправляем сообщение боту
+        // Отправляем message боту
         const result = botManager.sendMessageToBot(socket.botId, message, chatType, recipient);
 
         if (!result.success) {
@@ -53,7 +54,7 @@ function handleSendMessage(socket, payload) {
             success: true,
         });
     } catch (error) {
-        console.error('[Bot API] Ошибка отправки сообщения:', error);
+        console.error(t('core:error_e68866e3'), error);
         socket.emit('error', {
             action: 'send_message',
             message: 'Internal error',

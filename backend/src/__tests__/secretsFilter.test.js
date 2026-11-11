@@ -6,14 +6,15 @@ const {
     isMaskedValue,
     prepareSettingsForSave
 } = require('../core/utils/secretsFilter');
+const { t } = require('../i18n');
 
 describe('secretsFilter', () => {
     describe('isSecretSetting', () => {
-        it('должен определять секретную настройку', () => {
+        it(t('tests:validation_7e4cfa08'), () => {
             expect(isSecretSetting({ secret: true })).toBe(true);
         });
 
-        it('должен определять несекретную настройку', () => {
+        it(t('tests:validation_adf81cbd'), () => {
             expect(isSecretSetting({ secret: false })).toBe(false);
             expect(isSecretSetting({})).toBe(false);
             expect(isSecretSetting(null)).toBe(false);
@@ -24,42 +25,42 @@ describe('secretsFilter', () => {
         const secretConfig = { secret: true };
         const normalConfig = { secret: false };
 
-        it('должен маскировать строковое значение', () => {
+        it(t('tests:validation_f1630e58'), () => {
             expect(maskSecretValue('my-secret-key', secretConfig)).toBe(SECRET_MASK);
         });
 
-        it('не должен маскировать несекретное значение', () => {
+        it(t('tests:validation_d439ce83'), () => {
             expect(maskSecretValue('public-value', normalConfig)).toBe('public-value');
         });
 
-        it('должен маскировать массив строк', () => {
+        it(t('tests:validation_93337837'), () => {
             const result = maskSecretValue(['key1', 'key2', 'key3'], secretConfig);
             expect(result).toEqual([SECRET_MASK, SECRET_MASK, SECRET_MASK]);
         });
 
-        it('должен маскировать объект', () => {
+        it(t('tests:validation_6f1479f3'), () => {
             const result = maskSecretValue({ key1: 'value1', key2: 'value2' }, secretConfig);
             expect(result).toEqual({ key1: SECRET_MASK, key2: SECRET_MASK });
         });
 
-        it('должен возвращать null/undefined без изменений', () => {
+        it(t('tests:validation_8384dd08'), () => {
             expect(maskSecretValue(null, secretConfig)).toBe(null);
             expect(maskSecretValue(undefined, secretConfig)).toBe(undefined);
             expect(maskSecretValue('', secretConfig)).toBe('');
         });
 
-        it('должен маскировать числовое значение', () => {
+        it(t('tests:validation_b1d29d6d'), () => {
             expect(maskSecretValue(12345, secretConfig)).toBe(SECRET_MASK);
             expect(maskSecretValue(0, secretConfig)).toBe(SECRET_MASK);
             expect(maskSecretValue(-999, secretConfig)).toBe(SECRET_MASK);
         });
 
-        it('должен маскировать булево значение', () => {
+        it(t('tests:validation_21844ace'), () => {
             expect(maskSecretValue(true, secretConfig)).toBe(SECRET_MASK);
             expect(maskSecretValue(false, secretConfig)).toBe(SECRET_MASK);
         });
 
-        it('не должен маскировать несекретные числа и булевы значения', () => {
+        it(t('tests:validation_9d306f73'), () => {
             expect(maskSecretValue(12345, normalConfig)).toBe(12345);
             expect(maskSecretValue(true, normalConfig)).toBe(true);
             expect(maskSecretValue(false, normalConfig)).toBe(false);
@@ -67,7 +68,7 @@ describe('secretsFilter', () => {
     });
 
     describe('filterSecretSettings', () => {
-        it('должен фильтровать обычные настройки', () => {
+        it(t('tests:validation_a7be3593'), () => {
             const settings = {
                 apiKey: 'secret-key-123',
                 username: 'john_doe',
@@ -87,15 +88,15 @@ describe('secretsFilter', () => {
             expect(result.password).toBe(SECRET_MASK);
         });
 
-        it('должен фильтровать группированные настройки', () => {
+        it(t('tests:validation_1b206309'), () => {
             const settings = {
                 apiKey: 'secret-key-123',
                 username: 'john_doe'
             };
 
             const manifest = {
-                'Аутентификация': {
-                    label: 'Настройки аутентификации',
+                t('tests:msg_fe794973'): {
+                    label: t('tests:msg_f6dfa4b7'),
                     apiKey: { type: 'string', secret: true },
                     username: { type: 'string' }
                 }
@@ -107,7 +108,7 @@ describe('secretsFilter', () => {
             expect(result.username).toBe('john_doe');
         });
 
-        it('должен обрабатывать массивы секретов', () => {
+        it(t('tests:validation_9330e045'), () => {
             const settings = {
                 apiKeys: ['key1', 'key2', 'key3']
             };
@@ -121,7 +122,7 @@ describe('secretsFilter', () => {
             expect(result.apiKeys).toEqual([SECRET_MASK, SECRET_MASK, SECRET_MASK]);
         });
 
-        it('должен возвращать настройки без изменений если манифест пустой', () => {
+        it(t('tests:validation_43d0a052'), () => {
             const settings = { apiKey: 'test' };
             const result = filterSecretSettings(settings, null, false);
             expect(result).toEqual(settings);
@@ -129,55 +130,55 @@ describe('secretsFilter', () => {
     });
 
     describe('isMaskedValue', () => {
-        it('должен определять замаскированную строку', () => {
+        it(t('tests:validation_53c47afc'), () => {
             expect(isMaskedValue(SECRET_MASK)).toBe(true);
         });
 
-        it('должен определять замаскированный массив', () => {
+        it(t('tests:validation_dbec935e'), () => {
             expect(isMaskedValue([SECRET_MASK, SECRET_MASK])).toBe(true);
         });
 
-        it('должен определять замаскированный объект', () => {
+        it(t('tests:validation_7c0ded5d'), () => {
             expect(isMaskedValue({ key1: SECRET_MASK, key2: SECRET_MASK })).toBe(true);
         });
 
-        it('должен определять незамаскированные значения', () => {
+        it(t('tests:validation_d3e178a9'), () => {
             expect(isMaskedValue('real-value')).toBe(false);
             expect(isMaskedValue(['key1', SECRET_MASK])).toBe(false);
             expect(isMaskedValue({ key1: 'value', key2: SECRET_MASK })).toBe(false);
         });
 
-        it('должен возвращать false для пустого массива', () => {
+        it(t('tests:validation_a20bc2f2'), () => {
             expect(isMaskedValue([])).toBe(false);
         });
 
-        it('должен возвращать false для пустого объекта', () => {
+        it(t('tests:validation_7213168c'), () => {
             expect(isMaskedValue({})).toBe(false);
         });
 
-        it('должен возвращать false для массива с замаскированным и незамаскированным значением', () => {
+        it(t('tests:validation_1f7d9f09'), () => {
             expect(isMaskedValue([SECRET_MASK, 'real-value'])).toBe(false);
             expect(isMaskedValue(['real-value', SECRET_MASK])).toBe(false);
             expect(isMaskedValue([SECRET_MASK, null])).toBe(false);
         });
 
-        it('должен возвращать false для объекта с замаскированным и незамаскированным значением', () => {
+        it(t('tests:validation_4c608cd7'), () => {
             expect(isMaskedValue({ key1: SECRET_MASK, key2: 'real-value' })).toBe(false);
             expect(isMaskedValue({ key1: 'real-value', key2: SECRET_MASK })).toBe(false);
             expect(isMaskedValue({ key1: SECRET_MASK, key2: null })).toBe(false);
         });
 
-        it('должен возвращать false для массива с разными типами', () => {
+        it(t('tests:validation_4df6e977'), () => {
             expect(isMaskedValue([SECRET_MASK, 123, true])).toBe(false);
         });
 
-        it('должен возвращать false для объекта с разными типами', () => {
+        it(t('tests:validation_f4994c7e'), () => {
             expect(isMaskedValue({ key1: SECRET_MASK, key2: 123, key3: true })).toBe(false);
         });
     });
 
     describe('prepareSettingsForSave', () => {
-        it('должен сохранять существующие значения для замаскированных секретов', () => {
+        it(t('tests:validation_b884abbc'), () => {
             const newSettings = {
                 apiKey: SECRET_MASK,  // не изменилось
                 username: 'new_user'  // изменилось
@@ -199,7 +200,7 @@ describe('secretsFilter', () => {
             expect(result.username).toBe('new_user');       // сохранено новое
         });
 
-        it('должен сохранять новые значения секретов если они изменились', () => {
+        it(t('tests:validation_3feda77f'), () => {
             const newSettings = {
                 apiKey: 'new-secret-key',  // изменилось
                 username: 'new_user'
@@ -221,7 +222,7 @@ describe('secretsFilter', () => {
             expect(result.username).toBe('new_user');
         });
 
-        it('должен удалять ключи с маской если нет существующего значения', () => {
+        it(t('tests:validation_4820cf05'), () => {
             const newSettings = {
                 apiKey: SECRET_MASK,
                 username: 'new_user'
@@ -243,7 +244,7 @@ describe('secretsFilter', () => {
             expect(result.username).toBe('new_user');
         });
 
-        it('должен обрабатывать группированные настройки', () => {
+        it(t('tests:validation_61655a69'), () => {
             const newSettings = {
                 apiKey: SECRET_MASK,
                 password: 'new-password'
@@ -255,8 +256,8 @@ describe('secretsFilter', () => {
             };
 
             const manifest = {
-                'Секретно': {
-                    label: 'Секретные настройки',
+                t('tests:msg_f9c1d3e8'): {
+                    label: t('tests:msg_e7fdd350'),
                     apiKey: { type: 'string', secret: true },
                     password: { type: 'string', secret: true }
                 }
@@ -268,7 +269,7 @@ describe('secretsFilter', () => {
             expect(result.password).toBe('new-password'); // сохранено новое
         });
 
-        it('должен обрабатывать массивы секретов', () => {
+        it(t('tests:validation_9330e045'), () => {
             const newSettings = {
                 apiKeys: [SECRET_MASK, SECRET_MASK]
             };
@@ -286,7 +287,7 @@ describe('secretsFilter', () => {
             expect(result.apiKeys).toEqual(['key1', 'key2']);  // сохранены старые
         });
 
-        it('должен обрабатывать смешанные массивы (замаскированные и новые значения)', () => {
+        it(t('tests:validation_62236ee5'), () => {
             const newSettings = {
                 apiKeys: ['new-key-1', 'new-key-2', 'new-key-3'],
                 passwords: [SECRET_MASK, SECRET_MASK]
@@ -308,7 +309,7 @@ describe('secretsFilter', () => {
             expect(result.passwords).toEqual(['old-pass-1', 'old-pass-2']);  // старые сохранены
         });
 
-        it('должен обрабатывать смешанные объекты (замаскированные и новые значения)', () => {
+        it(t('tests:validation_e0b89d95'), () => {
             const newSettings = {
                 secretObj: { key1: SECRET_MASK, key2: SECRET_MASK },
                 normalValue: 'updated-value'
@@ -330,11 +331,11 @@ describe('secretsFilter', () => {
             expect(result.normalValue).toBe('updated-value');  // новое сохранено
         });
 
-        it('должен правильно обрабатывать частичное обновление настроек', () => {
+        it(t('tests:success_9b1d86e2'), () => {
             const newSettings = {
                 apiKey: SECRET_MASK,  // не изменилось
                 username: 'new_user',  // изменилось
-                // serverUrl отсутствует в новых настройках
+                // serverUrl отсутствует in новых настройках
             };
 
             const existingSettings = {
@@ -357,9 +358,9 @@ describe('secretsFilter', () => {
         });
     });
 
-    describe('интеграционные тесты', () => {
-        it('должен корректно обрабатывать полный цикл read-update-save', () => {
-            // Начальное состояние в БД
+    describe(t('tests:msg_4e964986'), () => {
+        it(t('tests:validation_b7f10d95'), () => {
+            // Начальное state in БД
             const dbSettings = {
                 apiKey: 'secret-api-key',
                 username: 'john_doe',
@@ -372,19 +373,19 @@ describe('secretsFilter', () => {
                 serverUrl: { type: 'string' }
             };
 
-            // 1. Читаем настройки (GET)
+            // 1. Читаем settings (GET)
             const settingsForFrontend = filterSecretSettings(dbSettings, manifest, false);
             expect(settingsForFrontend.apiKey).toBe(SECRET_MASK);
             expect(settingsForFrontend.username).toBe('john_doe');
 
-            // 2. Пользователь изменяет только username на фронтенде
+            // 2. User изменяет only username on фронтенде
             const updatedFromFrontend = {
                 apiKey: SECRET_MASK,  // не изменилось
                 username: 'jane_doe', // изменилось
                 serverUrl: 'https://api.example.com'
             };
 
-            // 3. Сохраняем настройки (PUT)
+            // 3. Сохраняем settings (PUT)
             const settingsToSaveInDb = prepareSettingsForSave(
                 updatedFromFrontend,
                 dbSettings,
@@ -392,13 +393,13 @@ describe('secretsFilter', () => {
                 false
             );
 
-            // 4. Проверяем что apiKey не перезаписан маской
+            // 4. Проверяем что apiKey not перезаписан маской
             expect(settingsToSaveInDb.apiKey).toBe('secret-api-key');  // оригинал сохранен
             expect(settingsToSaveInDb.username).toBe('jane_doe');       // новое значение
             expect(settingsToSaveInDb.serverUrl).toBe('https://api.example.com');
         });
 
-        it('должен позволять изменять секретные значения', () => {
+        it(t('tests:validation_e87eefd5'), () => {
             const dbSettings = {
                 apiKey: 'old-secret-key'
             };
@@ -411,7 +412,7 @@ describe('secretsFilter', () => {
             const forFrontend = filterSecretSettings(dbSettings, manifest, false);
             expect(forFrontend.apiKey).toBe(SECRET_MASK);
 
-            // 2. Пользователь вводит новый ключ
+            // 2. User вводит new key
             const newSettings = {
                 apiKey: 'new-secret-key'
             };

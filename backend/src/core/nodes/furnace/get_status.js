@@ -1,8 +1,8 @@
 /**
- * furnace:get_status - Печка: статус
+ * furnace:get_status - Печка: status
  *
- * Получает текущий статус печки (топливо, прогресс, предметы в слотах).
- * Data нода - использует только evaluator.
+ * Gets current status печки (топливо, прогресс, предметы in слотах).
+ * Data нода - использует only evaluator.
  */
 async function evaluate(node, pinId, context, helpers) {
   const furnace = context.openFurnace;

@@ -82,7 +82,7 @@ function handleIncomingCommand(bot, type, username, message, sendLog) {
             });
         }
     } catch (e) {
-        log(`[BotProcess] Ошибка парсинга аргументов: ${e.message}`);
+        log(t('core:error_614a83a5', { e: e.message }));
     }
 }
 
@@ -91,7 +91,7 @@ function createBotIPCHandler(bot, prisma, pluginUiState, pendingRequests, sendLo
 
     handlers[MessageTypes.BOT.START] = async (message) => {
         const config = message.config;
-        sendLog(`[System] Получена команда на запуск бота ${config.username}...`);
+        sendLog(t('core:log_62985256', { config: config.username }));
         return { config };
     };
 
@@ -310,6 +310,7 @@ function createBotIPCHandler(bot, prisma, pluginUiState, pendingRequests, sendLo
         }
 
         const { buildGraphContext } = require('./graphContext');
+const { t } = require('../i18n');
         const context = buildGraphContext({
             bot,
             botId: config.id,
@@ -443,7 +444,7 @@ function createBotIPCHandler(bot, prisma, pluginUiState, pendingRequests, sendLo
             if (commandInstance.onInsufficientPermissions !== Command.prototype.onInsufficientPermissions) {
                 commandInstance.onInsufficientPermissions(bot, typeChat, { username });
             } else {
-                bot.api.sendMessage(typeChat, `У вас нет прав для выполнения команды ${commandName}.`, username);
+                bot.api.sendMessage(typeChat, t('core:msg_d8258c77', { commandName: commandName }), username);
             }
         }
         return null;
@@ -456,7 +457,7 @@ function createBotIPCHandler(bot, prisma, pluginUiState, pendingRequests, sendLo
             if (commandInstance.onWrongChatType !== Command.prototype.onWrongChatType) {
                 commandInstance.onWrongChatType(bot, typeChat, { username });
             } else {
-                bot.api.sendMessage('private', `Команду ${commandName} нельзя использовать в этом типе чата - ${typeChat}.`, username);
+                bot.api.sendMessage('private', t('core:msg_e991f72d', { commandName: commandName, typeChat: typeChat }), username);
             }
         }
         return null;
@@ -469,7 +470,7 @@ function createBotIPCHandler(bot, prisma, pluginUiState, pendingRequests, sendLo
             if (commandInstance.onCooldown !== Command.prototype.onCooldown) {
                 commandInstance.onCooldown(bot, typeChat, { username }, timeLeft);
             } else {
-                bot.api.sendMessage(typeChat, `Команду ${commandName} можно будет использовать через ${timeLeft} сек.`, username);
+                bot.api.sendMessage(typeChat, t('core:msg_86e18a3f', { commandName: commandName, timeLeft: timeLeft }), username);
             }
         }
         return null;
@@ -493,7 +494,7 @@ function createBotIPCHandler(bot, prisma, pluginUiState, pendingRequests, sendLo
     };
 
     handlers[MessageTypes.PLUGINS.RELOAD] = async () => {
-        sendLog('[System] Получена команда на перезагрузку плагинов...');
+        sendLog(t('core:log_d6d66632'));
         return { shouldReload: true };
     };
 
@@ -518,7 +519,7 @@ function createBotIPCHandler(bot, prisma, pluginUiState, pendingRequests, sendLo
                     UserService.cache.delete(cacheKey);
                 }
             }
-            sendLog(`[BotProcess] Кэш пользователей очищен для бота ${bot.config.id}`);
+            sendLog(t('core:log_8d1e4976', { bot: bot.config.id }));
         }
         return null;
     };

@@ -1,5 +1,6 @@
 const net = require('net');
 const { createProxySocket } = require('../createProxySocket');
+const { t } = require('../../i18n');
 
 function listen(server) {
     return new Promise((resolve) => {
@@ -8,7 +9,7 @@ function listen(server) {
 }
 
 describe('createProxySocket', () => {
-    test('HTTP CONNECT открывает туннель и передаёт логин', async () => {
+    test(t('tests:msg_66bde829'), async () => {
         const requests = [];
         const proxy = net.createServer((socket) => {
             let buffer = '';
@@ -40,7 +41,7 @@ describe('createProxySocket', () => {
         expect(requests[0]).toContain(`Proxy-Authorization: Basic ${Buffer.from('user:secret').toString('base64')}`);
     });
 
-    test('ответ прокси не 200 отклоняется', async () => {
+    test(t('tests:msg_af622a15'), async () => {
         const proxy = net.createServer((socket) => {
             socket.once('data', () => {
                 socket.end('HTTP/1.1 403 Forbidden\r\n\r\n');

@@ -3,10 +3,10 @@ const { safeJsonParse } = require('../utils/jsonParser');
 const { VALIDATION_ENABLED, VALIDATION_STRICT_MODE } = require('../config/validation');
 
 /**
- * Сервис для централизованной валидации графов и нод
+ * Service for централизованной validation графов and нод
  *
- * Предоставляет единую точку входа для валидации с учетом конфигурации окружения.
- * В строгом режиме (dev/test) выбрасывает исключения, в production логирует и возвращает результат.
+ * Предоставляет единую точку input for validation with учетом configuration окружения.
+ * In строгом режиме (dev/test) выбрасывает исключения, in production логирует and returns result.
  */
 class ValidationService {
     constructor() {
@@ -15,10 +15,10 @@ class ValidationService {
     }
 
     /**
-     * Парсит JSON строку графа с безопасной обработкой ошибок
-     * @param {string|object} graph - Граф в виде строки или объекта
-     * @param {string} contextName - Имя контекста для логирования
-     * @returns {object|null} - Распарсенный граф или null при ошибке
+     * Парсит JSON строку graph with безопасной обработкой ошибок
+     * @param {string|object} graph - Graph in виде string or object
+     * @param {string} contextName - Name контекста for логирования
+     * @returns {object|null} - Распарсенный graph or null when ошибке
      */
     parseGraph(graph, contextName = 'unknown context') {
         if (typeof graph === 'string') {
@@ -28,10 +28,10 @@ class ValidationService {
     }
 
     /**
-     * Валидирует конфигурацию графа
-     * @param {object} graph - Объект графа для валидации
-     * @param {string} contextName - Имя контекста для логирования (например, 'GraphExecutionEngine')
-     * @returns {{success: boolean, error?: any, shouldSkip: boolean}} - Результат валидации
+     * Валидирует конфигурацию graph
+     * @param {object} graph - Object graph for validation
+     * @param {string} contextName - Name контекста for логирования (например, 'GraphExecutionEngine')
+     * @returns {{success: boolean, error?: any, shouldSkip: boolean}} - Result validation
      */
     validateGraphStructure(graph, contextName = 'unknown context') {
         if (!this.validationEnabled) {
@@ -50,7 +50,7 @@ class ValidationService {
             return { success: false, error: 'Missing nodes or connections', shouldSkip: true };
         }
 
-        // Затем выполняем полную валидацию схемы
+        // Затем выполняем полную валидацию schema
         const validation = validateGraph(graph);
 
         if (!validation.success) {
@@ -62,7 +62,7 @@ class ValidationService {
                 throw new Error('Invalid graph structure');
             }
 
-            // В production логируем и пропускаем выполнение
+            // В production логируем and пропускаем выполнение
             console.warn(`[${contextName}] Skipping graph execution due to validation errors in production mode`);
             return { success: false, error: validation.error, shouldSkip: true };
         }
@@ -72,9 +72,9 @@ class ValidationService {
 
     /**
      * Валидирует конфигурацию ноды
-     * @param {object} nodeConfig - Конфигурация ноды для валидации
-     * @param {string} contextName - Имя контекста для логирования (например, 'NodeRegistry')
-     * @returns {{success: boolean, error?: any, shouldSkip: boolean}} - Результат валидации
+     * @param {object} nodeConfig - Configuration ноды for validation
+     * @param {string} contextName - Name контекста for логирования (например, 'NodeRegistry')
+     * @returns {{success: boolean, error?: any, shouldSkip: boolean}} - Result validation
      */
     validateNode(nodeConfig, contextName = 'unknown context') {
         if (!this.validationEnabled) {
@@ -102,16 +102,16 @@ class ValidationService {
     }
 
     /**
-     * Проверяет базовую структуру графа (nodes и connections)
-     * @param {object} graph - Объект графа
-     * @returns {boolean} - true если структура валидна
+     * Checks базовую структуру graph (nodes и connections)
+     * @param {object} graph - Object graph
+     * @returns {boolean} - true if структура валидна
      */
     hasValidBasicStructure(graph) {
         return !!(graph && Array.isArray(graph.nodes) && Array.isArray(graph.connections));
     }
 
     /**
-     * Проверяет, включена ли валидация
+     * Checks, включена ли validation
      * @returns {boolean}
      */
     isValidationEnabled() {
@@ -119,7 +119,7 @@ class ValidationService {
     }
 
     /**
-     * Проверяет, включен ли строгий режим
+     * Checks, включен ли строгий режим
      * @returns {boolean}
      */
     isStrictMode() {

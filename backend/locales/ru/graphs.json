@@ -1,0 +1,6 @@
+{
+  "error_a1ceabd8": "[API] Ошибка сохранения графа события в папку плагина:",
+  "msg_387b89f4": "${name} (копия)",
+  "msg_9a18bd58": "{{originalGraph}} (копия)",
+  "success_f004a8ea": "[API] Граф события {{updatedGraph}} сохранен в {{graphFile}}"
+}

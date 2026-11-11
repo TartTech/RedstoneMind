@@ -1,22 +1,23 @@
 const bcrypt = require('bcryptjs');
 const prisma = require('../../lib/prisma');
+const { t } = require('../../i18n');
 
 const keyCache = new Map();
 const CACHE_TTL = 5 * 60 * 1000;
 const MAX_CACHE_SIZE = 1000;
 
 /**
- * Аутентификация запросов Panel API с использованием API ключей
+ * Authentication запросов Panel API with использованием API ключей
  */
 async function authenticatePanelApiKey(req, res, next) {
     const authHeader = req.header('Authorization');
     if (!authHeader) {
-        return res.status(401).json({ error: 'API ключ не предоставлен' });
+        return res.status(401).json({ error: t('api:msg_e0f84354') });
     }
 
     const keyParts = authHeader.split(' ');
     if (keyParts.length !== 2 || keyParts[0] !== 'Bearer') {
-        return res.status(401).json({ error: 'Неверный формат API ключа' });
+        return res.status(401).json({ error: t('api:error_60f045e3') });
     }
 
     const apiKey = keyParts[1];
@@ -61,7 +62,7 @@ async function authenticatePanelApiKey(req, res, next) {
         }
 
         if (!matchedKey) {
-            return res.status(401).json({ error: 'Неверный API ключ' });
+            return res.status(401).json({ error: t('api:error_924d84ca') });
         }
 
         await prisma.panelApiKey.update({
@@ -81,8 +82,8 @@ async function authenticatePanelApiKey(req, res, next) {
                 permissions = rolePermissions;
             }
         } catch (parseError) {
-            console.error('Ошибка парсинга прав доступа:', parseError);
-            return res.status(500).json({ error: 'Ошибка обработки прав доступа' });
+            console.error(t('api:error_f07cb4fd'), parseError);
+            return res.status(500).json({ error: t('api:error_fe6882aa') });
         }
 
         const user = {
@@ -115,25 +116,25 @@ async function authenticatePanelApiKey(req, res, next) {
 
         next();
     } catch (err) {
-        console.error('Ошибка аутентификации Panel API ключа:', err);
-        res.status(500).json({ error: 'Ошибка аутентификации' });
+        console.error(t('api:error_deb1cbfa'), err);
+        res.status(500).json({ error: t('api:error_4d82dd6e') });
     }
 }
 
 /**
- * Авторизация запросов Panel API на основе прав доступа
+ * Authorization запросов Panel API on основе прав access
  */
 function authorizePanelApi(requiredPermission) {
     return (req, res, next) => {
         if (!req.user || !Array.isArray(req.user.permissions)) {
-            return res.status(403).json({ error: 'Доступ запрещён: пользователь не аутентифицирован или неверный формат прав' });
+            return res.status(403).json({ error: t('api:error_7562793b') });
         }
 
         const userPermissions = req.user.permissions;
         if (userPermissions.includes('*') || userPermissions.includes(requiredPermission)) {
             next();
         } else {
-            res.status(403).json({ error: 'Доступ запрещён: недостаточно прав' });
+            res.status(403).json({ error: t('api:msg_250ce550') });
         }
     };
 }

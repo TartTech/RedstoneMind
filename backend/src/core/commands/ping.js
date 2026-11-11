@@ -1,11 +1,12 @@
 const Command = require('../system/Command');
+const { t } = require('../../i18n');
 
 class PingCommand extends Command {
     constructor() {
         super({
             name: 'ping',
-            description: 'Проверяет работоспособность бота и может пинговать игрока.',
-            aliases: ['пинг', 'p'],
+            description: t('core:msg_5e582140'),
+            aliases: [t('core:msg_452d49d6'), 'p'],
             cooldown: 5,
             permissions: 'user.ping',
             owner: 'system',
@@ -16,7 +17,7 @@ class PingCommand extends Command {
                     name: 'target',
                     type: 'string',
                     required: false,
-                    description: 'Ник игрока для пинга'
+                    description: t('core:msg_0c2165bf')
                 }
             ]
         });
@@ -25,9 +26,9 @@ class PingCommand extends Command {
     async handler(bot, typeChat, user, { target }) {
         let message;
         if (target) {
-            message = `Понг, ${user.username}! Пингую игрока ${target}.`;
+            message = t('core:msg_1d643fbb', { user: user.username, target: target });
         } else {
-            message = `Понг, ${user.username}!`;
+            message = t('core:msg_c0fdcedb', { user: user.username });
         }
 
         if (typeChat === 'websocket') {

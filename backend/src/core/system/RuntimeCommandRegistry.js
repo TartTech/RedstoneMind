@@ -1,6 +1,6 @@
 /**
- * RuntimeCommandRegistry - реестр временных команд, созданных во время выполнения
- * Хранит команды в памяти для каждого бота
+ * RuntimeCommandRegistry - registry временных команд, созданных во время execution
+ * Хранит commands in памяти for каждого bot
  */
 class RuntimeCommandRegistry {
     constructor() {
@@ -9,10 +9,10 @@ class RuntimeCommandRegistry {
     }
 
     /**
-     * Добавить временную команду для бота
-     * @param {string} botId - ID бота
-     * @param {string} commandName - Имя команды
-     * @param {object} commandData - Данные команды
+     * Добавить временную команду for bot
+     * @param {string} botId - ID bot
+     * @param {string} commandName - Name commands
+     * @param {object} commandData - Data commands
      */
     register(botId, commandName, commandData) {
         if (!this.commands.has(botId)) {
@@ -25,9 +25,9 @@ class RuntimeCommandRegistry {
 
     /**
      * Удалить временную команду
-     * @param {string} botId - ID бота
-     * @param {string} commandName - Имя команды
-     * @returns {boolean} - Успешно ли удалена команда
+     * @param {string} botId - ID bot
+     * @param {string} commandName - Name commands
+     * @returns {boolean} - Успешно ли удалена command
      */
     unregister(botId, commandName) {
         if (!this.commands.has(botId)) {
@@ -40,9 +40,9 @@ class RuntimeCommandRegistry {
 
     /**
      * Получить временную команду
-     * @param {string} botId - ID бота
-     * @param {string} commandName - Имя команды
-     * @returns {object|null} - Данные команды или null
+     * @param {string} botId - ID bot
+     * @param {string} commandName - Name commands
+     * @returns {object|null} - Data commands or null
      */
     get(botId, commandName) {
         if (!this.commands.has(botId)) {
@@ -53,8 +53,8 @@ class RuntimeCommandRegistry {
     }
 
     /**
-     * Получить все временные команды для бота
-     * @param {string} botId - ID бота
+     * Получить all временные commands for bot
+     * @param {string} botId - ID bot
      * @returns {Map<string, object>} - Map команд
      */
     getAllForBot(botId) {
@@ -62,9 +62,9 @@ class RuntimeCommandRegistry {
     }
 
     /**
-     * Проверить существование команды
-     * @param {string} botId - ID бота
-     * @param {string} commandName - Имя команды
+     * Проверить существование commands
+     * @param {string} botId - ID bot
+     * @param {string} commandName - Name commands
      * @returns {boolean}
      */
     has(botId, commandName) {
@@ -76,8 +76,8 @@ class RuntimeCommandRegistry {
     }
 
     /**
-     * Очистить все команды для бота (при остановке бота)
-     * @param {string} botId - ID бота
+     * Очистить all commands for bot (when остановке bot)
+     * @param {string} botId - ID bot
      */
     clearForBot(botId) {
         if (this.commands.has(botId)) {

@@ -2,8 +2,9 @@ const { v4: uuidv4 } = require('uuid');
 const UserService = require('../UserService');
 const { getRuntimeCommandRegistry } = require('../system/RuntimeCommandRegistry');
 const botHistoryStore = require('../BotHistoryStore');
+const { t } = require('../../i18n');
 
-// Кулдауны и предупреждения - глобальные для всех инстансов
+// Кулдауны and предупреждения - глобальные for всех инстансов
 const cooldowns = new Map();
 const warningCache = new Map();
 const WARNING_COOLDOWN = 10 * 1000;
@@ -51,7 +52,7 @@ class CommandExecutionService {
         const botId = botConfig.id;
 
         try {
-            // Получаем конфигурацию из кеша или загружаем из БД
+            // Получаем конфигурацию from кеша or загружаем from БД
             const botConfigCache = await this.cache.getOrLoadBotConfig(botId);
 
             const user = await UserService.getUser(username, botId, botConfig);
@@ -72,13 +73,13 @@ class CommandExecutionService {
             const mainCommandName = botConfigCache.commandAliases.get(commandName) || commandName;
             let dbCommand = botConfigCache.commands.get(mainCommandName);
 
-            // Если команда не найдена в БД, проверяем runtime registry (временные команды)
+            // If command not найдена in БД, проверяем runtime registry (временные commands)
             if (!dbCommand) {
                 const runtimeRegistry = getRuntimeCommandRegistry();
                 const tempCommand = runtimeRegistry.get(botId, mainCommandName);
 
                 if (tempCommand) {
-                    // Преобразуем временную команду в формат dbCommand
+                    // Преобразуем временную команду in format dbCommand
                     dbCommand = {
                         name: tempCommand.name,
                         isEnabled: true,
@@ -96,13 +97,13 @@ class CommandExecutionService {
 
             const allowedTypes = JSON.parse(dbCommand.allowedChatTypes || '[]');
             if (!allowedTypes.includes(typeChat) && !user.isOwner) {
-                // Тип чата не разрешен для обычного пользователя - просто молча игнорируем
-                // Никаких сообщений об ошибке не отправляем
+                // Type chat not разрешен for обычного user - просто молча игнорируем
+                // Никаких сообщений об ошибке not отправляем
                 return;
             }
 
-            // Проверяем required аргументы ПОСЛЕ проверки типа чата
-            // чтобы обычные пользователи не видели ошибки в неразрешенных чатах
+            // Проверяем required аргументы After verification type chat
+            // чтобы обычные users not видели errors in неразрешенных чатах
             if (message.commandArgs) {
                 for (const argDef of message.commandArgs) {
                     if (argDef.required && (args[argDef.name] === undefined || args[argDef.name] === null)) {
@@ -113,7 +114,7 @@ class CommandExecutionService {
                         child.send({
                             type: 'send_message',
                             typeChat,
-                            message: `Ошибка: Необходимо указать: ${argDef.description || argDef.name}`,
+                            message: t('core:error_18fc663a', { argDef: argDef.description || argDef.name }),
                             username
                         });
                         child.send({
@@ -178,8 +179,8 @@ class CommandExecutionService {
             });
 
         } catch (error) {
-            this.logger.error({ botId, command: commandName, username, error }, 'Ошибка валидации команды');
-            this.sendMessageToBot(botId, `Произошла внутренняя ошибка при выполнении команды.`, 'private', username);
+            this.logger.error({ botId, command: commandName, username, error }, t('services:error_cc3ece5c'));
+            this.sendMessageToBot(botId, t('services:error_b8adeccf'), 'private', username);
         }
     }
 
@@ -202,13 +203,13 @@ class CommandExecutionService {
         const mainCommandName = botConfigCache.commandAliases.get(commandName) || commandName;
         let dbCommand = botConfigCache.commands.get(mainCommandName);
 
-        // Если команда не найдена в БД, проверяем runtime registry (временные команды)
+        // If command not найдена in БД, проверяем runtime registry (временные commands)
         if (!dbCommand) {
             const runtimeRegistry = getRuntimeCommandRegistry();
             const tempCommand = runtimeRegistry.get(botId, mainCommandName);
 
             if (tempCommand) {
-                // Преобразуем временную команду в формат dbCommand
+                // Преобразуем временную команду in format dbCommand
                 dbCommand = {
                     name: tempCommand.name,
                     isEnabled: true,
@@ -292,7 +293,7 @@ class CommandExecutionService {
 
             const requestId = uuidv4();
 
-            // Таймаут на выполнение команды
+            // Таймаут on выполнение commands
             const timeout = setTimeout(() => {
                 reject(new Error('Command execution timed out.'));
             }, 10000);
@@ -344,7 +345,7 @@ class CommandExecutionService {
             child.api.sendMessage(chatType, message, username);
             return { success: true };
         }
-        return { success: false, message: 'Бот не найден или не запущен' };
+        return { success: false, message: t('services:msg_f833d35c') };
     }
 
     async handleCommandRegistration(botId, commandConfig) {
@@ -359,7 +360,7 @@ class CommandExecutionService {
                         permission = await this.permissionRepository.create({
                             botId,
                             name: commandConfig.permissions,
-                            description: `Автоматически создано для команды ${commandConfig.name}`,
+                            description: t('services:success_59feb915', { commandConfig: commandConfig.name }),
                             owner: commandConfig.owner,
                         });
                     } catch (error) {
@@ -411,14 +412,14 @@ class CommandExecutionService {
 
             this.cache.deleteBotConfig(botId);
         } catch (error) {
-            this.logger.error({ botId, commandName: commandConfig.name, error }, 'Ошибка регистрации команды');
+            this.logger.error({ botId, commandName: commandConfig.name, error }, t('services:error_1faddb6b'));
         }
     }
 
     async handleGroupRegistration(botId, groupConfig) {
         try {
             if (!groupConfig.name || !groupConfig.owner) {
-                this.logger.warn({ botId, groupConfig }, 'Пропущена группа без имени или владельца');
+                this.logger.warn({ botId, groupConfig }, t('services:msg_4a364bf8'));
                 return;
             }
 
@@ -427,10 +428,10 @@ class CommandExecutionService {
                 description: groupConfig.description || ''
             });
 
-            this.logger.debug({ botId, groupName: groupConfig.name }, 'Группа зарегистрирована');
+            this.logger.debug({ botId, groupName: groupConfig.name }, t('services:msg_e5bfd74b'));
             this.cache.deleteBotConfig(botId);
         } catch (error) {
-            this.logger.error({ botId, groupName: groupConfig.name, error }, 'Ошибка регистрации группы');
+            this.logger.error({ botId, groupName: groupConfig.name, error }, t('services:error_129e5e11'));
         }
     }
 
@@ -438,7 +439,7 @@ class CommandExecutionService {
         try {
             for (const perm of permissions) {
                 if (!perm.name || !perm.owner) {
-                    this.logger.warn({ botId, perm }, 'Пропущено право без имени или владельца');
+                    this.logger.warn({ botId, perm }, t('services:msg_c004b542'));
                     continue;
                 }
 
@@ -457,7 +458,7 @@ class CommandExecutionService {
 
             this.cache.deleteBotConfig(botId);
         } catch (error) {
-            this.logger.error({ botId, error }, 'Ошибка регистрации прав');
+            this.logger.error({ botId, error }, t('services:error_18a3950b'));
         }
     }
 
@@ -468,26 +469,26 @@ class CommandExecutionService {
             // Находим группу
             const group = await this.groupRepository.findByName(botId, groupName);
             if (!group) {
-                this.logger.warn({ botId, groupName }, 'Группа не найдена');
+                this.logger.warn({ botId, groupName }, t('bots:msg_7d233798'));
                 return;
             }
 
-            // Добавляем каждое право в группу
+            // Добавляем каждое право in группу
             for (const permName of permissionNames) {
                 const permission = await this.permissionRepository.findByName(botId, permName);
                 if (!permission) {
-                    this.logger.warn({ botId, groupName, permName }, 'Право не найдено');
+                    this.logger.warn({ botId, groupName, permName }, t('bots:msg_0657020d'));
                     continue;
                 }
 
                 await this.groupRepository.addPermissionToGroup(group.id, permission.id, this.permissionRepository.prisma);
-                this.logger.debug({ botId, groupName, permName }, 'Право добавлено в группу');
+                this.logger.debug({ botId, groupName, permName }, t('services:msg_e43435db'));
             }
 
             this.cache.deleteBotConfig(botId);
             this.clearBotUserCache(botId);
         } catch (error) {
-            this.logger.error({ botId, groupName: message.groupName, error }, 'Ошибка добавления прав в группу');
+            this.logger.error({ botId, groupName: message.groupName, error }, t('services:error_2fd07d80'));
         }
     }
 }

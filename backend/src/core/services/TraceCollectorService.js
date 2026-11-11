@@ -1,30 +1,31 @@
 const prisma = require('../../lib/prisma');
 const { randomUUID } = require('crypto');
+const { t } = require('../../i18n');
 
 /**
- * Сервис для сбора и управления трассировками выполнения графов
+ * Service for сбора and управления трассировками execution графов
  */
 class TraceCollectorService {
   constructor() {
-    // Хранилище активных трассировок в памяти
-    // Ключ: traceId, Значение: { trace, steps: [] }
+    // Хранилище активных трассировок in памяти
+    // Key: traceId, Value: { trace, steps: [] }
     this.activeTraces = new Map();
 
-    // Socket.IO instance (будет установлен извне)
+    // Socket.IO instance (will установлен извне)
     this.io = null;
 
-    // Конфигурация
+    // Configuration
     this.config = {
-      // Хранить ли трассировки в БД
+      // Хранить ли трассировки in БД
       persistToDb: process.env.TRACE_PERSIST_TO_DB !== 'false', // По умолчанию true
-      // Максимальное количество трассировок в памяти на бота
+      // Максимальное количество трассировок in памяти on bot
       maxTracesPerBot: parseInt(process.env.TRACE_MAX_PER_BOT) || 50,
       // Автоочистка старых трассировок (дни)
       cleanupAfterDays: parseInt(process.env.TRACE_CLEANUP_DAYS) || 7,
     };
 
-    // Хранилище завершённых трассировок в памяти
-    // Ключ: botId, Значение: [traces] (отсортированные по времени)
+    // Хранилище завершённых трассировок in памяти
+    // Key: botId, Value: [traces] (отсортированные by времени)
     this.completedTraces = new Map();
 
     this._cleanupTimer = null;
@@ -52,14 +53,14 @@ class TraceCollectorService {
   }
 
   /**
-   * Установить Socket.IO instance для real-time уведомлений
+   * Установить Socket.IO instance for real-time уведомлений
    */
   setSocketIO(io) {
     this.io = io;
   }
 
   /**
-   * Начать новую трассировку выполнения
+   * Начать новую трассировку execution
    */
   async startTrace(botId, graphId, eventType, eventArgs = {}) {
     const traceId = this._generateTraceId();
@@ -79,7 +80,7 @@ class TraceCollectorService {
 
     this.activeTraces.set(traceId, trace);
 
-    // Эмитим событие начала трассировки
+    // Эмитим event начала трассировки
     this._emitTraceEvent(botId, graphId, 'trace:start', {
       traceId,
       graphId,
@@ -91,12 +92,12 @@ class TraceCollectorService {
   }
 
   /**
-   * Записать шаг выполнения ноды
+   * Записать шаг execution ноды
    */
   recordStep(traceId, stepData) {
     const trace = this.activeTraces.get(traceId);
     if (!trace) {
-      console.warn(`[TraceCollector] Трассировка ${traceId} не найдена`);
+      console.warn(t('services:log_b792eb41', { traceId: traceId }));
       return;
     }
 
@@ -113,7 +114,7 @@ class TraceCollectorService {
 
     trace.steps.push(step);
 
-    // Эмитим событие шага
+    // Эмитим event шага
     this._emitTraceEvent(trace.botId, trace.graphId, 'trace:step', {
       traceId,
       step,
@@ -121,16 +122,16 @@ class TraceCollectorService {
   }
 
   /**
-   * Обновить outputs для последнего шага с указанным nodeId
+   * Обновить outputs for последнего шага with указанным nodeId
    */
   updateStepOutputs(traceId, nodeId, outputs) {
     const trace = this.activeTraces.get(traceId);
     if (!trace) {
-      // Трассировка уже завершена - это нормально, просто игнорируем
+      // Трассировка already завершена - это нормально, просто игнорируем
       return;
     }
 
-    // Находим последний шаг с этим nodeId
+    // Находим last шаг with этим nodeId
     for (let i = trace.steps.length - 1; i >= 0; i--) {
       if (trace.steps[i].nodeId === nodeId && trace.steps[i].type !== 'traversal') {
         trace.steps[i].outputs = outputs;
@@ -140,16 +141,16 @@ class TraceCollectorService {
   }
 
   /**
-   * Обновить duration для последнего шага с указанным nodeId
+   * Обновить duration for последнего шага with указанным nodeId
    */
   updateStepDuration(traceId, nodeId, duration) {
     const trace = this.activeTraces.get(traceId);
     if (!trace) {
-      // Трассировка уже завершена - это нормально, просто игнорируем
+      // Трассировка already завершена - это нормально, просто игнорируем
       return;
     }
 
-    // Находим последний шаг с этим nodeId
+    // Находим last шаг with этим nodeId
     for (let i = trace.steps.length - 1; i >= 0; i--) {
       if (trace.steps[i].nodeId === nodeId && trace.steps[i].type !== 'traversal') {
         trace.steps[i].duration = duration;
@@ -159,7 +160,7 @@ class TraceCollectorService {
   }
 
   /**
-   * Обновить статус ошибки для последнего шага с указанным nodeId
+   * Обновить status errors for последнего шага with указанным nodeId
    */
   updateStepError(traceId, nodeId, error, duration) {
     const trace = this.activeTraces.get(traceId);
@@ -167,7 +168,7 @@ class TraceCollectorService {
       return;
     }
 
-    // Находим последний шаг с этим nodeId
+    // Находим last шаг with этим nodeId
     for (let i = trace.steps.length - 1; i >= 0; i--) {
       if (trace.steps[i].nodeId === nodeId && trace.steps[i].type !== 'traversal') {
         trace.steps[i].status = 'error';
@@ -179,7 +180,7 @@ class TraceCollectorService {
   }
 
   /**
-   * Записать прохождение по связи (exec flow)
+   * Записать прохождение by связи (exec flow)
    */
   recordTraversal(traceId, fromNodeId, toPinId, toNodeId) {
     const trace = this.activeTraces.get(traceId);
@@ -209,13 +210,13 @@ class TraceCollectorService {
   async completeTrace(traceId) {
     const trace = this.activeTraces.get(traceId);
     if (!trace) {
-      console.warn(`[TraceCollector] Трассировка ${traceId} не найдена`);
+      console.warn(t('services:log_b792eb41', { traceId: traceId }));
       return;
     }
 
     // Защита от race condition - помечаем trace как завершаемый
     if (trace.isCompleting) {
-      console.warn(`[TraceCollector] Трассировка ${traceId} уже завершается`);
+      console.warn(t('services:log_f70fa53c', { traceId: traceId }));
       return trace;
     }
     trace.isCompleting = true;
@@ -223,14 +224,14 @@ class TraceCollectorService {
     trace.endTime = new Date();
     trace.status = 'completed';
 
-    // Удаляем с небольшой задержкой, чтобы updateStepOutputs успел завершиться
+    // Удаляем with небольшой задержкой, чтобы updateStepOutputs успел завершиться
     setTimeout(() => {
       this.activeTraces.delete(traceId);
     }, 100);
 
     await this._storeCompletedTrace(trace);
 
-    // Не сохраняем трассировки команд в БД (только события)
+    // Not сохраняем трассировки команд in БД (only events)
     if (this.config.persistToDb && trace.eventType !== 'command') {
       await this._persistTraceToDb(trace);
     }
@@ -246,12 +247,12 @@ class TraceCollectorService {
   }
 
   /**
-   * Завершить трассировку с ошибкой
+   * Завершить трассировку with ошибкой
    */
   async failTrace(traceId, error) {
     const trace = this.activeTraces.get(traceId);
     if (!trace) {
-      console.warn(`[TraceCollector] Трассировка ${traceId} не найдена`);
+      console.warn(t('services:log_b792eb41', { traceId: traceId }));
       return;
     }
 
@@ -263,7 +264,7 @@ class TraceCollectorService {
 
     await this._storeCompletedTrace(trace);
 
-    // Не сохраняем трассировки команд в БД (только события)
+    // Not сохраняем трассировки команд in БД (only events)
     if (this.config.persistToDb && trace.eventType !== 'command') {
       await this._persistTraceToDb(trace);
     }
@@ -280,7 +281,7 @@ class TraceCollectorService {
   }
 
   /**
-   * Получить трассировку по ID (из активных или завершённых)
+   * Получить трассировку by ID (from активных or завершённых)
    */
   getTrace(traceId) {
     const activeTrace = this.activeTraces.get(traceId);
@@ -299,7 +300,7 @@ class TraceCollectorService {
   }
 
   /**
-   * Получить все трассировки для бота
+   * Получить all трассировки for bot
    */
   getTracesForBot(botId, options = {}) {
     const {
@@ -332,10 +333,10 @@ class TraceCollectorService {
   }
 
   /**
-   * Получить последнюю трассировку для графа
-   * @param {number} botId - ID бота
-   * @param {number} graphId - ID графа
-   * @param {string} eventType - Опциональный фильтр по типу события (например, 'command', 'chat', 'botStartup')
+   * Получить последнюю трассировку for graph
+   * @param {number} botId - ID bot
+   * @param {number} graphId - ID graph
+   * @param {string} eventType - Опциональный фильтр by типу events (например, 'command', 'chat', 'botStartup')
    */
   async getLastTraceForGraph(botId, graphId, eventType = null) {
     let traces = this.getTracesForBot(botId, { graphId, limit: 100 }); // Увеличиваем лимит для фильтрации
@@ -383,7 +384,7 @@ class TraceCollectorService {
           };
         }
       } catch (error) {
-        console.error('[TraceCollector] Ошибка загрузки последней трассировки из БД:', error);
+        console.error(t('services:error_536be18c'), error);
       }
     }
 
@@ -391,10 +392,10 @@ class TraceCollectorService {
   }
 
   /**
-   * Очистить все трассировки для конкретного бота (при остановке бота)
+   * Очистить all трассировки for конкретного bot (when остановке bot)
    */
   clearForBot(botId) {
-    // Удаляем активные трассировки этого бота
+    // Удаляем активные трассировки этого bot
     for (const [traceId, trace] of this.activeTraces.entries()) {
       if (trace.botId === botId) {
         this.activeTraces.delete(traceId);
@@ -404,7 +405,7 @@ class TraceCollectorService {
     // Удаляем завершённые трассировки
     this.completedTraces.delete(botId);
 
-    console.log(`[TraceCollector] Очищены все трассировки для бота ${botId}`);
+    console.log(t('services:log_396ff24e', { botId: botId }));
   }
 
   /**
@@ -433,11 +434,11 @@ class TraceCollectorService {
       });
     }
 
-    console.log(`[TraceCollector] Очистка старых трассировок завершена`);
+    console.log(t('services:log_f2fc538c'));
   }
 
   /**
-   * Сохранить завершённую трассировку в памяти
+   * Сохранить завершённую трассировку in памяти
    */
   async _storeCompletedTrace(trace) {
     const botId = trace.botId;
@@ -457,7 +458,7 @@ class TraceCollectorService {
   }
 
   /**
-   * Сохранить трассировку в БД
+   * Сохранить трассировку in БД
    */
   async _persistTraceToDb(trace) {
     try {
@@ -476,7 +477,7 @@ class TraceCollectorService {
         }
       });
     } catch (error) {
-      console.error('[TraceCollector] Ошибка сохранения в БД:', error);
+      console.error(t('services:error_0b6a8609'), error);
     }
   }
 
@@ -488,7 +489,7 @@ class TraceCollectorService {
   }
 
   /**
-   * Загрузить трассировку из БД
+   * Загрузить трассировку from БД
    */
   async loadTraceFromDb(traceId) {
     if (!this.config.persistToDb) {
@@ -510,7 +511,7 @@ class TraceCollectorService {
         steps: typeof trace.steps === 'string' ? JSON.parse(trace.steps) : trace.steps,
       };
     } catch (error) {
-      console.error('[TraceCollector] Ошибка загрузки из БД:', error);
+      console.error(t('services:error_1ee804bc'), error);
       return null;
     }
   }
@@ -535,7 +536,7 @@ class TraceCollectorService {
   }
 
   /**
-   * Эмитить Socket.IO событие для трассировки
+   * Эмитить Socket.IO event for трассировки
    */
   _emitTraceEvent(botId, graphId, eventName, data) {
     if (!this.io) {

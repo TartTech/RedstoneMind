@@ -1,0 +1,12 @@
+{
+  "msg_07bac64a": "Graph in session yet not загрузился. Подожди, пока редактор откроется.",
+  "msg_178c625b": "Открыто several graphs. Укажи botId and graphId.",
+  "msg_2994112b": "Node {{nodeId}} not found in open graph",
+  "msg_3556bf8c": "Open graph in editor. Changes попадают only in open сессию and сами not сохраняются.",
+  "msg_598be220": "This graph no in твоей открытой session. First open its in editor.",
+  "msg_608333ad": "Hello",
+  "msg_906e9981": "Graph editor is not ready yet",
+  "msg_c28e8951": "Ноду {{protectedNode}} delete cannot",
+  "msg_c77153ec": "Node {{node}} already is on холсте",
+  "validation_c45b5a0d": "Оба конца связи must be нодами open graph"
+}

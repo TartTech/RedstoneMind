@@ -1,3 +1,4 @@
+const { t } = require('../i18n');
 class PluginStore {
     constructor(prisma, botId, pluginName) {
         this.prisma = prisma;
@@ -17,22 +18,22 @@ class PluginStore {
 
     async set(key, value) {
         if (typeof key !== 'string' || key.length === 0) {
-            throw new Error('PluginStore: ключ должен быть непустой строкой.');
+            throw new Error(t('core:validation_48182be3'));
         }
         if (key.length > 512) {
-            throw new Error('PluginStore: ключ слишком длинный (максимум 512 символов).');
+            throw new Error(t('core:validation_198ee739'));
         }
         let jsonValue;
         try {
             jsonValue = JSON.stringify(value);
         } catch (error) {
-            throw new Error(`PluginStore: значение нельзя сериализовать в JSON: ${error.message}`);
+            throw new Error(t('core:msg_c08a5e51', { error: error.message }));
         }
         if (jsonValue === undefined) {
             jsonValue = 'null';
         }
         if (jsonValue.length > 1024 * 1024) {
-            throw new Error('PluginStore: значение слишком большое (максимум 1 МБ).');
+            throw new Error(t('core:validation_6e906515'));
         }
         await this.prisma.pluginDataStore.upsert({
             where: this._whereKey(key),

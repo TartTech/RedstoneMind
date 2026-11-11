@@ -1,0 +1,20 @@
+{
+  "error_065d6587": "[API Keys] Error getting number clients:",
+  "error_46cfe0ab": "Error retrieving logs",
+  "error_508c0567": "Error during retrieving number clients",
+  "error_7d6598e1": "[API Keys] Error deleting key:",
+  "error_821b25a8": "[API Keys] Error getting logs:",
+  "error_86b08df0": "Invalid permissions value",
+  "error_8bd24ab6": "Error during updating key",
+  "error_9e3f7884": "[API Keys] Error creating key:",
+  "error_b38d6d70": "Error during deleting key",
+  "error_b6ad1e83": "[API Keys] Error updating key:",
+  "error_c0874f09": "[API Keys] Error getting list keys:",
+  "error_d301814b": "Error during creating key",
+  "error_ebf23142": "Error during retrieving keys",
+  "msg_c82b4016": "Key not found",
+  "msg_dc2abbfe": "Нечего update",
+  "success_6ee89242": "Key updated",
+  "success_92e69113": "Key deleted",
+  "validation_6eedfe63": "Name key is required"
+}

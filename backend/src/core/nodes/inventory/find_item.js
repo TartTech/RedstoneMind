@@ -1,5 +1,5 @@
 /**
- * inventory:find_item - Найти предмет в инвентаре по имени
+ * inventory:find_item - Найти item in инвентаре by name
  */
 async function evaluate(node, pinId, context, helpers) {
   const bot = context.bot;
@@ -12,7 +12,7 @@ async function evaluate(node, pinId, context, helpers) {
     return null;
   }
 
-  // Ищем предмет (поддержка частичного совпадения)
+  // Ищем item (поддержка частичного совпадения)
   const searchName = itemName.toLowerCase().replace('minecraft:', '');
   const item = bot.inventory.items().find(i =>
     i.name.toLowerCase().includes(searchName) ||
@@ -22,7 +22,7 @@ async function evaluate(node, pinId, context, helpers) {
   if (pinId === 'item') {
     if (!item) return null;
 
-    // Извлекаем прочность из NBT
+    // Извлекаем прочность from NBT
     const damage = item.nbt?.value?.Damage?.value ?? 0;
     const maxDurability = item.maxDurability ?? null;
     const durability = maxDurability ? maxDurability - damage : null;

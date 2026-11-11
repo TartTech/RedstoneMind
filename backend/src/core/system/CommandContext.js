@@ -2,15 +2,15 @@ const Transport = require('./Transport');
 const UserService = require('../UserService');
 
 /**
- * CommandContext - контекст выполнения команды
- * Предоставляет единый интерфейс для команд независимо от источника (Minecraft, WebSocket, Telegram)
+ * CommandContext - context execution commands
+ * Предоставляет единый интерфейс for команд независимо от источника (Minecraft, WebSocket, Telegram)
  */
 class CommandContext {
     /**
-     * @param {object} bot - Экземпляр бота
-     * @param {object} user - User объект с методами
-     * @param {object} args - Аргументы команды
-     * @param {Transport} transport - Transport объект
+     * @param {object} bot - Instance bot
+     * @param {object} user - User object with методами
+     * @param {object} args - Аргументы commands
+     * @param {Transport} transport - Transport object
      */
     constructor(bot, user, args, transport) {
         this.bot = bot;
@@ -18,10 +18,10 @@ class CommandContext {
         this.args = args;
         this.transport = transport;
 
-        // Для обратной совместимости
+        // For обратной совместимости
         this.typeChat = transport.type;
         
-        // Добавляем информацию о позиции бота
+        // Добавляем информацию о position bot
         this.botEntity = bot.entity ? {
             position: bot.entity.position,
             yaw: bot.entity.yaw,
@@ -30,19 +30,19 @@ class CommandContext {
     }
 
     /**
-     * Отправить ответ пользователю
-     * @param {string} message - Текст сообщения
-     * @returns {string|void} - Для websocket возвращает message, для остальных void
+     * Отправить response пользователю
+     * @param {string} message - Текст messages
+     * @returns {string|void} - For websocket returns message, for остальных void
      */
     reply(message) {
         return this.transport.send(message, this.user.username);
     }
 
     /**
-     * Отправить сообщение в определенный чат
-     * @param {string} chatType - Тип чата ('chat', 'clan', 'private', etc)
-     * @param {string} message - Текст сообщения
-     * @param {string} recipient - Получатель (для private)
+     * Отправить message in определенный chat
+     * @param {string} chatType - Type chat ('chat', 'clan', 'private', etc)
+     * @param {string} message - Текст messages
+     * @param {string} recipient - Получатель (for private)
      */
     sendTo(chatType, message, recipient = null) {
         if (this.bot.api) {
@@ -51,23 +51,23 @@ class CommandContext {
     }
 
     /**
-     * Получить User объект с методами
-     * @param {string} username - Имя пользователя
-     * @returns {Promise<User>} - User объект с методами
+     * Получить User object with методами
+     * @param {string} username - Name user
+     * @returns {Promise<User>} - User object with методами
      */
     async getUser(username) {
         return await UserService.getUser(username, this.bot.config.id, this.bot.config);
     }
 
     /**
-     * Проверка, выполняется ли команда через WebSocket API
+     * Check, выполняется ли command through WebSocket API
      */
     isWebSocket() {
         return this.transport.type === 'websocket';
     }
 
     /**
-     * Проверка, выполняется ли команда из Minecraft
+     * Check, выполняется ли command from Minecraft
      */
     isMinecraft() {
         return this.transport.isMinecraftTransport();

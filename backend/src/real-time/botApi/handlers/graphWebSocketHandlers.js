@@ -1,9 +1,10 @@
 const prisma = require('../../../lib/prisma');
 const { botManager } = require('../../../core/services');
+const { t } = require('../../../i18n');
 
 /**
- * action:call_graph - Вызвать граф и получить ответ
- * Граф получит событие websocket_call и сможет отправить ответ
+ * action:call_graph - Вызвать graph and получить response
+ * Graph получит event websocket_call and сможет отправить response
  */
 async function handleCallGraph(socket, payload) {
     if (socket.permissions === 'Read') {
@@ -111,7 +112,7 @@ async function handleCallGraph(socket, payload) {
                     data,
                     socketId: socket.id,
                     keyPrefix: socket.keyPrefix,
-                    // Callback для отправки ответа
+                    // Callback for отправки response
                     sendResponse: (responseData) => {
                         clearTimeout(timeout);
                         sendResponse(responseData);
@@ -119,7 +120,7 @@ async function handleCallGraph(socket, payload) {
                 }
             );
 
-            // Если граф завершился без отправки ответа, отправляем успех
+            // If graph завершился without отправки response, отправляем успех
             clearTimeout(timeout);
             if (!responseSent) {
                 sendResponse({ completed: true });
@@ -134,7 +135,7 @@ async function handleCallGraph(socket, payload) {
             }
         }
     } catch (error) {
-        console.error('[Bot API] Ошибка вызова графа:', error);
+        console.error(t('core:error_402fc19f'), error);
         socket.emit('error', {
             action: 'call_graph',
             message: 'Internal error',

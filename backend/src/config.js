@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const os = require('os');
 const crypto = require('crypto');
+const { t } = require('./i18n');
 
 const DATA_DIR = path.join(os.homedir(), '.redstonemind');
 const CONFIG_PATH = path.join(DATA_DIR, 'config.json');
@@ -9,7 +10,7 @@ const CONFIG_PATH = path.join(DATA_DIR, 'config.json');
 let config = null;
 
 function generateInitialConfig() {
-    console.log('[Config] Файл конфигурации не найден. Генерируем новый...');
+    console.log(t('core:log_d13ebca1'));
 
     const newConfig = {
         server: {
@@ -34,15 +35,15 @@ function generateInitialConfig() {
     fs.writeFileSync(CONFIG_PATH, JSON.stringify(newConfig, null, 2), 'utf-8');
     
     console.log('================================================================');
-    console.log('ВАЖНО: Конфигурация сгенерирована!');
-    console.log(`Файл сохранен в: ${CONFIG_PATH}`);
+    console.log(t('core:msg_0e194790'));
+    console.log(t('core:success_e9f32676', { CONFIG_PATH: CONFIG_PATH }));
     
-    console.log('\nПанель слушает 0.0.0.0:3001 и доступна извне.');
-    console.log('Рекомендуется ставить панель за reverse-proxy с HTTPS (nginx/Caddy) и закрывать порт фаерволом.');
+    console.log(t('core:msg_190a035b'));
+    console.log(t('core:msg_1a0e908e'));
     
-    console.log('\nПожалуйста, сохраните этот код восстановления в безопасном месте.');
-    console.log('Он понадобится для сброса пароля администратора.');
-    console.log(`\n    Код восстановления: ${newConfig.security.adminRecoveryCode}\n`);
+    console.log(t('core:msg_1512d70c'));
+    console.log(t('core:msg_4293d986'));
+    console.log(t('core:msg_b8b9e121', { newConfig: newConfig.security.adminRecoveryCode }));
     console.log('================================================================');
 
     return newConfig;
@@ -57,12 +58,12 @@ function loadConfig() {
         if (fs.existsSync(CONFIG_PATH)) {
             const fileContent = fs.readFileSync(CONFIG_PATH, 'utf-8');
             config = JSON.parse(fileContent);
-            console.log(`[Config] Конфигурация успешно загружена из ${CONFIG_PATH}`);
+            console.log(t('core:success_543c3bf6', { CONFIG_PATH: CONFIG_PATH }));
         } else {
             config = generateInitialConfig();
         }
     } catch (error) {
-        console.error('[Config] КРИТИЧЕСКАЯ ОШИБКА: Не удалось загрузить или создать файл конфигурации.', error);
+        console.error(t('core:error_130f7018'), error);
         process.exit(1);
     }
     

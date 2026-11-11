@@ -1,5 +1,5 @@
 /**
- * inventory:has_item - Проверить наличие предмета в инвентаре
+ * inventory:has_item - Проверить наличие item in инвентаре
  */
 async function evaluate(node, pinId, context, helpers) {
   const bot = context.bot;
@@ -12,7 +12,7 @@ async function evaluate(node, pinId, context, helpers) {
     return null;
   }
 
-  // Подсчитываем общее количество предмета
+  // Подсчитываем общее количество item
   const searchName = itemName.toLowerCase().replace('minecraft:', '');
   const actualCount = bot.inventory.items()
     .filter(i =>

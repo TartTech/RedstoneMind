@@ -1,15 +1,15 @@
 {
-  "name": "blockmine",
+  "name": "redstonemind",
   "version": "1.28.0",
-  "description": "Open-source Minecraft bot framework and automation platform on Mineflayer. Plugins, visual scripting, multi-bot panel. Start: npx blockmine",
+  "description": "Open-source Minecraft bot framework and automation platform on Mineflayer. Plugins, visual scripting, multi-bot panel. Start: npx redstonemind",
   "author": "merka",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/blockmineJS/blockmine.git"
+    "url": "git+https://github.com/TartTech/RedstoneMind.git"
   },
   "bin": {
-    "blockmine": "backend/cli.js"
+    "redstonemind": "backend/cli.js"
   },
   "keywords": [
     "minecraft",

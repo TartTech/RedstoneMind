@@ -59,7 +59,7 @@ class DevCommand extends Command {
         }
         const totalCommandsCount = uniqueCommands.size;
 
-        const message = `Бот создан с помощью - BlockMine. Версия: v${appVersion}. Активных плагинов: ${enabledPluginsCount}. Всего команд: ${totalCommandsCount}`;
+        const message = `Бот создан с помощью - RedstoneMind. Версия: v${appVersion}. Активных плагинов: ${enabledPluginsCount}. Всего команд: ${totalCommandsCount}`;
 
         if (typeChat === 'websocket') {
             return message;

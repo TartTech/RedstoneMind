@@ -508,7 +508,7 @@ export default function Layout() {
             .then((status) => {
                 if (stopped) return;
                 if (status?.status === 'ready' && status.token) {
-                    localStorage.setItem('blockmine_github_token', status.token);
+                    localStorage.setItem('redstonemind_github_token', status.token);
                     toast({ title: t('github.connected', { ns: 'plugins', defaultValue: 'GitHub подключён' }) });
                 } else {
                     toast({
@@ -608,11 +608,11 @@ export default function Layout() {
                                 )}
                             >
                                 <div className={sidebarBrandLogoClasses(isSidebarBrandHidden)}>
-                                    <img src="/logo.png" alt="BlockMineJS Logo" className="h-8 w-8 rounded" />
+                                    <img src="/logo.png" alt="RedstoneMindJS Logo" className="h-8 w-8 rounded" />
                                 </div>
                                 <div className="min-w-0 flex-1">
                                     <h2 className="text-base font-bold leading-tight">
-                                        BlockMine
+                                        RedstoneMind
                                     </h2>
                                     <p className="truncate text-xs leading-tight text-muted-foreground">
                                         {user?.username}
@@ -670,7 +670,7 @@ export default function Layout() {
                                 "absolute inset-0 flex items-center justify-center overflow-hidden rounded transition-[opacity,transform] " + SIDEBAR_TRANSITION,
                                 isSidebarBrandHidden ? "opacity-0 scale-90" : "opacity-100 scale-100"
                             )}>
-                                <img src="/logo.png" alt="BlockMineJS Logo" className="h-8 w-8 rounded" />
+                                <img src="/logo.png" alt="RedstoneMindJS Logo" className="h-8 w-8 rounded" />
                             </div>
                         </button>
                     </div>
@@ -821,13 +821,13 @@ export default function Layout() {
                     isCollapsed ? "max-h-0 opacity-0 -translate-y-2 pt-0" : "max-h-36 opacity-100 translate-y-0 pt-2"
                 )}>
                     <a
-                        href="https://github.com/blockmineJS/blockmine"
+                        href="https://github.com/TartTech/redstonemind"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 hover:text-foreground transition-colors"
                     >
                         <Github className="h-4 w-4" />
-                        <span>BlockMine v{appVersion}</span>
+                        <span>RedstoneMind v{appVersion}</span>
                     </a>
                     {updateAvailable && (
                         <button

@@ -1,6 +1,6 @@
 # Threat model
 
-BlockMine is a self-hosted Minecraft bot framework. One install is one operator's panel: an Express API and a Vite SPA on port 3001, SQLite in `~/.blockmine/blockmine.db`, and one child process per bot. Bots speak Minecraft through Mineflayer. Behavior comes from JavaScript plugins and from visual graphs. The panel also exposes Socket.IO and an MCP endpoint at `POST /api/mcp`.
+RedstoneMind is a self-hosted Minecraft bot framework. One install is one operator's panel: an Express API and a Vite SPA on port 3001, SQLite in `~/.redstonemind/redstonemind.db`, and one child process per bot. Bots speak Minecraft through Mineflayer. Behavior comes from JavaScript plugins and from visual graphs. The panel also exposes Socket.IO and an MCP endpoint at `POST /api/mcp`.
 
 The operator chooses the host, the Minecraft accounts, and the servers. Other panel users, other players on those servers, and the Minecraft server itself are not the operator.
 
@@ -17,7 +17,7 @@ Four more inputs are untrusted even after login:
 - Minecraft chat, commands, and packets. Players and the server are untrusted. A command runs only when the bot's own permission, chat-type, and cooldown checks allow it. Owner bypass applies to usernames configured as that bot's owners.
 - API keys. A `pk_` key acts as the panel user who created it and must not gain permissions that user does not have. Bot API keys on the bot-API socket are a separate credential. A read-only bot key must not perform writes, and the username in a socket payload must not be treated as proof of an in-game identity.
 
-SQLite stores bcrypt password hashes, Minecraft account passwords, proxy passwords, and API-key hashes. The JWT secret and the bind address live in `~/.blockmine/config.json`. Those values must not come back in API responses, MCP tool results, logs shown to a lesser user, or the SPA.
+SQLite stores bcrypt password hashes, Minecraft account passwords, proxy passwords, and API-key hashes. The JWT secret and the bind address live in `~/.redstonemind/config.json`. Those values must not come back in API responses, MCP tool results, logs shown to a lesser user, or the SPA.
 
 ## Components that matter most / least
 
@@ -34,8 +34,8 @@ Matter most:
 Matter less, and only when they cross one of the boundaries above:
 
 - React pages, i18n JSON, the 3D viewer, and Monaco as an editor.
-- `node_modules`, Mineflayer, and Prismarine. A bug that exists only inside those libraries is out of scope. It is in scope when BlockMine feeds untrusted chat, a URL, a path, or a graph into them in a way that escapes the bot.
-- `services/`, the stats server, the landing site, and `packages/blockmine-mcp`. They are not this process. The MCP server that matters is `POST /api/mcp` inside the panel.
+- `node_modules`, Mineflayer, and Prismarine. A bug that exists only inside those libraries is out of scope. It is in scope when RedstoneMind feeds untrusted chat, a URL, a path, or a graph into them in a way that escapes the bot.
+- `services/`, the stats server, the landing site, and `packages/redstonemind-mcp`. They are not this process. The MCP server that matters is `POST /api/mcp` inside the panel.
 
 ## How to exercise it
 
@@ -55,7 +55,7 @@ To boot the panel inside the image:
 node backend/cli.js
 ```
 
-That creates `~/.blockmine`, runs `prisma migrate deploy`, and listens on the host and port from config (port 3001). The first process start is the unauthenticated setup window. After one user exists, call the API with `Authorization: Bearer <jwt>`. Socket.IO expects the JWT in `handshake.auth.token`. MCP is `POST /api/mcp` with the same header.
+That creates `~/.redstonemind`, runs `prisma migrate deploy`, and listens on the host and port from config (port 3001). The first process start is the unauthenticated setup window. After one user exists, call the API with `Authorization: Bearer <jwt>`. Socket.IO expects the JWT in `handshake.auth.token`. MCP is `POST /api/mcp` with the same header.
 
 The image has no network after the build. Do not add a test that clones GitHub, calls the npm registry, or joins a public Minecraft server.
 
@@ -66,7 +66,7 @@ Critical:
 - Code execution, arbitrary file read, or arbitrary file write without `plugin:develop` or `plugin:install`, including before login.
 - Authentication bypass that yields the owner, `*`, or any plugin-write permission.
 - A `pk_` or bot API key that ends up with more rights than the account that created it.
-- Reading or changing `~/.blockmine` (JWT secret, bot passwords, proxy passwords, raw API keys) from a user who was not granted that bot.
+- Reading or changing `~/.redstonemind` (JWT secret, bot passwords, proxy passwords, raw API keys) from a user who was not granted that bot.
 - SQL that reads or writes the panel database past the caller's permission.
 
 High:

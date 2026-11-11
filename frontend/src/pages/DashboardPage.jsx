@@ -309,7 +309,7 @@ export default function DashboardPage() {
                                     <QuickActionButton
                                         icon={<MessageSquarePlus className="h-5 w-5" />}
                                         label={t('quickActions.suggest')}
-                                        onClick={() => window.open('https://github.com/blockmineJS/blockmine/issues/new/choose')}
+                                        onClick={() => window.open('https://github.com/TartTech/redstonemind/issues/new/choose')}
                                     />
                                     <QuickActionButton
                                         icon={<Info className="h-5 w-5" />}

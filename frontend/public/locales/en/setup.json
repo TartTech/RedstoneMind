@@ -1,6 +1,6 @@
 {
   "title": "Initial Setup",
-  "description": "Create an administrator account for the BlockMine panel.",
+  "description": "Create an administrator account for the RedstoneMind panel.",
   "username": "Admin username",
   "password": "Password (min. 4 characters)",
   "showPassword": "Show password",

@@ -7,7 +7,7 @@ const GITHUB_OWNER_REPO_PATTERN = /^[A-Za-z0-9_.-]+$/;
 function getGithubHeaders(extra = {}) {
     const headers = {
         Accept: 'application/vnd.github+json',
-        'User-Agent': 'BlockMine',
+        'User-Agent': 'RedstoneMind',
         ...extra,
     };
     if (process.env.GITHUB_TOKEN) {

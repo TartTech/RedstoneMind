@@ -3,7 +3,7 @@ const path = require('path');
 const os = require('os');
 const crypto = require('crypto');
 
-const AUDIT_LOG_DIR = path.join(os.homedir(), '.blockmine', 'logs');
+const AUDIT_LOG_DIR = path.join(os.homedir(), '.redstonemind', 'logs');
 const AUDIT_LOG_FILE = path.join(AUDIT_LOG_DIR, 'audit.log');
 
 class AuditLogger {

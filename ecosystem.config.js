@@ -1,7 +1,7 @@
 
 module.exports = {
     apps: [{
-      name: 'blockmine',
+      name: 'redstonemind',
       script: './cli.js',
       cwd: './backend/',
       watch: false,

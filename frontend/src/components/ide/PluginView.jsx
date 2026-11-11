@@ -12,7 +12,7 @@ import { toast } from '@/hooks/use-toast';
 import CreateReleaseDialog from './CreateReleaseDialog';
 import SubmitToOfficialListDialog from './SubmitToOfficialListDialog';
 
-const GITHUB_TOKEN_KEY = 'blockmine_github_token';
+const GITHUB_TOKEN_KEY = 'redstonemind_github_token';
 
 // Helper function to compare semver versions
 const compareVersions = (v1, v2) => {
@@ -202,7 +202,7 @@ export default function PluginView({ botId, pluginName, onRefresh }) {
         setIsCheckingOfficialList(true);
         try {
             // Загружаем официальный список с GitHub
-            const response = await fetch('https://raw.githubusercontent.com/blockmineJS/official-plugins-list/main/index.json');
+            const response = await fetch('https://raw.githubusercontent.com/TartTech/official-plugins-list/main/index.json');
             if (response.ok) {
                 const officialList = await response.json();
 
@@ -368,7 +368,7 @@ export default function PluginView({ botId, pluginName, onRefresh }) {
                     branch: `update-v${versionClean}`,
                     commitMessage: `Update to v${versionClean}`,
                     prTitle: `Update to v${versionClean}`,
-                    prBody: `This PR updates the plugin to version ${versionClean}.\n\nChanges made using BlockMine IDE.`
+                    prBody: `This PR updates the plugin to version ${versionClean}.\n\nChanges made using RedstoneMind IDE.`
                 })
             });
 
@@ -707,7 +707,7 @@ export default function PluginView({ botId, pluginName, onRefresh }) {
                                 ) : (
                                     <>
                                         <p className="text-sm text-muted-foreground mb-3">
-                                            Добавьте ваш плагин в официальный список BlockMine что бы он появился в магазине плагинов
+                                            Добавьте ваш плагин в официальный список RedstoneMind что бы он появился в магазине плагинов
                                         </p>
                                         <Button
                                             onClick={() => setShowOfficialListDialog(true)}

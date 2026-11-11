@@ -156,7 +156,7 @@ describe('plugin catalog sections', () => {
             official: [pinned],
             unofficial: [{ ...added, description: 'Коротко о плагине', author: 'ada', categories: ['Чат'] }],
         });
-        const embed = buildPayloads(described, { commitUrl: 'https://github.com/blockmineJS/official-plugins-list/commit/abc', pusher: 'ada' })[0].embeds[0];
+        const embed = buildPayloads(described, { commitUrl: 'https://github.com/TartTech/official-plugins-list/commit/abc', pusher: 'ada' })[0].embeds[0];
         expect(embed.description).toBe('Коротко о плагине');
         expect(embed.fields.find((field) => field.name === 'Автор').value).toBe('ada');
         expect(embed.fields.find((field) => field.name === 'Категории').value).toBe('Чат');

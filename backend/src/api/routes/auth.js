@@ -129,7 +129,7 @@ router.get('/status', async (req, res) => {
  * @access  Public
  */
 router.get('/config-path', (req, res) => {
-    const configPath = path.join(os.homedir(), '.blockmine', 'config.json');
+    const configPath = path.join(os.homedir(), '.redstonemind', 'config.json');
     res.json({ configPath });
 });
 

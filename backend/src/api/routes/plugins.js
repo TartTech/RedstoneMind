@@ -15,7 +15,7 @@ const { normalizeCatalog } = require('../../core/utils/pluginCatalog');
 const { removeOwnUnofficialEntry } = require('../../core/utils/pluginPublish');
 
 const router = express.Router();
-const OFFICIAL_CATALOG_URL = 'https://raw.githubusercontent.com/blockmineJS/official-plugins-list/main/index.json';
+const OFFICIAL_CATALOG_URL = 'https://raw.githubusercontent.com/TartTech/official-plugins-list/main/index.json';
 const CATALOG_TTL_MS = 5 * 60 * 1000;
 const PLUGIN_DETAIL_TTL_MS = 10 * 60 * 1000;
 const PLUGIN_CHANGELOG_TTL_MS = 10 * 60 * 1000;

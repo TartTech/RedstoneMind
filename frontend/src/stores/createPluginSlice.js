@@ -6,7 +6,7 @@ import { produce } from 'immer';
 const translatePlugins = (key, defaultValue, options = {}) =>
   i18n.t(key, { ns: 'plugins', defaultValue, ...options });
 
-const PLUGIN_UPDATE_COUNT_STORAGE_KEY = 'blockmine-plugin-update-counts';
+const PLUGIN_UPDATE_COUNT_STORAGE_KEY = 'redstonemind-plugin-update-counts';
 const PLUGIN_STATUS_TOAST_ID = 'plugin-status-toast';
 
 const loadStoredPluginUpdateCounts = () => {

@@ -6,12 +6,12 @@ const { execSync } = require('child_process');
 
 const config = require('./src/config.js'); 
 
-const DATA_DIR = path.join(os.homedir(), '.blockmine');
+const DATA_DIR = path.join(os.homedir(), '.redstonemind');
 if (!fs.existsSync(DATA_DIR)) {
     fs.mkdirSync(DATA_DIR, { recursive: true });
 }
 
-process.env.DATABASE_URL = `file:${path.join(DATA_DIR, 'blockmine.db')}`;
+process.env.DATABASE_URL = `file:${path.join(DATA_DIR, 'redstonemind.db')}`;
 
 if (process.env.NODE_ENV === 'development' || process.argv.includes('--dev') || process.argv.includes('--debug')) {
     process.env.DEBUG = 'true';
@@ -29,9 +29,9 @@ function runCommand(command) {
 }
 
 async function main() {
-    console.log('Запуск панели управления BlockMine...');
+    console.log('Запуск панели управления RedstoneMind...');
 
-    const dbPath = path.join(DATA_DIR, 'blockmine.db');
+    const dbPath = path.join(DATA_DIR, 'redstonemind.db');
     runCommand(`npx prisma generate`);
 
     if (!fs.existsSync(dbPath)) {

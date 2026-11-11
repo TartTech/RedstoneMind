@@ -9,7 +9,7 @@ import { useAppStore } from '@/stores/appStore';
 let loginRequest = null;
 
 function loadGithubLogin() {
-  const token = localStorage.getItem('blockmine_github_token');
+  const token = localStorage.getItem('redstonemind_github_token');
   if (!token) return Promise.resolve('');
   if (!loginRequest) {
     loginRequest = apiHelper('/api/github/whoami', {
@@ -50,7 +50,7 @@ export default function UnlistCatalogButton({ plugin, className }) {
   if (plugin?.listing !== 'unofficial' || !isOwner) return null;
 
   const removeFromList = async () => {
-    const token = localStorage.getItem('blockmine_github_token');
+    const token = localStorage.getItem('redstonemind_github_token');
     setBusy(true);
     try {
       await apiHelper(`/api/plugins/catalog/${encodeURIComponent(plugin.name)}/unlist`, {

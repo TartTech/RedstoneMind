@@ -6,7 +6,7 @@ const { filterSecretSettings, prepareSettingsForSave, isGroupedSettings } = requ
 const { ok, err, wrap, requirePermission, requireBotAccess, jsonField, hasPermission } = require('../helpers');
 const { normalizeCatalog } = require('../../../core/utils/pluginCatalog');
 
-const CATALOG_URL = 'https://raw.githubusercontent.com/blockmineJS/official-plugins-list/main/index.json';
+const CATALOG_URL = 'https://raw.githubusercontent.com/TartTech/official-plugins-list/main/index.json';
 
 async function findPluginByName(botId, pluginName) {
     return prisma.installedPlugin.findFirst({
@@ -203,7 +203,7 @@ function register(server, { user }) {
     }));
 
     server.registerTool('list_plugin_catalog', {
-        description: 'List plugins from the official BlockMine catalog.',
+        description: 'List plugins from the official RedstoneMind catalog.',
         inputSchema: {},
     }, wrap('list_plugin_catalog', async () => {
         const permErr = requireCatalogAccess(user);

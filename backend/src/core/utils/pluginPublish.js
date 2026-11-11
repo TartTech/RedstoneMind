@@ -4,7 +4,7 @@ const { Octokit } = require('@octokit/rest');
 const { tryParseGithubRepoUrl } = require('./github');
 const { asSections, findListing, upsertUnofficial, bumpPatch, tagFor, repoOwner } = require('./pluginCatalog');
 
-const LIST_OWNER = 'blockmineJS';
+const LIST_OWNER = 'TartTech';
 const LIST_REPO = 'official-plugins-list';
 
 function fail(message, statusCode = 400) {
@@ -94,7 +94,7 @@ async function uploadFiles(octokit, owner, repo, pluginPath) {
     const { data: nextCommit } = await octokit.git.createCommit({
         owner,
         repo,
-        message: 'Update plugin from BlockMine',
+        message: 'Update plugin from RedstoneMind',
         tree: tree.sha,
         parents: [ref.object.sha],
     });
@@ -360,7 +360,7 @@ async function publishLocalPlugin({ token, pluginPath, pluginRecord, fields = {}
             description: description.slice(0, 350),
             private: false,
             auto_init: false,
-            homepage: 'https://github.com/blockmineJS',
+            homepage: 'https://github.com/TartTech',
         });
         owner = created.owner.login;
         repo = created.name;
@@ -369,7 +369,7 @@ async function publishLocalPlugin({ token, pluginPath, pluginRecord, fields = {}
             await octokit.repos.replaceAllTopics({
                 owner,
                 repo,
-                names: ['blockmine', 'blockmine-plugin', 'minecraft', 'mineflayer', 'minecraft-bot'],
+                names: ['redstonemind', 'redstonemind-plugin', 'minecraft', 'mineflayer', 'minecraft-bot'],
             });
         } catch {
         }
@@ -398,7 +398,7 @@ async function publishLocalPlugin({ token, pluginPath, pluginRecord, fields = {}
     packageJson.botpanel.icon = icon;
     if (displayName) packageJson.botpanel.displayName = displayName;
     if (!Array.isArray(packageJson.keywords)) packageJson.keywords = [];
-    for (const keyword of ['blockmine', 'blockmine-plugin', 'minecraft', 'mineflayer']) {
+    for (const keyword of ['redstonemind', 'redstonemind-plugin', 'minecraft', 'mineflayer']) {
         if (!packageJson.keywords.includes(keyword)) packageJson.keywords.push(keyword);
     }
     await fse.writeJson(packageJsonPath, packageJson, { spaces: 2 });

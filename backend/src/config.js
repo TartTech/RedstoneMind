@@ -3,7 +3,7 @@ const path = require('path');
 const os = require('os');
 const crypto = require('crypto');
 
-const DATA_DIR = path.join(os.homedir(), '.blockmine');
+const DATA_DIR = path.join(os.homedir(), '.redstonemind');
 const CONFIG_PATH = path.join(DATA_DIR, 'config.json');
 
 let config = null;

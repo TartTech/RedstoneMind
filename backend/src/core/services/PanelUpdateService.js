@@ -9,12 +9,12 @@ const { fetchGithubJsonSafe } = require('../utils/github');
 const execFileAsync = promisify(execFile);
 
 const REPO_ROOT = path.resolve(__dirname, '../../../..');
-const OFFICIAL_OWNER = 'blockmineJS';
-const OFFICIAL_REPO = 'blockmine';
+const OFFICIAL_OWNER = 'TartTech';
+const OFFICIAL_REPO = 'redstonemind';
 const OFFICIAL_GIT_URL = `https://github.com/${OFFICIAL_OWNER}/${OFFICIAL_REPO}.git`;
 const STAMP_PATH = path.join(REPO_ROOT, 'backend', 'src', '.panel-update-stamp.json');
-const PROGRESS_PATH = path.join(os.homedir(), '.blockmine', 'update-progress.json');
-const UPDATE_REQUEST_PATH = path.join(os.homedir(), '.blockmine', 'update-requested.txt');
+const PROGRESS_PATH = path.join(os.homedir(), '.redstonemind', 'update-progress.json');
+const UPDATE_REQUEST_PATH = path.join(os.homedir(), '.redstonemind', 'update-requested.txt');
 const CHECK_CACHE_MS = 2 * 60 * 1000;
 const STALE_PROGRESS_MS = 5 * 60 * 1000;
 const MAX_COMMITS = 25;
@@ -91,7 +91,7 @@ function isDevelopment(env = process.env, argv = process.argv) {
 }
 
 function resolveRestartMethod(env = process.env, argv = process.argv) {
-    if (env.BLOCKMINE_UPDATE_WORKER === '1') return 'none';
+    if (env.REDSTONEMIND_UPDATE_WORKER === '1') return 'none';
     if (isDevelopment(env, argv)) return 'nodemon';
     if (env.pm_id != null && String(env.pm_id) !== '') return 'pm2';
     return 'spawn';
@@ -100,7 +100,7 @@ function resolveRestartMethod(env = process.env, argv = process.argv) {
 function getPm2Target(env = process.env) {
     if (env.pm_id != null && String(env.pm_id) !== '') return String(env.pm_id);
     if (env.name) return String(env.name);
-    return 'blockmine';
+    return 'redstonemind';
 }
 
 function parseGitLogLine(line) {
@@ -478,7 +478,7 @@ function persistProgress() {
 }
 
 function emitSocketProgress() {
-    if (process.env.BLOCKMINE_UPDATE_WORKER === '1') return;
+    if (process.env.REDSTONEMIND_UPDATE_WORKER === '1') return;
     try {
         const { getIOSafe } = require('../../real-time/socketHandler');
         getIOSafe().emit('panel:update', {
@@ -622,7 +622,7 @@ function handleRestartStage() {
 }
 
 function startProgressWatch() {
-    if (process.env.BLOCKMINE_UPDATE_WORKER === '1') return;
+    if (process.env.REDSTONEMIND_UPDATE_WORKER === '1') return;
     if (watchTimer) return;
     watchTimer = setInterval(() => {
         const data = readProgressFile();
@@ -948,12 +948,12 @@ async function stopRunningPanel(restartMethod) {
     }
     if (process.platform === 'win32') {
         try {
-            await execFileAsync('taskkill', ['/F', '/FI', 'WINDOWTITLE eq BlockMine'], {
+            await execFileAsync('taskkill', ['/F', '/FI', 'WINDOWTITLE eq RedstoneMind'], {
                 windowsHide: true,
                 timeout: 15000,
             });
         } catch {
-            emitProgress({ line: 'no BlockMine console window' });
+            emitProgress({ line: 'no RedstoneMind console window' });
         }
     }
     await killPortListeners(3001);
@@ -1041,7 +1041,7 @@ function spawnWindowsProcess(filePath, args, options = {}) {
 }
 
 function writeUpdateLauncher(branch, method) {
-    const dir = path.join(os.homedir(), '.blockmine');
+    const dir = path.join(os.homedir(), '.redstonemind');
     fs.mkdirSync(dir, { recursive: true });
     const logPath = path.join(dir, 'update-worker.log');
     const cmdPath = path.join(dir, 'run-update.cmd');
@@ -1050,8 +1050,8 @@ function writeUpdateLauncher(branch, method) {
     const body = [
         '@echo off',
         `cd /d "${REPO_ROOT}"`,
-        'set BLOCKMINE_UPDATE_WORKER=1',
-        `set BLOCKMINE_RESTART_METHOD=${method}`,
+        'set REDSTONEMIND_UPDATE_WORKER=1',
+        `set REDSTONEMIND_RESTART_METHOD=${method}`,
         `>>"${logPath}" echo launch %date% %time%`,
         `"${process.execPath}" "${workerPath}" ${branch} ${method} >>"${logPath}" 2>&1`,
         `>>"${logPath}" echo exit %ERRORLEVEL% %date% %time%`,
@@ -1066,8 +1066,8 @@ function spawnUpdateWorker(branch, restartMethod) {
     const method = restartMethod || 'nodemon';
     const env = {
         ...process.env,
-        BLOCKMINE_UPDATE_WORKER: '1',
-        BLOCKMINE_RESTART_METHOD: method,
+        REDSTONEMIND_UPDATE_WORKER: '1',
+        REDSTONEMIND_RESTART_METHOD: method,
     };
     if (process.platform === 'win32') {
         const launchPath = writeUpdateLauncher(branch, method);
@@ -1095,7 +1095,7 @@ async function runPanelUpdateJob(branch, restartMethod) {
         error.code = 'invalid_branch';
         throw error;
     }
-    const method = restartMethod || process.env.BLOCKMINE_RESTART_METHOD || resolveRestartMethod();
+    const method = restartMethod || process.env.REDSTONEMIND_RESTART_METHOD || resolveRestartMethod();
 
     try {
         await sleep(1500);

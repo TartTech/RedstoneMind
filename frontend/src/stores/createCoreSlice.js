@@ -264,8 +264,8 @@ export const createCoreSlice = (set, get) => ({
         try {
             set({ panelUpdateChecking: true });
             const data = await apiHelper(`/api/panel/update/check${force ? '?fresh=1' : ''}`);
-            if (!data?.applying && sessionStorage.getItem('blockmine-panel-updating') && !data?.updateAvailable) {
-                sessionStorage.removeItem('blockmine-panel-updating');
+            if (!data?.applying && sessionStorage.getItem('redstonemind-panel-updating') && !data?.updateAvailable) {
+                sessionStorage.removeItem('redstonemind-panel-updating');
             }
             set({
                 panelUpdate: data,

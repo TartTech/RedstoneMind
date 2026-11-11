@@ -11,7 +11,7 @@ const { inspectLocalPublish, publishLocalPlugin, submitListedRelease, removeOwnU
 const prisma = new PrismaClient();
 const router = express.Router({ mergeParams: true });
 
-const DATA_DIR = path.join(os.homedir(), '.blockmine');
+const DATA_DIR = path.join(os.homedir(), '.redstonemind');
 const PLUGINS_BASE_DIR = path.join(DATA_DIR, 'storage', 'plugins');
 
 function resolveWithin(baseDir, relativePath) {
@@ -136,7 +136,7 @@ router.post('/create', async (req, res) => {
             version,
             description,
             author,
-            keywords: ['blockmine', 'blockmine-plugin', 'minecraft', 'mineflayer'],
+            keywords: ['redstonemind', 'redstonemind-plugin', 'minecraft', 'mineflayer'],
             botpanel: {
                 main: 'index.js',
                 categories: [],
@@ -723,7 +723,7 @@ router.post('/:pluginName/fork', resolvePluginPath, async (req, res) => {
 
 router.post('/:pluginName/create-pr', resolvePluginPath, async (req, res) => {
     const cp = require('child_process');
-    const { token, branch = 'contribution', commitMessage = 'Changes from BlockMine IDE', prTitle, prBody } = req.body;
+    const { token, branch = 'contribution', commitMessage = 'Changes from RedstoneMind IDE', prTitle, prBody } = req.body;
 
     if (!token) {
         return res.status(400).json({ error: 'GitHub токен обязателен.' });
@@ -860,8 +860,8 @@ router.post('/:pluginName/create-pr', resolvePluginPath, async (req, res) => {
                 const { data: pr } = await octokit.pulls.create({
                     owner: repoInfo.owner,
                     repo: repoInfo.repo,
-                    title: prTitle || `Update from BlockMine IDE`,
-                    body: prBody || `Changes made using BlockMine IDE.\n\n${commitMessage}`,
+                    title: prTitle || `Update from RedstoneMind IDE`,
+                    body: prBody || `Changes made using RedstoneMind IDE.\n\n${commitMessage}`,
                     head: `${myUsername}:${branch}`,
                     base: defaultBranch
                 });
@@ -1218,11 +1218,11 @@ router.post('/:pluginName/github/create', resolvePluginPath, async (req, res) =>
 
         // Читаем package.json для получения description
         const packageJsonPath = path.join(req.pluginPath, 'package.json');
-        let description = 'BlockMine plugin for Minecraft bots';
+        let description = 'RedstoneMind plugin for Minecraft bots';
         if (await fse.pathExists(packageJsonPath)) {
             const packageJson = await fse.readJson(packageJsonPath);
             if (packageJson.description) {
-                description = `${packageJson.description} | BlockMine plugin`;
+                description = `${packageJson.description} | RedstoneMind plugin`;
             }
         }
 
@@ -1232,7 +1232,7 @@ router.post('/:pluginName/github/create', resolvePluginPath, async (req, res) =>
             description: description,
             private: isPrivate,
             auto_init: false,
-            homepage: 'https://github.com/blockmineJS'
+            homepage: 'https://github.com/TartTech'
         });
 
         console.log(`[Plugin IDE] Repository created: ${repo.html_url}`);
@@ -1242,7 +1242,7 @@ router.post('/:pluginName/github/create', resolvePluginPath, async (req, res) =>
             await octokit.repos.replaceAllTopics({
                 owner: repo.owner.login,
                 repo: repo.name,
-                names: ['blockmine', 'blockmine-plugin', 'minecraft', 'mineflayer', 'minecraft-bot']
+                names: ['redstonemind', 'redstonemind-plugin', 'minecraft', 'mineflayer', 'minecraft-bot']
             });
             console.log(`[Plugin IDE] Topics added to repository`);
         } catch (topicError) {
@@ -1263,7 +1263,7 @@ router.post('/:pluginName/github/create', resolvePluginPath, async (req, res) =>
             if (!packageJson.keywords) {
                 packageJson.keywords = [];
             }
-            const keywords = ['blockmine', 'blockmine-plugin', 'minecraft', 'mineflayer'];
+            const keywords = ['redstonemind', 'redstonemind-plugin', 'minecraft', 'mineflayer'];
             keywords.forEach(kw => {
                 if (!packageJson.keywords.includes(kw)) {
                     packageJson.keywords.push(kw);
@@ -1984,7 +1984,7 @@ async function uploadFilesToGitHub(octokit, owner, repo, pluginPath) {
         const { data: newCommit } = await octokit.git.createCommit({
             owner,
             repo,
-            message: 'Update plugin files from BlockMine IDE',
+            message: 'Update plugin files from RedstoneMind IDE',
             tree: tree.sha,
             parents: [parentSha]
         });

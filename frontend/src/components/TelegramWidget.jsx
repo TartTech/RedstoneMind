@@ -6,7 +6,7 @@ export default function TelegramWidget({ isCollapsed }) {
 
     return (
         <a
-            href="https://t.me/blockmineJs"
+            href="https://t.me/redstonemindJs"
             target="_blank"
             rel="noopener noreferrer"
             title={isCollapsed ? 'Telegram' : undefined}

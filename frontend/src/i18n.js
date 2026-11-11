@@ -28,7 +28,7 @@ i18n
     detection: {
       order: ['localStorage', 'navigator'],
       caches: ['localStorage'],
-      lookupLocalStorage: 'blockmine-language',
+      lookupLocalStorage: 'redstonemind-language',
     },
 
     // debug: true,

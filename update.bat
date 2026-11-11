@@ -12,11 +12,11 @@ if /i "%~1"=="--from-start" (
     set "UPDATE_BRANCH=%~1"
 )
 
-if "%FROM_START%"=="0" title BlockMine update
+if "%FROM_START%"=="0" title RedstoneMind update
 
-if exist "%USERPROFILE%\.blockmine\update-requested.txt" (
-    set /p UPDATE_BRANCH=<"%USERPROFILE%\.blockmine\update-requested.txt"
-    del "%USERPROFILE%\.blockmine\update-requested.txt" >nul 2>&1
+if exist "%USERPROFILE%\.redstonemind\update-requested.txt" (
+    set /p UPDATE_BRANCH=<"%USERPROFILE%\.redstonemind\update-requested.txt"
+    del "%USERPROFILE%\.redstonemind\update-requested.txt" >nul 2>&1
 )
 if "%UPDATE_BRANCH%"=="" set "UPDATE_BRANCH=master"
 
@@ -49,42 +49,42 @@ set "HUSKY=0"
 
 echo.
 echo ========================================
-echo   BlockMine update  (!UPDATE_BRANCH!)
+echo   RedstoneMind update  (!UPDATE_BRANCH!)
 echo ========================================
 echo.
 
 if "%FROM_START%"=="1" goto fetch
-echo [BlockMine] Stopping the panel...
-taskkill /F /FI "WINDOWTITLE eq BlockMine" >nul 2>&1
+echo [RedstoneMind] Stopping the panel...
+taskkill /F /FI "WINDOWTITLE eq RedstoneMind" >nul 2>&1
 call :free_ports
 
 :fetch
-echo [BlockMine] git fetch !UPDATE_BRANCH!
-git fetch --quiet https://github.com/blockmineJS/blockmine.git +refs/heads/!UPDATE_BRANCH!:refs/panel-update/!UPDATE_BRANCH!
+echo [RedstoneMind] git fetch !UPDATE_BRANCH!
+git fetch --quiet https://github.com/TartTech/redstonemind.git +refs/heads/!UPDATE_BRANCH!:refs/panel-update/!UPDATE_BRANCH!
 if errorlevel 1 goto update_failed
-echo [BlockMine] restore package-lock.json
+echo [RedstoneMind] restore package-lock.json
 git checkout -- package-lock.json
 if exist frontend\package-lock.json git checkout -- frontend/package-lock.json
-echo [BlockMine] git merge --ff-only
+echo [RedstoneMind] git merge --ff-only
 git merge --ff-only refs/panel-update/!UPDATE_BRANCH!
 if errorlevel 1 goto update_failed
-echo [BlockMine] npm install
+echo [RedstoneMind] npm install
 call npm install --no-fund --no-audit
 if errorlevel 1 goto update_failed
-echo [BlockMine] npm run build
+echo [RedstoneMind] npm run build
 call npm run build
 if errorlevel 1 goto update_failed
 
 if "%FROM_START%"=="1" exit /b 0
 
 echo.
-echo [BlockMine] Update finished. Starting panel...
+echo [RedstoneMind] Update finished. Starting panel...
 call :free_ports
 call "%~dp0start.bat"
 exit /b
 
 :free_ports
-echo [BlockMine] Waiting until ports 3001 and 5173 are free...
+echo [RedstoneMind] Waiting until ports 3001 and 5173 are free...
 set /a _port_try=0
 :free_ports_loop
 set /a _port_try+=1
@@ -114,51 +114,51 @@ exit /b 0
 
 :update_failed
 echo.
-echo [BlockMine] Update failed.
-echo [BlockMine] Only a fast-forward is applied. Local commits or edited files can block it.
+echo [RedstoneMind] Update failed.
+echo [RedstoneMind] Only a fast-forward is applied. Local commits or edited files can block it.
 if "%FROM_START%"=="1" exit /b 1
 pause
 exit /b 1
 
 :bad_branch
-echo [BlockMine] Branch name is not allowed: !UPDATE_BRANCH!
+echo [RedstoneMind] Branch name is not allowed: !UPDATE_BRANCH!
 if "%FROM_START%"=="1" exit /b 1
 pause
 exit /b 1
 
 :missing_repo
-echo [BlockMine] Run update.bat from the BlockMine repository root.
+echo [RedstoneMind] Run update.bat from the RedstoneMind repository root.
 if "%FROM_START%"=="1" exit /b 1
 pause
 exit /b 1
 
 :not_git
-echo [BlockMine] This folder is not a git clone. update.bat only works for a git install.
-echo [BlockMine] For npx, update with: npx blockmine
+echo [RedstoneMind] This folder is not a git clone. update.bat only works for a git install.
+echo [RedstoneMind] For npx, update with: npx redstonemind
 if "%FROM_START%"=="1" exit /b 1
 pause
 exit /b 1
 
 :git_missing
-echo [BlockMine] Git was not found. Install Git and run update.bat again.
+echo [RedstoneMind] Git was not found. Install Git and run update.bat again.
 if "%FROM_START%"=="1" exit /b 1
 pause
 exit /b 1
 
 :node_missing
-echo [BlockMine] Node.js 22+ was not found. Run start.bat or install it from https://nodejs.org/
+echo [RedstoneMind] Node.js 22+ was not found. Run start.bat or install it from https://nodejs.org/
 if "%FROM_START%"=="1" exit /b 1
 pause
 exit /b 1
 
 :node_old
-echo [BlockMine] Node.js %NODE_MAJOR% is too old. Need 22+.
+echo [RedstoneMind] Node.js %NODE_MAJOR% is too old. Need 22+.
 if "%FROM_START%"=="1" exit /b 1
 pause
 exit /b 1
 
 :npm_missing
-echo [BlockMine] npm was not found. Reinstall Node.js from https://nodejs.org/
+echo [RedstoneMind] npm was not found. Reinstall Node.js from https://nodejs.org/
 if "%FROM_START%"=="1" exit /b 1
 pause
 exit /b 1

@@ -67,7 +67,7 @@ describe('PanelUpdateService helpers', () => {
     test('mapGithubCommit собирает короткое описание', () => {
         const mapped = mapGithubCommit({
             sha: '1234567890abcdef',
-            html_url: 'https://github.com/blockmineJS/blockmine/commit/1234567890abcdef',
+            html_url: 'https://github.com/TartTech/redstonemind/commit/1234567890abcdef',
             commit: {
                 message: 'fix: bot kick\n\ndetails',
                 author: { name: 'merka', date: '2026-09-24T10:00:00Z' },
@@ -163,7 +163,7 @@ describe('resolveUpdateDecision', () => {
 
     test('Linux PM2 перезапускается через pm2 restart', () => {
         expect(resolveRestartMethod({ NODE_ENV: 'production', pm_id: '0' })).toBe('pm2');
-        expect(getPm2Target({ pm_id: '0', name: 'blockmine' })).toBe('0');
+        expect(getPm2Target({ pm_id: '0', name: 'redstonemind' })).toBe('0');
         expect(resolveRestartMethod({ NODE_ENV: 'production' })).toBe('spawn');
         expect(resolveRestartMethod({ NODE_ENV: 'development' })).toBe('nodemon');
     });

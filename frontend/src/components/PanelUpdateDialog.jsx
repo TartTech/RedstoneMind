@@ -145,7 +145,7 @@ export default function PanelUpdateDialog() {
     }, [stage, t]);
 
     useEffect(() => {
-        if (!applying && !waiting && !sessionStorage.getItem('blockmine-panel-updating')) {
+        if (!applying && !waiting && !sessionStorage.getItem('redstonemind-panel-updating')) {
             return undefined;
         }
         let cancelled = false;
@@ -164,7 +164,7 @@ export default function PanelUpdateDialog() {
                     panelUpdateWaiting: payload.stage === 'restarting' ? true : useAppStore.getState().panelUpdateWaiting,
                 });
                 if (payload.stage === 'error') {
-                    sessionStorage.removeItem('blockmine-panel-updating');
+                    sessionStorage.removeItem('redstonemind-panel-updating');
                     useAppStore.getState().fetchPanelUpdate(true);
                 }
             } catch {
@@ -181,7 +181,7 @@ export default function PanelUpdateDialog() {
 
     const handleApply = async () => {
         try {
-            sessionStorage.setItem('blockmine-panel-updating', '1');
+            sessionStorage.setItem('redstonemind-panel-updating', '1');
             await applyPanelUpdate();
             toast({
                 title: t('panelUpdate.closingTitle'),
@@ -193,7 +193,7 @@ export default function PanelUpdateDialog() {
                 window.location.replace('about:blank');
             }, 400);
         } catch (error) {
-            sessionStorage.removeItem('blockmine-panel-updating');
+            sessionStorage.removeItem('redstonemind-panel-updating');
             toast({
                 title: t('panelUpdate.applyError'),
                 description: error.message,

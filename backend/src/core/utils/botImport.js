@@ -5,7 +5,7 @@ const os = require('os');
 const AdmZip = require('adm-zip');
 const { assertArchiveLimits } = require('./zipSafe');
 
-const PLUGINS_BASE_DIR = path.join(os.homedir(), '.blockmine', 'storage', 'plugins');
+const PLUGINS_BASE_DIR = path.join(os.homedir(), '.redstonemind', 'storage', 'plugins');
 
 function httpError(message, statusCode = 400) {
     const err = new Error(message);

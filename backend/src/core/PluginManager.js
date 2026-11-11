@@ -20,7 +20,7 @@ const TtlCache = require('./utils/ttlCache');
 const { pluginDependencySatisfied, diffSettings, listDeclaredPermissions, ensureDeclaredPermissions } = require('./utils/pluginManifest');
 const { isFloatingLatest } = require('./utils/pluginCatalog');
 
-const DATA_DIR = path.join(os.homedir(), '.blockmine');
+const DATA_DIR = path.join(os.homedir(), '.redstonemind');
 const PLUGINS_BASE_DIR = path.join(DATA_DIR, 'storage', 'plugins');
 
 function isPathInside(parent, child) {
@@ -40,7 +40,7 @@ function httpError(message, statusCode) {
 }
 
 async function readExportedSettings(pluginDir) {
-    const settingsPath = path.join(pluginDir, 'blockmine-settings.json');
+    const settingsPath = path.join(pluginDir, 'redstonemind-settings.json');
     if (!await fse.pathExists(settingsPath)) return null;
     const raw = await fse.readFile(settingsPath, 'utf8');
     let parsed;
@@ -80,7 +80,7 @@ async function appendPluginFiles(archive, directory, relativeDir = '') {
     const entries = await fse.readdir(directory, { withFileTypes: true });
     for (const entry of entries) {
         if (entry.name === 'node_modules' || entry.name === '.git') continue;
-        if (!relativeDir && entry.name === 'blockmine-settings.json') continue;
+        if (!relativeDir && entry.name === 'redstonemind-settings.json') continue;
         const absolutePath = path.join(directory, entry.name);
         const entryName = relativeDir ? `${relativeDir}/${entry.name}` : entry.name;
         if (entry.isSymbolicLink()) continue;
@@ -94,7 +94,7 @@ async function appendPluginFiles(archive, directory, relativeDir = '') {
     }
 }
 
-const TELEMETRY_ENABLED = process.env.BLOCKMINE_TELEMETRY !== 'false';
+const TELEMETRY_ENABLED = process.env.REDSTONEMIND_TELEMETRY !== 'false';
 const STATS_SERVER_URL = process.env.STATS_SERVER_URL || 'http://212.22.78.42:3000';
 
 const LATEST_TAG_TTL_MS = 30 * 60 * 1000;
@@ -239,7 +239,7 @@ class PluginManager {
             await fse.copy(realSource, managedPath, {
                 filter: (src) => {
                     const base = path.basename(src);
-                    return base !== 'node_modules' && base !== '.git' && base !== 'blockmine-settings.json';
+                    return base !== 'node_modules' && base !== '.git' && base !== 'redstonemind-settings.json';
                 },
             });
         }
@@ -324,7 +324,7 @@ class PluginManager {
         archive.pipe(outputStream);
         await appendPluginFiles(archive, directory);
         if (settingsJson != null) {
-            archive.append(settingsJson, { name: 'blockmine-settings.json' });
+            archive.append(settingsJson, { name: 'redstonemind-settings.json' });
         }
         await Promise.race([archive.finalize(), failed]);
     }
@@ -348,7 +348,7 @@ class PluginManager {
             throw error;
         }
 
-        const tempDir = await fse.mkdtemp(path.join(os.tmpdir(), 'blockmine-plugin-zip-'));
+        const tempDir = await fse.mkdtemp(path.join(os.tmpdir(), 'redstonemind-plugin-zip-'));
         try {
             assertSafeZip(zip, tempDir);
             zip.extractAllTo(tempDir, true);
@@ -399,7 +399,7 @@ class PluginManager {
     }
 
     async _downloadToTemp(repoUrl, ref, tag, repoInfo) {
-        const tempDir = await fse.mkdtemp(path.join(os.tmpdir(), 'blockmine-plugin-'));
+        const tempDir = await fse.mkdtemp(path.join(os.tmpdir(), 'redstonemind-plugin-'));
         try {
             try {
                 const extracted = await this._downloadAndExtract(repoUrl, ref, tempDir);

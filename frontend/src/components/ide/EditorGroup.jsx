@@ -232,7 +232,7 @@ export default function EditorGroup({
                 {files.length === 0 ? (
                     <div className="absolute inset-0 flex items-center justify-center text-muted-foreground">
                         <div className="text-center">
-                            <div className="text-2xl font-semibold mb-2">BlockMine Studio</div>
+                            <div className="text-2xl font-semibold mb-2">RedstoneMind Studio</div>
                             <div className="text-sm">Выберите файл для редактирования</div>
                         </div>
                     </div>

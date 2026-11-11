@@ -39,7 +39,7 @@ export default function ContributeDialog({ onClose }) {
             <DialogFooter>
                 <Button variant="ghost" onClick={onClose}>{t('contribute.close')}</Button>
                 <Button asChild>
-                    <a href="https://github.com/blockmineJS/blockmine/issues/new/choose" target="_blank" rel="noopener noreferrer">
+                    <a href="https://github.com/TartTech/redstonemind/issues/new/choose" target="_blank" rel="noopener noreferrer">
                         <Github className="mr-2 h-4 w-4" />
                         {t('contribute.goToGithub')}
                     </a>

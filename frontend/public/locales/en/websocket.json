@@ -44,7 +44,7 @@
     "endpoint": "Endpoint",
     "params": "Connection parameters",
     "recommended": "Recommended",
-    "recommendedHint": "Use the high-level blockmine-sdk SDK for easy API usage",
+    "recommendedHint": "Use the high-level redstonemind-sdk SDK for easy API usage",
     "sdkTitle": "Option 1: High-level SDK (recommended)",
     "sdkDescription": "Simple Promise-based API for working with the bot",
     "rawTitle": "Option 2: Direct Socket.IO usage",

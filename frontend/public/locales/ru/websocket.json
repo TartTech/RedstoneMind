@@ -44,7 +44,7 @@
     "endpoint": "Endpoint",
     "params": "Параметры подключения",
     "recommended": "Рекомендуется",
-    "recommendedHint": "Используйте высокоуровневый SDK blockmine-sdk для простого использования API",
+    "recommendedHint": "Используйте высокоуровневый SDK redstonemind-sdk для простого использования API",
     "sdkTitle": "Вариант 1: Высокоуровневый SDK (рекомендуется)",
     "sdkDescription": "Простой Promise-based API для работы с ботом",
     "rawTitle": "Вариант 2: Прямое использование Socket.IO",

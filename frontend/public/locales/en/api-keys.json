@@ -5,7 +5,7 @@
   "experimental": "Experimental feature. Documentation not yet available.",
   "about": {
     "title": "About Panel API Keys",
-    "description": "Panel API keys allow you to access the BlockMine panel API and WebSocket for automation and integrations. Keys inherit your user permissions by default.",
+    "description": "Panel API keys allow you to access the RedstoneMind panel API and WebSocket for automation and integrations. Keys inherit your user permissions by default.",
     "security": "Security: Treat API keys like passwords. Never share them publicly or add them to version control."
   },
   "table": {

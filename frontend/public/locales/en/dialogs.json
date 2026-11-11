@@ -29,7 +29,7 @@
     "closingHint": "This tab will close, the panel will open on its own.",
     "commitCount": "{{count}} commits",
     "reason": {
-      "not_git": "In-app updates work from a git clone: start.bat on Windows or PM2 on Linux. For npx, install again with: npx blockmine",
+      "not_git": "In-app updates work from a git clone: start.bat on Windows or PM2 on Linux. For npx, install again with: npx redstonemind",
       "no_git_binary": "Git was not found. Install Git and start the panel again.",
       "dirty": "Could not pull from GitHub: local files block the merge. Remove the conflicting edits and try again.",
       "wrong_branch": "The panel is not on master/main. Switch to the default branch to update with the button.",

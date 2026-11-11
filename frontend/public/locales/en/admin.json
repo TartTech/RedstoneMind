@@ -84,7 +84,7 @@
     "title": "Global Settings",
     "description": "These settings affect the entire panel. Some changes require a restart.",
     "restartRequired": "Restart Required",
-    "restartDescription": "After saving settings, you need to restart the panel, for example using <code>npx blockmine</code> in the terminal.",
+    "restartDescription": "After saving settings, you need to restart the panel, for example using <code>npx redstonemind</code> in the terminal.",
     "externalAccess": "External Access",
     "externalAccessDescription": "Allow panel access from local network or internet.",
     "telemetry": "Anonymous Telemetry",

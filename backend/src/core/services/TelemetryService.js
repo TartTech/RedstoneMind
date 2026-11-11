@@ -13,7 +13,7 @@ class TelemetryService {
         this.heartbeatInterval = null;
 
         this.STATS_SERVER_URL = process.env.STATS_SERVER_URL || 'http://212.22.78.42:3000';
-        this.DATA_DIR = path.join(os.homedir(), '.blockmine');
+        this.DATA_DIR = path.join(os.homedir(), '.redstonemind');
         this.INSTANCE_ID_PATH = path.join(this.DATA_DIR, '.instance_id');
 
         this.loadInstanceId();

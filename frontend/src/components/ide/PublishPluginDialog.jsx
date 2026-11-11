@@ -9,7 +9,7 @@ import { apiHelper } from '@/lib/api';
 import { toast } from '@/hooks/use-toast';
 import { ExternalLink, Loader2 } from 'lucide-react';
 
-const GITHUB_TOKEN_KEY = 'blockmine_github_token';
+const GITHUB_TOKEN_KEY = 'redstonemind_github_token';
 
 export default function PublishPluginDialog({ open, onClose, botId, plugin, onPublished }) {
   const { t } = useTranslation('plugins');

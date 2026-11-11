@@ -420,11 +420,11 @@ const WebSocketTab = () => {
                                 </p>
                                 <pre className="bg-muted p-4 rounded text-xs overflow-x-auto">
 {`// Установка:
-// npm install blockmine-sdk
+// npm install redstonemind-sdk
 
-const BlockMineBot = require('blockmine-sdk');
+const RedstoneMindBot = require('redstonemind-sdk');
 
-const bot = new BlockMineBot({
+const bot = new RedstoneMindBot({
     url: 'http://localhost:3001',
     botId: ${botId},
     apiKey: 'bk_ваш_ключ_здесь'

@@ -6,7 +6,7 @@ const slugify = require('slugify');
 const prisma = require('../../../lib/prisma');
 const { ok, err, wrap, requirePermission, requireBotAccess } = require('../helpers');
 
-const DATA_DIR = path.join(os.homedir(), '.blockmine');
+const DATA_DIR = path.join(os.homedir(), '.redstonemind');
 const PLUGINS_BASE_DIR = path.join(DATA_DIR, 'storage', 'plugins');
 
 async function findPluginRecord(botId, pluginName) {
@@ -46,7 +46,7 @@ async function readTree(basePath, currentPath = '') {
 
 function register(server, { user }) {
     server.registerTool('create_plugin', {
-        description: 'Create a new empty plugin (or with hello-command template) for a bot. Files live in ~/.blockmine/storage/plugins/bot_<id>/<slug>/. Before writing the plugin, load the MCP prompt plugin-author. That prompt is the plugin API. Reading the panel source is fine when the prompt is not enough.',
+        description: 'Create a new empty plugin (or with hello-command template) for a bot. Files live in ~/.redstonemind/storage/plugins/bot_<id>/<slug>/. Before writing the plugin, load the MCP prompt plugin-author. That prompt is the plugin API. Reading the panel source is fine when the prompt is not enough.',
         inputSchema: {
             botId: z.number().int(),
             name: z.string().min(1).describe('Display name; will be slugified for the folder/package name'),
@@ -79,7 +79,7 @@ function register(server, { user }) {
             version,
             description,
             author,
-            keywords: ['blockmine', 'blockmine-plugin', 'minecraft', 'mineflayer'],
+            keywords: ['redstonemind', 'redstonemind-plugin', 'minecraft', 'mineflayer'],
             botpanel: {
                 main: 'index.js',
                 categories: [],

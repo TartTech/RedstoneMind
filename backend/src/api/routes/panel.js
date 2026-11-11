@@ -7,7 +7,7 @@ const config = require('../../config');
 
 const router = express.Router();
 
-const DATA_DIR = path.join(os.homedir(), '.blockmine');
+const DATA_DIR = path.join(os.homedir(), '.redstonemind');
 const CONFIG_PATH = path.join(DATA_DIR, 'config.json');
 
 /**

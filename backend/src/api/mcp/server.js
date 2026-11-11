@@ -24,7 +24,7 @@ function loadPluginAuthorPrompt() {
 
 function buildMcpServer(ctx) {
     const server = new McpServer({
-        name: 'blockmine',
+        name: 'redstonemind',
         version: PKG_VERSION,
     });
 
@@ -36,14 +36,14 @@ function buildMcpServer(ctx) {
     registerManagementTools(server, ctx);
     registerGraphTools(server, ctx);
 
-    server.registerPrompt('blockmine-assistant', {
-        description: 'Onboarding prompt explaining how to drive BlockMine through this MCP endpoint.',
+    server.registerPrompt('redstonemind-assistant', {
+        description: 'Onboarding prompt explaining how to drive RedstoneMind through this MCP endpoint.',
     }, () => ({
         messages: [{
             role: 'user',
             content: {
                 type: 'text',
-                text: `You manage BlockMine — a Minecraft bot panel — through this MCP server.
+                text: `You manage RedstoneMind — a Minecraft bot panel — through this MCP server.
 
 Tools group into:
 - Bots: list_bots, get_bot, get_bot_states, get_bot_live_state, get_chat_history, start_bot, stop_bot, restart_bot, create_bot, update_bot, delete_bot, send_message_to_bot, get_bot_logs

@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { cn } from '@/lib/utils';
 import { Check } from 'lucide-react';
 
-const LANGUAGE_CHOSEN_KEY = 'blockmine-language-chosen';
+const LANGUAGE_CHOSEN_KEY = 'redstonemind-language-chosen';
 
 function RussianFlag({ className }) {
   return (

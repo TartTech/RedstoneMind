@@ -1,5 +1,5 @@
-export const THEME_STORAGE_KEY = 'blockmine-theme';
-export const CUSTOM_THEME_STORAGE_KEY = 'blockmine-custom-theme';
+export const THEME_STORAGE_KEY = 'redstonemind-theme';
+export const CUSTOM_THEME_STORAGE_KEY = 'redstonemind-custom-theme';
 export const DEFAULT_THEME = 'dark';
 export const THEME_MODES = ['light', 'dark', 'system', 'custom'];
 

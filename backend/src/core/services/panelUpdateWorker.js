@@ -1,26 +1,26 @@
-process.env.BLOCKMINE_UPDATE_WORKER = '1';
+process.env.REDSTONEMIND_UPDATE_WORKER = '1';
 
 const { spawn } = require('child_process');
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
 
-if (process.env.BLOCKMINE_UPDATE_DETACHED !== '1') {
+if (process.env.REDSTONEMIND_UPDATE_DETACHED !== '1') {
     const child = spawn(process.execPath, process.argv.slice(1), {
         cwd: process.cwd(),
         detached: true,
         stdio: 'ignore',
         env: {
             ...process.env,
-            BLOCKMINE_UPDATE_WORKER: '1',
-            BLOCKMINE_UPDATE_DETACHED: '1',
+            REDSTONEMIND_UPDATE_WORKER: '1',
+            REDSTONEMIND_UPDATE_DETACHED: '1',
         },
     });
     child.unref();
     process.exit(0);
 }
 
-const logPath = path.join(os.homedir(), '.blockmine', 'update-worker.log');
+const logPath = path.join(os.homedir(), '.redstonemind', 'update-worker.log');
 
 function wlog(message) {
     try {
@@ -36,7 +36,7 @@ const { runPanelUpdateJob, isSafeRef } = require('./PanelUpdateService');
 
 async function main() {
     const branch = process.argv[2] || 'master';
-    const restartMethod = process.argv[3] || process.env.BLOCKMINE_RESTART_METHOD || '';
+    const restartMethod = process.argv[3] || process.env.REDSTONEMIND_RESTART_METHOD || '';
     if (!isSafeRef(branch)) {
         wlog('invalid branch');
         process.exit(1);

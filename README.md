@@ -1,9 +1,9 @@
 [🇷🇺 Русский](./README.ru.md) | **🇬🇧 English**
 
 <div align="center">
-  <img src="./image/logo.png" alt="BlockMine Logo" width="150">
+  <img src="./image/logo.png" alt="RedstoneMind Logo" width="150">
 
-  <h1>BlockMine</h1>
+  <h1>RedstoneMind</h1>
 
   <p>
     <strong>Open-source Minecraft Bot Framework and Automation Platform</strong>
@@ -16,21 +16,21 @@
   </p>
 
   <p>
-    <a href="https://github.com/blockmineJS/blockmine/stargazers"><img src="https://img.shields.io/github/stars/blockmineJS/blockmine?style=for-the-badge&logo=github" alt="GitHub Stars"></a>
-    <a href="https://github.com/blockmineJS/blockmine/commits/main"><img src="https://img.shields.io/github/last-commit/blockmineJS/blockmine?style=for-the-badge&logo=git" alt="Last Commit"></a>
-    <a href="http://212.22.78.42:3000/api/stats" target="_blank"><img src="https://img.shields.io/endpoint?url=https://blockmine-proxy.vercel.app/api/shield&style=for-the-badge&logo=minecraft&logoColor=white" alt="Bots Online"></a>
+    <a href="https://github.com/TartTech/redstonemind/stargazers"><img src="https://img.shields.io/github/stars/TartTech/redstonemind?style=for-the-badge&logo=github" alt="GitHub Stars"></a>
+    <a href="https://github.com/TartTech/redstonemind/commits/main"><img src="https://img.shields.io/github/last-commit/TartTech/redstonemind?style=for-the-badge&logo=git" alt="Last Commit"></a>
+    <a href="http://212.22.78.42:3000/api/stats" target="_blank"><img src="https://img.shields.io/endpoint?url=https://redstonemind-proxy.vercel.app/api/shield&style=for-the-badge&logo=minecraft&logoColor=white" alt="Bots Online"></a>
   </p>
 </div>
 
 ---
 
-## What is BlockMine?
+## What is RedstoneMind?
 
-**BlockMine** is an open-source **Minecraft bot framework**, a **Minecraft automation platform**, and a web panel for creating and running Minecraft bots.
+**RedstoneMind** is an open-source **Minecraft bot framework**, a **Minecraft automation platform**, and a web panel for creating and running Minecraft bots.
 
-BlockMine is a ready-made environment for Minecraft automation. Bot management, commands, plugins, permissions, scheduling, debugging, and multi-account control are already in one panel.
+RedstoneMind is a ready-made environment for Minecraft automation. Bot management, commands, plugins, permissions, scheduling, debugging, and multi-account control are already in one panel.
 
-BlockMine supports two ways to build behavior:
+RedstoneMind supports two ways to build behavior:
 
 * **No-code.** Draw Minecraft bot behavior in the visual editor.
 * **Code / low-code.** Write JavaScript plugins and your own nodes.
@@ -56,9 +56,9 @@ It fits simple AFK bots and server helpers, and it also fits heavier automation:
 * AI-controlled Minecraft bots
 * Custom Minecraft automation scripts
 
-### Why BlockMine?
+### Why RedstoneMind?
 
-BlockMine puts these pieces in one system:
+RedstoneMind puts these pieces in one system:
 
 * Minecraft bot runtime
 * Web dashboard
@@ -77,15 +77,15 @@ BlockMine puts these pieces in one system:
 * SOCKS5 proxy support
 * Hot reload
 
-More examples: [https://t.me/blockmineJs](https://t.me/blockmineJs)
+More examples: [https://t.me/redstonemindJs](https://t.me/redstonemindJs)
 
 ---
 
-## BlockMine and Mineflayer
+## RedstoneMind and Mineflayer
 
-Mineflayer is the Minecraft bot API. BlockMine is the framework around it: the panel, several bots, plugins, visual scenarios, a debugger, the WebSocket API, and MCP are already included.
+Mineflayer is the Minecraft bot API. RedstoneMind is the framework around it: the panel, several bots, plugins, visual scenarios, a debugger, the WebSocket API, and MCP are already included.
 
-| Feature | Mineflayer | BlockMine |
+| Feature | Mineflayer | RedstoneMind |
 |---|---|---|
 | Minecraft bot API | ✅ | ✅ |
 | Bot management | Manual | Built-in |
@@ -105,7 +105,7 @@ Mineflayer is the Minecraft bot API. BlockMine is the framework around it: the p
 | Hot reload | Depends on setup | ✅ |
 
 > **Looking for a Mineflayer alternative or a ready-made framework for building custom Minecraft bots?**
-> BlockMine provides the bot runtime, web panel, plugin system, visual scripting, debugging, multi-bot management, WebSocket API and MCP integration out of the box.
+> RedstoneMind provides the bot runtime, web panel, plugin system, visual scripting, debugging, multi-bot management, WebSocket API and MCP integration out of the box.
 
 ---
 
@@ -121,7 +121,7 @@ Mineflayer is the Minecraft bot API. BlockMine is the framework around it: the p
 * Centralized Minecraft bot management
 
 <p align="center">
-  <img src="./screen/language_selector.png" alt="BlockMine language selector" width="400">
+  <img src="./screen/language_selector.png" alt="RedstoneMind language selector" width="400">
   <br>
   <em>Interface language selection on first launch</em>
 </p>
@@ -164,7 +164,7 @@ Run several Minecraft bots from one panel.
 
 ### 🔌 Plugin system
 
-Plugins extend BlockMine in code.
+Plugins extend RedstoneMind in code.
 
 A plugin can:
 
@@ -176,7 +176,7 @@ A plugin can:
 
 #### Plugin marketplace
 
-BlockMine includes a plugin catalog:
+RedstoneMind includes a plugin catalog:
 
 * **Categories** — Core, Clan, Utilities, and others
 * **Search**
@@ -188,7 +188,7 @@ BlockMine includes a plugin catalog:
 * **Hot reload** without restarting the bot
 
 <p align="center">
-  <img src="./screen/plugin_обзор.png" alt="BlockMine Plugin Marketplace" width="100%">
+  <img src="./screen/plugin_обзор.png" alt="RedstoneMind Plugin Marketplace" width="100%">
   <br>
   <em>Built-in plugin store with categories, search, and automatic dependency installation</em>
 </p>
@@ -227,16 +227,16 @@ BlockMine includes a plugin catalog:
 
 ### 📦 Export / import
 
-Move bots and their settings between BlockMine installs.
+Move bots and their settings between RedstoneMind installs.
 
 * Full bot backups as a **ZIP archive**
 * Export and import individual commands
 * Export and import graphs
-* Move a setup from one BlockMine install to another
+* Move a setup from one RedstoneMind install to another
 
 ### 🔌 WebSocket API
 
-The WebSocket API connects BlockMine to other applications.
+The WebSocket API connects RedstoneMind to other applications.
 
 The API can:
 
@@ -250,12 +250,12 @@ The API can:
 
 Node.js SDK:
 
-`blockmine-sdk`
+`redstonemind-sdk`
 
 > ⚠️ The SDK is alpha and is not a priority right now.
 
 <p align="center">
-  <img src="./screen/websocket.png" alt="BlockMine WebSocket API" width="100%">
+  <img src="./screen/websocket.png" alt="RedstoneMind WebSocket API" width="100%">
   <br>
   <em>Interactive panel for the WebSocket API</em>
 </p>
@@ -264,7 +264,7 @@ Node.js SDK:
 
 # 🤖 MCP server — run Minecraft through an AI
 
-BlockMine ships a built-in **Model Context Protocol (MCP)** server.
+RedstoneMind ships a built-in **Model Context Protocol (MCP)** server.
 
 Endpoint:
 
@@ -272,7 +272,7 @@ Endpoint:
 POST /api/mcp
 ```
 
-Through MCP, an AI agent works with the BlockMine panel, bots, servers, plugins, files, commands, permissions, the scheduler, and the visual editor.
+Through MCP, an AI agent works with the RedstoneMind panel, bots, servers, plugins, files, commands, permissions, the scheduler, and the visual editor.
 
 Clients:
 
@@ -335,7 +335,7 @@ Edits to the open graph show up in the editor and **are not written to disk unti
 
 ## 1. Create a panel API key
 
-In the BlockMine panel:
+In the RedstoneMind panel:
 
 **Settings → API keys → Create key**
 
@@ -350,7 +350,7 @@ pk_
 Example:
 
 ```bash
-claude mcp add blockmine --scope user --transport http \
+claude mcp add redstonemind --scope user --transport http \
   http://localhost:3001/api/mcp \
   --header "Authorization: Bearer pk_your_key"
 ```
@@ -360,7 +360,7 @@ claude mcp add blockmine --scope user --transport http \
 ```json
 {
   "mcpServers": {
-    "blockmine": {
+    "redstonemind": {
       "type": "http",
       "url": "http://localhost:3001/api/mcp",
       "headers": {
@@ -373,7 +373,7 @@ claude mcp add blockmine --scope user --transport http \
 
 ## Remote connection
 
-The MCP endpoint starts with BlockMine.
+The MCP endpoint starts with RedstoneMind.
 
 If the panel runs on a VPS, replace:
 
@@ -411,8 +411,8 @@ On Windows, `start.bat` can install the Node.js LTS build through `winget` when 
 ### 1. Clone
 
 ```bash
-git clone https://github.com/blockmineJS/blockmine.git
-cd blockmine
+git clone https://github.com/TartTech/redstonemind.git
+cd redstonemind
 ```
 
 ### 2. Start with `start.bat`
@@ -486,7 +486,7 @@ After startup:
 If Git cannot be installed:
 
 ```bash
-npx blockmine
+npx redstonemind
 ```
 
 The command:
@@ -501,7 +501,7 @@ The console prints:
 http://localhost:3001
 ```
 
-> An `npx` install has no in-panel update button. A newer version means running `npx blockmine` again, and the package downloads in full.
+> An `npx` install has no in-panel update button. A newer version means running `npx redstonemind` again, and the package downloads in full.
 
 ### Windows and PowerShell
 
@@ -519,7 +519,7 @@ Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
 
 Press `Y` to confirm.
 
-Or install BlockMine from Git and use:
+Or install RedstoneMind from Git and use:
 
 ```bat
 start.bat
@@ -543,7 +543,7 @@ sudo npm install -g pm2@latest
 Then clone the repository:
 
 ```bash
-git clone https://github.com/blockmineJS/blockmine.git
+git clone https://github.com/TartTech/redstonemind.git
 ```
 
 If it prints `-bash: git: command not found`, git is not on the host. Install it and run `git clone` again:
@@ -555,7 +555,7 @@ sudo apt install -y git
 Then go into the folder, build the panel, and start it:
 
 ```bash
-cd blockmine
+cd redstonemind
 npm i
 npm run build
 pm2 start
@@ -570,11 +570,11 @@ On a PM2 host the panel can update itself: the **Update** button in the UI runs 
 The same steps by hand:
 
 ```bash
-cd blockmine
+cd redstonemind
 git pull
 npm install
 npm run build
-pm2 restart blockmine
+pm2 restart redstonemind
 ```
 
 Locally with `start.bat` / `npm run dev` you do not need a production build: Vite serves port 5173.
@@ -585,10 +585,10 @@ Locally with `start.bat` / `npm run dev` you do not need a production build: Vit
 
 ## 🎨 Visual node editor
 
-The visual editor is the no-code side of BlockMine.
+The visual editor is the no-code side of RedstoneMind.
 
 <p align="center">
-  <img src="./image/visualcommand.png" alt="BlockMine Visual Node Editor" width="100%">
+  <img src="./image/visualcommand.png" alt="RedstoneMind Visual Node Editor" width="100%">
 </p>
 
 Logic is built by dragging and connecting functional blocks — **nodes**.
@@ -614,7 +614,7 @@ Logic is built by dragging and connecting functional blocks — **nodes**.
 
 # 🔍 Debugging
 
-BlockMine has two debugging systems:
+RedstoneMind has two debugging systems:
 
 * **Live debug**
 * **Trace viewer**
@@ -631,7 +631,7 @@ Debug a visual graph while it runs.
 
 <p align="center">
   <strong>🎨 Visual editor with live debug</strong><br>
-  <img src="./screen/graph_live_debug.png" alt="BlockMine Live Debug" width="100%">
+  <img src="./screen/graph_live_debug.png" alt="RedstoneMind Live Debug" width="100%">
   <br>
   <em>Real-time graph debugging with breakpoints and step-by-step execution</em>
 </p>
@@ -647,7 +647,7 @@ The trace viewer stores graph runs.
 
 <p align="center">
   <strong>🔍 Trace viewer</strong><br>
-  <img src="./screen/node_debug_trace.png" alt="BlockMine Trace Viewer" width="100%">
+  <img src="./screen/node_debug_trace.png" alt="RedstoneMind Trace Viewer" width="100%">
   <br>
   <em>Step-by-step graph execution with history and variable values</em>
 </p>
@@ -656,10 +656,10 @@ The trace viewer stores graph runs.
 
 # 🔌 Plugins
 
-Plugins are how you extend BlockMine in code.
+Plugins are how you extend RedstoneMind in code.
 
 <p align="center">
-  <img src="./screen/plugin_обзор.png" alt="BlockMine Plugin Store" width="100%">
+  <img src="./screen/plugin_обзор.png" alt="RedstoneMind Plugin Store" width="100%">
   <br>
   <em>Built-in plugin store with categories, search, and automatic dependency installation</em>
 </p>
@@ -747,7 +747,7 @@ Commands can have:
 
 # 🔐 Permissions and groups
 
-BlockMine includes permissions and groups.
+RedstoneMind includes permissions and groups.
 
 ## Permissions
 
@@ -789,7 +789,7 @@ Users:
 
 # ⏰ Task scheduler
 
-BlockMine can run actions on a schedule.
+RedstoneMind can run actions on a schedule.
 
 Schedules use **cron expressions**.
 
@@ -810,7 +810,7 @@ Each task has:
 
 # 🧑‍💻 For developers
 
-BlockMine is also a platform for your own Minecraft automation plugins.
+RedstoneMind is also a platform for your own Minecraft automation plugins.
 
 > **For AI agents:** if you are connected through MCP, load the `plugin-author` prompt with `prompts/get`. Without MCP, the full guide is in [docs/plugin-author.md](./docs/plugin-author.md).
 
@@ -822,8 +822,8 @@ BlockMine is also a platform for your own Minecraft automation plugins.
 ## Install
 
 ```bash
-git clone https://github.com/blockmineJS/blockmine.git
-cd blockmine
+git clone https://github.com/TartTech/redstonemind.git
+cd redstonemind
 npm install
 npm run build
 ```
@@ -860,7 +860,7 @@ After startup:
 ## Dashboard
 
 <p align="center">
-  <img src="./screen/dashboard.png" alt="BlockMine Dashboard" width="100%">
+  <img src="./screen/dashboard.png" alt="RedstoneMind Dashboard" width="100%">
   <br>
   <em>Bot status, CPU, and RAM</em>
 </p>
@@ -868,7 +868,7 @@ After startup:
 ## Plugin store
 
 <p align="center">
-  <img src="./screen/plugins-store.png" alt="BlockMine Plugin Store" width="100%">
+  <img src="./screen/plugins-store.png" alt="RedstoneMind Plugin Store" width="100%">
   <br>
   <em>Install from the catalog, GitHub, or a local file</em>
 </p>
@@ -876,7 +876,7 @@ After startup:
 ## Installed plugins
 
 <p align="center">
-  <img src="./screen/plugins.png" alt="BlockMine Installed Plugins" width="100%">
+  <img src="./screen/plugins.png" alt="RedstoneMind Installed Plugins" width="100%">
   <br>
   <em>Enable a plugin, edit its settings, and see its commands</em>
 </p>
@@ -884,7 +884,7 @@ After startup:
 ## Plugin editor
 
 <p align="center">
-  <img src="./screen/ide.png" alt="BlockMine Plugin Editor" width="100%">
+  <img src="./screen/ide.png" alt="RedstoneMind Plugin Editor" width="100%">
   <br>
   <em>Files, Monaco, and a terminal on the machine that runs the panel</em>
 </p>
@@ -892,7 +892,7 @@ After startup:
 ## Commands
 
 <p align="center">
-  <img src="./screen/management.png" alt="BlockMine Commands" width="100%">
+  <img src="./screen/management.png" alt="RedstoneMind Commands" width="100%">
   <br>
   <em>Aliases, permissions, and where a command comes from</em>
 </p>
@@ -900,7 +900,7 @@ After startup:
 ## 3D viewer
 
 <p align="center">
-  <img src="./screen/3dviewer.png" alt="BlockMine 3D Viewer" width="100%">
+  <img src="./screen/3dviewer.png" alt="RedstoneMind 3D Viewer" width="100%">
   <br>
   <em>The Minecraft world through the bot's eyes</em>
 </p>
@@ -908,7 +908,7 @@ After startup:
 ## Graph debugging
 
 <p align="center">
-  <img src="./screen/graph_live_debug.png" alt="BlockMine Graph Debugger" width="100%">
+  <img src="./screen/graph_live_debug.png" alt="RedstoneMind Graph Debugger" width="100%">
   <br>
   <em>Breakpoints and node values</em>
 </p>
@@ -953,9 +953,9 @@ This project uses [Conventional Commits](https://www.conventionalcommits.org/).
 
 ---
 
-# ⭐ BlockMine
+# ⭐ RedstoneMind
 
-**BlockMine is an open-source Minecraft bot framework and automation platform for creating, running, debugging, and managing Minecraft bots.**
+**RedstoneMind is an open-source Minecraft bot framework and automation platform for creating, running, debugging, and managing Minecraft bots.**
 
 If you are looking for:
 
@@ -971,11 +971,11 @@ If you are looking for:
 * AI Minecraft bot platform
 * MCP Minecraft automation
 
-BlockMine brings those together in one platform.
+RedstoneMind brings those together in one platform.
 
 <div align="center">
   <p>
-    <a href="https://github.com/blockmineJS/blockmine">⭐ Star BlockMine on GitHub</a>
+    <a href="https://github.com/TartTech/redstonemind">⭐ Star RedstoneMind on GitHub</a>
   </p>
 </div>
 

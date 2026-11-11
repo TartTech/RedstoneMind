@@ -279,7 +279,7 @@ export default function PanelApiKeysPage() {
                             <Label>{t('createdDialog.usage')}</Label>
                             <div className="bg-muted p-4 rounded-lg">
                                 <code className="text-sm">
-                                    const panel = await BlockMineSDK.connectToPanel(&#123;<br />
+                                    const panel = await RedstoneMindSDK.connectToPanel(&#123;<br />
                                     &nbsp;&nbsp;url: 'http://localhost:3000',<br />
                                     &nbsp;&nbsp;token: '{createdKey?.apiKey}'<br />
                                     &#125;);

@@ -359,7 +359,7 @@ export default function SubmitToOfficialListDialog({ isOpen, onClose, pluginInfo
                                 <ol className="text-xs space-y-1 text-muted-foreground list-decimal list-inside">
                                     <li>Автоматически создастся ветка <code className="bg-muted px-1 rounded">add-plugin-{getRepoId()}</code></li>
                                     <li>{isUpdate ? 'Версия плагина будет обновлена' : 'Ваш плагин будет добавлен'} в <code className="bg-muted px-1 rounded">index.json</code></li>
-                                    <li>Создастся Pull Request в <code className="bg-muted px-1 rounded">blockmineJS/official-plugins-list</code></li>
+                                    <li>Создастся Pull Request в <code className="bg-muted px-1 rounded">TartTech/official-plugins-list</code></li>
                                     <li>После проверки и одобрения модераторами, {isUpdate ? 'новая версия появится в списке' : 'плагин появится в официальном списке'}</li>
                                 </ol>
                             </div>

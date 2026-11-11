@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды object:set
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const objectSetDefinition = new NodeDefinition({
   type: 'object:set',
   category: 'object',
-  label: t('labels.installZnachenie'),
-  description: t('descriptions.dobavlyaetIliIzmenyaetZnacheniePoKlyuchu'),
+  label: i18n.t('labels.installZnachenie'),
+  description: i18n.t('descriptions.dobavlyaetIliIzmenyaetZnacheniePoKlyuchu'),
 
 
 

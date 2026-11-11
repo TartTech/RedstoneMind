@@ -1,75 +1,76 @@
+import i18n from '@/i18n';
 const normalizeValue = (value) => String(value || '').trim().toLowerCase();
 
 const CATEGORY_DEFINITIONS = [
   {
     id: 'all',
-    values: [t('allPlugins'), 'All plugins', 'All'],
+    values: [i18n.t('allPlugins'), 'All plugins', 'All'],
     translationKey: 'categories.allPlugins',
-    defaultLabel: t('labels.allPlugins'),
+    defaultLabel: i18n.t('labels.allPlugins'),
     iconName: 'LayoutGrid',
     color: 'from-blue-500 to-purple-500',
   },
   {
     id: 'core',
-    values: [t('yadro'), 'Core'],
+    values: [i18n.t('yadro'), 'Core'],
     translationKey: 'categories.core',
-    defaultLabel: t('labels.yadro'),
+    defaultLabel: i18n.t('labels.yadro'),
     iconName: 'ShieldCheck',
     color: 'from-green-500 to-emerald-500',
   },
   {
     id: 'clan',
-    values: [t('klan'), 'Clan'],
+    values: [i18n.t('klan'), 'Clan'],
     translationKey: 'categories.clan',
-    defaultLabel: t('labels.klan'),
+    defaultLabel: i18n.t('labels.klan'),
     iconName: 'Users',
     color: 'from-orange-500 to-red-500',
   },
   {
     id: 'chat',
-    values: [t('chat'), 'Chat'],
+    values: [i18n.t('chat'), 'Chat'],
     translationKey: 'categories.chat',
-    defaultLabel: t('labels.chat'),
+    defaultLabel: i18n.t('labels.chat'),
     iconName: 'MessageSquare',
     color: 'from-purple-500 to-pink-500',
   },
   {
     id: 'automation',
-    values: [t('avtomatizatsiya'), 'Automation'],
+    values: [i18n.t('avtomatizatsiya'), 'Automation'],
     translationKey: 'categories.automation',
-    defaultLabel: t('labels.avtomatizatsiya'),
+    defaultLabel: i18n.t('labels.avtomatizatsiya'),
     iconName: 'Bot',
     color: 'from-cyan-500 to-blue-500',
   },
   {
     id: 'security',
-    values: [t('bezopasnost'), 'Security'],
+    values: [i18n.t('bezopasnost'), 'Security'],
     translationKey: 'categories.security',
-    defaultLabel: t('labels.bezopasnost'),
+    defaultLabel: i18n.t('labels.bezopasnost'),
     iconName: 'ShieldBan',
     color: 'from-red-500 to-rose-500',
   },
   {
     id: 'commands',
-    values: [t('komandy'), 'Commands'],
+    values: [i18n.t('komandy'), 'Commands'],
     translationKey: 'categories.commands',
-    defaultLabel: t('labels.komandy'),
+    defaultLabel: i18n.t('labels.komandy'),
     iconName: 'TerminalSquare',
     color: 'from-gray-500 to-gray-700',
   },
   {
     id: 'utilities',
-    values: [t('utility'), 'Utilities'],
+    values: [i18n.t('utility'), 'Utilities'],
     translationKey: 'categories.utilities',
-    defaultLabel: t('labels.utility'),
+    defaultLabel: i18n.t('labels.utility'),
     iconName: 'Wrench',
     color: 'from-yellow-500 to-amber-500',
   },
   {
     id: 'permissions',
-    values: [t('prava'), 'Permissions'],
+    values: [i18n.t('prava'), 'Permissions'],
     translationKey: 'categories.permissions',
-    defaultLabel: t('labels.prava'),
+    defaultLabel: i18n.t('labels.prava'),
     iconName: 'KeyRound',
     color: 'from-indigo-500 to-purple-500',
   },
@@ -77,8 +78,8 @@ const CATEGORY_DEFINITIONS = [
 
 const SOURCE_TYPE_DEFINITIONS = {
   GITHUB: { translationKey: 'sources.github', defaultLabel: 'GitHub' },
-  LOCAL: { translationKey: 'sources.local', defaultLabel: t('labels.lokalnyy') },
-  LOCAL_IDE: { translationKey: 'sources.localIde', defaultLabel: t('labels.lokalnyyIde') },
+  LOCAL: { translationKey: 'sources.local', defaultLabel: i18n.t('labels.lokalnyy') },
+  LOCAL_IDE: { translationKey: 'sources.localIde', defaultLabel: i18n.t('labels.lokalnyyIde') },
 };
 
 const categoryById = new Map(CATEGORY_DEFINITIONS.map((definition) => [definition.id, definition]));
@@ -103,7 +104,7 @@ export const translatePluginCategory = (category, t) => {
     return category;
   }
 
-  return t(definition.translationKey, {
+  return i18n.t(definition.translationKey, {
     defaultValue: definition.defaultLabel,
   });
 };
@@ -152,7 +153,7 @@ export const translatePluginSourceType = (sourceType, t) => {
     return sourceType;
   }
 
-  return t(definition.translationKey, {
+  return i18n.t(definition.translationKey, {
     defaultValue: definition.defaultLabel,
   });
 };

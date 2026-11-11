@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
+import i18n from '@/i18n';
 
 /**
  * Component настроек for flow:sequence ноды
@@ -17,7 +18,7 @@ const FlowSequenceSettings = ({ nodeId, data, updateNodeData }) => {
         }}
         className="h-8 rounded-md px-3 text-xs"
       >
-        {t('nodeSettings.add')}
+        {i18n.t('nodeSettings.add')}
       </Button>
       <Button
         onClick={() => {
@@ -29,7 +30,7 @@ const FlowSequenceSettings = ({ nodeId, data, updateNodeData }) => {
         variant="destructive"
         className="h-8 rounded-md px-3 text-xs"
       >
-        {t('nodeSettings.remove')}
+        {i18n.t('nodeSettings.remove')}
       </Button>
     </div>
   );

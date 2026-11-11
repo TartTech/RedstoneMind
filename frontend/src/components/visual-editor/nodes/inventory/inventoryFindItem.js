@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды inventory:find_item
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const inventoryFindItemDefinition = new NodeDefinition({
   type: 'inventory:find_item',
   category: 'inventory',
-  label: t('labels.naytiPredmet'),
-  description: t('descriptions.ishchetPredmetVInventarePoImeni'),
+  label: i18n.t('labels.naytiPredmet'),
+  description: i18n.t('descriptions.ishchetPredmetVInventarePoImeni'),
 
 
 

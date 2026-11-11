@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды action:send_websocket_response
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const actionSendWebsocketResponseDefinition = new NodeDefinition({
   type: 'action:send_websocket_response',
   category: 'action',
-  label: t('labels.websocketOtvet'),
-  description: t('descriptions.otpravlyaetOtvetKlientuCherezWebsocketApi'),
+  label: i18n.t('labels.websocketOtvet'),
+  description: i18n.t('descriptions.otpravlyaetOtvetKlientuCherezWebsocketApi'),
 
 
 

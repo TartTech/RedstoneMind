@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды inventory:get_held_item
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const inventoryGetHeldItemDefinition = new NodeDefinition({
   type: 'inventory:get_held_item',
   category: 'inventory',
-  label: t('labels.itemVRuke'),
-  description: t('descriptions.poluchaetPredmetKotoryyBotDerzhitV'),
+  label: i18n.t('labels.itemVRuke'),
+  description: i18n.t('descriptions.poluchaetPredmetKotoryyBotDerzhitV'),
 
 
 

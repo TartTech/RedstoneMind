@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды container:close
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const containerCloseDefinition = new NodeDefinition({
   type: 'container:close',
   category: 'container',
-  label: t('labels.konteynerZakryt'),
-  description: t('descriptions.zakryvaetTekushchiyOtkrytyyKonteyner'),
+  label: i18n.t('labels.konteynerZakryt'),
+  description: i18n.t('descriptions.zakryvaetTekushchiyOtkrytyyKonteyner'),
 
 
 

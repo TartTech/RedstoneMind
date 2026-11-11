@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды event:entitySpawn
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const eventEntitySpawnDefinition = new NodeDefinition({
   type: 'event:entitySpawn',
   category: 'event',
-  label: t('labels.entityPoyavilas'),
-  description: t('descriptions.vyzyvaetsyaKogdaNovayaSushchnostPoyavlyaetsyaV'),
+  label: i18n.t('labels.entityPoyavilas'),
+  description: i18n.t('descriptions.vyzyvaetsyaKogdaNovayaSushchnostPoyavlyaetsyaV'),
 
 
 

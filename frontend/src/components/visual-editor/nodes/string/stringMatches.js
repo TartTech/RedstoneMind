@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды string:matches
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const stringMatchesDefinition = new NodeDefinition({
   type: 'string:matches',
   category: 'string',
-  label: t('labels.sovpadaet'),
-  description: t('descriptions.proveryaetSovpadenieStrokiSRegexPatternom'),
+  label: i18n.t('labels.sovpadaet'),
+  description: i18n.t('descriptions.proveryaetSovpadenieStrokiSRegexPatternom'),
 
 
 

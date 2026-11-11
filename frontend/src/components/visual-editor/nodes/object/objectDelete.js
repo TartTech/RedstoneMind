@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды object:delete
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const objectDeleteDefinition = new NodeDefinition({
   type: 'object:delete',
   category: 'object',
-  label: t('labels.deleteKlyuch'),
-  description: t('descriptions.udalyaetKlyuchIzObekta'),
+  label: i18n.t('labels.deleteKlyuch'),
+  description: i18n.t('descriptions.udalyaetKlyuchIzObekta'),
 
 
 

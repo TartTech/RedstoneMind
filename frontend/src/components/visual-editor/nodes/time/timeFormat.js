@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды time:format
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const timeFormatDefinition = new NodeDefinition({
   type: 'time:format',
   category: 'time',
-  label: t('labels.formatirovatDatu'),
-  description: t('descriptions.formatiruetDatuVStrokuYyyymmddHhmmss'),
+  label: i18n.t('labels.formatirovatDatu'),
+  description: i18n.t('descriptions.formatiruetDatuVStrokuYyyymmddHhmmss'),
 
 
 

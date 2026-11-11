@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды string:contains
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const stringContainsDefinition = new NodeDefinition({
   type: 'string:contains',
   category: 'string',
-  label: t('labels.soderzhit2'),
-  description: t('descriptions.proveryaetSoderzhitsyaLiPodstrokaVStroke'),
+  label: i18n.t('labels.soderzhit2'),
+  description: i18n.t('descriptions.proveryaetSoderzhitsyaLiPodstrokaVStroke'),
 
 
 

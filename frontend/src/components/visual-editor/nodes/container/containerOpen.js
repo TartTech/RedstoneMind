@@ -1,5 +1,6 @@
 import { NodeDefinition } from '../../core/registry';
 import ContainerOpenSettings from './ContainerOpenSettings';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды container:open
@@ -8,8 +9,8 @@ import ContainerOpenSettings from './ContainerOpenSettings';
 export const containerOpenDefinition = new NodeDefinition({
   type: 'container:open',
   category: 'container',
-  label: t('labels.konteynerOtkryt'),
-  description: t('descriptions.otkryvaetKonteynerSundukBochkuPoKoordinatam'),
+  label: i18n.t('labels.konteynerOtkryt'),
+  description: i18n.t('descriptions.otkryvaetKonteynerSundukBochkuPoKoordinatam'),
 
 
 

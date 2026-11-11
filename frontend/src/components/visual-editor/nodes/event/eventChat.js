@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды event:chat
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const eventChatDefinition = new NodeDefinition({
   type: 'event:chat',
   category: 'event',
-  label: t('labels.soobshchenieVChate'),
-  description: t('descriptions.srabatyvaetKogdaVChatPrikhoditSoobshchenie'),
+  label: i18n.t('labels.soobshchenieVChate'),
+  description: i18n.t('descriptions.srabatyvaetKogdaVChatPrikhoditSoobshchenie'),
 
 
 

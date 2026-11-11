@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
+import i18n from '@/i18n';
 
 /**
  * Settings for ноды flow:delay
@@ -12,7 +13,7 @@ function FlowDelaySettings({ nodeId, data, updateNodeData }) {
   return (
     <div className="space-y-4">
       <div>
-        <Label htmlFor="delay">{t('nodeHelp.flowDelay.label')}</Label>
+        <Label htmlFor="delay">{i18n.t('nodeHelp.flowDelay.label')}</Label>
         <Input
           id="delay"
           type="number"
@@ -22,21 +23,21 @@ function FlowDelaySettings({ nodeId, data, updateNodeData }) {
           placeholder="1000"
         />
         <p className="text-xs text-muted-foreground mt-1">
-          {t('nodeSettings.usedWhenPinDisconnected', { pin: 'Delay' })}
+          {i18n.t('nodeSettings.usedWhenPinDisconnected', { pin: 'Delay' })}
         </p>
       </div>
 
       <div className="text-sm text-muted-foreground">
-        <p>{t('nodeHelp.flowDelay.intro')}</p>
+        <p>{i18n.t('nodeHelp.flowDelay.intro')}</p>
         <ul className="list-disc list-inside mt-2 space-y-1">
-          <li>{t('nodeHelp.flowDelay.item1')}</li>
-          <li>{t('nodeHelp.flowDelay.item2')}</li>
-          <li>{t('nodeHelp.flowDelay.item3')}</li>
+          <li>{i18n.t('nodeHelp.flowDelay.item1')}</li>
+          <li>{i18n.t('nodeHelp.flowDelay.item2')}</li>
+          <li>{i18n.t('nodeHelp.flowDelay.item3')}</li>
         </ul>
       </div>
 
       <div className="text-xs text-muted-foreground p-2 bg-muted rounded">
-        {t('nodeHelp.flowDelay.note')}
+        {i18n.t('nodeHelp.flowDelay.note')}
       </div>
     </div>
   );

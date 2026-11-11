@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды flow:break
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const flowBreakDefinition = new NodeDefinition({
   type: 'flow:break',
   category: 'flow',
-  label: t('labels.vyytiIzTsikla'),
-  description: t('descriptions.nemedlennoPreryvaetVypolnenieTsiklaForEach'),
+  label: i18n.t('labels.vyytiIzTsikla'),
+  description: i18n.t('descriptions.nemedlennoPreryvaetVypolnenieTsiklaForEach'),
 
 
 

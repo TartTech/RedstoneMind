@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { MapPin } from 'lucide-react';
 import CoordinatePickerDialog from '@/components/minecraft/CoordinatePickerDialog';
+import i18n from '@/i18n';
 
 /**
  * Component настроек for furnace:open ноды
@@ -31,7 +32,7 @@ const FurnaceOpenSettings = ({ nodeId, data, updateNodeData }) => {
         onClick={() => setPickerOpen(true)}
       >
         <MapPin className="w-4 h-4 mr-2" />
-        {t('nodeSettings.selectFurnaceIn3dViewer')}
+        {i18n.t('nodeSettings.selectFurnaceIn3dViewer')}
       </Button>
 
       {hasCoords && (

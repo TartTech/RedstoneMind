@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { randomUUID } from '@/lib/uuid';
+import i18n from '@/i18n';
 
 const PIN_TYPES = [
   { value: 'String', label: 'String' },
@@ -37,12 +38,12 @@ const EventCustomSettings = ({ nodeId, data, updateNodeData }) => {
   return (
     <div className="p-2 border-t border-slate-700 flex flex-col gap-2">
       <div className="flex items-center gap-2">
-        <Label className="text-xs shrink-0">{t('eventNodes.eventName')}</Label>
+        <Label className="text-xs shrink-0">{i18n.t('eventNodes.eventName')}</Label>
         <Input
           className="h-7 text-xs"
           value={data.label || ''}
           onChange={(e) => updateNodeData(nodeId, { label: e.target.value })}
-          placeholder={t('eventNodes.eventNamePlaceholder')}
+          placeholder={i18n.t('eventNodes.eventNamePlaceholder')}
         />
       </div>
 
@@ -52,7 +53,7 @@ const EventCustomSettings = ({ nodeId, data, updateNodeData }) => {
             className="h-7 text-xs flex-1 min-w-0"
             value={pin.name}
             onChange={(e) => handleUpdatePin(pin.id, 'name', e.target.value)}
-            placeholder={t('eventNodes.pinNamePlaceholder')}
+            placeholder={i18n.t('eventNodes.pinNamePlaceholder')}
           />
           <Select value={pin.type} onValueChange={(val) => handleUpdatePin(pin.id, 'type', val)}>
             <SelectTrigger className="h-7 text-xs w-[90px] shrink-0">
@@ -83,7 +84,7 @@ const EventCustomSettings = ({ nodeId, data, updateNodeData }) => {
         className="h-7 text-xs w-full"
         onClick={handleAddPin}
       >
-        {t('eventNodes.addPin')}
+        {i18n.t('eventNodes.addPin')}
       </Button>
     </div>
   );

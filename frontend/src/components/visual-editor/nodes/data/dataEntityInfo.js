@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды data:entity_info
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const dataEntityInfoDefinition = new NodeDefinition({
   type: 'data:entity_info',
   category: 'data',
-  label: t('labels.informationOSushchnosti'),
-  description: t('descriptions.informationOSushchestve'),
+  label: i18n.t('labels.informationOSushchnosti'),
+  description: i18n.t('descriptions.informationOSushchestve'),
 
 
 

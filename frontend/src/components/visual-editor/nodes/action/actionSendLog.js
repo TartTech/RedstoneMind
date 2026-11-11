@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды action:send_log
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const actionSendLogDefinition = new NodeDefinition({
   type: 'action:send_log',
   category: 'action',
-  label: t('labels.sendLog'),
-  description: t('descriptions.zapisyvaetSoobshchenieVVebkonsol'),
+  label: i18n.t('labels.sendLog'),
+  description: i18n.t('descriptions.zapisyvaetSoobshchenieVVebkonsol'),
 
 
 

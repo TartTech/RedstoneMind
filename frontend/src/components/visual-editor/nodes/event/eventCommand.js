@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды event:command
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const eventCommandDefinition = new NodeDefinition({
   type: 'event:command',
   category: 'event',
-  label: t('labels.priVypolneniiKomandy'),
-  description: t('descriptions.startovayaTochkaDlyaGrafaKomandy'),
+  label: i18n.t('labels.priVypolneniiKomandy'),
+  description: i18n.t('descriptions.startovayaTochkaDlyaGrafaKomandy'),
 
 
 

@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useVisualEditorStore } from '@/stores/visualEditorStore';
+import i18n from '@/i18n';
 
 const EventCallSettings = ({ nodeId, data, updateNodeData }) => {
   const { t } = useTranslation('visual-editor');
@@ -11,7 +12,7 @@ const EventCallSettings = ({ nodeId, data, updateNodeData }) => {
 
   return (
     <div className="p-2 border-t border-slate-700 flex items-center gap-2">
-      <Label>{t('eventNodes.selectEvent')}</Label>
+      <Label>{i18n.t('eventNodes.selectEvent')}</Label>
       <Select
         value={data.selectedEventId || ''}
         onValueChange={(value) => updateNodeData(nodeId, { selectedEventId: value })}
@@ -20,8 +21,8 @@ const EventCallSettings = ({ nodeId, data, updateNodeData }) => {
         <SelectTrigger className="w-[180px]">
           <SelectValue placeholder={
             customEventNodes.length === 0
-              ? t('eventNodes.noEvents')
-              : t('eventNodes.selectEventPlaceholder')
+              ? i18n.t('eventNodes.noEvents')
+              : i18n.t('eventNodes.selectEventPlaceholder')
           } />
         </SelectTrigger>
         <SelectContent>

@@ -1,5 +1,6 @@
 import { NodeDefinition } from '../../core/registry';
 import DataTypeCheckSettings from './DataTypeCheckSettings';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды data:type_check
@@ -8,8 +9,8 @@ import DataTypeCheckSettings from './DataTypeCheckSettings';
 export const dataTypeCheckDefinition = new NodeDefinition({
   type: 'data:type_check',
   category: 'data',
-  label: t('labels.proveritTip'),
-  description: t('descriptions.proveryaetSootvetstvieZnacheniyaTipu'),
+  label: i18n.t('labels.proveritTip'),
+  description: i18n.t('descriptions.proveryaetSootvetstvieZnacheniyaTipu'),
 
 
 

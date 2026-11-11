@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды data:get_nearby_entities
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const dataGetNearbyEntitiesDefinition = new NodeDefinition({
   type: 'data:get_nearby_entities',
   category: 'data',
-  label: t('labels.sushchnostiRyadom'),
-  description: t('descriptions.sushchestvaVRadiuseOtBota'),
+  label: i18n.t('labels.sushchnostiRyadom'),
+  description: i18n.t('descriptions.sushchestvaVRadiuseOtBota'),
 
 
 

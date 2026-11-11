@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды math:random_number
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const mathRandomNumberDefinition = new NodeDefinition({
   type: 'math:random_number',
   category: 'math',
-  label: t('labels.sluchaynoeChislo'),
-  description: t('descriptions.generiruetSluchaynoeChisloVZadannomDiapazone'),
+  label: i18n.t('labels.sluchaynoeChislo'),
+  description: i18n.t('descriptions.generiruetSluchaynoeChisloVZadannomDiapazone'),
 
 
 

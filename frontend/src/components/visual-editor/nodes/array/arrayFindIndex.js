@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды array:find_index
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const arrayFindIndexDefinition = new NodeDefinition({
   type: 'array:find_index',
   category: 'array',
-  label: t('labels.naytiIndeks'),
-  description: t('descriptions.nakhoditIndeksElementaVMassive'),
+  label: i18n.t('labels.naytiIndeks'),
+  description: i18n.t('descriptions.nakhoditIndeksElementaVMassive'),
 
 
 

@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды data:number_literal
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const dataNumberLiteralDefinition = new NodeDefinition({
   type: 'data:number_literal',
   category: 'data',
-  label: t('labels.number'),
-  description: t('descriptions.prostoeChislovoeZnachenie'),
+  label: i18n.t('labels.number'),
+  description: i18n.t('descriptions.prostoeChislovoeZnachenie'),
 
 
 

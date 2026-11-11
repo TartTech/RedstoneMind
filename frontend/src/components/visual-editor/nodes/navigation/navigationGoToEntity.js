@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды navigation:go_to_entity
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const navigationGoToEntityDefinition = new NodeDefinition({
   type: 'navigation:go_to_entity',
   category: 'navigation',
-  label: t('labels.idtiKSushchnosti'),
-  description: t('descriptions.peremeshchaetBotaKUkazannoySushchnostiMob'),
+  label: i18n.t('labels.idtiKSushchnosti'),
+  description: i18n.t('descriptions.peremeshchaetBotaKUkazannoySushchnostiMob'),
 
 
 

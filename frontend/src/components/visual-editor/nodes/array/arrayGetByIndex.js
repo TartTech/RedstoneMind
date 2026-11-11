@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды array:get_by_index
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const arrayGetByIndexDefinition = new NodeDefinition({
   type: 'array:get_by_index',
   category: 'array',
-  label: t('labels.poluchitPoIndeksu'),
-  description: t('descriptions.poluchaetElementMassivaPoEgoIndeksu'),
+  label: i18n.t('labels.poluchitPoIndeksu'),
+  description: i18n.t('descriptions.poluchaetElementMassivaPoEgoIndeksu'),
 
 
 

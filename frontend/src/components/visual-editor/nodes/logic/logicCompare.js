@@ -1,5 +1,6 @@
 import { NodeDefinition } from '../../core/registry';
 import LogicCompareSettings from './LogicCompareSettings';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды logic:compare
@@ -8,8 +9,8 @@ import LogicCompareSettings from './LogicCompareSettings';
 export const logicCompareDefinition = new NodeDefinition({
   type: 'logic:compare',
   category: 'logic',
-  label: t('labels.sravnenie'),
-  description: t('descriptions.sravnenieDvukhZnacheniy'),
+  label: i18n.t('labels.sravnenie'),
+  description: i18n.t('descriptions.sravnenieDvukhZnacheniy'),
 
 
 

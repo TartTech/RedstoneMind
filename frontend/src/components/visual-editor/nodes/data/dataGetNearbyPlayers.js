@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды data:get_nearby_players
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const dataGetNearbyPlayersDefinition = new NodeDefinition({
   type: 'data:get_nearby_players',
   category: 'data',
-  label: t('labels.playeriRyadom'),
-  description: t('descriptions.playeriRyadomSBotom'),
+  label: i18n.t('labels.playeriRyadom'),
+  description: i18n.t('descriptions.playeriRyadomSBotom'),
 
 
 

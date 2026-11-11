@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды furnace:get_status
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const furnaceGetStatusDefinition = new NodeDefinition({
   type: 'furnace:get_status',
   category: 'furnace',
-  label: t('labels.pechkaStatus'),
-  description: t('descriptions.poluchaetTekushchiyStatusPechkiToplivoProgress'),
+  label: i18n.t('labels.pechkaStatus'),
+  description: i18n.t('descriptions.poluchaetTekushchiyStatusPechkiToplivoProgress'),
 
 
 

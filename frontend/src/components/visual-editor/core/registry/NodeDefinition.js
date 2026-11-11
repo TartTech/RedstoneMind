@@ -1,3 +1,4 @@
+import i18n from '@/i18n';
 /**
  * Извлекает переменные из strings в формате {varName}
  */
@@ -79,7 +80,7 @@ export class NodeDefinition {
           name: varName,
           type: 'Wildcard',
           required: false,
-          description: t('descriptions.valueDlyaVarname', { varName: varName })
+          description: i18n.t('descriptions.valueDlyaVarname', { varName: varName })
         });
       }
     });

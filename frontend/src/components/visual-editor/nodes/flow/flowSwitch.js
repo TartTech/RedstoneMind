@@ -1,5 +1,6 @@
 import { NodeDefinition } from '../../core/registry';
 import FlowSwitchSettings from './FlowSwitchSettings';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды flow:switch
@@ -8,8 +9,8 @@ import FlowSwitchSettings from './FlowSwitchSettings';
 export const flowSwitchDefinition = new NodeDefinition({
   type: 'flow:switch',
   category: 'flow',
-  label: t('labels.pereklyuchatel'),
-  description: t('descriptions.vybiraetVetkuVypolneniyaNaOsnoveZnacheniya'),
+  label: i18n.t('labels.pereklyuchatel'),
+  description: i18n.t('descriptions.vybiraetVetkuVypolneniyaNaOsnoveZnacheniya'),
 
 
 

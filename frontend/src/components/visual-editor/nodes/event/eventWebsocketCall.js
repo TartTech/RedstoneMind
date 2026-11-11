@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды event:websocket_call
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const eventWebsocketCallDefinition = new NodeDefinition({
   type: 'event:websocket_call',
   category: 'event',
-  label: t('labels.vyzovIzWebsocketApi'),
-  description: t('descriptions.srabatyvaetKogdaGrafVyzyvaetsyaCherezWebsocket'),
+  label: i18n.t('labels.vyzovIzWebsocketApi'),
+  description: i18n.t('descriptions.srabatyvaetKogdaGrafVyzyvaetsyaCherezWebsocket'),
 
 
 

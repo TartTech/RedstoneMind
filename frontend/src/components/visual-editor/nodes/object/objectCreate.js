@@ -1,5 +1,6 @@
 import { NodeDefinition } from '../../core/registry';
 import ObjectCreateSettings from './ObjectCreateSettings';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды object:create
@@ -8,8 +9,8 @@ import ObjectCreateSettings from './ObjectCreateSettings';
 export const objectCreateDefinition = new NodeDefinition({
   type: 'object:create',
   category: 'object',
-  label: t('labels.createObekt2'),
-  description: t('descriptions.sozdaetObektIzParKlyuchznachenie2'),
+  label: i18n.t('labels.createObekt2'),
+  description: i18n.t('descriptions.sozdaetObektIzParKlyuchznachenie2'),
 
 
 

@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды inventory:has_item
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const inventoryHasItemDefinition = new NodeDefinition({
   type: 'inventory:has_item',
   category: 'inventory',
-  label: t('labels.estPredmet'),
-  description: t('descriptions.proveryaetEstLiUkazannyyPredmetV'),
+  label: i18n.t('labels.estPredmet'),
+  description: i18n.t('descriptions.proveryaetEstLiUkazannyyPredmetV'),
 
 
 

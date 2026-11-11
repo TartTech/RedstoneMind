@@ -1,5 +1,6 @@
 import { NodeDefinition } from '../../core/registry';
 import DataMakeObjectSettings from './DataMakeObjectSettings';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды data:make_object
@@ -8,8 +9,8 @@ import DataMakeObjectSettings from './DataMakeObjectSettings';
 export const dataMakeObjectDefinition = new NodeDefinition({
   type: 'data:make_object',
   category: 'data',
-  label: t('labels.createObekt'),
-  description: t('descriptions.sozdaetObektIzParKlyuchznachenie'),
+  label: i18n.t('labels.createObekt'),
+  description: i18n.t('descriptions.sozdaetObektIzParKlyuchznachenie'),
 
 
 

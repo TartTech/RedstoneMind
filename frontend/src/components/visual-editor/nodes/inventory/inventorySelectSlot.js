@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды inventory:select_slot
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const inventorySelectSlotDefinition = new NodeDefinition({
   type: 'inventory:select_slot',
   category: 'inventory',
-  label: t('labels.vybratSlot'),
-  description: t('descriptions.vybiraetSlotKhotbara08PereklyuchayaAktivnyy'),
+  label: i18n.t('labels.vybratSlot'),
+  description: i18n.t('descriptions.vybiraetSlotKhotbara08PereklyuchayaAktivnyy'),
 
 
 

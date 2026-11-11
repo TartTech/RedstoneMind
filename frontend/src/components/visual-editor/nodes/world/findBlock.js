@@ -1,10 +1,11 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 export const worldFindBlockDefinition = new NodeDefinition({
   type: 'world:find_block',
   category: 'world',
-  label: t('labels.naytiBlok'),
-  description: t('descriptions.ishchetBlokiPoImeniVZagruzhennykh'),
+  label: i18n.t('labels.naytiBlok'),
+  description: i18n.t('descriptions.ishchetBlokiPoImeniVZagruzhennykh'),
   defaultData: {
     name: 'wheat',
     radius: 16,

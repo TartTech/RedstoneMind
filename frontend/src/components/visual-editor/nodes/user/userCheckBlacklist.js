@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды user:check_blacklist
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const userCheckBlacklistDefinition = new NodeDefinition({
   type: 'user:check_blacklist',
   category: 'user',
-  label: t('labels.proveritChs'),
-  description: t('descriptions.proveryaetNakhoditsyaLiPolzovatelVChernom'),
+  label: i18n.t('labels.proveritChs'),
+  description: i18n.t('descriptions.proveryaetNakhoditsyaLiPolzovatelVChernom'),
 
 
 

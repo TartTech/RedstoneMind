@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды event:playerLeft
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const eventPlayerLeftDefinition = new NodeDefinition({
   type: 'event:playerLeft',
   category: 'event',
-  label: t('labels.playerVyshel'),
-  description: t('descriptions.srabatyvaetKogdaIgrokPokidaetServer'),
+  label: i18n.t('labels.playerVyshel'),
+  description: i18n.t('descriptions.srabatyvaetKogdaIgrokPokidaetServer'),
 
 
 

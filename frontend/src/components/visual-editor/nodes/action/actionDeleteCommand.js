@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды action:delete_command
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const actionDeleteCommandDefinition = new NodeDefinition({
   type: 'action:delete_command',
   category: 'action',
-  label: t('labels.deleteKomandu'),
-  description: t('descriptions.udalyaetSushchestvuyushchuyuKomanduBota'),
+  label: i18n.t('labels.deleteKomandu'),
+  description: i18n.t('descriptions.udalyaetSushchestvuyushchuyuKomanduBota'),
 
 
 

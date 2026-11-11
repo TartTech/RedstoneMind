@@ -1,12 +1,13 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 export const botRestartDefinition = new NodeDefinition({
   type: 'bot:restart',
   category: 'bot',
-  label: t('labels.restartBota'),
-  description: t('descriptions.ostanavlivaetBotaIZapuskaetEgoSnova'),
+  label: i18n.t('labels.restartBota'),
+  description: i18n.t('descriptions.ostanavlivaetBotaIZapuskaetEgoSnova'),
   computeInputs: () => [
-    { id: 'exec', name: t('vypolnit'), type: 'Exec' },
+    { id: 'exec', name: i18n.t('vypolnit'), type: 'Exec' },
   ],
   computeOutputs: () => [],
   theme: {

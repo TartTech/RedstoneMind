@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
+import i18n from '@/i18n';
 
 /**
  * Component настроек for logic:operation ноды
@@ -12,7 +13,7 @@ const LogicOperationSettings = ({ nodeId, data, updateNodeData }) => {
 
   return (
     <div className="p-2 border-t border-slate-700">
-      <Label>{t('nodeSettings.operator')}</Label>
+      <Label>{i18n.t('nodeSettings.operator')}</Label>
       <Select
         value={data.operation || 'AND'}
         onValueChange={(value) => {
@@ -24,9 +25,9 @@ const LogicOperationSettings = ({ nodeId, data, updateNodeData }) => {
           <SelectValue />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="AND">{t('nodeSettings.logicAnd')}</SelectItem>
-          <SelectItem value="OR">{t('nodeSettings.logicOr')}</SelectItem>
-          <SelectItem value="NOT">{t('nodeSettings.logicNot')}</SelectItem>
+          <SelectItem value="AND">{i18n.t('nodeSettings.logicAnd')}</SelectItem>
+          <SelectItem value="OR">{i18n.t('nodeSettings.logicOr')}</SelectItem>
+          <SelectItem value="NOT">{i18n.t('nodeSettings.logicNot')}</SelectItem>
         </SelectContent>
       </Select>
       {data.operation !== 'NOT' && (
@@ -36,7 +37,7 @@ const LogicOperationSettings = ({ nodeId, data, updateNodeData }) => {
             variant="ghost"
             onClick={() => updateNodeData(nodeId, { pinCount: (data.pinCount || 2) + 1 })}
           >
-            {t('nodeSettings.add')}
+            {i18n.t('nodeSettings.add')}
           </Button>
           {(data.pinCount || 0) > 2 && (
             <Button
@@ -44,7 +45,7 @@ const LogicOperationSettings = ({ nodeId, data, updateNodeData }) => {
               variant="destructive"
               onClick={() => updateNodeData(nodeId, { pinCount: Math.max(2, (data.pinCount || 2) - 1) })}
             >
-              {t('nodeSettings.remove')}
+              {i18n.t('nodeSettings.remove')}
             </Button>
           )}
         </div>

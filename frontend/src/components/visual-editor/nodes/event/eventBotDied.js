@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды event:botDied
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const eventBotDiedDefinition = new NodeDefinition({
   type: 'event:botDied',
   category: 'event',
-  label: t('labels.botUmer'),
-  description: t('descriptions.srabatyvaetKogdaBotUmiraet'),
+  label: i18n.t('labels.botUmer'),
+  description: i18n.t('descriptions.srabatyvaetKogdaBotUmiraet'),
 
 
 

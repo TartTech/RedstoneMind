@@ -1,10 +1,11 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 export const botStopDefinition = new NodeDefinition({
   type: 'bot:stop',
   category: 'bot',
-  label: t('labels.vyklyuchitBota'),
-  description: t('descriptions.ostanavlivaetBota'),
+  label: i18n.t('labels.vyklyuchitBota'),
+  description: i18n.t('descriptions.ostanavlivaetBota'),
 
 
 

@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды bot:get_position
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const botGetPositionDefinition = new NodeDefinition({
   type: 'bot:get_position',
   category: 'bot',
-  label: t('labels.poluchitPozitsiyu'),
-  description: t('descriptions.vozvrashchaetTekushchuyuPozitsiyuBotaVMire'),
+  label: i18n.t('labels.poluchitPozitsiyu'),
+  description: i18n.t('descriptions.vozvrashchaetTekushchuyuPozitsiyuBotaVMire'),
 
 
 

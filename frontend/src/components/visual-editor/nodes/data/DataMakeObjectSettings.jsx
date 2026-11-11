@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
+import i18n from '@/i18n';
 
 /**
  * Component настроек for data:make_object ноды
@@ -17,7 +18,7 @@ const DataMakeObjectSettings = ({ nodeId, data, updateNodeData }) => {
         }}
         className="h-8 rounded-md px-3 text-xs"
       >
-        {t('nodeSettings.addField')}
+        {i18n.t('nodeSettings.addField')}
       </Button>
       {(data.pinCount || 0) > 0 && (
         <Button
@@ -25,7 +26,7 @@ const DataMakeObjectSettings = ({ nodeId, data, updateNodeData }) => {
           variant="destructive"
           className="h-8 rounded-md px-3 text-xs"
         >
-          {t('nodeSettings.removeField')}
+          {i18n.t('nodeSettings.removeField')}
         </Button>
       )}
     </div>

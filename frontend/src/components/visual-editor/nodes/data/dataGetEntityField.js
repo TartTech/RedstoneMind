@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды data:get_entity_field
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const dataGetEntityFieldDefinition = new NodeDefinition({
   type: 'data:get_entity_field',
   category: 'data',
-  label: t('labels.poleSushchnosti'),
-  description: t('descriptions.poluchaetPolyaIzObektaSushchnosti'),
+  label: i18n.t('labels.poleSushchnosti'),
+  description: i18n.t('descriptions.poluchaetPolyaIzObektaSushchnosti'),
 
 
 

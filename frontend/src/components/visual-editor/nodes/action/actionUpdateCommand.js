@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды action:update_command
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const actionUpdateCommandDefinition = new NodeDefinition({
   type: 'action:update_command',
   category: 'action',
-  label: t('labels.editKomandu'),
-  description: t('descriptions.izmenyaetParametrySushchestvuyushcheyKomandy'),
+  label: i18n.t('labels.editKomandu'),
+  description: i18n.t('descriptions.izmenyaetParametrySushchestvuyushcheyKomandy'),
 
 
 

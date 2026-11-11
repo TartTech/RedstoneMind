@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды navigation:follow
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const navigationFollowDefinition = new NodeDefinition({
   type: 'navigation:follow',
   category: 'navigation',
-  label: t('labels.sledovat'),
-  description: t('descriptions.nachinaetSledovatZaIgrokomIliSushchnostyu'),
+  label: i18n.t('labels.sledovat'),
+  description: i18n.t('descriptions.nachinaetSledovatZaIgrokomIliSushchnostyu'),
 
 
 

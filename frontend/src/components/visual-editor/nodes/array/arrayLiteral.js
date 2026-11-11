@@ -1,5 +1,6 @@
 import { NodeDefinition } from '../../core/registry';
 import ArrayLiteralSettings from './ArrayLiteralSettings';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды data:array_literal
@@ -8,8 +9,8 @@ import ArrayLiteralSettings from './ArrayLiteralSettings';
 export const arrayLiteralDefinition = new NodeDefinition({
   type: 'data:array_literal',
   category: 'array',
-  label: t('labels.array'),
-  description: t('descriptions.sozdaetMassivIzElementov'),
+  label: i18n.t('labels.array'),
+  description: i18n.t('descriptions.sozdaetMassivIzElementov'),
 
 
 

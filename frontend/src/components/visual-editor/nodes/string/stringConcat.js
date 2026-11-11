@@ -1,5 +1,6 @@
 import { NodeDefinition } from '../../core/registry';
 import StringConcatSettings from './StringConcatSettings';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды string:concat
@@ -8,8 +9,8 @@ import StringConcatSettings from './StringConcatSettings';
 export const stringConcatDefinition = new NodeDefinition({
   type: 'string:concat',
   category: 'string',
-  label: t('labels.obedinitStroki'),
-  description: t('descriptions.obedinyaetNeskolkoStrokVOdnu'),
+  label: i18n.t('labels.obedinitStroki'),
+  description: i18n.t('descriptions.obedinyaetNeskolkoStrokVOdnu'),
 
 
 

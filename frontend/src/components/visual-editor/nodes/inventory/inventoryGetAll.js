@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды inventory:get_all
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const inventoryGetAllDefinition = new NodeDefinition({
   type: 'inventory:get_all',
   category: 'inventory',
-  label: t('labels.vesInventar'),
-  description: t('descriptions.vozvrashchaetVesInventarBotaKakMassiv'),
+  label: i18n.t('labels.vesInventar'),
+  description: i18n.t('descriptions.vozvrashchaetVesInventarBotaKakMassiv'),
 
 
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { AutosizeInput } from '@/components/ui/AutosizeInput';
+import i18n from '@/i18n';
 
 /**
  * Component настроек for data:string_literal ноды
@@ -15,7 +16,7 @@ const StringLiteralSettings = ({ nodeId, data, updateNodeData }) => {
         fullWidth
         value={data.value ?? ''}
         onChange={(e) => updateNodeData(nodeId, { value: e.target.value })}
-        placeholder={t('nodeSettings.stringLiteralPlaceholder')}
+        placeholder={i18n.t('nodeSettings.stringLiteralPlaceholder')}
       />
     </div>
   );

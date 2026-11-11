@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды array:get_next
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const arrayGetNextDefinition = new NodeDefinition({
   type: 'array:get_next',
   category: 'array',
-  label: t('labels.sleduyushchiyElement'),
-  description: t('descriptions.poluchaetSleduyushchiyElementMassiva'),
+  label: i18n.t('labels.sleduyushchiyElement'),
+  description: i18n.t('descriptions.poluchaetSleduyushchiyElementMassiva'),
 
 
 

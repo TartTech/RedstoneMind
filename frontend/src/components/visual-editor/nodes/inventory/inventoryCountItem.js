@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды inventory:count_item
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const inventoryCountItemDefinition = new NodeDefinition({
   type: 'inventory:count_item',
   category: 'inventory',
-  label: t('labels.podschitatPredmet'),
-  description: t('descriptions.podschityvaetObshcheeKolichestvoUkazannogoPredmetaVo'),
+  label: i18n.t('labels.podschitatPredmet'),
+  description: i18n.t('descriptions.podschityvaetObshcheeKolichestvoUkazannogoPredmetaVo'),
 
 
 

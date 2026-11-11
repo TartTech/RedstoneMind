@@ -1,5 +1,6 @@
 import { NodeDefinition } from '../../core/registry';
 import ActionHttpRequestSettings from './ActionHttpRequestSettings';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды action:http_request
@@ -8,8 +9,8 @@ import ActionHttpRequestSettings from './ActionHttpRequestSettings';
 export const actionHttpRequestDefinition = new NodeDefinition({
   type: 'action:http_request',
   category: 'action',
-  label: t('labels.httpZapros'),
-  description: t('descriptions.vypolnyaetHttpZaprosPodderzhivaetPeremennyeVarname'),
+  label: i18n.t('labels.httpZapros'),
+  description: i18n.t('descriptions.vypolnyaetHttpZaprosPodderzhivaetPeremennyeVarname'),
 
 
 

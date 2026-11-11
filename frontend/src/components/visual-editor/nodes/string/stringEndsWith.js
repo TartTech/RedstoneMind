@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды string:ends_with
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const stringEndsWithDefinition = new NodeDefinition({
   type: 'string:ends_with',
   category: 'string',
-  label: t('labels.zakanchivaetsyaNa'),
-  description: t('descriptions.proveryaetZakanchivaetsyaLiStrokaSuffiksom'),
+  label: i18n.t('labels.zakanchivaetsyaNa'),
+  description: i18n.t('descriptions.proveryaetZakanchivaetsyaLiStrokaSuffiksom'),
 
 
 

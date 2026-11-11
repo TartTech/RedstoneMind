@@ -1,5 +1,6 @@
 import { NodeDefinition } from '../../core/registry';
 import MathOperationSettings from './MathOperationSettings';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды math:operation
@@ -8,8 +9,8 @@ import MathOperationSettings from './MathOperationSettings';
 export const mathOperationDefinition = new NodeDefinition({
   type: 'math:operation',
   category: 'math',
-  label: t('labels.matematicheskayaOperatsiya'),
-  description: t('descriptions.matematicheskieOperatsiiISravneniya'),
+  label: i18n.t('labels.matematicheskayaOperatsiya'),
+  description: i18n.t('descriptions.matematicheskieOperatsiiISravneniya'),
 
 
 

@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды string:split
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const stringSplitDefinition = new NodeDefinition({
   type: 'string:split',
   category: 'string',
-  label: t('labels.razdelit'),
-  description: t('descriptions.razdelyaetStrokuNaMassivPoRazdelitelyu'),
+  label: i18n.t('labels.razdelit'),
+  description: i18n.t('descriptions.razdelyaetStrokuNaMassivPoRazdelitelyu'),
 
 
 

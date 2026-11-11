@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды type:to_string
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const typeToStringDefinition = new NodeDefinition({
   type: 'type:to_string',
   category: 'type',
-  label: t('labels.vStroku'),
-  description: t('descriptions.preobrazuetLyuboeZnachenieVStrokuTostring'),
+  label: i18n.t('labels.vStroku'),
+  description: i18n.t('descriptions.preobrazuetLyuboeZnachenieVStrokuTostring'),
 
 
 

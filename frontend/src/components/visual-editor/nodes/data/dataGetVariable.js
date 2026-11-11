@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды data:get_variable
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const dataGetVariableDefinition = new NodeDefinition({
   type: 'data:get_variable',
   category: 'data',
-  label: t('labels.poluchitPeremennuyu'),
-  description: t('descriptions.poluchitZnacheniePeremennoy'),
+  label: i18n.t('labels.poluchitPeremennuyu'),
+  description: i18n.t('descriptions.poluchitZnacheniePeremennoy'),
 
 
 

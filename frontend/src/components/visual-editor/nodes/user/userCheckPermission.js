@@ -1,10 +1,11 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 export const userCheckPermissionDefinition = new NodeDefinition({
   type: 'user:check_permission',
   category: 'user',
-  label: t('labels.proveritPravo'),
-  description: t('descriptions.proveryaetEstLiUPolzovatelyaUkazannoe'),
+  label: i18n.t('labels.proveritPravo'),
+  description: i18n.t('descriptions.proveryaetEstLiUPolzovatelyaUkazannoe'),
 
 
 

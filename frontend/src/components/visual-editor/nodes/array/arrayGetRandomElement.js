@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды array:get_random_element
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const arrayGetRandomElementDefinition = new NodeDefinition({
   type: 'array:get_random_element',
   category: 'array',
-  label: t('labels.sluchaynyyElement'),
-  description: t('descriptions.vozvrashchaetSluchaynyyElementIzMassivaI'),
+  label: i18n.t('labels.sluchaynyyElement'),
+  description: i18n.t('descriptions.vozvrashchaetSluchaynyyElementIzMassivaI'),
 
 
 

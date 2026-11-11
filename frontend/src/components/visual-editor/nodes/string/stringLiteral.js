@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды data:string_literal
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const stringLiteralDefinition = new NodeDefinition({
   type: 'data:string_literal',
   category: 'string',
-  label: t('labels.string'),
-  description: t('descriptions.stringSPodderzhkoyPeremennykhName'),
+  label: i18n.t('labels.string'),
+  description: i18n.t('descriptions.stringSPodderzhkoyPeremennykhName'),
 
 
 

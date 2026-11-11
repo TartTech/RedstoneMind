@@ -1,10 +1,11 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 export const dataStoreWriteDefinition = new NodeDefinition({
   type: 'data:store_write',
   category: 'data',
-  label: t('labels.zapisatVStore'),
-  description: t('descriptions.sokhranyaetZnachenieVKhranilishchePluginaPo'),
+  label: i18n.t('labels.zapisatVStore'),
+  description: i18n.t('descriptions.sokhranyaetZnachenieVKhranilishchePluginaPo'),
 
 
 

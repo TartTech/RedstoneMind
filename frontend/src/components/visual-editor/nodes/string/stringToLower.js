@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды string:to_lower
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const stringToLowerDefinition = new NodeDefinition({
   type: 'string:to_lower',
   category: 'string',
-  label: t('labels.vNizhniyRegistr'),
-  description: t('descriptions.preobrazuetStrokuVNizhniyRegistrLowercase'),
+  label: i18n.t('labels.vNizhniyRegistr'),
+  description: i18n.t('descriptions.preobrazuetStrokuVNizhniyRegistrLowercase'),
 
 
 

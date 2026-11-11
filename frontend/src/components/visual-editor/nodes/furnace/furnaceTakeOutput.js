@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды furnace:take_output
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const furnaceTakeOutputDefinition = new NodeDefinition({
   type: 'furnace:take_output',
   category: 'furnace',
-  label: t('labels.pechkaZabratRezultat'),
-  description: t('descriptions.zabiraetGotovyyPredmetIzSlotaRezultata'),
+  label: i18n.t('labels.pechkaZabratRezultat'),
+  description: i18n.t('descriptions.zabiraetGotovyyPredmetIzSlotaRezultata'),
 
 
 

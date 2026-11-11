@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды object:has_key
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const objectHasKeyDefinition = new NodeDefinition({
   type: 'object:has_key',
   category: 'object',
-  label: t('labels.estKlyuch'),
-  description: t('descriptions.proveryaetNalichieKlyuchaVObekte'),
+  label: i18n.t('labels.estKlyuch'),
+  description: i18n.t('descriptions.proveryaetNalichieKlyuchaVObekte'),
 
 
 

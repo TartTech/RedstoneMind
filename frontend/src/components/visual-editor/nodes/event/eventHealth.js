@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды event:health
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const eventHealthDefinition = new NodeDefinition({
   type: 'event:health',
   category: 'event',
-  label: t('labels.healthhungerIzmenilos'),
-  description: t('descriptions.srabatyvaetPriIzmeneniiZdorovyaGolodaIli'),
+  label: i18n.t('labels.healthhungerIzmenilos'),
+  description: i18n.t('descriptions.srabatyvaetPriIzmeneniiZdorovyaGolodaIli'),
 
 
 

@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды container:get_items
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const containerGetItemsDefinition = new NodeDefinition({
   type: 'container:get_items',
   category: 'container',
-  label: t('labels.konteynerSoderzhimoe'),
-  description: t('descriptions.poluchaetSpisokPredmetovIzOtkrytogoKonteynera'),
+  label: i18n.t('labels.konteynerSoderzhimoe'),
+  description: i18n.t('descriptions.poluchaetSpisokPredmetovIzOtkrytogoKonteynera'),
 
 
 

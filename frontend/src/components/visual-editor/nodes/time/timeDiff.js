@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды time:diff
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const timeDiffDefinition = new NodeDefinition({
   type: 'time:diff',
   category: 'time',
-  label: t('labels.raznitsaVremeni'),
-  description: t('descriptions.raznitsaMezhduDatamiVMillisecondsakh'),
+  label: i18n.t('labels.raznitsaVremeni'),
+  description: i18n.t('descriptions.raznitsaMezhduDatamiVMillisecondsakh'),
 
 
 

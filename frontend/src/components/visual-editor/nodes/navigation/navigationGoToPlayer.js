@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды navigation:go_to_player
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const navigationGoToPlayerDefinition = new NodeDefinition({
   type: 'navigation:go_to_player',
   category: 'navigation',
-  label: t('labels.idtiKIgroku'),
-  description: t('descriptions.peremeshchaetBotaKUkazannomuIgroku'),
+  label: i18n.t('labels.idtiKIgroku'),
+  description: i18n.t('descriptions.peremeshchaetBotaKUkazannomuIgroku'),
 
 
 

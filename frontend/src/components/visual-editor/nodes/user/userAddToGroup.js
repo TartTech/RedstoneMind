@@ -1,10 +1,11 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 export const userAddToGroupDefinition = new NodeDefinition({
   type: 'user:add_to_group',
   category: 'user',
-  label: t('labels.addVGruppu'),
-  description: t('descriptions.dobavlyaetPolzovatelyaVUkazannuyuGruppu'),
+  label: i18n.t('labels.addVGruppu'),
+  description: i18n.t('descriptions.dobavlyaetPolzovatelyaVUkazannuyuGruppu'),
 
 
 

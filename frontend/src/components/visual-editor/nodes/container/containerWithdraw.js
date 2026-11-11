@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды container:withdraw
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const containerWithdrawDefinition = new NodeDefinition({
   type: 'container:withdraw',
   category: 'container',
-  label: t('labels.konteynerZabrat'),
-  description: t('descriptions.zabiraetPredmetIzKonteyneraVInventar'),
+  label: i18n.t('labels.konteynerZabrat'),
+  description: i18n.t('descriptions.zabiraetPredmetIzKonteyneraVInventar'),
 
 
 

@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды debug:log
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const debugLogDefinition = new NodeDefinition({
   type: 'debug:log',
   category: 'debug',
-  label: t('labels.debug'),
-  description: t('descriptions.vyvoditZnachenieVKonsolServera'),
+  label: i18n.t('labels.debug'),
+  description: i18n.t('descriptions.vyvoditZnachenieVKonsolServera'),
 
 
 

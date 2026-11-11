@@ -1,5 +1,6 @@
 import { NodeDefinition } from '../../core/registry';
 import FlowBranchSettings from './FlowBranchSettings';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды flow:branch
@@ -8,8 +9,8 @@ import FlowBranchSettings from './FlowBranchSettings';
 export const flowBranchDefinition = new NodeDefinition({
   type: 'flow:branch',
   category: 'flow',
-  label: t('labels.vetvlenie'),
-  description: t('descriptions.uslovnoeVetvlenieNaOsnoveBooleanZnacheniya'),
+  label: i18n.t('labels.vetvlenie'),
+  description: i18n.t('descriptions.uslovnoeVetvlenieNaOsnoveBooleanZnacheniya'),
 
 
 

@@ -34,7 +34,7 @@ export const getGraphStoreApiUrl = (path = '') => {
 const getBinaryErrorMessage = async (response) => {
   const fallbackMessage = translateCommon(
     'messages.downloadErrorWithStatus',
-    t('errorPriSkachivaniiFaylaStatus'),
+    i18n.t('errorPriSkachivaniiFaylaStatus'),
     { status: response.statusText || response.status }
   );
 
@@ -49,7 +49,7 @@ const getBinaryErrorMessage = async (response) => {
       return (
         errData.error ||
         errData.message ||
-        translateCommon('messages.downloadError', t('errors.errorPriSkachivaniiFayla'))
+        translateCommon('messages.downloadError', i18n.t('errors.errorPriSkachivaniiFayla'))
       );
     } catch {
       return fallbackMessage;
@@ -92,7 +92,7 @@ export const apiHelper = async (url, options = {}, successMessage) => {
     if (response.status === 204 || response.headers.get('content-length') === '0') {
       if (successMessage) {
         toast({
-          title: translateCommon('messages.success', t('titles.success')),
+          title: translateCommon('messages.success', i18n.t('titles.success')),
           description: successMessage,
         });
       }
@@ -108,19 +108,19 @@ export const apiHelper = async (url, options = {}, successMessage) => {
           logout();
         }
 
-        throw new Error(data.error || data.message || translateCommon('messages.authError', t('errors.errorAvtorizatsii')));
+        throw new Error(data.error || data.message || translateCommon('messages.authError', i18n.t('errors.errorAvtorizatsii')));
       }
 
       throw new Error(
         data.error ||
           data.message ||
-          translateCommon('messages.serverError', t('errors.proizoshlaNeizvestnayaOshibkaNaServere'))
+          translateCommon('messages.serverError', i18n.t('errors.proizoshlaNeizvestnayaOshibkaNaServere'))
       );
     }
 
     if (successMessage) {
       toast({
-        title: translateCommon('messages.success', t('titles.success2')),
+        title: translateCommon('messages.success', i18n.t('titles.success2')),
         description: successMessage,
       });
     }
@@ -130,16 +130,16 @@ export const apiHelper = async (url, options = {}, successMessage) => {
     if (error.message.includes('NetworkError') || error.message.includes('Failed to fetch')) {
       toast({
         variant: 'destructive',
-        title: translateCommon('messages.networkTitle', t('titles.errorSeti')),
-        description: translateCommon('messages.networkDescription', t('descriptions.neUdaetsyaPodklyuchitsyaKServeru')),
+        title: translateCommon('messages.networkTitle', i18n.t('titles.errorSeti')),
+        description: translateCommon('messages.networkDescription', i18n.t('descriptions.neUdaetsyaPodklyuchitsyaKServeru')),
       });
-    } else if (error.message.includes(t('errors.nevalidnyyToken'))) {
+    } else if (error.message.includes(i18n.t('errors.nevalidnyyToken'))) {
       const { logout } = useAppStore.getState();
       logout();
     } else {
       toast({
         variant: 'destructive',
-        title: translateCommon('messages.error', t('errors.error')),
+        title: translateCommon('messages.error', i18n.t('errors.error')),
         description: error.message,
       });
     }

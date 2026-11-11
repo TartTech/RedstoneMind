@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды action:bot_set_variable
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const actionBotSetVariableDefinition = new NodeDefinition({
   type: 'action:bot_set_variable',
   category: 'action',
-  label: t('labels.installPeremennuyu'),
-  description: t('descriptions.zapisyvaetZnachenieVPeremennuyu'),
+  label: i18n.t('labels.installPeremennuyu'),
+  description: i18n.t('descriptions.zapisyvaetZnachenieVPeremennuyu'),
 
 
 

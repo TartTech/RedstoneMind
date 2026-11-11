@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды data:boolean_literal
@@ -8,7 +9,7 @@ export const dataBooleanLiteralDefinition = new NodeDefinition({
   type: 'data:boolean_literal',
   category: 'data',
   label: 'Boolean',
-  description: t('descriptions.bulevoZnachenieTruefalse'),
+  description: i18n.t('descriptions.bulevoZnachenieTruefalse'),
 
 
 

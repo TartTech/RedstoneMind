@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды event:playerJoined
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const eventPlayerJoinedDefinition = new NodeDefinition({
   type: 'event:playerJoined',
   category: 'event',
-  label: t('labels.playerZashel'),
-  description: t('descriptions.srabatyvaetKogdaIgrokZakhoditNaServer'),
+  label: i18n.t('labels.playerZashel'),
+  description: i18n.t('descriptions.srabatyvaetKogdaIgrokZakhoditNaServer'),
 
 
 

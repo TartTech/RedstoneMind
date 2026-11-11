@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды object:get
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const objectGetDefinition = new NodeDefinition({
   type: 'object:get',
   category: 'object',
-  label: t('labels.poluchitZnachenie'),
-  description: t('descriptions.poluchaetZnacheniePoKlyuchuIzObekta'),
+  label: i18n.t('labels.poluchitZnachenie'),
+  description: i18n.t('descriptions.poluchaetZnacheniePoKlyuchuIzObekta'),
 
 
 

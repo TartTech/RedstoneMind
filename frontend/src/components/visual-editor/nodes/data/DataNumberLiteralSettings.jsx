@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
+import i18n from '@/i18n';
 
 /**
  * Component настроек for data:number_literal ноды
@@ -11,7 +12,7 @@ const DataNumberLiteralSettings = ({ nodeId, data, updateNodeData }) => {
 
   return (
     <div className="p-2 border-t border-slate-700">
-      <Label>{t('nodeSettings.number')}</Label>
+      <Label>{i18n.t('nodeSettings.number')}</Label>
       <Input
         type="number"
         value={data.value || 0}

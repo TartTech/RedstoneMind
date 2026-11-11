@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды data:get_user_field
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const dataGetUserFieldDefinition = new NodeDefinition({
   type: 'data:get_user_field',
   category: 'data',
-  label: t('labels.polePolzovatelya'),
-  description: t('descriptions.yesnnyePolzovatelya'),
+  label: i18n.t('labels.polePolzovatelya'),
+  description: i18n.t('descriptions.yesnnyePolzovatelya'),
 
 
 

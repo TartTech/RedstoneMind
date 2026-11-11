@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды flow:delay
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const flowDelayDefinition = new NodeDefinition({
   type: 'flow:delay',
   category: 'flow',
-  label: t('labels.delay'),
-  description: t('descriptions.ozhidaetUkazannoeKolichestvoMillisecondsZatemProdolzhaet'),
+  label: i18n.t('labels.delay'),
+  description: i18n.t('descriptions.ozhidaetUkazannoeKolichestvoMillisecondsZatemProdolzhaet'),
 
 
 

@@ -1,5 +1,6 @@
 import { NodeDefinition } from '../../core/registry';
 import FurnaceOpenSettings from './FurnaceOpenSettings';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды furnace:open
@@ -8,8 +9,8 @@ import FurnaceOpenSettings from './FurnaceOpenSettings';
 export const furnaceOpenDefinition = new NodeDefinition({
   type: 'furnace:open',
   category: 'furnace',
-  label: t('labels.pechkaOtkryt'),
-  description: t('descriptions.otkryvaetPechkuObychnuyuPlavilnuyuKoptilnyuPo'),
+  label: i18n.t('labels.pechkaOtkryt'),
+  description: i18n.t('descriptions.otkryvaetPechkuObychnuyuPlavilnuyuKoptilnyuPo'),
 
 
 

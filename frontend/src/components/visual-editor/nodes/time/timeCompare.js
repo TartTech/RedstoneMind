@@ -1,5 +1,6 @@
 import { NodeDefinition } from '../../core/registry';
 import TimeCompareSettings from './TimeCompareSettings';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды time:compare
@@ -8,8 +9,8 @@ import TimeCompareSettings from './TimeCompareSettings';
 export const timeCompareDefinition = new NodeDefinition({
   type: 'time:compare',
   category: 'time',
-  label: t('labels.sravnitDaty'),
-  description: t('descriptions.sravnivaetDveDaty'),
+  label: i18n.t('labels.sravnitDaty'),
+  description: i18n.t('descriptions.sravnivaetDveDaty'),
 
 
 

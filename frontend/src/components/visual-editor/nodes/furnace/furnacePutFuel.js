@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды furnace:put_fuel
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const furnacePutFuelDefinition = new NodeDefinition({
   type: 'furnace:put_fuel',
   category: 'furnace',
-  label: t('labels.pechkaPolozhitToplivo'),
-  description: t('descriptions.kladyotToplivoVSlotToplivaPechki'),
+  label: i18n.t('labels.pechkaPolozhitToplivo'),
+  description: i18n.t('descriptions.kladyotToplivoVSlotToplivaPechki'),
 
 
 

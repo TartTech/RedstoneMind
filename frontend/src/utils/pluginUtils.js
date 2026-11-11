@@ -1,3 +1,4 @@
+import i18n from '@/i18n';
 export const calculatePluginPopularity = (plugin, allPlugins = []) => {
   const downloads = plugin.downloads || 0;
   const daysOld = Math.floor((Date.now() - new Date(plugin.createdAt || Date.now())) / (1000 * 60 * 60 * 24));
@@ -36,13 +37,13 @@ export const calculatePluginPopularity = (plugin, allPlugins = []) => {
 
 export const getPopularityBadge = (popularity) => {
   if (popularity.isTrending) {
-    return { text: t('vTrende'), color: 'from-purple-500 to-pink-500', icon: 'TrendingUp' };
+    return { text: i18n.t('vTrende'), color: 'from-purple-500 to-pink-500', icon: 'TrendingUp' };
   }
   if (popularity.isNew && popularity.downloads > 100) {
-    return { text: t('novinka'), color: 'from-green-500 to-emerald-500', icon: 'Sparkles' };
+    return { text: i18n.t('novinka'), color: 'from-green-500 to-emerald-500', icon: 'Sparkles' };
   }
   if (popularity.isPopular) {
-    return { text: t('populyarnyy'), color: 'from-orange-500 to-red-500', icon: 'Fire' };
+    return { text: i18n.t('populyarnyy'), color: 'from-orange-500 to-red-500', icon: 'Fire' };
   }
   return null;
 };

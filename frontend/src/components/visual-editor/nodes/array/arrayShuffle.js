@@ -1,10 +1,11 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 export const arrayShuffleDefinition = new NodeDefinition({
   type: 'array:shuffle',
   category: 'array',
-  label: t('labels.peremeshatMassiv'),
-  description: t('descriptions.vozvrashchaetNovyyMassivSElementamiV'),
+  label: i18n.t('labels.peremeshatMassiv'),
+  description: i18n.t('descriptions.vozvrashchaetNovyyMassivSElementamiV'),
 
 
 

@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { AutosizeInput } from '@/components/ui/AutosizeInput';
+import i18n from '@/i18n';
 
 /**
  * Component настроек for flow:switch ноды
@@ -14,7 +15,7 @@ const FlowSwitchSettings = ({ nodeId, data, updateNodeData }) => {
     <div className="p-2 border-t border-slate-700">
       <div className="space-y-2">
         <div className="flex items-center justify-between">
-          <Label>{t('nodeSettings.cases')}</Label>
+          <Label>{i18n.t('nodeSettings.cases')}</Label>
           <div className="flex gap-2">
             <Button
               size="sm"
@@ -25,7 +26,7 @@ const FlowSwitchSettings = ({ nodeId, data, updateNodeData }) => {
               }}
               className="h-6 px-2 text-xs"
             >
-              {t('nodeSettings.add')}
+              {i18n.t('nodeSettings.add')}
             </Button>
             {(data.caseCount || 0) > 0 && (
               <Button
@@ -42,7 +43,7 @@ const FlowSwitchSettings = ({ nodeId, data, updateNodeData }) => {
                 }}
                 className="h-6 px-2 text-xs"
               >
-                {t('nodeSettings.remove')}
+                {i18n.t('nodeSettings.remove')}
               </Button>
             )}
           </div>
@@ -57,13 +58,13 @@ const FlowSwitchSettings = ({ nodeId, data, updateNodeData }) => {
               fullWidth
               value={data[`case_${i}`] ?? ''}
               onChange={(e) => updateNodeData(nodeId, { [`case_${i}`]: e.target.value })}
-              placeholder={t('nodeSettings.comparePlaceholder')}
+              placeholder={i18n.t('nodeSettings.comparePlaceholder')}
             />
           </div>
         ))}
 
         <div className="text-xs text-slate-400 mt-2">
-          {t('nodeSettings.autoCompareHint')}
+          {i18n.t('nodeSettings.autoCompareHint')}
         </div>
       </div>
     </div>

@@ -1,5 +1,6 @@
 import { NodeDefinition } from '../../core/registry';
 import LogicOperationSettings from './LogicOperationSettings';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды logic:operation
@@ -8,8 +9,8 @@ import LogicOperationSettings from './LogicOperationSettings';
 export const logicOperationDefinition = new NodeDefinition({
   type: 'logic:operation',
   category: 'logic',
-  label: t('labels.logicheskayaOperatsiya'),
-  description: t('descriptions.logicheskieOperatsii'),
+  label: i18n.t('labels.logicheskayaOperatsiya'),
+  description: i18n.t('descriptions.logicheskieOperatsii'),
 
 
 

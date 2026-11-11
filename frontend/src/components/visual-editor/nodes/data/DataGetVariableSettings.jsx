@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useVisualEditorStore } from '@/stores/visualEditorStore';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import i18n from '@/i18n';
 
 /**
  * Component настроек for data:get_variable ноды
@@ -13,13 +14,13 @@ const DataGetVariableSettings = ({ nodeId, data, updateNodeData }) => {
 
   return (
     <div className="p-2">
-      <Label>{t('nodeSettings.variableName')}</Label>
+      <Label>{i18n.t('nodeSettings.variableName')}</Label>
       <Select
         value={data.variableName || ''}
         onValueChange={(value) => updateNodeData(nodeId, { variableName: value })}
       >
         <SelectTrigger>
-          <SelectValue placeholder={t('nodeSettings.selectVariable')} />
+          <SelectValue placeholder={i18n.t('nodeSettings.selectVariable')} />
         </SelectTrigger>
         <SelectContent>
           {variables.filter(v => v.name).map(v => (

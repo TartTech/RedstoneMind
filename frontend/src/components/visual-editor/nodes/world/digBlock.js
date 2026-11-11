@@ -1,10 +1,11 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 export const worldDigDefinition = new NodeDefinition({
   type: 'world:dig',
   category: 'world',
-  label: t('labels.slomatBlok'),
-  description: t('descriptions.lomaetBlokPoObektuIliKoordinatam'),
+  label: i18n.t('labels.slomatBlok'),
+  description: i18n.t('descriptions.lomaetBlokPoObektuIliKoordinatam'),
   defaultData: {
     x: null,
     y: null,

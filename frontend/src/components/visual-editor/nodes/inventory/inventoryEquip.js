@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды inventory:equip
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const inventoryEquipDefinition = new NodeDefinition({
   type: 'inventory:equip',
   category: 'inventory',
-  label: t('labels.ekipirovat'),
-  description: t('descriptions.ekipiruetPredmetVRukuIliSlot'),
+  label: i18n.t('labels.ekipirovat'),
+  description: i18n.t('descriptions.ekipiruetPredmetVRukuIliSlot'),
 
 
 

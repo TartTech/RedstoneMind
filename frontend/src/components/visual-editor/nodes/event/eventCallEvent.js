@@ -1,11 +1,12 @@
 import { NodeDefinition } from '../../core/registry';
 import EventCallSettings from './EventCallSettings';
+import i18n from '@/i18n';
 
 export const eventCallEventDefinition = new NodeDefinition({
   type: 'event:call_event',
   category: 'flow',
-  label: t('labels.vyzvatSobytie'),
-  description: t('descriptions.vyzyvaetPolzovatelskoeSobytieIPeredayotParametry'),
+  label: i18n.t('labels.vyzvatSobytie'),
+  description: i18n.t('descriptions.vyzyvaetPolzovatelskoeSobytieIPeredayotParametry'),
 
 
 

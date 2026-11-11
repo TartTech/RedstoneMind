@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды time:datetime_literal
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const timeDateTimeLiteralDefinition = new NodeDefinition({
   type: 'time:datetime_literal',
   category: 'time',
-  label: t('labels.dateIVremya'),
-  description: t('descriptions.sozdaetObektDatyIVremeniEmpty'),
+  label: i18n.t('labels.dateIVremya'),
+  description: i18n.t('descriptions.sozdaetObektDatyIVremeniEmpty'),
 
 
 

@@ -1,10 +1,11 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 export const userRemoveFromGroupDefinition = new NodeDefinition({
   type: 'user:remove_from_group',
   category: 'user',
-  label: t('labels.ubratIzGruppy'),
-  description: t('descriptions.ubiraetPolzovatelyaIzUkazannoyGruppy'),
+  label: i18n.t('labels.ubratIzGruppy'),
+  description: i18n.t('descriptions.ubiraetPolzovatelyaIzUkazannoyGruppy'),
 
 
 

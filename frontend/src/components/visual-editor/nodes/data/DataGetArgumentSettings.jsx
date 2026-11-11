@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useVisualEditorStore } from '@/stores/visualEditorStore';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import i18n from '@/i18n';
 
 /**
  * Component настроек for data:get_argument ноды
@@ -13,13 +14,13 @@ const DataGetArgumentSettings = ({ nodeId, data, updateNodeData }) => {
 
   return (
     <div className="p-2">
-      <Label>{t('nodeSettings.argumentName')}</Label>
+      <Label>{i18n.t('nodeSettings.argumentName')}</Label>
       <Select
         value={data.argumentName || ''}
         onValueChange={(value) => updateNodeData(nodeId, { argumentName: value })}
       >
         <SelectTrigger>
-          <SelectValue placeholder={t('nodeSettings.selectArgument')} />
+          <SelectValue placeholder={i18n.t('nodeSettings.selectArgument')} />
         </SelectTrigger>
         <SelectContent>
           {(commandArguments || []).map(arg => (

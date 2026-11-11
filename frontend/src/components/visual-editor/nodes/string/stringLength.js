@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды string:length
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const stringLengthDefinition = new NodeDefinition({
   type: 'string:length',
   category: 'string',
-  label: t('labels.dlina2'),
-  description: t('descriptions.vozvrashchaetDlinuStroki'),
+  label: i18n.t('labels.dlina2'),
+  description: i18n.t('descriptions.vozvrashchaetDlinuStroki'),
 
 
 

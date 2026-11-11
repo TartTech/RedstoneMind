@@ -1,10 +1,11 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 export const flowTimerDefinition = new NodeDefinition({
   type: 'flow:timer',
   category: 'flow',
-  label: t('labels.timer'),
-  description: t('descriptions.vypolnyaetTeloTsiklaKazhdyeNSeconds'),
+  label: i18n.t('labels.timer'),
+  description: i18n.t('descriptions.vypolnyaetTeloTsiklaKazhdyeNSeconds'),
 
 
 

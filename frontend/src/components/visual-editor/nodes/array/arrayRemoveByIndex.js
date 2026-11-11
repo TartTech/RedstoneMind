@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды array:remove_by_index
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const arrayRemoveByIndexDefinition = new NodeDefinition({
   type: 'array:remove_by_index',
   category: 'array',
-  label: t('labels.deletePoIndeksu'),
-  description: t('descriptions.udalyaetElementIzMassivaPoEgo'),
+  label: i18n.t('labels.deletePoIndeksu'),
+  description: i18n.t('descriptions.udalyaetElementIzMassivaPoEgo'),
 
 
 

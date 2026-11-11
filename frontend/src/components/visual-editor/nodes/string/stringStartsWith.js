@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды string:starts_with
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const stringStartsWithDefinition = new NodeDefinition({
   type: 'string:starts_with',
   category: 'string',
-  label: t('labels.nachinaetsyaS'),
-  description: t('descriptions.proveryaetNachinaetsyaLiStrokaSPrefiksa'),
+  label: i18n.t('labels.nachinaetsyaS'),
+  description: i18n.t('descriptions.proveryaetNachinaetsyaLiStrokaSPrefiksa'),
 
 
 

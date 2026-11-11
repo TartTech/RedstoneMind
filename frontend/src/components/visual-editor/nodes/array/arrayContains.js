@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды array:contains
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const arrayContainsDefinition = new NodeDefinition({
   type: 'array:contains',
   category: 'array',
-  label: t('labels.soderzhit'),
-  description: t('descriptions.proveryaetSoderzhitLiMassivUkazannyyElement'),
+  label: i18n.t('labels.soderzhit'),
+  description: i18n.t('descriptions.proveryaetSoderzhitLiMassivUkazannyyElement'),
 
 
 

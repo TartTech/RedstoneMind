@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды time:now
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const timeNowDefinition = new NodeDefinition({
   type: 'time:now',
   category: 'time',
-  label: t('labels.seychas'),
-  description: t('descriptions.vozvrashchaetTekushchuyuDatuIVremya'),
+  label: i18n.t('labels.seychas'),
+  description: i18n.t('descriptions.vozvrashchaetTekushchuyuDatuIVremya'),
 
 
 

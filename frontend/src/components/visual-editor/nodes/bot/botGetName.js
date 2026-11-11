@@ -1,10 +1,11 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 export const botGetNameDefinition = new NodeDefinition({
   type: 'bot:get_name',
   category: 'bot',
-  label: t('labels.imyaBota'),
-  description: t('descriptions.vozvrashchaetImyaUsernameBota'),
+  label: i18n.t('labels.imyaBota'),
+  description: i18n.t('descriptions.vozvrashchaetImyaUsernameBota'),
 
 
 

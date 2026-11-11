@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды array:add_element
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const arrayAddElementDefinition = new NodeDefinition({
   type: 'array:add_element',
   category: 'array',
-  label: t('labels.addElement'),
-  description: t('descriptions.dobavlyaetElementVKonetsMassiva'),
+  label: i18n.t('labels.addElement'),
+  description: i18n.t('descriptions.dobavlyaetElementVKonetsMassiva'),
 
 
 

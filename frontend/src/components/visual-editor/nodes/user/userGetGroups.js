@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды user:get_groups
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const userGetGroupsDefinition = new NodeDefinition({
   type: 'user:get_groups',
   category: 'user',
-  label: t('labels.poluchitGruppy'),
-  description: t('descriptions.vozvrashchaetGruppyPolzovatelya'),
+  label: i18n.t('labels.poluchitGruppy'),
+  description: i18n.t('descriptions.vozvrashchaetGruppyPolzovatelya'),
 
 
 

@@ -1,10 +1,11 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 export const dataStoreReadDefinition = new NodeDefinition({
   type: 'data:store_read',
   category: 'data',
-  label: t('labels.prochitatIzStore'),
-  description: t('descriptions.chitaetZnachenieIzKhranilishchaPluginaPo'),
+  label: i18n.t('labels.prochitatIzStore'),
+  description: i18n.t('descriptions.chitaetZnachenieIzKhranilishchaPluginaPo'),
 
 
 

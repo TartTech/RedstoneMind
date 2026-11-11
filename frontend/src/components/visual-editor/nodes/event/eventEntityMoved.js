@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды event:entityMoved
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const eventEntityMovedDefinition = new NodeDefinition({
   type: 'event:entityMoved',
   category: 'event',
-  label: t('labels.entityPodvinulas'),
-  description: t('descriptions.vyzyvaetsyaKogdaLyubayaSushchnostPeremeshchaetsya'),
+  label: i18n.t('labels.entityPodvinulas'),
+  description: i18n.t('descriptions.vyzyvaetsyaKogdaLyubayaSushchnostPeremeshchaetsya'),
 
 
 

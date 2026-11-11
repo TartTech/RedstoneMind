@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды action:send_message
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const actionSendMessageDefinition = new NodeDefinition({
   type: 'action:send_message',
   category: 'action',
-  label: t('labels.sendSoobshchenie'),
-  description: t('descriptions.otpravlyaetSoobshchenieVChatPodderzhivaetPeremennye'),
+  label: i18n.t('labels.sendSoobshchenie'),
+  description: i18n.t('descriptions.otpravlyaetSoobshchenieVChatPodderzhivaetPeremennye'),
 
 
 

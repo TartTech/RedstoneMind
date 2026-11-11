@@ -1,5 +1,6 @@
 import { NodeDefinition } from '../../core/registry';
 import DataCastSettings from './DataCastSettings';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды data:cast
@@ -8,8 +9,8 @@ import DataCastSettings from './DataCastSettings';
 export const dataCastDefinition = new NodeDefinition({
   type: 'data:cast',
   category: 'data',
-  label: t('labels.preobrazovatTip'),
-  description: t('descriptions.preobrazuetZnachenieVVybrannyyTip'),
+  label: i18n.t('labels.preobrazovatTip'),
+  description: i18n.t('descriptions.preobrazuetZnachenieVVybrannyyTip'),
 
 
 

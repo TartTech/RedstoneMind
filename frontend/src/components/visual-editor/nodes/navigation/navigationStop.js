@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды navigation:stop
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const navigationStopDefinition = new NodeDefinition({
   type: 'navigation:stop',
   category: 'navigation',
-  label: t('labels.stopsya'),
-  description: t('descriptions.ostanavlivaetTekushcheeDvizheniesledovanieBota'),
+  label: i18n.t('labels.stopsya'),
+  description: i18n.t('descriptions.ostanavlivaetTekushcheeDvizheniesledovanieBota'),
 
 
 

@@ -1,5 +1,6 @@
 import { NodeDefinition } from '../../core/registry';
 import FlowSequenceSettings from './FlowSequenceSettings';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды flow:sequence
@@ -8,8 +9,8 @@ import FlowSequenceSettings from './FlowSequenceSettings';
 export const flowSequenceDefinition = new NodeDefinition({
   type: 'flow:sequence',
   category: 'flow',
-  label: t('labels.posledovatelnost'),
-  description: t('descriptions.posledovatelnoVypolnyaetNeskolkoVetok'),
+  label: i18n.t('labels.posledovatelnost'),
+  description: i18n.t('descriptions.posledovatelnoVypolnyaetNeskolkoVetok'),
 
 
 

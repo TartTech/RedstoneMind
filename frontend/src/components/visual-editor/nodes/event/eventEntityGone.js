@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды event:entityGone
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const eventEntityGoneDefinition = new NodeDefinition({
   type: 'event:entityGone',
   category: 'event',
-  label: t('labels.entityIschezla'),
-  description: t('descriptions.vyzyvaetsyaKogdaSushchnostPropadaetIzZony'),
+  label: i18n.t('labels.entityIschezla'),
+  description: i18n.t('descriptions.vyzyvaetsyaKogdaSushchnostPropadaetIzZony'),
 
 
 

@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды data:get_server_players
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const dataGetServerPlayersDefinition = new NodeDefinition({
   type: 'data:get_server_players',
   category: 'data',
-  label: t('labels.playeriNaServere'),
-  description: t('descriptions.spisokVsekhIgrokovNaServere'),
+  label: i18n.t('labels.playeriNaServere'),
+  description: i18n.t('descriptions.spisokVsekhIgrokovNaServere'),
 
 
 

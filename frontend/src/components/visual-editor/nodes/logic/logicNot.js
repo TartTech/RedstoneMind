@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды logic:not
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const logicNotDefinition = new NodeDefinition({
   type: 'logic:not',
   category: 'logic',
-  label: t('labels.ne'),
-  description: t('descriptions.invertiruetBooleanZnachenieNot'),
+  label: i18n.t('labels.ne'),
+  description: i18n.t('descriptions.invertiruetBooleanZnachenieNot'),
 
 
 

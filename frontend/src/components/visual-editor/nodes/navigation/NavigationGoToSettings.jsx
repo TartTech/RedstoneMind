@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { MapPin } from 'lucide-react';
 import CoordinatePickerDialog from '@/components/minecraft/CoordinatePickerDialog';
+import i18n from '@/i18n';
 
 /**
  * Component настроек for navigation:go_to ноды
@@ -31,7 +32,7 @@ const NavigationGoToSettings = ({ nodeId, data, updateNodeData }) => {
         onClick={() => setPickerOpen(true)}
       >
         <MapPin className="w-4 h-4 mr-2" />
-        {t('nodeSettings.selectIn3dViewer')}
+        {i18n.t('nodeSettings.selectIn3dViewer')}
       </Button>
 
       {hasCoords && (

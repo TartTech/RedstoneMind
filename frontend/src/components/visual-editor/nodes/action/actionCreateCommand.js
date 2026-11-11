@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды action:create_command
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const actionCreateCommandDefinition = new NodeDefinition({
   type: 'action:create_command',
   category: 'action',
-  label: t('labels.createKomandu'),
-  description: t('descriptions.sozdaetNovuyuKomanduDlyaBotaVremennuyu'),
+  label: i18n.t('labels.createKomandu'),
+  description: i18n.t('descriptions.sozdaetNovuyuKomanduDlyaBotaVremennuyu'),
 
 
 

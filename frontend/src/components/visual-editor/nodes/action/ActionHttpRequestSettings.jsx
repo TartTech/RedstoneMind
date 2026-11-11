@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import i18n from '@/i18n';
 
 /**
  * Component настроек for action:http_request ноды
@@ -17,7 +18,7 @@ const ActionHttpRequestSettings = ({ nodeId, data, updateNodeData, nodeEdges }) 
     <div className="p-2 border-t border-slate-700">
       {!hasMethodConnection && (
         <>
-          <Label>{t('nodeSettings.httpMethod')}</Label>
+          <Label>{i18n.t('nodeSettings.httpMethod')}</Label>
           <Select
             value={data.method || 'GET'}
             onValueChange={(value) => updateNodeData(nodeId, { method: value })}

@@ -1,5 +1,6 @@
 import { NodeDefinition } from '../../core/registry';
 import NavigationGoToSettings from './NavigationGoToSettings';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды navigation:go_to
@@ -8,8 +9,8 @@ import NavigationGoToSettings from './NavigationGoToSettings';
 export const navigationGoToDefinition = new NodeDefinition({
   type: 'navigation:go_to',
   category: 'navigation',
-  label: t('labels.idtiK'),
-  description: t('descriptions.peremeshchaetBotaKUkazannymKoordinatamIspolzuya'),
+  label: i18n.t('labels.idtiK'),
+  description: i18n.t('descriptions.peremeshchaetBotaKUkazannymKoordinatamIspolzuya'),
 
 
 

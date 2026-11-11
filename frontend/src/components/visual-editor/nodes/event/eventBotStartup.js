@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды event:botStartup
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const eventBotStartupDefinition = new NodeDefinition({
   type: 'event:botStartup',
   category: 'event',
-  label: t('labels.priZapuskeBota'),
-  description: t('descriptions.srabatyvaetOdinRazPriZapuskeBota'),
+  label: i18n.t('labels.priZapuskeBota'),
+  description: i18n.t('descriptions.srabatyvaetOdinRazPriZapuskeBota'),
 
 
 

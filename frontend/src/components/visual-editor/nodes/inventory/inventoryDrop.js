@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды inventory:drop
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const inventoryDropDefinition = new NodeDefinition({
   type: 'inventory:drop',
   category: 'inventory',
-  label: t('labels.vybrosit'),
-  description: t('descriptions.vybrasyvaetPredmetIzInventaryaNaZemlyu'),
+  label: i18n.t('labels.vybrosit'),
+  description: i18n.t('descriptions.vybrasyvaetPredmetIzInventaryaNaZemlyu'),
 
 
 

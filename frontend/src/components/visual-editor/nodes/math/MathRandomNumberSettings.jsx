@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
+import i18n from '@/i18n';
 
 /**
  * Settings for ноды math:random_number
@@ -12,7 +13,7 @@ function MathRandomNumberSettings({ nodeId, data, updateNodeData }) {
   return (
     <div className="space-y-4">
       <div>
-        <Label htmlFor="min">{t('nodeSettings.minimumDefault')}</Label>
+        <Label htmlFor="min">{i18n.t('nodeSettings.minimumDefault')}</Label>
         <Input
           id="min"
           type="text"
@@ -21,12 +22,12 @@ function MathRandomNumberSettings({ nodeId, data, updateNodeData }) {
           placeholder="0"
         />
         <p className="text-xs text-muted-foreground mt-1">
-          {t('nodeSettings.usedWhenPinDisconnected', { pin: 'Min' })}
+          {i18n.t('nodeSettings.usedWhenPinDisconnected', { pin: 'Min' })}
         </p>
       </div>
 
       <div>
-        <Label htmlFor="max">{t('nodeSettings.maximumDefault')}</Label>
+        <Label htmlFor="max">{i18n.t('nodeSettings.maximumDefault')}</Label>
         <Input
           id="max"
           type="text"
@@ -35,12 +36,12 @@ function MathRandomNumberSettings({ nodeId, data, updateNodeData }) {
           placeholder="1"
         />
         <p className="text-xs text-muted-foreground mt-1">
-          {t('nodeSettings.usedWhenPinDisconnected', { pin: 'Max' })}
+          {i18n.t('nodeSettings.usedWhenPinDisconnected', { pin: 'Max' })}
         </p>
       </div>
 
       <div className="text-xs text-muted-foreground p-2 bg-muted rounded">
-        {t('nodeHelp.mathRandom.note')}
+        {i18n.t('nodeHelp.mathRandom.note')}
       </div>
     </div>
   );

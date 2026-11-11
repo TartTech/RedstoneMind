@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды array:join
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const arrayJoinDefinition = new NodeDefinition({
   type: 'array:join',
   category: 'array',
-  label: t('labels.obedinitVStroku'),
-  description: t('descriptions.obedinyaetElementyMassivaVStrokuS'),
+  label: i18n.t('labels.obedinitVStroku'),
+  description: i18n.t('descriptions.obedinyaetElementyMassivaVStrokuS'),
 
 
 

@@ -1,4 +1,5 @@
 import { NodeDefinition } from '../../core/registry';
+import i18n from '@/i18n';
 
 /**
  * Определение ноды container:deposit
@@ -7,8 +8,8 @@ import { NodeDefinition } from '../../core/registry';
 export const containerDepositDefinition = new NodeDefinition({
   type: 'container:deposit',
   category: 'container',
-  label: t('labels.konteynerPolozhit'),
-  description: t('descriptions.kladyotPredmetIzInventaryaVOtkrytyy'),
+  label: i18n.t('labels.konteynerPolozhit'),
+  description: i18n.t('descriptions.kladyotPredmetIzInventaryaVOtkrytyy'),
 
 
 

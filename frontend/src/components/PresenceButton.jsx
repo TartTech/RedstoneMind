@@ -79,7 +79,7 @@ export default function PresenceButton() {
 					if (!currentUser || user.userId !== currentUser.id) {
 						const lastLeft = lastLeftAtRef.current.get(user.userId);
 						if (!lastLeft || now - lastLeft >= 5 * 60 * 1000) {
-							toast({ title: t('messages.userusernameZashelVPanel', { user.username: user.username }), description: routeTitles(user.path, user.metadata) });
+							toast({ title: t('messages.userusernameZashelVPanel', { username: user.username }), description: routeTitles(user.path, user.metadata) });
 						}
 					}
 				}

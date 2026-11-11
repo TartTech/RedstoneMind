@@ -316,7 +316,7 @@ export default function SubmitToOfficialListDialog({ isOpen, onClose, pluginInfo
                                                                 ) : (
                                                                     <Badge variant="outline" className="text-xs">
                                                                         <Icons.Server className="h-3 w-3 mr-1" />
-                                                                        {hosts.length <= 2 ? hosts.join(', ') : t('hostslengthServerov', { hosts.length: hosts.length })}
+                                                                        {hosts.length <= 2 ? hosts.join(', ') : t('hostslengthServerov', { count: hosts.length })}
                                                                     </Badge>
                                                                 )}
                                                             </div>

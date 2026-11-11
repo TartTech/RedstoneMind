@@ -1062,7 +1062,7 @@ export const useVisualEditorStore = create(
         toast({ title: t('messages.success2'), description: t('messages.graphSokhranen') });
       } catch (error) {
         console.error("Ошибка сохранения графа:", error);
-        toast({ variant: 'destructive', title: t('errors.error2'), description: t('errors.errorSokhraneniyaGrafaErrormessage', { error.message: error.message }) });
+        toast({ variant: 'destructive', title: t('errors.error2'), description: t('errors.errorSokhraneniyaGrafaErrormessage', { message: error.message }) });
       } finally {
         set({ isSaving: false });
       }
@@ -1644,7 +1644,7 @@ export const useVisualEditorStore = create(
         });
         toast({
           title: t('titles.userPrisoedinilsya'),
-          description: t('descriptions.userusernameNachalRedaktirovatGraf', { user.username: user.username })
+          description: t('descriptions.userusernameNachalRedaktirovatGraf', { username: user.username })
         });
       });
 

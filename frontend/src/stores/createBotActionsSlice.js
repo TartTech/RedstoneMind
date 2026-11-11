@@ -49,7 +49,7 @@ export const createBotActionsSlice = (set, get) => ({
                     botIds,
                     proxySettings
                 })
-            }, t('settingsProksiPrimenenyKBotidslengthBotam', { botIds.length: botIds.length }));
+            }, t('settingsProksiPrimenenyKBotidslengthBotam', { count: botIds.length }));
             
             if (result.success) {
                 await get().fetchInitialData();

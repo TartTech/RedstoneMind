@@ -211,5 +211,7 @@
   "validation_48182be3": "PluginStore: key must be non-empty string.",
   "validation_6e906515": "PluginStore: value is too large (maximum 1 MB).",
   "validation_beb9c3d5": "Name bot is required",
-  "validation_e2a4da56": "Too many files in archive: {{entries}} (maximum {{maxEntries}})"
+  "validation_e2a4da56": "Too many files in archive: {{entries}} (maximum {{maxEntries}})",
+  "msg_plugin_submit_header": "Plugin {{id}} submitted for review.",
+  "msg_plugin_remove_body": "Request to remove plugin {{id}} from the list."
 }

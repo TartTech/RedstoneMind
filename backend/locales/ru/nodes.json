@@ -486,5 +486,7 @@
   "success_c665d401": "Выполнено",
   "validation_0735c330": "[delete_command] Имя команды обязательно",
   "validation_7cd81c76": "[update_command] Имя команды обязательно",
-  "validation_d7d1d181": "[create_command] Имя команды обязательно"
+  "validation_d7d1d181": "[create_command] Имя команды обязательно",
+  "msg_for_each_desc": "Выполняет действие для каждого элемента в массиве.",
+  "msg_while_desc": "Выполняет действие пока условие истинно."
 }

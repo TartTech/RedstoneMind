@@ -211,5 +211,7 @@
   "validation_48182be3": "PluginStore: ключ должен быть непустой строкой.",
   "validation_6e906515": "PluginStore: значение слишком большое (максимум 1 МБ).",
   "validation_beb9c3d5": "Имя бота обязательно",
-  "validation_e2a4da56": "Слишком много файлов в архиве: {{entries}} (максимум {{maxEntries}})"
+  "validation_e2a4da56": "Слишком много файлов в архиве: {{entries}} (максимум {{maxEntries}})",
+  "msg_plugin_submit_header": "Плагин {{id}} отправлен на проверку.",
+  "msg_plugin_remove_body": "Запрос на удаление плагина {{id}} из списка."
 }

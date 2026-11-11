@@ -41,7 +41,7 @@ const flowNodes = [
     type: 'flow:for_each',
     label: t('nodes:msg_ff4c3e0c'),
     category: t('nodes:msg_e696d1e1'),
-    description: 'Выполняет t('nodes:msg_665729a7') для каждого элемента в t('nodes:msg_e1ab76bb').',
+    description: t('nodes:msg_for_each_desc'),
     graphType: GRAPH_TYPES.ALL,
     executor: require('../../core/nodes/flow/for_each').execute,
     computeInputs: (data) => [
@@ -61,7 +61,7 @@ const flowNodes = [
     type: 'flow:while',
     label: t('nodes:msg_98ec0881'),
     category: t('nodes:msg_e696d1e1'),
-    description: 'Выполняет t('nodes:msg_665729a7') пока условие истинно.',
+    description: t('nodes:msg_while_desc'),
     graphType: GRAPH_TYPES.ALL,
     executor: require('../../core/nodes/flow/while').execute,
     evaluator: require('../../core/nodes/flow/while').evaluate,

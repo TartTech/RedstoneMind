@@ -486,5 +486,7 @@
   "success_c665d401": "Concluído",
   "validation_0735c330": "[delete_command] Nome do comando é obrigatório",
   "validation_7cd81c76": "[update_command] Nome do comando é obrigatório",
-  "validation_d7d1d181": "[create_command] Nome do comando é obrigatório"
+  "validation_d7d1d181": "[create_command] Nome do comando é obrigatório",
+  "msg_for_each_desc": "Executa ação para cada elemento no array.",
+  "msg_while_desc": "Executa ação enquanto a condição for verdadeira."
 }

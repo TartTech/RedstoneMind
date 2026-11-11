@@ -257,7 +257,7 @@ async function openUnofficialPullRequest(octokit, entry) {
     const head = `${me.login}:${branch}`;
     const title = `Unofficial: ${entry.displayName || entry.name} ${entry.latestTag}`;
     const body = [
-        t('core:msg_7e886c63')${entry.id}\t('core:msg_b6b8432f'),
+        t('core:msg_plugin_submit_header', { id: entry.id }),
         '',
         t('core:msg_4bb6cb70', { entry: entry.author }),
         t('core:msg_01c81dfa', { entry: entry.repoUrl }),
@@ -550,7 +550,7 @@ async function removeOwnUnofficialEntry({ token, pluginId }) {
         title: `Remove unofficial ${entry.id}`,
         head,
         base: branch,
-        body: t('core:msg_1be2f605')${entry.id}\t('core:msg_ac0f07e3'),
+        body: t('core:msg_plugin_remove_body', { id: entry.id }),
     });
     return { direct: false, removed: true, prUrl: pr.html_url, prNumber: pr.number, login: me.login };
 }

@@ -486,5 +486,7 @@
   "success_c665d401": "Completed",
   "validation_0735c330": "[delete_command] Command name is required",
   "validation_7cd81c76": "[update_command] Command name is required",
-  "validation_d7d1d181": "[create_command] Command name is required"
+  "validation_d7d1d181": "[create_command] Command name is required",
+  "msg_for_each_desc": "Executes action for each element in array.",
+  "msg_while_desc": "Executes action while condition is true."
 }

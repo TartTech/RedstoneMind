@@ -21,12 +21,13 @@ import {
   translatePluginCategory,
   normalizeGithubRepoUrl,
 } from '@/utils/pluginPresentation';
+import i18n from '@/i18n';
 
 const SORT_OPTIONS = [
-  { id: 'popular', icon: Icons.TrendingUp, labelKey: 'browser.sort.popular', defaultLabel: t('labels.populyarnye') },
-  { id: 'newest', icon: Icons.Clock, labelKey: 'browser.sort.newest', defaultLabel: t('labels.novye') },
-  { id: 'alphabetical', icon: Icons.ArrowDownAZ, labelKey: 'browser.sort.alphabetical', defaultLabel: t('labels.poAlfavitu') },
-  { id: 'downloads', icon: Icons.Download, labelKey: 'browser.sort.downloads', defaultLabel: t('labels.poZagruzkam') },
+  { id: 'popular', icon: Icons.TrendingUp, labelKey: 'browser.sort.popular', defaultLabel: i18n.t('labels.populyarnye') },
+  { id: 'newest', icon: Icons.Clock, labelKey: 'browser.sort.newest', defaultLabel: i18n.t('labels.novye') },
+  { id: 'alphabetical', icon: Icons.ArrowDownAZ, labelKey: 'browser.sort.alphabetical', defaultLabel: i18n.t('labels.poAlfavitu') },
+  { id: 'downloads', icon: Icons.Download, labelKey: 'browser.sort.downloads', defaultLabel: i18n.t('labels.poZagruzkam') },
 ];
 
 export default function PluginBrowserView({ botId, isActive, installedPlugins, onInstallSuccess }) {

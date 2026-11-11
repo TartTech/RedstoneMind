@@ -222,7 +222,6 @@ const eventsNodes = [
 ];
 
 const { evaluateEventPin } = require('../nodes/event/evaluateEvent');
-const { t } = require('../../i18n');
 for (const node of eventsNodes) {
   if (node.type !== 'event:call_event' && !node.evaluator) {
     node.evaluator = (nodeInstance, pinId, context) => evaluateEventPin(nodeInstance, pinId, context);

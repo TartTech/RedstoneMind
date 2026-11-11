@@ -46,23 +46,41 @@ function UsaFlag({ className }) {
   );
 }
 
+function BrazilFlag({ className }) {
+  return (
+    <svg viewBox="0 0 32 24" className={className} aria-hidden="true">
+      <rect width="32" height="24" rx="3" fill="#009739" />
+      <polygon points="16,2 30,12 16,22 2,12" fill="#FEDD00" />
+      <circle cx="16" cy="12" r="5" fill="#012169" />
+      <path d="M8.5,12 C8.5,12 12,15 16,15 C20,15 23.5,12 23.5,12" fill="none" stroke="#fff" strokeWidth="0.8" />
+    </svg>
+  );
+}
+
 function LanguageFlag({ code, className }) {
   if (code === 'en') {
     return <UsaFlag className={className} />;
+  }
+  if (code === 'pt-BR') {
+    return <BrazilFlag className={className} />;
   }
   return <RussianFlag className={className} />;
 }
 
 const languages = [
-  { code: 'ru', name: t('russkiy2') },
+  { code: 'ru', name: 'Русский' },
   { code: 'en', name: 'English' },
+  { code: 'pt-BR', name: 'Português (BR)' },
 ];
 
 export default function LanguageSwitcher({ isCollapsed, compact = false }) {
   const { i18n } = useTranslation();
 
-  const normalizedLanguage = (i18n.resolvedLanguage || i18n.language || 'ru').split('-')[0];
-  const currentLang = languages.find((language) => language.code === normalizedLanguage) || languages[0];
+  const rawLang = i18n.resolvedLanguage || i18n.language || 'ru';
+  const currentLang = languages.find((language) => language.code === rawLang)
+    || languages.find((language) => language.code === rawLang.split('-')[0])
+    || languages[0];
+  const normalizedLanguage = currentLang.code;
 
   const handleChangeLanguage = (langCode) => {
     i18n.changeLanguage(langCode);

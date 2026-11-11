@@ -11,23 +11,33 @@ const LANGUAGE_CHOSEN_KEY = 'redstonemind-language-chosen';
 const languages = [
   {
     code: 'ru',
-    name: t('russkiy'),
+    name: 'Русский',
     nativeName: 'Russian',
     flagSrc: '/flags/ru.svg',
-    greeting: t('dobroPozhalovat'),
-    description: t('descriptions.russkiyYazykInterfeysa'),
+    greeting: 'Добро пожаловать!',
+    description: 'Русский язык интерфейса',
     gradient: 'from-blue-500 via-blue-600 to-red-500',
     bgGradient: 'from-blue-500/10 to-red-500/10',
   },
   {
     code: 'en',
     name: 'English',
-    nativeName: t('angliyskiy'),
+    nativeName: 'Inglês',
     flagSrc: '/flags/en.svg',
     greeting: 'Welcome!',
     description: 'English interface language',
     gradient: 'from-blue-600 via-red-500 to-blue-600',
     bgGradient: 'from-blue-500/10 to-red-500/10',
+  },
+  {
+    code: 'pt-BR',
+    name: 'Português (BR)',
+    nativeName: 'Brazilian Portuguese',
+    flagSrc: '/flags/pt-BR.svg',
+    greeting: 'Bem-vindo!',
+    description: 'Idioma da interface em português brasileiro',
+    gradient: 'from-green-500 via-yellow-400 to-blue-600',
+    bgGradient: 'from-green-500/10 to-yellow-400/10',
   },
 ];
 
@@ -75,7 +85,7 @@ export default function LanguageSelectModal() {
   return (
     <Dialog open={isOpen} onOpenChange={() => {}}>
       <DialogContent
-        className="sm:max-w-md overflow-hidden border border-border/60 bg-background shadow-2xl"
+        className="sm:max-w-lg overflow-hidden border border-border/60 bg-background shadow-2xl"
         onPointerDownOutside={(e) => e.preventDefault()}
         onEscapeKeyDown={(e) => e.preventDefault()}
       >
@@ -95,17 +105,21 @@ export default function LanguageSelectModal() {
                 className="w-12 h-9 object-cover rounded shadow-sm animate-in zoom-in-50 duration-300"
               />
             ) : (
-              // Показываем оба флага
-              <div className="flex items-center -space-x-2">
+              <div className="flex items-center -space-x-1">
                 <img
                   src="/flags/ru.svg"
                   alt="Russian"
-                  className="w-10 h-7 object-cover rounded shadow-sm transform -rotate-12 hover:rotate-0 transition-transform"
+                  className="w-8 h-6 object-cover rounded shadow-sm transform -rotate-12 hover:rotate-0 transition-transform"
+                />
+                <img
+                  src="/flags/pt-BR.svg"
+                  alt="Português"
+                  className="w-8 h-6 object-cover rounded shadow-sm transform hover:scale-110 transition-transform z-10"
                 />
                 <img
                   src="/flags/en.svg"
                   alt="English"
-                  className="w-10 h-7 object-cover rounded shadow-sm transform rotate-12 hover:rotate-0 transition-transform"
+                  className="w-8 h-6 object-cover rounded shadow-sm transform rotate-12 hover:rotate-0 transition-transform"
                 />
               </div>
             )}
@@ -120,8 +134,8 @@ export default function LanguageSelectModal() {
           </DialogDescription>
         </DialogHeader>
 
-        {/* Карточки языков */}
-        <div className="relative grid grid-cols-2 gap-4 py-6">
+        {/* Language cards */}
+        <div className="relative grid grid-cols-3 gap-3 py-6">
           {languages.map((lang) => (
             <button
               key={lang.code}
@@ -206,7 +220,7 @@ export default function LanguageSelectModal() {
             </div>
           ) : (
             <span>
-              {selectedLang === 'ru' ? t('prodolzhit') : selectedLang === 'en' ? 'Continue' : 'Select language'}
+              {selectedLang === 'ru' ? 'Продолжить' : selectedLang === 'en' ? 'Continue' : selectedLang === 'pt-BR' ? 'Continuar' : 'Select language'}
             </span>
           )}
         </Button>
@@ -215,7 +229,7 @@ export default function LanguageSelectModal() {
         <p className="relative text-xs text-center text-muted-foreground/60">
           You can change the language later in settings
           <br />
-          <span className="text-muted-foreground/40">Вы можете изменить язык позже в настройках</span>
+          <span className="text-muted-foreground/40">Você pode mudar o idioma depois nas configurações</span>
         </p>
       </DialogContent>
     </Dialog>

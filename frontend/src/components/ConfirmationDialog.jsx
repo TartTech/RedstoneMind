@@ -29,9 +29,12 @@ export default function ConfirmationDialog({
   title,
   description,
   onConfirm,
-  confirmText = t('confirm.confirm'),
-  cancelText = t('cancel'),
+  confirmText,
+  cancelText,
 }) {
+  const { t } = useTranslation();
+  const resolvedConfirmText = confirmText ?? t('confirm.confirm');
+  const resolvedCancelText = cancelText ?? t('cancel');
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent>
@@ -40,7 +43,7 @@ export default function ConfirmationDialog({
           {description ? <AlertDialogDescription>{description}</AlertDialogDescription> : null}
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>{cancelText}</AlertDialogCancel>
+          <AlertDialogCancel>{resolvedCancelText}</AlertDialogCancel>
           <AlertDialogAction
             onClick={(e) => {
               e.preventDefault();
@@ -49,7 +52,7 @@ export default function ConfirmationDialog({
             }}
             className={buttonVariants({ variant: "destructive" })}
           >
-            {confirmText}
+            {resolvedConfirmText}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

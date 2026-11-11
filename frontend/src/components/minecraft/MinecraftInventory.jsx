@@ -279,7 +279,7 @@ const MinecraftInventory = ({ inventory, onSlotClick, onClose, botState }) => {
             <div style={{ position: 'relative' }}>
                 <button
                     onClick={onClose}
-                    title=t('titles.closeEEsc')
+                    title={t('titles.closeEEsc')}
                     style={{
                         position: 'absolute',
                         top: 4,

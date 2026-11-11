@@ -63,13 +63,13 @@ export default function ProxyForm({ proxy, onSubmit, onCancel, isSaving }) {
             <form id="proxy-form" onSubmit={handleSubmit} className="space-y-4 py-4">
                 <div className="space-y-2">
                     <Label htmlFor="name">Название</Label>
-                    <Input id="name" name="name" value={formData.name} onChange={handleChange} placeholder=t('placeholders.moyProksi') required />
+                    <Input id="name" name="name" value={formData.name} onChange={handleChange} placeholder={t('placeholders.moyProksi')} required />
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="type">Тип прокси</Label>
                     <Select value={formData.type} onValueChange={handleTypeChange}>
                         <SelectTrigger id="type">
-                            <SelectValue placeholder=t('placeholders.vyberiteTipProksi') />
+                            <SelectValue placeholder={t('placeholders.vyberiteTipProksi')} />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectItem value="socks5">SOCKS5</SelectItem>
@@ -99,7 +99,7 @@ export default function ProxyForm({ proxy, onSubmit, onCancel, isSaving }) {
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="note">Заметка (опционально)</Label>
-                    <Textarea id="note" name="note" value={formData.note} onChange={handleChange} placeholder=t('placeholders.descriptionIliZametki') />
+                    <Textarea id="note" name="note" value={formData.note} onChange={handleChange} placeholder={t('placeholders.descriptionIliZametki')} />
                 </div>
             </form>
             <DialogFooter>

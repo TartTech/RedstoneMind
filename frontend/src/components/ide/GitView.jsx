@@ -459,7 +459,7 @@ export default function GitView({ botId, pluginName, onRefresh }) {
                             {/* Field for сообщения коммита */}
                             <div className="space-y-2">
                                 <Textarea
-                                    placeholder=t('placeholders.soobshchenieKommita')
+                                    placeholder={t('placeholders.soobshchenieKommita')}
                                     value={commitMessage}
                                     onChange={(e) => setCommitMessage(e.target.value)}
                                     className="min-h-[60px] text-sm bg-slate-800 border-slate-600"

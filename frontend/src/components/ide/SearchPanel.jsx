@@ -211,7 +211,7 @@ export default function SearchPanel({ botId, pluginName, onOpenFile }) {
                     <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
                     <Input
                         ref={searchInputRef}
-                        placeholder=t('placeholders.search')
+                        placeholder={t('placeholders.search')}
                         className="pl-8"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
@@ -225,7 +225,7 @@ export default function SearchPanel({ botId, pluginName, onOpenFile }) {
                     <div className="relative">
                         <Replace className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
                         <Input
-                            placeholder=t('placeholders.zamenit')
+                            placeholder={t('placeholders.zamenit')}
                             className="pl-8"
                             value={replaceQuery}
                             onChange={(e) => setReplaceQuery(e.target.value)}
@@ -287,7 +287,7 @@ export default function SearchPanel({ botId, pluginName, onOpenFile }) {
                         size="sm"
                         variant="outline"
                         onClick={() => setShowReplace(!showReplace)}
-                        title=t('titles.pokazatskrytZamenu')
+                        title={t('titles.pokazatskrytZamenu')}
                     >
                         <Replace className="h-4 w-4" />
                     </Button>

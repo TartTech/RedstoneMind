@@ -94,7 +94,7 @@ const QuickOpen = ({ isOpen, onClose, fileStructure, onSelectFile }) => {
                         <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                         <Input
                             ref={inputRef}
-                            placeholder=t('placeholders.searchFaylov')
+                            placeholder={t('placeholders.searchFaylov')}
                             className="pl-9"
                             value={query}
                             onChange={(e) => setQuery(e.target.value)}

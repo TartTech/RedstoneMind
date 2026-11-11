@@ -175,7 +175,7 @@ export default function ConsolePanel({ botId, pluginName }) {
                 <div className="relative flex-1">
                     <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                     <Input
-                        placeholder=t('placeholders.searchVLogakh')
+                        placeholder={t('placeholders.searchVLogakh')}
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         className="pl-8 h-8 text-sm"
@@ -210,7 +210,7 @@ export default function ConsolePanel({ botId, pluginName }) {
                     size="sm"
                     onClick={() => setAutoScroll(!autoScroll)}
                     className="h-8"
-                    title=t('titles.avtoprokrutka')
+                    title={t('titles.avtoprokrutka')}
                 >
                     <ChevronDown className="w-4 h-4" />
                 </Button>
@@ -221,7 +221,7 @@ export default function ConsolePanel({ botId, pluginName }) {
                     size="sm"
                     onClick={clearLogs}
                     className="h-8"
-                    title=t('titles.ochistitLogi')
+                    title={t('titles.ochistitLogi')}
                 >
                     <Trash2 className="w-4 h-4" />
                 </Button>

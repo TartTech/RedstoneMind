@@ -38,7 +38,7 @@ export default function StatusBar({ botId, pluginName, activeFile, onTogglePanel
                     <div
                         className="flex items-center gap-3 cursor-pointer hover:bg-primary-foreground/20 px-2 py-0.5 rounded"
                         onClick={onProblemsClick}
-                        title=t('titles.pokazatProblemy')
+                        title={t('titles.pokazatProblemy')}
                     >
                         {errorCount > 0 && (
                             <div className="flex items-center gap-1">
@@ -59,7 +59,7 @@ export default function StatusBar({ botId, pluginName, activeFile, onTogglePanel
                 <div
                     className="cursor-pointer hover:bg-primary-foreground/20 px-1 rounded"
                     onClick={() => setShowShortcutsHelp(true)}
-                    title=t('titles.keyboardShortcuts')
+                    title={t('titles.keyboardShortcuts')}
                 >
                     <Keyboard className="h-3 w-3" />
                 </div>

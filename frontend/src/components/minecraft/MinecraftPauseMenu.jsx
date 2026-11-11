@@ -113,21 +113,21 @@ const SettingsView = ({ settings, updateSetting, onBack, scoreboardVisible, setS
 
         <div className="grid grid-cols-2 gap-2">
             <Slider
-                label=t('labels.yeslnostProrisovki')
+                label={t('labels.yeslnostProrisovki')}
                 value={settings.renderDistance}
                 min={8} max={64} step={4}
                 onChange={(v) => updateSetting('renderDistance', v)}
                 format={(v) => t('vChank', { v: v })}
             />
             <Slider
-                label=t('labels.chuvstvitelnost')
+                label={t('labels.chuvstvitelnost')}
                 value={settings.sensitivity}
                 min={0.2} max={3} step={0.1}
                 onChange={(v) => updateSetting('sensitivity', v)}
                 format={(v) => `${v.toFixed(1)}x`}
             />
             <Slider
-                label=t('labels.silaSinkhron')
+                label={t('labels.silaSinkhron')}
                 value={settings.correctionSpeed}
                 min={0.2} max={3} step={0.1}
                 onChange={(v) => updateSetting('correctionSpeed', v)}
@@ -136,13 +136,13 @@ const SettingsView = ({ settings, updateSetting, onBack, scoreboardVisible, setS
         </div>
 
         <div className="grid grid-cols-2 gap-2 mt-2">
-            <Toggle label=t('labels.skorbord')
+            <Toggle label={t('labels.skorbord')}
                 value={scoreboardVisible}
                 onChange={setScoreboardVisible} />
-            <Toggle label=t('labels.sglazhivanieFxaa')
+            <Toggle label={t('labels.sglazhivanieFxaa')}
                 value={!!settings.fxaa}
                 onChange={(v) => updateSetting('fxaa', v)} />
-            <Toggle label=t('labels.osveshchenie')
+            <Toggle label={t('labels.osveshchenie')}
                 value={!!settings.dynamicLighting}
                 onChange={(v) => updateSetting('dynamicLighting', v)} />
             <Toggle label="Frustum culling"
@@ -151,13 +151,13 @@ const SettingsView = ({ settings, updateSetting, onBack, scoreboardVisible, setS
             <Toggle label="Instanced render"
                 value={settings.instancedRendering !== false}
                 onChange={(v) => updateSetting('instancedRendering', v)} />
-            <Toggle label=t('labels.zamedlVFone')
+            <Toggle label={t('labels.zamedlVFone')}
                 value={!!settings.throttleWhenHidden}
                 onChange={(v) => updateSetting('throttleWhenHidden', v)} />
-            <Toggle label=t('labels.lokalnoeDvizhenie')
+            <Toggle label={t('labels.lokalnoeDvizhenie')}
                 value={!!settings.localMovement}
                 onChange={(v) => updateSetting('localMovement', v)} />
-            <Toggle label=t('labels.debugF3')
+            <Toggle label={t('labels.debugF3')}
                 value={!!settings.showDebug}
                 onChange={(v) => updateSetting('showDebug', v)} />
         </div>

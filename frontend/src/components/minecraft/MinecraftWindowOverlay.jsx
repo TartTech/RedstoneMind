@@ -225,7 +225,7 @@ const MinecraftWindowOverlay = ({ window: win, onSlotClick, onClose }) => {
                 {/* Button закрытия */}
                 <button
                     onClick={onClose}
-                    title=t('titles.closeEscE')
+                    title={t('titles.closeEscE')}
                     style={{
                         position: 'absolute',
                         top: 4,

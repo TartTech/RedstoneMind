@@ -187,7 +187,7 @@ export default function SubmitToOfficialListDialog({ isOpen, onClose, pluginInfo
                                 </Label>
                                 <Input
                                     id="plugin-name"
-                                    placeholder=t('placeholders.moyPlugin')
+                                    placeholder={t('placeholders.moyPlugin')}
                                     value={pluginDisplayName}
                                     onChange={(e) => setPluginDisplayName(e.target.value)}
                                     disabled={isSubmitting}
@@ -203,7 +203,7 @@ export default function SubmitToOfficialListDialog({ isOpen, onClose, pluginInfo
                                 </Label>
                                 <Input
                                     id="icon"
-                                    placeholder=t('placeholders.packageIliHttpsexamplecomiconsvg')
+                                    placeholder={t('placeholders.packageIliHttpsexamplecomiconsvg')}
                                     value={icon}
                                     onChange={(e) => setIcon(e.target.value)}
                                     disabled={isSubmitting}

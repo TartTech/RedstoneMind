@@ -14,6 +14,7 @@ import { debounce } from '@/lib/debounce';
 import { io } from 'socket.io-client';
 import { useAppStore } from './appStore';
 import NodeRegistry from '@/components/visual-editor/nodes';
+import i18n from '@/i18n';
 
 function buildGraphPayload(nodes, edges, variables) {
   return {
@@ -151,8 +152,8 @@ export const useVisualEditorStore = create(
             if (type === 'command') {
                 const managementData = await get().fetchManagementData(botId);
                 itemData = {
-                    name: t('novayaKomanda'),
-                    description: t('descriptions.descriptionNovoyKomandy'),
+                    name: i18n.t('novayaKomanda'),
+                    description: i18n.t('descriptions.descriptionNovoyKomandy'),
                     graphJson: JSON.stringify({ nodes: [], edges: [], variables: [] }),
                     argumentsJson: '[]',
                     isEnabled: true,
@@ -162,7 +163,7 @@ export const useVisualEditorStore = create(
                  set({ chatTypes: managementData.chatTypes });
             } else {
                  itemData = {
-                    name: t('novyyGraf'),
+                    name: i18n.t('novyyGraf'),
                     graphJson: JSON.stringify({ nodes: [], edges: [], variables: [] }),
                     variables: '[]',
                     triggers: '[]',
@@ -180,7 +181,7 @@ export const useVisualEditorStore = create(
         }
         
         if (!itemData) {
-            throw new Error(type === 'command' ? t('errors.commandNeNaydena') : t('errors.graphSobytiyaNeNayden'));
+            throw new Error(type === 'command' ? i18n.t('errors.commandNeNaydena') : i18n.t('errors.graphSobytiyaNeNayden'));
         }
 
         let parsedGraph;
@@ -206,7 +207,7 @@ export const useVisualEditorStore = create(
         
 
 
-        const EVENT_CATEGORY_KEYS = [t('sobytiya'), 'event', 'events'];
+        const EVENT_CATEGORY_KEYS = [i18n.t('sobytiya'), 'event', 'events'];
         const sortedAvailableNodes = Object.fromEntries(
           Object.entries(availableNodesData).sort(([a], [b]) => {
             const aIsEvent = EVENT_CATEGORY_KEYS.includes(a.toLowerCase());
@@ -305,7 +306,7 @@ export const useVisualEditorStore = create(
         });
       } catch (error) {
         console.error("Ошибка инициализации редактора:", error);
-        toast({ variant: 'destructive', title: t('errors.errorZagruzki'), description: error.message });
+        toast({ variant: 'destructive', title: i18n.t('errors.errorZagruzki'), description: error.message });
         set({ isLoading: false });
       }
     },
@@ -313,7 +314,7 @@ export const useVisualEditorStore = create(
     fetchCommand: async (botId, commandId) => {
       const allData = await apiHelper(`/api/bots/${botId}/management-data`);
       const command = allData.commands.find(c => c.id === parseInt(commandId));
-      if (!command) throw new Error(t('errors.commandNeNaydena2'));
+      if (!command) throw new Error(i18n.t('errors.commandNeNaydena2'));
       set({ chatTypes: allData.chatTypes });
       return command;
     },
@@ -827,10 +828,10 @@ export const useVisualEditorStore = create(
           }
         });
         
-        toast({ title: t('messages.success'), description: t('messages.pluginvladeletsObnovlen') });
+        toast({ title: i18n.t('messages.success'), description: i18n.t('messages.pluginvladeletsObnovlen') });
       } catch (error) {
         console.error('Ошибка обновления плагина-владельца:', error);
-        toast({ variant: 'destructive', title: t('messages.error'), description: t('messages.failedToObnovitPluginvladelets') });
+        toast({ variant: 'destructive', title: i18n.t('messages.error'), description: i18n.t('messages.failedToObnovitPluginvladelets') });
       }
     },
 
@@ -974,7 +975,7 @@ export const useVisualEditorStore = create(
         const targetNodeConfig = nodeConfigs.find(n => n.type === nodeType);
 
         if (!sourceNodeConfig || !targetNodeConfig) {
-          throw new Error(t('errors.failedToPoluchitKonfiguratsiyuUzlov'));
+          throw new Error(i18n.t('errors.failedToPoluchitKonfiguratsiyuUzlov'));
         }
 
         const sourcePin = (sourceNodeConfig.pins?.outputs || sourceNodeConfig.outputs || []).find(p => p.id === connectingPin.pinId);
@@ -1002,7 +1003,7 @@ export const useVisualEditorStore = create(
 
       } catch (error) {
         console.error("Ошибка при добавлении и подключении узла:", error);
-        toast({ variant: 'destructive', title: t('messages.error2'), description: t('messages.errorDobavleniyaUzla') });
+        toast({ variant: 'destructive', title: i18n.t('messages.error2'), description: i18n.t('messages.errorDobavleniyaUzla') });
       } finally {
         set({ connectingPin: null });
       }
@@ -1059,10 +1060,10 @@ export const useVisualEditorStore = create(
           socket.emit('graph:updated', { botId, graphId: id });
         }
 
-        toast({ title: t('messages.success2'), description: t('messages.graphSokhranen') });
+        toast({ title: i18n.t('messages.success2'), description: i18n.t('messages.graphSokhranen') });
       } catch (error) {
         console.error("Ошибка сохранения графа:", error);
-        toast({ variant: 'destructive', title: t('errors.error2'), description: t('errors.errorSokhraneniyaGrafaErrormessage', { message: error.message }) });
+        toast({ variant: 'destructive', title: i18n.t('errors.error2'), description: i18n.t('errors.errorSokhraneniyaGrafaErrormessage', { message: error.message }) });
       } finally {
         set({ isSaving: false });
       }
@@ -1391,11 +1392,11 @@ export const useVisualEditorStore = create(
     startTestRun: async (payload) => {
       const { command, editorType, socket } = get();
       if (!command?.id) {
-        toast({ variant: 'destructive', title: t('messages.error3'), description: t('messages.snachalaSokhraniteGraf') });
+        toast({ variant: 'destructive', title: i18n.t('messages.error3'), description: i18n.t('messages.snachalaSokhraniteGraf') });
         return { success: false, error: 'not_saved' };
       }
       if (!socket) {
-        toast({ variant: 'destructive', title: t('messages.error4'), description: t('messages.noSoedineniyaSPanelyu') });
+        toast({ variant: 'destructive', title: i18n.t('messages.error4'), description: i18n.t('messages.noSoedineniyaSPanelyu') });
         return { success: false, error: 'no_socket' };
       }
 
@@ -1464,7 +1465,7 @@ export const useVisualEditorStore = create(
     runSingleNode: async ({ nodeId, inputs, variables }) => {
       const { command, editorType, nodes, edges, variables: graphVariables } = get();
       if (!command?.id) {
-        const errResult = { success: false, error: t('errors.snachalaSokhraniteGraf') };
+        const errResult = { success: false, error: i18n.t('errors.snachalaSokhraniteGraf') };
         set({ runNodeResult: errResult });
         return errResult;
       }
@@ -1643,8 +1644,8 @@ export const useVisualEditorStore = create(
           }
         });
         toast({
-          title: t('titles.userPrisoedinilsya'),
-          description: t('descriptions.userusernameNachalRedaktirovatGraf', { username: user.username })
+          title: i18n.t('titles.userPrisoedinilsya'),
+          description: i18n.t('descriptions.userusernameNachalRedaktirovatGraf', { username: user.username })
         });
       });
 
@@ -1657,8 +1658,8 @@ export const useVisualEditorStore = create(
           state.collabSelections.delete(socketId);
         });
         toast({
-          title: t('titles.userOtklyuchilsya'),
-          description: t('descriptions.usernamePokinulRedaktor', { username: username })
+          title: i18n.t('titles.userOtklyuchilsya'),
+          description: i18n.t('descriptions.usernamePokinulRedaktor', { username: username })
         });
       });
 
@@ -1689,11 +1690,11 @@ export const useVisualEditorStore = create(
         // Показываем уведомление
         const modeLabels = {
           'live': '🐛 Live Debug',
-          'trace': t('prosmotrTrassirovki'),
-          'normal': t('obychnyyRezhim')
+          'trace': i18n.t('prosmotrTrassirovki'),
+          'normal': i18n.t('obychnyyRezhim')
         };
         toast({
-          title: t('titles.usernamePereklyuchilsya', { username: username }),
+          title: i18n.t('titles.usernamePereklyuchilsya', { username: username }),
           description: modeLabels[debugMode] || debugMode
         });
       });
@@ -1791,8 +1792,8 @@ export const useVisualEditorStore = create(
       newSocket.on('collab:graph-reloaded', ({ botId, graphId }) => {
         console.log('[Collab] Graph reloaded for bot', botId, 'graphId:', graphId);
         toast({
-          title: t('titles.graphPerezagruzhen'),
-          description: t('descriptions.izmeneniyaPrimenenyBezPerezapuskaBota')
+          title: i18n.t('titles.graphPerezagruzhen'),
+          description: i18n.t('descriptions.izmeneniyaPrimenenyBezPerezapuskaBota')
         });
       });
 

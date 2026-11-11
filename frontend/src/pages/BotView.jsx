@@ -14,9 +14,10 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 const EMPTY_EXTENSIONS = [];
 const UI_EXTENSION_LABEL_TRANSLATIONS = {
-    t('moderatsiya'): {
-        ru: t('moderatsiya2'),
+    'Модерация': {
+        ru: 'Модерация',
         en: 'Moderation',
+        'pt-BR': 'Moderação',
     },
 };
 const TRANSLATABLE_BOT_STATUSES = new Set(['running', 'stopped', 'starting', 'stopping', 'restarting']);

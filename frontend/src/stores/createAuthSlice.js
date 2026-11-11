@@ -1,4 +1,5 @@
 import { apiHelper } from '@/lib/api';
+import i18n from '@/i18n';
 
 export const createAuthSlice = (set, get) => ({
     token: localStorage.getItem('authToken') || null,
@@ -31,7 +32,7 @@ export const createAuthSlice = (set, get) => ({
             }
         } catch (error) {
             console.error("Auth initialization failed:", error.message);
-            if (error.message.includes(t('errors.nevalidnyyToken2')) || error.message.includes(t('errors.noTokena'))) {
+            if (error.message.includes(i18n.t('errors.nevalidnyyToken2')) || error.message.includes(i18n.t('errors.noTokena'))) {
                  localStorage.removeItem('authToken');
             }
             set({ isAuthenticated: false, token: null, user: null });

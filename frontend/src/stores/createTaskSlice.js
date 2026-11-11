@@ -1,5 +1,6 @@
 
 import { apiHelper } from '@/lib/api';
+import i18n from '@/i18n';
 
 export const createTaskSlice = (set, get) => ({
     tasks: [],
@@ -19,7 +20,7 @@ export const createTaskSlice = (set, get) => ({
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(taskData),
-        }, t('zadachaUspeshnoSozdana'));
+        }, i18n.t('zadachaUspeshnoSozdana'));
         
         if (newTask) {
             set(state => {
@@ -34,7 +35,7 @@ export const createTaskSlice = (set, get) => ({
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(dataToUpdate),
-        }, t('zadachaUspeshnoObnovlena'));
+        }, i18n.t('zadachaUspeshnoObnovlena'));
         
         if (updatedTask) {
             set(state => {
@@ -48,7 +49,7 @@ export const createTaskSlice = (set, get) => ({
     },
 
     deleteTask: async (taskId) => {
-        await apiHelper(`/api/tasks/${taskId}`, { method: 'DELETE' }, t('zadachaUspeshnoUdalena'));
+        await apiHelper(`/api/tasks/${taskId}`, { method: 'DELETE' }, i18n.t('zadachaUspeshnoUdalena'));
         set(state => {
             state.tasks = state.tasks.filter(t => t.id !== taskId);
         });

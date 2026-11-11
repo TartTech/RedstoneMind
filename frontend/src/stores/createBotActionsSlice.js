@@ -1,5 +1,6 @@
 
 import { apiHelper } from '@/lib/api';
+import i18n from '@/i18n';
 
 export const createBotActionsSlice = (set, get) => ({
     createBot: async (botData) => {
@@ -7,7 +8,7 @@ export const createBotActionsSlice = (set, get) => ({
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(botData),
-        }, t('novyyBotUspeshnoSozdan'));
+        }, i18n.t('novyyBotUspeshnoSozdan'));
         
         if (newBot) {
             await get().fetchInitialData();
@@ -28,16 +29,16 @@ export const createBotActionsSlice = (set, get) => ({
     },
     
     deleteBot: async (botId) => {
-        await apiHelper(`/api/bots/${botId}`, { method: 'DELETE' }, t('botUspeshnoUdalen'));
+        await apiHelper(`/api/bots/${botId}`, { method: 'DELETE' }, i18n.t('botUspeshnoUdalen'));
         await get().fetchInitialData();
     },
 
     startAllBots: async () => {
-        await apiHelper('/api/bots/start-all', { method: 'POST' }, t('commandNaZapuskVsekhBotovOtpravlena'));
+        await apiHelper('/api/bots/start-all', { method: 'POST' }, i18n.t('commandNaZapuskVsekhBotovOtpravlena'));
     },
 
     stopAllBots: async () => {
-        await apiHelper('/api/bots/stop-all', { method: 'POST' }, t('commandNaOstanovkuVsekhBotovOtpravlena'));
+        await apiHelper('/api/bots/stop-all', { method: 'POST' }, i18n.t('commandNaOstanovkuVsekhBotovOtpravlena'));
     },
 
     applyProxyToBots: async (botIds, proxySettings) => {
@@ -49,7 +50,7 @@ export const createBotActionsSlice = (set, get) => ({
                     botIds,
                     proxySettings
                 })
-            }, t('settingsProksiPrimenenyKBotidslengthBotam', { count: botIds.length }));
+            }, i18n.t('settingsProksiPrimenenyKBotidslengthBotam', { count: botIds.length }));
             
             if (result.success) {
                 await get().fetchInitialData();

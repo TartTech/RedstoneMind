@@ -1,4 +1,5 @@
 import {
+import i18n from '@/i18n';
   applyThemeToDocument,
   CUSTOM_THEME_STORAGE_KEY,
   DEFAULT_THEME,

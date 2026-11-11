@@ -6,6 +6,7 @@ const os = require('os');
 const prisma = require('./lib/prisma');
 
 const config = require('./config');
+const { t } = require('./i18n');
 const { initializeSocket } = require('./real-time/socketHandler');
 const { botManager, pluginManager } = require('./core/services');
 

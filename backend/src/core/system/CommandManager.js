@@ -3,6 +3,7 @@ const path = require('path');
 const Command = require('./Command');
 const GraphExecutionEngine = require('../GraphExecutionEngine');
 const NodeRegistry = require('../NodeRegistry');
+const { t } = require('../i18n');
 
 class CommandManager {
     constructor(commandsPath) {

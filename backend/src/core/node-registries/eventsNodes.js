@@ -1,4 +1,5 @@
 const { GRAPH_TYPES } = require('../../core/constants/graphTypes');
+const { t } = require('../../i18n');
 
 const eventsNodes = [
   {

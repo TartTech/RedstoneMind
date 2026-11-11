@@ -306,7 +306,7 @@ export default function PluginView({ botId, pluginName, onRefresh }) {
 
             toast({
                 title: t('titles.success2'),
-                description: t('descriptions.pluginUspeshnoZagruzhenVUploadmodeNew', { uploadMode === 'new' ? 'novyy' : 'sushchestvuyushchiy': uploadMode === 'new' ? 'novyy' : 'sushchestvuyushchiy' })
+                description: t('descriptions.pluginUspeshnoZagruzhenVUploadmodeNew', { mode: uploadMode === 'new' ? 'novyy' : 'sushchestvuyushchiy' })
             });
 
             await fetchPluginInfo();

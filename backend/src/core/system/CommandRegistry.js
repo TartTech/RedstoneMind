@@ -1,5 +1,6 @@
 const fs = require('fs/promises');
 const path = require('path');
+const { t } = require('../../i18n');
 
 const commands = new Map();
 
@@ -10,7 +11,6 @@ async function loadCommands() {
     for (const file of files) {
         if (file.endsWith('.js')) {
             const CommandClass = require(path.join(commandsDir, file));
-const { t } = require('../../i18n');
             const commandInstance = new CommandClass();
             commands.set(commandInstance.name, commandInstance);
         }

@@ -7,8 +7,8 @@ import { NodeDefinition } from '../../core/registry';
 export const actionDeleteCommandDefinition = new NodeDefinition({
   type: 'action:delete_command',
   category: 'action',
-  label: 'Удалить команду',
-  description: 'Удаляет существующую команду бота',
+  label: t('labels.deleteKomandu'),
+  description: t('descriptions.udalyaetSushchestvuyushchuyuKomanduBota'),
 
 
 

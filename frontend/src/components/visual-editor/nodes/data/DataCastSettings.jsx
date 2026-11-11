@@ -4,7 +4,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 /**
- * Компонент настроек для data:cast ноды
+ * Component настроек for data:cast ноды
  */
 const DataCastSettings = ({ nodeId, data, updateNodeData }) => {
   const { t } = useTranslation('visual-editor');

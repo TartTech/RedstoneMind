@@ -8,8 +8,8 @@ import FlowSequenceSettings from './FlowSequenceSettings';
 export const flowSequenceDefinition = new NodeDefinition({
   type: 'flow:sequence',
   category: 'flow',
-  label: 'Последовательность',
-  description: 'Последовательно выполняет несколько веток',
+  label: t('labels.posledovatelnost'),
+  description: t('descriptions.posledovatelnoVypolnyaetNeskolkoVetok'),
 
 
 

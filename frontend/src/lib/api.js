@@ -34,7 +34,7 @@ export const getGraphStoreApiUrl = (path = '') => {
 const getBinaryErrorMessage = async (response) => {
   const fallbackMessage = translateCommon(
     'messages.downloadErrorWithStatus',
-    'Ошибка при скачивании файла: {{status}}',
+    t('errorPriSkachivaniiFaylaStatus'),
     { status: response.statusText || response.status }
   );
 
@@ -49,7 +49,7 @@ const getBinaryErrorMessage = async (response) => {
       return (
         errData.error ||
         errData.message ||
-        translateCommon('messages.downloadError', 'Ошибка при скачивании файла.')
+        translateCommon('messages.downloadError', t('errors.errorPriSkachivaniiFayla'))
       );
     } catch {
       return fallbackMessage;
@@ -92,7 +92,7 @@ export const apiHelper = async (url, options = {}, successMessage) => {
     if (response.status === 204 || response.headers.get('content-length') === '0') {
       if (successMessage) {
         toast({
-          title: translateCommon('messages.success', 'Успех!'),
+          title: translateCommon('messages.success', t('titles.success')),
           description: successMessage,
         });
       }
@@ -108,19 +108,19 @@ export const apiHelper = async (url, options = {}, successMessage) => {
           logout();
         }
 
-        throw new Error(data.error || data.message || translateCommon('messages.authError', 'Ошибка авторизации'));
+        throw new Error(data.error || data.message || translateCommon('messages.authError', t('errors.errorAvtorizatsii')));
       }
 
       throw new Error(
         data.error ||
           data.message ||
-          translateCommon('messages.serverError', 'Произошла неизвестная ошибка на сервере')
+          translateCommon('messages.serverError', t('errors.proizoshlaNeizvestnayaOshibkaNaServere'))
       );
     }
 
     if (successMessage) {
       toast({
-        title: translateCommon('messages.success', 'Успех!'),
+        title: translateCommon('messages.success', t('titles.success2')),
         description: successMessage,
       });
     }
@@ -130,16 +130,16 @@ export const apiHelper = async (url, options = {}, successMessage) => {
     if (error.message.includes('NetworkError') || error.message.includes('Failed to fetch')) {
       toast({
         variant: 'destructive',
-        title: translateCommon('messages.networkTitle', 'Ошибка сети'),
-        description: translateCommon('messages.networkDescription', 'Не удается подключиться к серверу'),
+        title: translateCommon('messages.networkTitle', t('titles.errorSeti')),
+        description: translateCommon('messages.networkDescription', t('descriptions.neUdaetsyaPodklyuchitsyaKServeru')),
       });
-    } else if (error.message.includes('Невалидный токен')) {
+    } else if (error.message.includes(t('errors.nevalidnyyToken'))) {
       const { logout } = useAppStore.getState();
       logout();
     } else {
       toast({
         variant: 'destructive',
-        title: translateCommon('messages.error', 'Ошибка'),
+        title: translateCommon('messages.error', t('errors.error')),
         description: error.message,
       });
     }

@@ -21,8 +21,9 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useAppStore } from '@/stores/appStore';
+import { useTranslation } from 'react-i18next';
 
-// Иконка для типа изменения файла
+// Icon for типа изменения файла
 const FileChangeIcon = ({ status }) => {
     switch (status) {
         case 'A':
@@ -39,7 +40,7 @@ const FileChangeIcon = ({ status }) => {
     }
 };
 
-// Название статуса изменения
+// Name статуса изменения
 const getStatusLabel = (status) => {
     switch (status) {
         case 'A': return 'Added';
@@ -52,6 +53,7 @@ const getStatusLabel = (status) => {
 };
 
 export default function GitView({ botId, pluginName, onRefresh }) {
+    const { t } = useTranslation('plugins');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [gitStatus, setGitStatus] = useState(null);
@@ -66,12 +68,12 @@ export default function GitView({ botId, pluginName, onRefresh }) {
     const [fileDiff, setFileDiff] = useState('');
     const [loadingDiff, setLoadingDiff] = useState(false);
 
-    // Секции UI
+    // UI sections
     const [stagedOpen, setStagedOpen] = useState(true);
     const [changesOpen, setChangesOpen] = useState(true);
     const [historyOpen, setHistoryOpen] = useState(false);
 
-    // Helper для получения headers с авторизацией
+    // Helper for получения headers с авторизацией
     const getHeaders = (includeContentType = false) => {
         const headers = {
             'Authorization': `Bearer ${useAppStore.getState().token}`
@@ -82,7 +84,7 @@ export default function GitView({ botId, pluginName, onRefresh }) {
         return headers;
     };
 
-    // Загрузка статуса Git
+    // Loading статуса Git
     const fetchGitStatus = useCallback(async () => {
         if (!pluginName) return;
 
@@ -108,7 +110,7 @@ export default function GitView({ botId, pluginName, onRefresh }) {
         }
     }, [botId, pluginName]);
 
-    // Загрузка истории коммитов
+    // Loading истории коммитов
     const fetchCommitHistory = useCallback(async () => {
         if (!pluginName) return;
 
@@ -217,7 +219,7 @@ export default function GitView({ botId, pluginName, onRefresh }) {
         }
     };
 
-    // Создать коммит
+    // Create коммит
     const createCommit = async () => {
         if (!commitMessage.trim() || !gitStatus?.staged?.length) return;
 
@@ -304,7 +306,7 @@ export default function GitView({ botId, pluginName, onRefresh }) {
 
     // Синхронизация с GitHub
     const syncWithGitHub = async () => {
-        if (!window.confirm('⚠️ Это заменит все локальные файлы версиями с GitHub.\n\nВсе несохранённые изменения будут ПОТЕРЯНЫ!\n\nПродолжить?')) {
+        if (!window.confirm(t('confirm.etoZamenitVseLokalnyeFaylyVersiyami'))) {
             return;
         }
 
@@ -336,7 +338,7 @@ export default function GitView({ botId, pluginName, onRefresh }) {
         }
     };
 
-    // Загрузка diff файла
+    // Loading diff файла
     const fetchFileDiff = async (file, isStaged) => {
         setLoadingDiff(true);
         setSelectedFile({ ...file, isStaged });
@@ -361,7 +363,7 @@ export default function GitView({ botId, pluginName, onRefresh }) {
         }
     };
 
-    // Компонент элемента файла
+    // Component элемента файла
     const FileItem = ({ file, isStaged }) => {
         const isSelected = selectedFile?.path === file.path && selectedFile?.isStaged === isStaged;
 
@@ -434,7 +436,7 @@ export default function GitView({ botId, pluginName, onRefresh }) {
 
             <ScrollArea className="flex-1">
                 <div className="p-2 space-y-3">
-                    {/* Ошибка */}
+                    {/* Error */}
                     {error && (
                         <div className="flex items-start gap-2 p-2 bg-red-500/20 border border-red-500/50 rounded text-sm">
                             <AlertCircle className="w-4 h-4 text-red-500 flex-shrink-0 mt-0.5" />
@@ -454,10 +456,10 @@ export default function GitView({ botId, pluginName, onRefresh }) {
                     {/* Git контент */}
                     {gitStatus?.isGitRepo && (
                         <>
-                            {/* Поле для сообщения коммита */}
+                            {/* Field for сообщения коммита */}
                             <div className="space-y-2">
                                 <Textarea
-                                    placeholder="Сообщение коммита"
+                                    placeholder=t('placeholders.soobshchenieKommita')
                                     value={commitMessage}
                                     onChange={(e) => setCommitMessage(e.target.value)}
                                     className="min-h-[60px] text-sm bg-slate-800 border-slate-600"
@@ -508,7 +510,7 @@ export default function GitView({ botId, pluginName, onRefresh }) {
                                     className="w-full"
                                 >
                                     <RefreshCw className={`w-4 h-4 mr-1 ${syncing ? 'animate-spin' : ''}`} />
-                                    {syncing ? 'Синхронизация...' : 'Синхронизировать с GitHub'}
+                                    {syncing ? t('sinkhronizatsiya') : t('sinkhronizirovatSGithub')}
                                 </Button>
                             </div>
 

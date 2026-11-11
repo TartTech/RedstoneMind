@@ -7,8 +7,8 @@ import { NodeDefinition } from '../../core/registry';
 export const arrayAddElementDefinition = new NodeDefinition({
   type: 'array:add_element',
   category: 'array',
-  label: 'Добавить элемент',
-  description: 'Добавляет элемент в конец массива',
+  label: t('labels.addElement'),
+  description: t('descriptions.dobavlyaetElementVKonetsMassiva'),
 
 
 

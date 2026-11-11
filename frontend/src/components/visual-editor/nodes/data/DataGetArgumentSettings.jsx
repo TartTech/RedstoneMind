@@ -5,7 +5,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 /**
- * Компонент настроек для data:get_argument ноды
+ * Component настроек for data:get_argument ноды
  */
 const DataGetArgumentSettings = ({ nodeId, data, updateNodeData }) => {
   const { t } = useTranslation('visual-editor');

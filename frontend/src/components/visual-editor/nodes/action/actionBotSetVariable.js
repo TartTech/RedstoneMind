@@ -7,8 +7,8 @@ import { NodeDefinition } from '../../core/registry';
 export const actionBotSetVariableDefinition = new NodeDefinition({
   type: 'action:bot_set_variable',
   category: 'action',
-  label: 'Установить переменную',
-  description: 'Записывает значение в переменную',
+  label: t('labels.installPeremennuyu'),
+  description: t('descriptions.zapisyvaetZnachenieVPeremennuyu'),
 
 
 

@@ -7,8 +7,8 @@ import { NodeDefinition } from '../../core/registry';
 export const inventoryHasItemDefinition = new NodeDefinition({
   type: 'inventory:has_item',
   category: 'inventory',
-  label: 'Есть предмет?',
-  description: 'Проверяет есть ли указанный предмет в инвентаре в нужном количестве',
+  label: t('labels.estPredmet'),
+  description: t('descriptions.proveryaetEstLiUkazannyyPredmetV'),
 
 
 

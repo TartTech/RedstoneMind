@@ -7,8 +7,8 @@ import { NodeDefinition } from '../../core/registry';
 export const stringSplitDefinition = new NodeDefinition({
   type: 'string:split',
   category: 'string',
-  label: 'Разделить',
-  description: 'Разделяет строку на массив по разделителю',
+  label: t('labels.razdelit'),
+  description: t('descriptions.razdelyaetStrokuNaMassivPoRazdelitelyu'),
 
 
 

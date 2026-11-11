@@ -2,13 +2,13 @@ import { NodeDefinition } from '../../core/registry';
 
 /**
  * Определение ноды string:matches
- * Проверяет совпадение строки с regex паттерном
+ * Проверяет совпадение strings с regex паттерном
  */
 export const stringMatchesDefinition = new NodeDefinition({
   type: 'string:matches',
   category: 'string',
-  label: 'Совпадает',
-  description: 'Проверяет совпадение строки с regex паттерном',
+  label: t('labels.sovpadaet'),
+  description: t('descriptions.proveryaetSovpadenieStrokiSRegexPatternom'),
 
 
 

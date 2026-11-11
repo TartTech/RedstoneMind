@@ -1,4 +1,4 @@
-// Inventory nodes - работа с инвентарём бота
+// Inventory nodes - раbotа с инвентарём botа
 
 // Data nodes (получение информации)
 export { inventoryGetAllDefinition } from './inventoryGetAll';

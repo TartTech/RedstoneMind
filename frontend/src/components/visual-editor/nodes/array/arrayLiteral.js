@@ -3,13 +3,13 @@ import ArrayLiteralSettings from './ArrayLiteralSettings';
 
 /**
  * Определение ноды data:array_literal
- * Создание массива из элементов
+ * Creation массива из элементов
  */
 export const arrayLiteralDefinition = new NodeDefinition({
   type: 'data:array_literal',
   category: 'array',
-  label: 'Массив',
-  description: 'Создает массив из элементов',
+  label: t('labels.array'),
+  description: t('descriptions.sozdaetMassivIzElementov'),
 
 
 

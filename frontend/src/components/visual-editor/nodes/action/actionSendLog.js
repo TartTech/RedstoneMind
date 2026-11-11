@@ -2,13 +2,13 @@ import { NodeDefinition } from '../../core/registry';
 
 /**
  * Определение ноды action:send_log
- * Отправляет сообщение в консоль на странице бота
+ * Отправляет сообщение в консоль на странице botа
  */
 export const actionSendLogDefinition = new NodeDefinition({
   type: 'action:send_log',
   category: 'action',
-  label: 'Отправить лог',
-  description: 'Записывает сообщение в веб-консоль',
+  label: t('labels.sendLog'),
+  description: t('descriptions.zapisyvaetSoobshchenieVVebkonsol'),
 
 
 

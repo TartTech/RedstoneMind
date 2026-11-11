@@ -1,0 +1,100 @@
+{
+  "title": "Administração",
+  "description": "Manage users, roles and global panel settings.",
+  "tabs": {
+    "users": "Usuários",
+    "roles": "Funções",
+    "settings": "Configurações globais"
+  },
+  "users": {
+    "title": "Usuários do painel",
+    "description": "Manage user accounts and their roles.",
+    "createUser": "Create User",
+    "table": {
+      "name": "Nome",
+      "role": "Função",
+      "botAccess": "Bot Access",
+      "createdAt": "Created",
+      "actions": "Ações"
+    },
+    "allBots": "Todos bots",
+    "selectedBots": "Selected: {{count}}",
+    "deleteConfirm": "Delete user \"{{name}}\"?",
+    "deleteDescription": "This action is irreversible.",
+    "deleteButton": "Yes, delete",
+    "userUpdated": "User updated.",
+    "userCreated": "User created.",
+    "userDeleted": "User deleted.",
+    "loadError": "Failed to load data.",
+    "saveError": "Failed to save user."
+  },
+  "roles": {
+    "title": "Funções do painel",
+    "description": "Manage roles and their permission sets.",
+    "createRole": "Criar função",
+    "table": {
+      "name": "Nome",
+      "permissions": "Permissões",
+      "actions": "Ações"
+    },
+    "allPermissions": "All permissions",
+    "roleCreated": "Role created successfully.",
+    "roleUpdated": "Role updated successfully.",
+    "roleDeleted": "Role deleted.",
+    "deleteConfirm": "Excluir função \"{{name}}\"?",
+    "deleteDescription": "This action is irreversible. Make sure this role is not assigned to any user.",
+    "deleteButton": "Yes, delete",
+    "loadError": "Failed to load data."
+  },
+  "userForm": {
+    "editTitle": "Edit User",
+    "createTitle": "Create New User",
+    "editDescription": "Editaring data for {{name}}.",
+    "createDescription": "Fill in the data to create a new account.",
+    "username": "Usuárioname",
+    "password": "Senha",
+    "newPassword": "New password (leave empty to keep current)",
+    "role": "Função",
+    "selectRole": "Select role...",
+    "allBotsAccess": "Access to all bots",
+    "ownerNote": "(owner, always enabled)",
+    "cancel": "Cancelar",
+    "save": "Salvar",
+    "saving": "Saving...",
+    "validation": {
+      "usernameRequired": "Usuárioname and role are required.",
+      "passwordRequired": "Password (min. 4 characters) is required for new user.",
+      "passwordMinLength": "New password must be at least 4 characters."
+    }
+  },
+  "roleForm": {
+    "editTitle": "Editar função",
+    "createTitle": "Create New Role",
+    "description": "Specify role name and select available permissions.",
+    "roleName": "Role Name",
+    "permissions": "Permissões",
+    "cancel": "Cancelar",
+    "save": "Salvar",
+    "saving": "Saving...",
+    "validation": {
+      "nameRequired": "Função name cannot be empty."
+    }
+  },
+  "settings": {
+    "title": "Global Configurações",
+    "description": "These settings affect the entire panel. Some changes require a restart.",
+    "restartRequired": "Reiniciar Required",
+    "restartDescription": "After saving settings, you need to restart the panel, for example using <code>npx redstonemind</code> in the terminal.",
+    "externalAccess": "External Access",
+    "externalAccessDescription": "Todosow panel access from local network or internet.",
+    "telemetry": "Anonymous Telemetry",
+    "telemetryDescription": "Send anonymous statistics (bot count, plugins) to improve the project.",
+    "save": "Salvar configurações",
+    "saveSuccess": "Settings saved. Restart the panel to apply.",
+    "loadError": "Failed to load global settings."
+  },
+  "common": {
+    "error": "Erro",
+    "success": "Com sucesso"
+  }
+}

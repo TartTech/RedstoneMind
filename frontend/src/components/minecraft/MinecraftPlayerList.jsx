@@ -2,7 +2,7 @@ import React from 'react';
 import { McText } from './mcText';
 
 /**
- * Список игроков (TAB).
+ * List игроков (TAB).
  * Поддерживает:
  *   - Header / footer (вверху и внизу TAB-меню)
  *   - Цветной prefix/suffix (через team)
@@ -42,14 +42,14 @@ const MinecraftPlayerList = ({ players, header, footer, visible }) => {
     if (!visible) return null;
 
     const playerList = players || [];
-    // Безопасное приведение к строке (на случай если backend прислал team chat-component)
+    // Безопасное приведение к строке (на случай if backend прислал team chat-component)
     const safeStr = (v) => {
         if (v == null) return '';
         if (typeof v === 'string') return v;
         if (typeof v === 'number') return String(v);
         return '';
     };
-    // Сортировка как в MC: сначала по тиму (если есть), потом по имени
+    // Sort как в MC: сначала по тиму (if exists), потом по имени
     const sorted = [...playerList].sort((a, b) => {
         const aTeam = safeStr(a?.teamName);
         const bTeam = safeStr(b?.teamName);

@@ -2,13 +2,13 @@ import { NodeDefinition } from '../../core/registry';
 
 /**
  * Определение ноды flow:delay
- * Ожидает указанное количество миллисекунд
+ * Ожидает указанное количество миллиseconds
  */
 export const flowDelayDefinition = new NodeDefinition({
   type: 'flow:delay',
   category: 'flow',
-  label: '⏱️ Задержка',
-  description: 'Ожидает указанное количество миллисекунд, затем продолжает выполнение',
+  label: t('labels.delay'),
+  description: t('descriptions.ozhidaetUkazannoeKolichestvoMillisecondsZatemProdolzhaet'),
 
 
 

@@ -4,7 +4,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 /**
- * Компонент настроек для time:compare ноды
+ * Component настроек for time:compare ноды
  */
 const TimeCompareSettings = ({ nodeId, data, updateNodeData, nodeEdges }) => {
   const { t } = useTranslation('visual-editor');

@@ -9,9 +9,9 @@ i18n
   .use(initReactI18next)
   .init({
 
-    fallbackLng: 'ru',
+    fallbackLng: 'en',
 
-    supportedLngs: ['ru', 'en'],
+    supportedLngs: ['en', 'ru', 'pt-BR'],
 
     backend: {
       loadPath: '/locales/{{lng}}/{{ns}}.json',
@@ -19,7 +19,7 @@ i18n
 
     // Namespaces
     defaultNS: 'common',
-    ns: ['common', 'dashboard', 'sidebar', 'bots', 'console', 'minecraft-viewer', 'plugins', 'websocket', 'management', 'event-graphs', 'visual-editor', 'nodes', 'login', 'admin', 'tasks', 'servers', 'proxies', 'graph-store', 'plugin-detail', 'configuration', 'api-keys', 'setup', 'permissions', 'dialogs'],
+    ns: ['common', 'dashboard', 'sidebar', 'bots', 'console', 'minecraft-viewer', 'plugins', 'websocket', 'management', 'event-graphs', 'visual-editor', 'nodes', 'login', 'admin', 'tasks', 'servers', 'proxies', 'graph-store', 'plugin-detail', 'configuration', 'api-keys', 'setup', 'permissions', 'dialogs', 'action'],
 
     interpolation: {
       escapeValue: false,

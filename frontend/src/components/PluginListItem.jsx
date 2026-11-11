@@ -114,15 +114,15 @@ export default function PluginListItem({ plugin, isInstalled, isInstalling, onIn
                     plugin.listing === 'unofficial' ? 'border-amber-700/60 text-amber-200' : 'border-sky-700/50 text-sky-200'
                   )}>
                     {plugin.listing === 'unofficial'
-                      ? t('badges.unofficial', { defaultValue: 'Неофициальный' })
-                      : t('badges.official', { defaultValue: 'Официальный' })}
+                      ? t('badges.unofficial', { defaultValue: 'Neofitsialnyy' })
+                      : t('badges.official', { defaultValue: 'Ofitsialnyy' })}
                   </Badge>
                   {plugin.verified && <SparklesIcon className="h-4 w-4 text-blue-500" />}
                 </h3>
               </Link>
               <div className="flex items-center gap-3 text-sm text-muted-foreground">
                 <span>
-                  {t('labels.by', { defaultValue: 'от' })}{' '}
+                  {t('labels.by', { defaultValue: 'ot' })}{' '}
                   <span className="font-medium text-primary/90">{authorLabel}</span>
                 </span>
               </div>
@@ -150,7 +150,7 @@ export default function PluginListItem({ plugin, isInstalled, isInstalling, onIn
             {isPopular && (
               <Badge className="border-0 bg-gradient-to-r from-orange-500 to-red-500 text-xs text-white">
                 <TrendingUpIcon className="mr-1 h-3 w-3" />
-                {t('badges.popular', { defaultValue: 'Популярное' })}
+                {t('badges.popular', { defaultValue: 'Populyarnoe' })}
               </Badge>
             )}
 
@@ -190,7 +190,7 @@ export default function PluginListItem({ plugin, isInstalled, isInstalling, onIn
             {!hasSupportedHosts ? (
               <Badge variant="outline" className="text-xs">
                 <GlobeIcon className="mr-1 h-3 w-3" />
-                {t('labels.any', { defaultValue: 'Любой' })}
+                {t('labels.any', { defaultValue: 'Lyuboy' })}
               </Badge>
             ) : plugin.supportedHosts.length <= 3 ? (
               plugin.supportedHosts.map((host) => (
@@ -251,19 +251,19 @@ export default function PluginListItem({ plugin, isInstalled, isInstalling, onIn
               {isInstalling ? (
                 <>
                   <LoaderIcon className="mr-2 h-4 w-4 animate-spin" />
-                  {t('messages.installing', { defaultValue: 'Установка...' })}
+                  {t('messages.installing', { defaultValue: 'Ustanovka...' })}
                 </>
               ) : !safeRepoUrl ? (
-                <>{t('actions.unavailable', { defaultValue: 'Недоступно' })}</>
+                <>{t('actions.unavailable', { defaultValue: 'Nedostupno' })}</>
               ) : isInstalled ? (
                 <>
                   <CheckCircleIcon className="mr-2 h-4 w-4" />
-                  {t('status.installed', { defaultValue: 'Установлен' })}
+                  {t('status.installed', { defaultValue: 'Ustanovlen' })}
                 </>
               ) : (
                 <>
                   <DownloadIcon className="mr-2 h-4 w-4" />
-                  {t('actions.install', { defaultValue: 'Установить' })}
+                  {t('actions.install', { defaultValue: 'Ustanovit' })}
                 </>
               )}
             </Button>

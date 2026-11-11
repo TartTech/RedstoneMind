@@ -31,7 +31,7 @@ export const createAuthSlice = (set, get) => ({
             }
         } catch (error) {
             console.error("Auth initialization failed:", error.message);
-            if (error.message.includes('Невалидный токен') || error.message.includes('Нет токена')) {
+            if (error.message.includes(t('errors.nevalidnyyToken2')) || error.message.includes(t('errors.noTokena'))) {
                  localStorage.removeItem('authToken');
             }
             set({ isAuthenticated: false, token: null, user: null });

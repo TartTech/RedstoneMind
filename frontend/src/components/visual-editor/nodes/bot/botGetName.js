@@ -3,8 +3,8 @@ import { NodeDefinition } from '../../core/registry';
 export const botGetNameDefinition = new NodeDefinition({
   type: 'bot:get_name',
   category: 'bot',
-  label: 'Имя бота',
-  description: 'Возвращает имя (username) бота',
+  label: t('labels.imyaBota'),
+  description: t('descriptions.vozvrashchaetImyaUsernameBota'),
 
 
 

@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 /**
  * Pause-меню в стиле Minecraft:
- * - Открывается по ESC
- * - Полупрозрачный фон, кнопки в Minecraft-стиле
- * - Кнопка "Options" открывает sub-меню настроек
+ * - Opens on ESC
+ * - Semi-transparentный фон, кнопки в Minecraft-стиле
+ * - Button "Options" opens settings sub-menu
  */
 
 const MCButton = ({ onClick, disabled, children, width = 200, danger }) => (
@@ -112,21 +113,21 @@ const SettingsView = ({ settings, updateSetting, onBack, scoreboardVisible, setS
 
         <div className="grid grid-cols-2 gap-2">
             <Slider
-                label="Дальность прорисовки"
+                label=t('labels.yeslnostProrisovki')
                 value={settings.renderDistance}
                 min={8} max={64} step={4}
                 onChange={(v) => updateSetting('renderDistance', v)}
-                format={(v) => `${v} чанк.`}
+                format={(v) => t('vChank', { v: v })}
             />
             <Slider
-                label="Чувствительность"
+                label=t('labels.chuvstvitelnost')
                 value={settings.sensitivity}
                 min={0.2} max={3} step={0.1}
                 onChange={(v) => updateSetting('sensitivity', v)}
                 format={(v) => `${v.toFixed(1)}x`}
             />
             <Slider
-                label="Сила синхрон."
+                label=t('labels.silaSinkhron')
                 value={settings.correctionSpeed}
                 min={0.2} max={3} step={0.1}
                 onChange={(v) => updateSetting('correctionSpeed', v)}
@@ -135,13 +136,13 @@ const SettingsView = ({ settings, updateSetting, onBack, scoreboardVisible, setS
         </div>
 
         <div className="grid grid-cols-2 gap-2 mt-2">
-            <Toggle label="Скорборд"
+            <Toggle label=t('labels.skorbord')
                 value={scoreboardVisible}
                 onChange={setScoreboardVisible} />
-            <Toggle label="Сглаживание (FXAA)"
+            <Toggle label=t('labels.sglazhivanieFxaa')
                 value={!!settings.fxaa}
                 onChange={(v) => updateSetting('fxaa', v)} />
-            <Toggle label="Освещение"
+            <Toggle label=t('labels.osveshchenie')
                 value={!!settings.dynamicLighting}
                 onChange={(v) => updateSetting('dynamicLighting', v)} />
             <Toggle label="Frustum culling"
@@ -150,13 +151,13 @@ const SettingsView = ({ settings, updateSetting, onBack, scoreboardVisible, setS
             <Toggle label="Instanced render"
                 value={settings.instancedRendering !== false}
                 onChange={(v) => updateSetting('instancedRendering', v)} />
-            <Toggle label="Замедл. в фоне"
+            <Toggle label=t('labels.zamedlVFone')
                 value={!!settings.throttleWhenHidden}
                 onChange={(v) => updateSetting('throttleWhenHidden', v)} />
-            <Toggle label="Локальное движение"
+            <Toggle label=t('labels.lokalnoeDvizhenie')
                 value={!!settings.localMovement}
                 onChange={(v) => updateSetting('localMovement', v)} />
-            <Toggle label="Отладка (F3)"
+            <Toggle label=t('labels.debugF3')
                 value={!!settings.showDebug}
                 onChange={(v) => updateSetting('showDebug', v)} />
         </div>
@@ -177,44 +178,45 @@ const SettingsView = ({ settings, updateSetting, onBack, scoreboardVisible, setS
 );
 
 const ControlsView = ({ onBack }) => {
+    const { t } = useTranslation('minecraft-viewer');
     const groups = [
         {
-            title: 'Движение',
+            title: t('titles.dvizhenie'),
             items: [
-                ['W A S D', 'Перемещение'],
-                ['Пробел', 'Прыжок'],
-                ['Shift', 'Красться'],
-                ['Ctrl', 'Бежать'],
+                ['W A S D', t('peremeshchenie')],
+                [t('probel'), t('pryzhok')],
+                ['Shift', t('krastsya')],
+                ['Ctrl', t('bezhat')],
             ]
         },
         {
-            title: 'Инвентарь',
+            title: t('titles.inventory'),
             items: [
-                ['E / И', 'Открыть инвентарь'],
-                ['1 — 9', 'Слот хотбара'],
-                ['Колесо', 'Цикл хотбара'],
-                ['Q', 'Выкинуть один'],
-                ['Ctrl + Q', 'Выкинуть весь стак'],
-                ['F', 'Поменять руки'],
-                ['Shift + клик', 'Быстрый перенос'],
+                ['E / И', t('openInventar')],
+                ['1 — 9', t('slotKhotbara')],
+                [t('koleso'), t('loopKhotbara')],
+                ['Q', t('vykinutOdin')],
+                ['Ctrl + Q', t('vykinutVesStak')],
+                ['F', t('pomenyatRuki')],
+                [t('shiftKlik'), t('bystryyPerenos')],
             ]
         },
         {
-            title: 'Действия',
+            title: t('titles.actions'),
             items: [
-                ['ЛКМ', 'Атака / копать'],
-                ['ПКМ', 'Использ. / поставить'],
-                ['T или /', 'Открыть чат'],
-                ['Tab', 'Список игроков'],
+                [t('lkm'), t('atakaKopat')],
+                [t('pkm'), t('ispolzPostavit')],
+                [t('tIli'), t('openChat')],
+                ['Tab', t('spisokIgrokov')],
             ]
         },
         {
-            title: 'Прочее',
+            title: t('titles.prochee'),
             items: [
-                ['Esc', 'Меню паузы'],
-                ['F1', 'Скрыть HUD'],
-                ['F3', 'Отладка'],
-                ['F5', 'Перспектива'],
+                ['Esc', t('menyuPauzy')],
+                ['F1', t('skrytHud')],
+                ['F3', t('debug')],
+                ['F5', t('perspektiva')],
             ]
         },
     ];

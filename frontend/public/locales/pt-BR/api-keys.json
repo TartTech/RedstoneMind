@@ -1,0 +1,58 @@
+{
+  "title": "API Chavee Do painel",
+  "description": "Manage your API keys for REST API and WebSocket panel access",
+  "createKey": "Criar API Chave",
+  "experimental": "Experimental feature. Documentation not yet available.",
+  "about": {
+    "title": "About Panel API Keys",
+    "description": "Panel API keys allow you to access the RedstoneMind panel API and WebSocket for automation and integrations. Keys inherit your user permissions by default.",
+    "security": "Security: Treat API keys like passwords. Never share them publicly or add them to version control."
+  },
+  "table": {
+    "title": "Your API Keys",
+    "name": "Nome",
+    "prefix": "Key Prefix",
+    "lastUsed": "Last Used",
+    "created": "Criard",
+    "status": "Status",
+    "actions": "Ações",
+    "loading": "Carregando...",
+    "empty": "No API keys. Create one to get started.",
+    "never": "Never",
+    "active": "Ativo",
+    "inactive": "Inativo"
+  },
+  "createDialog": {
+    "title": "Criar Novo API Chave",
+    "description": "Choose a descriptive name for your API key",
+    "nameLabel": "Key Name",
+    "namePlaceholder": "e.g., Production Bot, Development",
+    "cancel": "Cancelar",
+    "create": "Criar Chave"
+  },
+  "createdDialog": {
+    "title": "API Key Successfully Created!",
+    "description": "Make sure to copy your API key now. You won't be able to see it again!",
+    "warning": "This is the only time you'll see this key. Copiar it now!",
+    "nameLabel": "Key Name",
+    "keyLabel": "API Chave",
+    "hide": "Hide",
+    "show": "Show",
+    "copy": "Copiar",
+    "usage": "Usage Example",
+    "confirm": "I've Saved My Key"
+  },
+  "messages": {
+    "loadError": "Error loading API keys",
+    "nameRequired": "Chave name is required",
+    "createSuccess": "API key created successfully",
+    "createError": "Error creating API key",
+    "deleteConfirm": "Are you sure you want to delete this API key? This action is irreversible.",
+    "deleteSuccess": "API key deleted",
+    "deleteError": "Error deleting API key",
+    "copied": "Copiado",
+    "copiedDescription": "API key copied to clipboard",
+    "error": "Erro",
+    "success": "Sucesso"
+  }
+}

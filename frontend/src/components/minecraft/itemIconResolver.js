@@ -1,12 +1,12 @@
 /**
- * Resolver иконок предметов и блоков.
+ * Resolver иконок items и blocks.
  *
  * Стратегия:
- *   1. Проверяем алиасы (для предметов, у которых текстура называется иначе)
+ * 1. Проверяем алиасы (for items, у которых текстура называется else)
  *   2. Локальная папка /minecraft-assets/items/<name>.png
  *   3. Локальная папка /minecraft-assets/blocks/<name>.png
  *   4. Локальные _top / _front / _side варианты
- *   5. Из подкаталога bed/<color>.png для кроватей и т.п.
+ * 5. Из подкаталога bed/<color>.png for кроватей и т.п.
  *   6. CDN fallback (одна версия)
  */
 
@@ -15,10 +15,10 @@ const PRISMARINE_BASE = 'https://raw.githubusercontent.com/PrismarineJS/minecraf
 const ANIMATED_ITEMS = new Set(['clock', 'compass', 'recovery_compass']);
 
 /**
- * Алиасы: реальное имя в /items или /blocks для предметов где имя в инвентаре отличается
+ * Aliases: real name в /items or /blocks for items где имя в инвентаре отличается
  */
 const ITEM_ALIASES = {
-    // Кровати — рендерятся как entity, но в инвентаре есть 16x16 sprite
+    // Кровати — рендерятся как entity, но в инвентаре exists 16x16 sprite
     'red_bed': ['blocks/red_wool', 'blocks/oak_planks'],
     'white_bed': ['blocks/white_wool', 'blocks/oak_planks'],
     'orange_bed': ['blocks/orange_wool', 'blocks/oak_planks'],
@@ -36,15 +36,15 @@ const ITEM_ALIASES = {
     'green_bed': ['blocks/green_wool', 'blocks/oak_planks'],
     'black_bed': ['blocks/black_wool', 'blocks/oak_planks'],
 
-    // TNT — нет items/tnt.png, есть blocks/tnt_side.png
+    // TNT — no items/tnt.png, exists blocks/tnt_side.png
     'tnt': ['blocks/tnt_side'],
 
-    // Grass block — комбинированная текстура верх+бок
+    // Grass block — combined texture верх+бок
     'grass_block': ['blocks/grass_block_side', 'blocks/grass_block_top'],
     'mycelium': ['blocks/mycelium_side', 'blocks/mycelium_top'],
     'podzol': ['blocks/podzol_side', 'blocks/podzol_top'],
 
-    // Вода/лава — нет в items, берём из blocks
+    // Вода/лава — no в items, берём из blocks
     'water': ['blocks/water_still'],
     'lava': ['blocks/lava_still'],
     'water_bucket': ['items/water_bucket'],
@@ -70,12 +70,12 @@ const ITEM_ALIASES = {
     'black_stained_glass_pane': ['blocks/black_stained_glass'],
     'tinted_glass': ['blocks/tinted_glass'],
 
-    // Сундуки — entity-блоки, нет items/chest.png
+    // Сундуки — entity-блоки, no items/chest.png
     'chest': ['blocks/oak_planks'],
     'trapped_chest': ['blocks/oak_planks'],
     'ender_chest': ['blocks/obsidian'],
 
-    // Доски/брёвна (если items/<name>.png отсутствует, берём blocks/)
+    // Доски/брёвна (if items/<name>.png отсутствует, берём blocks/)
     'oak_planks': ['blocks/oak_planks'],
     'birch_planks': ['blocks/birch_planks'],
     'spruce_planks': ['blocks/spruce_planks'],
@@ -139,7 +139,7 @@ const ITEM_ALIASES = {
     'deepslate': ['blocks/deepslate'],
     'cobbled_deepslate': ['blocks/cobbled_deepslate'],
 
-    // Блоки руды
+    // Blockи руды
     'iron_block': ['blocks/iron_block'],
     'gold_block': ['blocks/gold_block'],
     'diamond_block': ['blocks/diamond_block'],
@@ -173,7 +173,7 @@ const ITEM_ALIASES = {
     'white_concrete': ['blocks/white_concrete'],
     // ... остальные цвета бетона будут проходить через стандартный resolver
 
-    // Печь, крафт, наковальня — entity, но есть в blocks
+    // Печь, крафт, наковальня — entity, но exists в blocks
     'furnace': ['blocks/furnace_front', 'blocks/furnace_side'],
     'crafting_table': ['blocks/crafting_table_top', 'blocks/crafting_table_front'],
     'anvil': ['blocks/anvil', 'blocks/anvil_top'],
@@ -199,7 +199,7 @@ const ITEM_ALIASES = {
 };
 
 /**
- * Возвращает массив URL'ов для попыток загрузки иконки.
+ * Возвращает массив URL'ов for попыток загрузки иконки.
  */
 export function getItemIconUrls(itemName) {
     if (!itemName) return [];
@@ -211,7 +211,7 @@ export function getItemIconUrls(itemName) {
 
     const urls = [];
 
-    // 1. Алиасы — приоритет (специальные mapping)
+    // 1. Aliases — приоритет (специальные mapping)
     if (ITEM_ALIASES[clean]) {
         for (const alias of ITEM_ALIASES[clean]) {
             urls.push(`/minecraft-assets/${alias}.png`);
@@ -227,7 +227,7 @@ export function getItemIconUrls(itemName) {
     // 3. Локальный — blocks
     urls.push(`/minecraft-assets/blocks/${clean}.png`);
 
-    // 4. Top/side для блоков
+    // 4. Top/side for blocks
     urls.push(`/minecraft-assets/blocks/${clean}_top.png`);
     urls.push(`/minecraft-assets/blocks/${clean}_side.png`);
     urls.push(`/minecraft-assets/blocks/${clean}_front.png`);

@@ -7,8 +7,8 @@ import { NodeDefinition } from '../../core/registry';
 export const timeNowDefinition = new NodeDefinition({
   type: 'time:now',
   category: 'time',
-  label: 'Сейчас',
-  description: 'Возвращает текущую дату и время',
+  label: t('labels.seychas'),
+  description: t('descriptions.vozvrashchaetTekushchuyuDatuIVremya'),
 
 
 

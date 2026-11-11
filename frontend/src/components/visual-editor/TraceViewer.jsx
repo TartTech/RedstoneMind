@@ -38,10 +38,10 @@ const TraceViewer = () => {
 
   const intervalRef = useRef(null);
 
-  // Фильтруем только шаги выполнения нод (без traversals)
+  // Filterуем только шаги execution нод (без traversals)
   const executionSteps = trace ? trace.steps.filter(step => step.type !== 'traversal') : [];
 
-  // DEBUG: Логируем для отладки
+  // DEBUG: Логируем for отладки
   useEffect(() => {
     if (trace) {
       console.log('[TraceViewer] Trace loaded:', {
@@ -155,7 +155,7 @@ const TraceViewer = () => {
           {/* Управление воспроизведением */}
           <div className="space-y-3">
             <div className="flex items-center gap-2">
-              {/* Назад */}
+              {/* Back */}
               <Button
                 variant="outline"
                 size="icon"
@@ -166,7 +166,7 @@ const TraceViewer = () => {
                 <SkipBack className="w-4 h-4" />
               </Button>
 
-              {/* Плей/Пауза */}
+              {/* Плей/Pause */}
               <Button
                 variant="default"
                 size="icon"
@@ -198,7 +198,7 @@ const TraceViewer = () => {
                 </span>
               </div>
 
-              {/* Кнопка развернуть детали */}
+              {/* Button развернуть детали */}
               <Button
                 variant="ghost"
                 size="icon"

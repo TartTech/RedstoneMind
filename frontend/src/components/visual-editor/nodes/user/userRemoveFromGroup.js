@@ -3,8 +3,8 @@ import { NodeDefinition } from '../../core/registry';
 export const userRemoveFromGroupDefinition = new NodeDefinition({
   type: 'user:remove_from_group',
   category: 'user',
-  label: 'Убрать из группы',
-  description: 'Убирает пользователя из указанной группы',
+  label: t('labels.ubratIzGruppy'),
+  description: t('descriptions.ubiraetPolzovatelyaIzUkazannoyGruppy'),
 
 
 

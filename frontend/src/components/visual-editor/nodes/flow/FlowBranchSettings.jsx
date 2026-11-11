@@ -5,7 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Button } from '@/components/ui/button';
 
 /**
- * Компонент настроек для flow:branch ноды
+ * Component настроек for flow:branch ноды
  */
 const FlowBranchSettings = ({ nodeId, data, updateNodeData }) => {
   const { t } = useTranslation('visual-editor');

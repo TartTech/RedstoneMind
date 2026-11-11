@@ -147,7 +147,7 @@ export default function BotForm({ bot, servers, proxies, onFormChange, onFormSub
             }
             if (!dataToSubmit.password) delete dataToSubmit.password;
 
-            // Обработка прокси
+            // Processing прокси
             if (dataToSubmit.proxyId) {
                 // Используется прокси из списка — удаляем кастомные поля
                 delete dataToSubmit.proxyHost;
@@ -155,7 +155,7 @@ export default function BotForm({ bot, servers, proxies, onFormChange, onFormSub
                 delete dataToSubmit.proxyUsername;
                 delete dataToSubmit.proxyPassword;
             } else if (!dataToSubmit.proxyHost) {
-                // Прокси не используется — удаляем все поля
+                // Proxy не используется — удаляем все поля
                 delete dataToSubmit.proxyHost;
                 delete dataToSubmit.proxyPort;
                 delete dataToSubmit.proxyUsername;

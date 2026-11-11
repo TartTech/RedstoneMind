@@ -1,5 +1,5 @@
 /**
- * Хелпер для автоматической конвертации типов при подключении нод
+ * Хелпер for автоматической конвертации типов при подключении нод
  */
 
 /**
@@ -7,7 +7,7 @@
  * @param {string} sourceType - Исходный тип (User, Array, Object и т.д.)
  * @param {string} targetType - Целевой тип (String, Boolean, Number и т.д.)
  * @param {object} sourceNode - Исходная нода
- * @returns {object|null} - Объект с информацией о ноде-конвертере или null
+ * @returns {object|null} - Object с информацией о ноде-конвертере or null
  */
 export function getConversionChain(sourceType, targetType, sourceNode) {
   // User -> String (username)
@@ -19,7 +19,7 @@ export function getConversionChain(sourceType, targetType, sourceNode) {
     };
   }
 
-  // User -> Boolean (isBlacklisted) - для условий
+  // User -> Boolean (isBlacklisted) - for условий
   if (sourceType === 'User' && targetType === 'Boolean') {
     return {
       nodeType: 'data:get_user_field',
@@ -28,7 +28,7 @@ export function getConversionChain(sourceType, targetType, sourceNode) {
     };
   }
 
-  // User -> Array (groups или permissions)
+  // User -> Array (groups or permissions)
   if (sourceType === 'User' && targetType === 'Array') {
     return {
       nodeType: 'data:get_user_field',
@@ -118,7 +118,7 @@ export function getConversionChain(sourceType, targetType, sourceNode) {
     };
   }
 
-  // Array -> Boolean (есть элементы)
+  // Array -> Boolean (exists элементы)
   if (sourceType === 'Array' && targetType === 'Boolean') {
     return {
       nodeType: 'data:length',
@@ -155,11 +155,11 @@ export function getConversionChain(sourceType, targetType, sourceNode) {
  * Ищет существующую ноду конвертации, подключенную к данному source
  * @param {string} sourceNodeId - ID исходной ноды
  * @param {string} sourceHandle - ID пина исходной ноды
- * @param {string} converterType - Тип ноды-конвертера
- * @param {string} converterInputPin - Входной пин конвертера
- * @param {array} nodes - Массив всех нод в графе
- * @param {array} edges - Массив всех connections в графе
- * @returns {object|null} - Найденная нода или null
+ * @param {string} converterType - Type ноды-конвертера
+ * @param {string} converterInputPin - Inputной пин конвертера
+ * @param {array} nodes - Array всех нод в графе
+ * @param {array} edges - Array всех connections в графе
+ * @returns {object|null} - Найденная нода or null
  */
 export function findExistingConverterNode(sourceNodeId, sourceHandle, converterType, converterInputPin, nodes, edges) {
   // Находим все edges, идущие от source node и source handle
@@ -171,7 +171,7 @@ export function findExistingConverterNode(sourceNodeId, sourceHandle, converterT
   for (const edge of outgoingEdges) {
     const targetNode = nodes.find(n => n.id === edge.target);
 
-    // Проверяем, является ли target нода нужным конвертером
+    // Проверяем, is ли target нода нужным конвертером
     if (targetNode &&
         targetNode.type === converterType &&
         edge.targetHandle === converterInputPin) {
@@ -188,10 +188,10 @@ export function findExistingConverterNode(sourceNodeId, sourceHandle, converterT
  * @param {object} conversionChain - Цепочка конвертации
  * @param {object} sourceNode - Исходная нода
  * @param {object} targetNode - Целевая нода
- * @param {function} addNode - Функция создания ноды
- * @param {function} addEdge - Функция создания edge
- * @param {array} nodes - Массив всех нод
- * @param {array} edges - Массив всех edges
+ * @param {function} addNode - Function создания ноды
+ * @param {function} addEdge - Function создания edge
+ * @param {array} nodes - Array всех нод
+ * @param {array} edges - Array всех edges
  * @returns {object} - { converterNode, newEdges }
  */
 export function createConverterNode(connection, conversionChain, sourceNode, targetNode, addNode, addEdgeFunc, nodes, edges) {
@@ -201,7 +201,7 @@ export function createConverterNode(connection, conversionChain, sourceNode, tar
     additionalNodes: []
   };
 
-  // Проверяем, есть ли уже конвертер
+  // Проверяем, exists ли уже конвертер
   const existingConverter = findExistingConverterNode(
     connection.source,
     connection.sourceHandle,
@@ -221,7 +221,7 @@ export function createConverterNode(connection, conversionChain, sourceNode, tar
     const midY = (sourceNode.position.y + targetNode.position.y) / 2;
     converterNode = addNode(conversionChain.nodeType, { x: midX, y: midY }, false);
 
-    // Устанавливаем данные для ноды (например targetType для data:cast)
+    // Устанавливаем data for ноды (например targetType for data:cast)
     if (conversionChain.targetType) {
       converterNode.data = converterNode.data || {};
       converterNode.data.targetType = conversionChain.targetType;
@@ -259,7 +259,7 @@ export function createConverterNode(connection, conversionChain, sourceNode, tar
 
     const secondNode = addNode(secondStage.nodeType, { x: midX2, y: midY2 }, false);
 
-    // Устанавливаем дефолтные данные если нужно
+    // Устанавливаем дефолтные data if нужно
     if (secondStage.defaultValue !== undefined) {
       secondNode.data = secondNode.data || {};
       secondNode.data[secondStage.inputPin2] = secondStage.defaultValue;

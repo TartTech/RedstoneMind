@@ -7,8 +7,8 @@ import { NodeDefinition } from '../../core/registry';
 export const dataGetVariableDefinition = new NodeDefinition({
   type: 'data:get_variable',
   category: 'data',
-  label: 'Получить переменную',
-  description: 'Получить значение переменной',
+  label: t('labels.poluchitPeremennuyu'),
+  description: t('descriptions.poluchitZnacheniePeremennoy'),
 
 
 

@@ -4,7 +4,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 /**
- * Компонент настроек для data:type_check ноды
+ * Component настроек for data:type_check ноды
  */
 const DataTypeCheckSettings = ({ nodeId, data, updateNodeData }) => {
   const { t } = useTranslation('visual-editor');

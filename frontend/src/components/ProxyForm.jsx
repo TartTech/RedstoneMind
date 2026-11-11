@@ -6,8 +6,10 @@ import { Label } from "@/components/ui/label";
 import { PasswordInput } from "@/components/ui/password-input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { useTranslation } from 'react-i18next';
 
 export default function ProxyForm({ proxy, onSubmit, onCancel, isSaving }) {
+    const { t } = useTranslation('proxies');
     const [formData, setFormData] = useState({
         name: '',
         type: 'socks5',
@@ -53,7 +55,7 @@ export default function ProxyForm({ proxy, onSubmit, onCancel, isSaving }) {
     return (
         <DialogContent>
             <DialogHeader>
-                <DialogTitle>{isEditMode ? 'Редактировать прокси' : 'Добавить новый прокси'}</DialogTitle>
+                <DialogTitle>{isEditMode ? t('titles.editProksi') : t('titles.addNovyyProksi')}</DialogTitle>
                 <DialogDescription>
                     Заполните информацию о прокси-сервере. Боты смогут использовать этот прокси для подключения.
                 </DialogDescription>
@@ -61,13 +63,13 @@ export default function ProxyForm({ proxy, onSubmit, onCancel, isSaving }) {
             <form id="proxy-form" onSubmit={handleSubmit} className="space-y-4 py-4">
                 <div className="space-y-2">
                     <Label htmlFor="name">Название</Label>
-                    <Input id="name" name="name" value={formData.name} onChange={handleChange} placeholder="Мой прокси" required />
+                    <Input id="name" name="name" value={formData.name} onChange={handleChange} placeholder=t('placeholders.moyProksi') required />
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="type">Тип прокси</Label>
                     <Select value={formData.type} onValueChange={handleTypeChange}>
                         <SelectTrigger id="type">
-                            <SelectValue placeholder="Выберите тип прокси" />
+                            <SelectValue placeholder=t('placeholders.vyberiteTipProksi') />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectItem value="socks5">SOCKS5</SelectItem>
@@ -97,13 +99,13 @@ export default function ProxyForm({ proxy, onSubmit, onCancel, isSaving }) {
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="note">Заметка (опционально)</Label>
-                    <Textarea id="note" name="note" value={formData.note} onChange={handleChange} placeholder="Описание или заметки..." />
+                    <Textarea id="note" name="note" value={formData.note} onChange={handleChange} placeholder=t('placeholders.descriptionIliZametki') />
                 </div>
             </form>
             <DialogFooter>
                 <Button variant="ghost" onClick={onCancel}>Отмена</Button>
                 <Button type="submit" form="proxy-form" disabled={isSaving}>
-                    {isSaving ? 'Сохранение...' : (isEditMode ? 'Сохранить' : 'Создать')}
+                    {isSaving ? t('sokhranenie') : (isEditMode ? t('save') : t('create'))}
                 </Button>
             </DialogFooter>
         </DialogContent>

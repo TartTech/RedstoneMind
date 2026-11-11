@@ -64,7 +64,7 @@ function JsonEditorDialog({ initialValue, onSave, onCancel }) {
             </div>
             <DialogFooter>
                 <Button variant="ghost" onClick={onCancel}>
-                    {t('actions.cancel', { defaultValue: 'Отмена' })}
+                    {t('actions.cancel', { defaultValue: 'Otmena' })}
                 </Button>
                 <Button onClick={handleSave}>
                     {t('settingsDialog.jsonEditor.applyAndSave', { defaultValue: 'Применить и сохранить' })}
@@ -141,15 +141,15 @@ function ProxySettingField({ settingKey, config, value, onChange, readOnly }) {
             {proxyValue.enabled && isCustom && (
                 <div className="grid grid-cols-2 gap-4 pt-2">
                     <div className="space-y-2">
-                        <Label>{t('settingsDialog.proxy.host', { defaultValue: 'Хост' })}</Label>
+                        <Label>{t('settingsDialog.proxy.host', { defaultValue: 'Khost' })}</Label>
                         <Input value={proxyValue.host || ''} onChange={(e) => handleFieldChange('host', e.target.value)} placeholder="127.0.0.1" disabled={readOnly} />
                     </div>
                     <div className="space-y-2">
-                        <Label>{t('settingsDialog.proxy.port', { defaultValue: 'Порт' })}</Label>
+                        <Label>{t('settingsDialog.proxy.port', { defaultValue: 'Port' })}</Label>
                         <Input type="number" value={proxyValue.port || ''} onChange={(e) => handleFieldChange('port', e.target.value)} placeholder="1080" disabled={readOnly} />
                     </div>
                     <div className="space-y-2">
-                        <Label>{t('settingsDialog.proxy.type', { defaultValue: 'Тип' })}</Label>
+                        <Label>{t('settingsDialog.proxy.type', { defaultValue: 'Tip' })}</Label>
                         <Select value={proxyValue.type || 'socks5'} onValueChange={(newValue) => handleFieldChange('type', newValue)} disabled={readOnly}>
                             <SelectTrigger>
                                 <SelectValue />
@@ -166,16 +166,16 @@ function ProxySettingField({ settingKey, config, value, onChange, readOnly }) {
                         <Input
                             value={proxyValue.username || ''}
                             onChange={(e) => handleFieldChange('username', e.target.value)}
-                            placeholder={t('settingsDialog.proxy.optional', { defaultValue: 'Опционально' })}
+                            placeholder={t('settingsDialog.proxy.optional', { defaultValue: 'Optsionalno' })}
                             disabled={readOnly}
                         />
                     </div>
                     <div className="col-span-2 space-y-2">
-                        <Label>{t('settingsDialog.proxy.password', { defaultValue: 'Пароль' })}</Label>
+                        <Label>{t('settingsDialog.proxy.password', { defaultValue: 'Parol' })}</Label>
                         <PasswordInput
                             value={proxyValue.password || ''}
                             onChange={(e) => handleFieldChange('password', e.target.value)}
-                            placeholder={t('settingsDialog.proxy.optional', { defaultValue: 'Опционально' })}
+                            placeholder={t('settingsDialog.proxy.optional', { defaultValue: 'Optsionalno' })}
                             disabled={readOnly}
                         />
                     </div>
@@ -287,7 +287,7 @@ function SettingField({ settingKey, config, value, onChange, readOnly }) {
                                 <span>
                                     <Button variant="outline" disabled={readOnly}>
                                         <Edit className="mr-2 h-4 w-4" />
-                                        {t('actions.edit', { defaultValue: 'Редактировать' })}
+                                        {t('actions.edit', { defaultValue: 'Redaktirovat' })}
                                     </Button>
                                 </span>
                             </DialogTrigger>

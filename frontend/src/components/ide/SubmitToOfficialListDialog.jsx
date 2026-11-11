@@ -9,8 +9,9 @@ import { toast } from '@/hooks/use-toast';
 import { apiHelper } from '@/lib/api';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { useTranslation } from 'react-i18next';
 
-// IconComponent для превью
+// IconComponent for превью
 const IconComponent = ({ name, ...props }) => {
     if (!name) return <Icons.Package {...props} />;
     if (name.startsWith('/') || name.startsWith('http')) {
@@ -32,6 +33,7 @@ const getSafeExternalUrl = (url) => {
 };
 
 export default function SubmitToOfficialListDialog({ isOpen, onClose, pluginInfo, repoUrl, latestTag, botId, pluginName, githubToken, onSuccess, isUpdate = false, currentVersion = null }) {
+    const { t } = useTranslation('plugins');
     const [pluginDisplayName, setPluginDisplayName] = useState('');
     const [icon, setIcon] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -52,8 +54,8 @@ export default function SubmitToOfficialListDialog({ isOpen, onClose, pluginInfo
         if (!pluginDisplayName.trim()) {
             toast({
                 variant: 'destructive',
-                title: 'Ошибка',
-                description: 'Введите название плагина'
+                title: t('titles.error5'),
+                description: t('descriptions.vvediteNazvaniePlugina')
             });
             return;
         }
@@ -61,8 +63,8 @@ export default function SubmitToOfficialListDialog({ isOpen, onClose, pluginInfo
         if (!icon.trim()) {
             toast({
                 variant: 'destructive',
-                title: 'Ошибка',
-                description: 'Введите иконку'
+                title: t('titles.error6'),
+                description: t('descriptions.vvediteIkonku')
             });
             return;
         }
@@ -81,7 +83,7 @@ export default function SubmitToOfficialListDialog({ isOpen, onClose, pluginInfo
             const safeResultPrUrl = getSafeExternalUrl(result.prUrl);
             setPrUrl(safeResultPrUrl);
             toast({
-                title: 'Pull Request создан!',
+                title: t('titles.pullRequestSozdan2'),
                 description: (
                     <div>
                         <a href={safeResultPrUrl || '#'} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
@@ -91,15 +93,15 @@ export default function SubmitToOfficialListDialog({ isOpen, onClose, pluginInfo
                 )
             });
 
-            // Вызываем callback для обновления статуса в родительском компоненте
+            // Вызываем callback for обновления статуса в родительском компоненте
             if (onSuccess) {
                 onSuccess();
             }
         } catch (error) {
             toast({
                 variant: 'destructive',
-                title: 'Ошибка создания PR',
-                description: error.message || 'Не удалось создать Pull Request'
+                title: t('titles.errorSozdaniyaPr2'),
+                description: error.message || t('errors.failedToSozdatPullRequest2')
             });
         } finally {
             setIsSubmitting(false);
@@ -139,12 +141,12 @@ export default function SubmitToOfficialListDialog({ isOpen, onClose, pluginInfo
                 <DialogHeader>
                     <DialogTitle className="flex items-center gap-2">
                         <Icons.Package className="h-5 w-5" />
-                        {isUpdate ? 'Обновить версию в списке' : 'Подать в неофициальный список'}
+                        {isUpdate ? t('refreshVersiyuVSpiske') : t('podatVNeofitsialnyySpisok')}
                     </DialogTitle>
                     <DialogDescription>
-                        {prUrl ? 'Pull Request успешно создан!' : isUpdate
-                            ? `Обновить версию с ${currentVersion} на ${latestTag}`
-                            : 'Создаст PR в неофициальный раздел. Его примет бот списка.'
+                        {prUrl ? t('pullRequestUspeshnoSozdan') : isUpdate
+                            ? t('refreshVersiyuSCurrentversionNaLatesttag', { currentVersion: currentVersion, latestTag: latestTag })
+                            : t('sozdastPrVNeofitsialnyyRazdelEgo')
                         }
                     </DialogDescription>
                 </DialogHeader>
@@ -185,7 +187,7 @@ export default function SubmitToOfficialListDialog({ isOpen, onClose, pluginInfo
                                 </Label>
                                 <Input
                                     id="plugin-name"
-                                    placeholder="Мой плагин"
+                                    placeholder=t('placeholders.moyPlugin')
                                     value={pluginDisplayName}
                                     onChange={(e) => setPluginDisplayName(e.target.value)}
                                     disabled={isSubmitting}
@@ -201,7 +203,7 @@ export default function SubmitToOfficialListDialog({ isOpen, onClose, pluginInfo
                                 </Label>
                                 <Input
                                     id="icon"
-                                    placeholder="package или https://example.com/icon.svg"
+                                    placeholder=t('placeholders.packageIliHttpsexamplecomiconsvg')
                                     value={icon}
                                     onChange={(e) => setIcon(e.target.value)}
                                     disabled={isSubmitting}
@@ -214,9 +216,9 @@ export default function SubmitToOfficialListDialog({ isOpen, onClose, pluginInfo
                                         rel="noopener noreferrer"
                                         className="text-primary hover:underline"
                                     >
-                                        lucide-иконки
+                                        lucide icons
                                     </a>
-                                    {' '}(например: <code className="bg-muted px-1 rounded">key-round</code>, <code className="bg-muted px-1 rounded">package</code>) или URL на SVG
+                                    {' '}({t('iconExample')}: <code className="bg-muted px-1 rounded">key-round</code>, <code className="bg-muted px-1 rounded">package</code>) {t('orSvgUrl')}
                                 </p>
                                 {icon && !isValidIcon() && (
                                     <p className="text-xs text-orange-500 mt-1">
@@ -261,7 +263,7 @@ export default function SubmitToOfficialListDialog({ isOpen, onClose, pluginInfo
 
                                                 <CardContent className="relative z-10 space-y-4">
                                                     <p className="text-sm text-muted-foreground line-clamp-3">
-                                                        {pluginInfo?.description || 'Нет описания'}
+                                                        {pluginInfo?.description || t('descriptions.noDescription')}
                                                     </p>
 
                                                     {(() => {
@@ -314,7 +316,7 @@ export default function SubmitToOfficialListDialog({ isOpen, onClose, pluginInfo
                                                                 ) : (
                                                                     <Badge variant="outline" className="text-xs">
                                                                         <Icons.Server className="h-3 w-3 mr-1" />
-                                                                        {hosts.length <= 2 ? hosts.join(', ') : `${hosts.length} серверов`}
+                                                                        {hosts.length <= 2 ? hosts.join(', ') : t('hostslengthServerov', { hosts.length: hosts.length })}
                                                                     </Badge>
                                                                 )}
                                                             </div>
@@ -336,7 +338,7 @@ export default function SubmitToOfficialListDialog({ isOpen, onClose, pluginInfo
                                                             <div className="w-full">
                                                                 <Badge variant="outline" className="cursor-help border-orange-600/50 text-orange-600 text-xs">
                                                                     <Icons.GitMerge className="h-3 w-3 mr-1" />
-                                                                    Требует {deps.length} зависимост{deps.length === 1 ? 'ь' : (deps.length < 5 ? 'и' : 'ей')}
+                                                                    Требует {deps.length} зависимост{deps.length === 1 ? '' : (deps.length < 5 ? 'i' : t('ey'))}
                                                                 </Badge>
                                                             </div>
                                                         );
@@ -358,9 +360,9 @@ export default function SubmitToOfficialListDialog({ isOpen, onClose, pluginInfo
                                 <p className="text-sm font-medium mb-2">ℹ️ Что произойдет:</p>
                                 <ol className="text-xs space-y-1 text-muted-foreground list-decimal list-inside">
                                     <li>Автоматически создастся ветка <code className="bg-muted px-1 rounded">add-plugin-{getRepoId()}</code></li>
-                                    <li>{isUpdate ? 'Версия плагина будет обновлена' : 'Ваш плагин будет добавлен'} в <code className="bg-muted px-1 rounded">index.json</code></li>
+                                    <li>{isUpdate ? t('versionPluginaBudetObnovlena') : t('vashPluginBudetDobavlen')} в <code className="bg-muted px-1 rounded">index.json</code></li>
                                     <li>Создастся Pull Request в <code className="bg-muted px-1 rounded">TartTech/official-plugins-list</code></li>
-                                    <li>После проверки и одобрения модераторами, {isUpdate ? 'новая версия появится в списке' : 'плагин появится в официальном списке'}</li>
+                                    <li>После проверки и одобрения модераторами, {isUpdate ? t('novayaVersiyaPoyavitsyaVSpiske') : t('pluginPoyavitsyaVOfitsialnomSpiske')}</li>
                                 </ol>
                             </div>
                         </>
@@ -369,7 +371,7 @@ export default function SubmitToOfficialListDialog({ isOpen, onClose, pluginInfo
 
                 <DialogFooter>
                     <Button variant="outline" onClick={handleClose} disabled={isSubmitting}>
-                        {prUrl ? 'Закрыть' : 'Отмена'}
+                        {prUrl ? t('close') : t('cancel')}
                     </Button>
                     {!prUrl && (
                         <Button onClick={handleSubmit} disabled={isSubmitting || !pluginDisplayName || !icon}>

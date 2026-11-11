@@ -13,7 +13,7 @@ import { useVisualEditorStore } from '@/stores/visualEditorStore';
  *
  * Позволяет:
  * - Просматривать текущие значения входных данных ноды
- * - Редактировать значения переменных
+ * - Edit значения переменных
  * - Продолжить выполнение с изменёнными значениями
  */
 const WhatIfEditor = () => {
@@ -40,7 +40,7 @@ const WhatIfEditor = () => {
 
   const { nodeId, nodeType, context } = debugSession;
 
-  // Находим ноду для получения её label
+  // Находим ноду for получения её label
   const node = nodes.find(n => n.id === nodeId);
   const nodeLabel = node?.data?.label || nodeType;
 
@@ -54,7 +54,7 @@ const WhatIfEditor = () => {
 
   const handleCancel = () => {
     setEditingKey(null);
-    // Убираем изменения для этого ключа
+    // Убираем изменения for этого ключа
     const newEdited = { ...editedValues };
     delete newEdited[editingKey];
     setEditedValues(newEdited);

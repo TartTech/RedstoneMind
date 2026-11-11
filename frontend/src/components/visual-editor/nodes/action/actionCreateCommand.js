@@ -2,13 +2,13 @@ import { NodeDefinition } from '../../core/registry';
 
 /**
  * Определение ноды action:create_command
- * Создает новую команду (временную или постоянную)
+ * Создает новую команду (временную or постоянную)
  */
 export const actionCreateCommandDefinition = new NodeDefinition({
   type: 'action:create_command',
   category: 'action',
-  label: 'Создать команду',
-  description: 'Создает новую команду для бота (временную или постоянную)',
+  label: t('labels.createKomandu'),
+  description: t('descriptions.sozdaetNovuyuKomanduDlyaBotaVremennuyu'),
 
 
 

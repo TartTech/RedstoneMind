@@ -1,0 +1,25 @@
+{
+  "title": "Bot Configuration",
+  "description": "All settings in one place. Click \"Save\" to apply changes.",
+  "save": "Salvar",
+  "loading": "Carregando da configuração...",
+  "loadError": "Failed to load data.",
+  "tabs": {
+    "general": "Geral",
+    "plugins": "Plugins"
+  },
+  "plugins": {
+    "noDescription": "Sem descrição.",
+    "empty": "Installed plugins have no configurable settings."
+  },
+  "messages": {
+    "success": "Sucesso!",
+    "allSaved": "All changes saved.",
+    "saveError": "Erro do salvamento",
+    "unknownError": "An unknown error occurred while saving",
+    "error": "Erro"
+  },
+  "errors": {
+    "uzheSushchestvuet": "já existe"
+  }
+}

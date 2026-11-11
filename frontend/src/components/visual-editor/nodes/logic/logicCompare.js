@@ -8,8 +8,8 @@ import LogicCompareSettings from './LogicCompareSettings';
 export const logicCompareDefinition = new NodeDefinition({
   type: 'logic:compare',
   category: 'logic',
-  label: 'Сравнение',
-  description: 'Сравнение двух значений',
+  label: t('labels.sravnenie'),
+  description: t('descriptions.sravnenieDvukhZnacheniy'),
 
 
 

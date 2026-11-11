@@ -2,13 +2,13 @@ import { NodeDefinition } from '../../core/registry';
 
 /**
  * Определение ноды action:bot_look_at
- * Поворачивает голову бота в сторону координат или сущности
+ * Поворачивает голову botа в сторону координат or сущности
  */
 export const actionBotLookAtDefinition = new NodeDefinition({
   type: 'action:bot_look_at',
   category: 'action',
-  label: 'Посмотреть на',
-  description: 'Поворачивает голову бота на цель',
+  label: t('labels.posmotretNa'),
+  description: t('descriptions.povorachivaetGolovuBotaNaTsel'),
 
 
 

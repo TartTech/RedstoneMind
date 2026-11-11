@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 
 /**
- * Компонент настроек для data:array_literal ноды
+ * Component настроек for data:array_literal ноды
  */
 const ArrayLiteralSettings = ({ nodeId, data, updateNodeData }) => {
   const { t } = useTranslation('visual-editor');

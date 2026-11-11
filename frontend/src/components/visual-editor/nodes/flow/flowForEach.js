@@ -2,13 +2,13 @@ import { NodeDefinition } from '../../core/registry';
 
 /**
  * Определение ноды flow:for_each
- * Выполняет тело цикла для каждого элемента массива
+ * Выполняет тело цикла for каждого элемента массива
  */
 export const flowForEachDefinition = new NodeDefinition({
   type: 'flow:for_each',
   category: 'flow',
-  label: 'Перебор массива (цикл)',
-  description: 'Выполняет "Тело цикла" для каждого элемента в "Массиве"',
+  label: t('labels.pereborMassivaTsikl'),
+  description: t('descriptions.vypolnyaetTeloTsiklaDlyaKazhdogoElementa'),
 
 
 

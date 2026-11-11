@@ -7,8 +7,8 @@ import { NodeDefinition } from '../../core/registry';
 export const timeDiffDefinition = new NodeDefinition({
   type: 'time:diff',
   category: 'time',
-  label: 'Разница времени',
-  description: 'Разница между датами в миллисекундах',
+  label: t('labels.raznitsaVremeni'),
+  description: t('descriptions.raznitsaMezhduDatamiVMillisecondsakh'),
 
 
 

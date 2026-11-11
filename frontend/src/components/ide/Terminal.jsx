@@ -3,8 +3,10 @@ import { Terminal as XTerm } from 'xterm';
 import { FitAddon } from 'xterm-addon-fit';
 import 'xterm/css/xterm.css';
 import { useAppStore } from '@/stores/appStore';
+import { useTranslation } from 'react-i18next';
 
 export default function Terminal({ botId }) {
+    const { t } = useTranslation('plugins');
     const terminalRef = useRef(null);
     const xtermRef = useRef(null);
     const fitAddonRef = useRef(null);
@@ -108,8 +110,8 @@ export default function Terminal({ botId }) {
                     }
                 }, 100);
 
-                term.writeln('\x1b[1;32mКонсоль Бота\x1b[0m');
-                term.writeln(`Подключено к сессии: ${botId}`);
+                term.writeln('\x1b[1;32mBot Console\x1b[0m');
+                term.writeln(t('connectedoKSessiiBotid', { botId: botId }));
 
                 // Handle input
                 let currentLine = '';
@@ -120,7 +122,7 @@ export default function Terminal({ botId }) {
                             if (socket) {
                                 socket.emit('bot:chat', { botId, message: currentLine });
                             } else {
-                                term.writeln('\x1b[31mОшибка: Нет соединения с сервером\x1b[0m');
+                                term.writeln('\x1b[31mError: No connection to server\x1b[0m');
                             }
                         }
                         currentLine = '';

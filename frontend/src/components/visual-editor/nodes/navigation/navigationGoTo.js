@@ -3,13 +3,13 @@ import NavigationGoToSettings from './NavigationGoToSettings';
 
 /**
  * Определение ноды navigation:go_to
- * Перемещает бота к указанным координатам
+ * Перемещает botа к указанным координатам
  */
 export const navigationGoToDefinition = new NodeDefinition({
   type: 'navigation:go_to',
   category: 'navigation',
-  label: 'Идти к',
-  description: 'Перемещает бота к указанным координатам используя pathfinding',
+  label: t('labels.idtiK'),
+  description: t('descriptions.peremeshchaetBotaKUkazannymKoordinatamIspolzuya'),
 
 
 

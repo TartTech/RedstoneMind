@@ -323,8 +323,8 @@ export default function PluginDetailPage() {
                     <Badge variant={installedPlugin.isEnabled ? 'default' : 'secondary'} className="text-sm">
                       <Power className="mr-1 h-3 w-3" />
                       {installedPlugin.isEnabled
-                        ? t('status.enabled', { defaultValue: 'Активен' })
-                        : t('status.disabled', { defaultValue: 'Выключен' })}
+                        ? t('status.enabled', { defaultValue: 'Aktiven' })
+                        : t('status.disabled', { defaultValue: 'Vyklyuchen' })}
                     </Badge>
                   )}
                 </div>
@@ -372,7 +372,7 @@ export default function PluginDetailPage() {
                         onClick={() => setSelectedPlugin(installedPlugin)}
                       >
                         <Settings className="mr-2 h-4 w-4" />
-                        {t('buttons.settings', { defaultValue: 'Настройки' })}
+                        {t('buttons.settings', { defaultValue: 'Nastroyki' })}
                       </Button>
                     )}
                     <Button
@@ -383,7 +383,7 @@ export default function PluginDetailPage() {
                       disabled={installedPlugin.isEnabled}
                     >
                       <Trash2 className="mr-2 h-4 w-4" />
-                      {t('buttons.delete', { defaultValue: 'Удалить' })}
+                      {t('buttons.delete', { defaultValue: 'Udalit' })}
                     </Button>
                   </div>
                 </Card>
@@ -445,12 +445,12 @@ export default function PluginDetailPage() {
               <Card className="p-4 text-center">
                 <Terminal className="mx-auto mb-2 h-8 w-8 text-green-500" />
                 <p className="text-2xl font-bold">{installedPlugin.commands?.length || 0}</p>
-                <p className="text-sm text-muted-foreground">{t('stats.commands', { defaultValue: 'Команд' })}</p>
+                <p className="text-sm text-muted-foreground">{t('stats.commands', { defaultValue: 'Komand' })}</p>
               </Card>
               <Card className="p-4 text-center">
                 <Activity className="mx-auto mb-2 h-8 w-8 text-purple-500" />
                 <p className="text-2xl font-bold">{installedPlugin.eventGraphs?.length || 0}</p>
-                <p className="text-sm text-muted-foreground">{t('stats.events', { defaultValue: 'Событий' })}</p>
+                <p className="text-sm text-muted-foreground">{t('stats.events', { defaultValue: 'Sobytiy' })}</p>
               </Card>
             </>
           )}
@@ -461,7 +461,7 @@ export default function PluginDetailPage() {
             <TabsTrigger value="overview">{t('tabs.overview')}</TabsTrigger>
             <TabsTrigger value="changelog">{t('tabs.changelog')}</TabsTrigger>
             {installedPlugin && installedPlugin.commands?.length > 0 && (
-              <TabsTrigger value="commands">{t('tabs.commands', { defaultValue: 'Команды' })}</TabsTrigger>
+              <TabsTrigger value="commands">{t('tabs.commands', { defaultValue: 'Komandy' })}</TabsTrigger>
             )}
           </TabsList>
 

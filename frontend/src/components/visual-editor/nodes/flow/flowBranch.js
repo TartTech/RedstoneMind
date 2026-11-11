@@ -3,13 +3,13 @@ import FlowBranchSettings from './FlowBranchSettings';
 
 /**
  * Определение ноды flow:branch
- * Условное ветвление выполнения
+ * Условное ветвление execution
  */
 export const flowBranchDefinition = new NodeDefinition({
   type: 'flow:branch',
   category: 'flow',
-  label: 'Ветвление',
-  description: 'Условное ветвление на основе boolean значения',
+  label: t('labels.vetvlenie'),
+  description: t('descriptions.uslovnoeVetvlenieNaOsnoveBooleanZnacheniya'),
 
 
 

@@ -3,8 +3,8 @@ import { NodeDefinition } from '../../core/registry';
 export const worldPlaceDefinition = new NodeDefinition({
   type: 'world:place',
   category: 'world',
-  label: 'Поставить блок',
-  description: 'Ставит предмет из руки на грань блока',
+  label: t('labels.postavitBlok'),
+  description: t('descriptions.stavitPredmetIzRukiNaGran'),
   defaultData: {
     x: null,
     y: null,

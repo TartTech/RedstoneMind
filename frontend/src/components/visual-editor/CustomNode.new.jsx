@@ -20,7 +20,7 @@ function CustomNode({ data, type, id: nodeId }) {
   const breakpoints = useVisualEditorStore(state => state.breakpoints);
   const debugSession = useVisualEditorStore(state => state.debugSession);
 
-  // i18n переводы для нод
+  // i18n переводы for нод
   const { getNodeTranslation, getPinName, getPinDescription, getPlaceholder, getInlineOptionLabel } = useNodeTranslation();
 
   const nodeEdges = useMemo(
@@ -40,7 +40,7 @@ function CustomNode({ data, type, id: nodeId }) {
     [variables, commandArguments, nodes]
   );
 
-  // Функция для перевода пинов
+  // Function for перевода пинов
   const translatePins = useCallback((pins) => {
     if (!pins || !Array.isArray(pins)) return pins;
     return pins.map(pin => ({
@@ -104,14 +104,14 @@ function CustomNode({ data, type, id: nodeId }) {
     });
   }, [type, nodeId]);
 
-  // Получаем inputs и outputs из trace для текущего шага, если воспроизводится трассировка
+  // Получаем inputs и outputs из trace for текущего шага, if воспроизводится трассировка
   const traceData = useMemo(() => {
     if (!trace || currentStepIndex < 0) return { inputs: null, outputs: null };
 
     const executionSteps = trace.steps.filter(step => step.type !== 'traversal');
     if (currentStepIndex >= executionSteps.length) return { inputs: null, outputs: null };
 
-    // Находим шаг для текущей ноды до или на текущем индексе
+    // Находим шаг for текущей ноды до or на текущем индексе
     const stepsUpToCurrent = executionSteps.slice(0, currentStepIndex + 1);
     const nodeStep = stepsUpToCurrent.reverse().find(step => step.nodeId === nodeId);
 
@@ -121,7 +121,7 @@ function CustomNode({ data, type, id: nodeId }) {
     return { inputs, outputs };
   }, [trace, currentStepIndex, nodeId, type]);
 
-  // Получаем данные из Live debug сессии (если на паузе на этой ноде)
+  // Получаем data из Live debug сессии (if на паузе на этой ноде)
   const liveDebugData = useMemo(() => {
     if (!debugSession || debugSession.status !== 'paused') {
       return { inputs: null, outputs: null };
@@ -156,7 +156,7 @@ function CustomNode({ data, type, id: nodeId }) {
     return { inputs: null, outputs: null };
   }, [debugSession, nodeId]);
 
-  // Комбинируем данные: приоритет у Live debug, потом trace
+  // Комбинируем data: приоритет у Live debug, потом trace
   const displayData = useMemo(() => {
     if (liveDebugData.inputs || liveDebugData.outputs) {
       return liveDebugData;
@@ -215,15 +215,15 @@ function CustomNode({ data, type, id: nodeId }) {
   );
 }
 
-// Кастомный компаратор для React.memo - ререндер только если изменились важные props
+// Кастомный компаратор for React.memo - ререндер только if изменorсь важные props
 function arePropsEqual(prevProps, nextProps) {
-  // Не ререндерим если изменилась только позиция (selected, dragging и т.д.)
+  // Не ререндерим if изменилась только позиция (selected, dragging и т.д.)
   //
   // ВАЖНО: Поверхностное сравнение data безопасно, потому что:
   // 1. visualEditorStore использует Immer middleware (см. visualEditorStore.js)
-  // 2. Immer гарантирует создание новых ссылок на объекты при любом изменении
-  // 3. Все обновления data идут через updateNodeData, который использует Immer
-  // 4. Поэтому если data изменился - ссылка будет другая, если не изменился - та же
+  // 2. Immer гарантирует создание новых ссылок на objects при любом изменении
+  // 3. All обновления data идут через updateNodeData, который использует Immer
+  // 4. Поэтому if data изменился - ссылка будет другая, if не изменился - та же
   //
   // Глубокое сравнение НЕ требуется и было бы избыточным.
   if (prevProps.id !== nextProps.id || prevProps.type !== nextProps.type) {

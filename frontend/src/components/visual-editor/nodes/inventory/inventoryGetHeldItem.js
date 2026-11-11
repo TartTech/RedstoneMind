@@ -2,13 +2,13 @@ import { NodeDefinition } from '../../core/registry';
 
 /**
  * Определение ноды inventory:get_held_item
- * Получает предмет в руке бота
+ * Получает предмет в руке botа
  */
 export const inventoryGetHeldItemDefinition = new NodeDefinition({
   type: 'inventory:get_held_item',
   category: 'inventory',
-  label: 'Предмет в руке',
-  description: 'Получает предмет который бот держит в руке',
+  label: t('labels.itemVRuke'),
+  description: t('descriptions.poluchaetPredmetKotoryyBotDerzhitV'),
 
 
 

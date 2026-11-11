@@ -7,8 +7,8 @@ import { NodeDefinition } from '../../core/registry';
 export const furnacePutFuelDefinition = new NodeDefinition({
   type: 'furnace:put_fuel',
   category: 'furnace',
-  label: 'Печка: положить топливо',
-  description: 'Кладёт топливо в слот топлива печки',
+  label: t('labels.pechkaPolozhitToplivo'),
+  description: t('descriptions.kladyotToplivoVSlotToplivaPechki'),
 
 
 

@@ -1,9 +1,9 @@
 /**
  * Проверяет, должно ли поле быть показано, основываясь на зависимостях dependsOn
- * @param {string} key - Ключ настройки
+ * @param {string} key - Key настройки
  * @param {Object} config - Конфигурация поля из manifest
- * @param {Object} allSettings - Все текущие значения настроек
- * @returns {boolean} - true, если поле должно быть показано
+ * @param {Object} allSettings - All текущие значения настроек
+ * @returns {boolean} - true, if поле должно быть показано
  */
 function parseSettingDefault(rawDefault) {
   if (rawDefault === undefined) return undefined;
@@ -50,20 +50,20 @@ export function collectManifestDefaults(manifestSettings) {
 }
 
 export function shouldShowField(key, config, allSettings) {
-  // Старая логика для обратной совместимости с actionsPreset
+  // Старая логика for обратной совместимости с actionsPreset
   if (allSettings?.actionsPreset !== undefined && key.startsWith('enable')) {
     return allSettings.actionsPreset === 'custom';
   }
 
-  // Если нет dependsOn, показываем поле
+  // Если no dependsOn, показываем поле
   if (!config?.dependsOn) return true;
 
-  // Преобразуем dependsOn в массив условий для единообразной обработки
+  // Преобразуем dependsOn в массив условий for единообразной обраbotки
   const conditions = Array.isArray(config.dependsOn)
     ? config.dependsOn
     : [config.dependsOn];
 
-  // Все условия должны быть выполнены (AND логика)
+  // All условия должны быть выполнены (AND логика)
   return conditions.every(condition => {
     const fieldValue = allSettings?.[condition.field];
     const targetValue = condition.value;
@@ -72,11 +72,11 @@ export function shouldShowField(key, config, allSettings) {
     let result;
 
     // Если targetValue - массив, проверяем, входит ли текущее значение в него
-    // Примечание: при использовании массива значений параметр operator игнорируется
+    // Note: при использовании массива значений параметр operator игнорируется
     if (Array.isArray(targetValue)) {
       result = targetValue.includes(fieldValue);
     } else {
-      // Проверка по оператору
+      // Check по оператору
       switch (operator) {
         case 'eq':  // равно (по умолчанию)
           result = fieldValue === targetValue;
@@ -101,7 +101,7 @@ export function shouldShowField(key, config, allSettings) {
       }
     }
 
-    // Инвертируем результат, если указан флаг invert (NOT логика)
+    // Инвертируем результат, if указан флаг invert (NOT логика)
     return condition.invert ? !result : result;
   });
 }

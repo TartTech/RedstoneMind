@@ -105,7 +105,7 @@ export default function ConfigurationPage() {
         } catch (error) {
             console.error('Error saving bot settings:', error);
             
-            if (error.message.includes('уже существует')) {
+            if (error.message.includes(t('errors.uzheSushchestvuet'))) {
                 setFormErrors({ username: error.message });
             } else {
                 toast({

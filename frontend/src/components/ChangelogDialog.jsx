@@ -120,7 +120,7 @@ export default function ChangelogDialog() {
 
                 <div className="custom-scrollbar flex-1 overflow-y-auto rounded-md border p-2 md:p-3">
                     {isChangelogLoading ? (
-                        <div className="py-16 text-center text-muted-foreground">{t('common.loading', { ns: 'common', defaultValue: 'Загрузка...' })}</div>
+                        <div className="py-16 text-center text-muted-foreground">{t('common.loading', { ns: 'common', defaultValue: 'Zagruzka...' })}</div>
                     ) : releases.length === 0 ? (
                         <div className="text-center py-16 text-muted-foreground">{t('changelog.noData')}</div>
                     ) : (

@@ -110,5 +110,9 @@
   },
   "common": {
     "error": "Error"
-  }
+  },
+  "confirm": {
+    "confirm": "Confirm"
+  },
+  "cancel": "Cancel"
 }

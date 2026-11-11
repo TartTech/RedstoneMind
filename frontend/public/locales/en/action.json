@@ -1,0 +1,23 @@
+{
+  "dannye": "data",
+  "potok": "flow",
+  "matematika": "math",
+  "logika": "logic",
+  "stroki": "strings",
+  "massiv": "array",
+  "massivy": "arrays",
+  "obekt": "object",
+  "obekty": "objects",
+  "deystviya": "actions",
+  "vremya": "time",
+  "polzovateli": "users",
+  "tipy": "types",
+  "bot": "bot",
+  "otladka": "debug",
+  "inventar": "inventory",
+  "navigatsiya": "navigation",
+  "mir": "world",
+  "konteynery": "containers",
+  "pechka": "furnace",
+  "sobytiya": "events"
+}

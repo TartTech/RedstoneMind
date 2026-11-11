@@ -20,16 +20,16 @@ const buildNodeTypeKeys = (nodeType) => {
 };
 
 /**
- * Hook для получения переводов нод
+ * Hook for получения переводов нод
  *
  * Позволяет получать переведённые label, description и pin names
- * для нод визуального редактора
+ * for нод визуального редактора
  */
 export function useNodeTranslation() {
   const { t, i18n } = useTranslation('nodes');
 
   /**
-   * Получает перевод для ноды
+   * Получает перевод for ноды
    * @param {string} nodeType - тип ноды (например, 'flow:branch')
    * @returns {object} - объект с переведёнными label и description
    */
@@ -55,7 +55,7 @@ export function useNodeTranslation() {
   }, [t]);
 
   /**
-   * Получает перевод для пина
+   * Получает перевод for пина
    * @param {string} nodeType - тип ноды
    * @param {string} pinId - ID пина
    * @param {string} fallback - значение по умолчанию
@@ -75,7 +75,7 @@ export function useNodeTranslation() {
   }, [t]);
 
   /**
-   * Получает описание для пина
+   * Получает описание for пина
    * @param {string} nodeType - тип ноды
    * @param {string} pinId - ID пина
    * @param {string} fallback - значение по умолчанию
@@ -91,7 +91,7 @@ export function useNodeTranslation() {
   }, [t]);
 
   /**
-   * Получает placeholder для пина
+   * Получает placeholder for пина
    * @param {string} nodeType - тип ноды
    * @param {string} pinId - ID пина
    * @param {string} fallback - значение по умолчанию

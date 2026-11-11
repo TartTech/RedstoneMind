@@ -7,8 +7,8 @@ import { NodeDefinition } from '../../core/registry';
 export const dataGetArgumentDefinition = new NodeDefinition({
   type: 'data:get_argument',
   category: 'data',
-  label: 'Получить аргумент',
-  description: 'Получить значение аргумента команды',
+  label: t('labels.poluchitArgument'),
+  description: t('descriptions.poluchitZnachenieArgumentaKomandy'),
 
 
 

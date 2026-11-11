@@ -2,13 +2,13 @@ import { NodeDefinition } from '../../core/registry';
 
 /**
  * Определение ноды data:boolean_literal
- * Значение Истина/Ложь
+ * Value Истина/Ложь
  */
 export const dataBooleanLiteralDefinition = new NodeDefinition({
   type: 'data:boolean_literal',
   category: 'data',
   label: 'Boolean',
-  description: 'Булево значение (true/false)',
+  description: t('descriptions.bulevoZnachenieTruefalse'),
 
 
 

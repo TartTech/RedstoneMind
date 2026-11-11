@@ -1,5 +1,5 @@
 /**
- * Furnace ноды - работа с печками
+ * Furnace ноды - раbotа с печками
  */
 
 export { furnaceOpenDefinition } from './furnaceOpen';

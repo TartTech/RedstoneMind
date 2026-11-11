@@ -36,13 +36,13 @@ export const calculatePluginPopularity = (plugin, allPlugins = []) => {
 
 export const getPopularityBadge = (popularity) => {
   if (popularity.isTrending) {
-    return { text: 'В тренде', color: 'from-purple-500 to-pink-500', icon: 'TrendingUp' };
+    return { text: t('vTrende'), color: 'from-purple-500 to-pink-500', icon: 'TrendingUp' };
   }
   if (popularity.isNew && popularity.downloads > 100) {
-    return { text: 'Новинка', color: 'from-green-500 to-emerald-500', icon: 'Sparkles' };
+    return { text: t('novinka'), color: 'from-green-500 to-emerald-500', icon: 'Sparkles' };
   }
   if (popularity.isPopular) {
-    return { text: 'Популярный', color: 'from-orange-500 to-red-500', icon: 'Fire' };
+    return { text: t('populyarnyy'), color: 'from-orange-500 to-red-500', icon: 'Fire' };
   }
   return null;
 };

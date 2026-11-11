@@ -7,8 +7,8 @@ import { NodeDefinition } from '../../core/registry';
 export const dataGetEntityFieldDefinition = new NodeDefinition({
   type: 'data:get_entity_field',
   category: 'data',
-  label: 'Поле сущности',
-  description: 'Получает поля из объекта сущности',
+  label: t('labels.poleSushchnosti'),
+  description: t('descriptions.poluchaetPolyaIzObektaSushchnosti'),
 
 
 

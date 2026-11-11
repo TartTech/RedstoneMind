@@ -1,0 +1,19 @@
+{
+  "title": "Initial Setup",
+  "description": "Criar an administrator account for the RedstoneMind panel.",
+  "username": "Admin username",
+  "password": "Password (min. 4 characters)",
+  "showPassword": "Show password",
+  "hidePassword": "Hide password",
+  "confirmPassword": "Confirmar password",
+  "submit": "Criar",
+  "errors": {
+    "passwordMin": "Password must be at least 4 characters.",
+    "passwordMismatch": "Senhas do not match.",
+    "createFailed": "Failed to create account."
+  },
+  "messages": {
+    "welcome": "Welcome!",
+    "loginSuccess": "You have successfully logged in."
+  }
+}

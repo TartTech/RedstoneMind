@@ -1,5 +1,5 @@
 /**
- * Извлекает переменные из строки в формате {varName}
+ * Извлекает переменные из strings в формате {varName}
  */
 function extractVariables(text) {
   if (!text || typeof text !== 'string') return [];
@@ -21,10 +21,10 @@ export class NodeDefinition {
    * @param {string} config.category - категория ноды (data, flow, action, etc)
    * @param {string} config.label - отображаемое имя ноды
    * @param {string} [config.description] - описание ноды
-   * @param {Function} [config.computeInputs] - функция для вычисления входных пинов
-   * @param {Function} [config.computeOutputs] - функция для вычисления выходных пинов
+   * @param {Function} [config.computeInputs] - функция for вычисления входных пинов
+   * @param {Function} [config.computeOutputs] - функция for вычисления выходных пинов
    * @param {React.Component} [config.SettingsComponent] - компонент настроек
-   * @param {Object} [config.defaultData] - данные по умолчанию
+   * @param {Object} [config.defaultData] - data по умолчанию
    * @param {Object} [config.theme] - настройки темы
    */
   constructor({
@@ -50,8 +50,8 @@ export class NodeDefinition {
   }
 
   /**
-   * Получает входные пины для данной ноды
-   * @param {Object} data - данные ноды
+   * Получает входные пины for данной ноды
+   * @param {Object} data - data ноды
    * @param {Object} context - контекст (variables, commandArguments, etc)
    * @returns {Array} массив пинов
    */
@@ -79,7 +79,7 @@ export class NodeDefinition {
           name: varName,
           type: 'Wildcard',
           required: false,
-          description: `Значение для {${varName}}`
+          description: t('descriptions.valueDlyaVarname', { varName: varName })
         });
       }
     });
@@ -88,8 +88,8 @@ export class NodeDefinition {
   }
 
   /**
-   * Получает выходные пины для данной ноды
-   * @param {Object} data - данные ноды
+   * Получает выходные пины for данной ноды
+   * @param {Object} data - data ноды
    * @param {Object} context - контекст
    * @returns {Array} массив пинов
    */
@@ -109,7 +109,7 @@ export class NodeDefinition {
   }
 
   /**
-   * Получает данные по умолчанию
+   * Получает data по умолчанию
    * @returns {Object}
    */
   getDefaultData() {

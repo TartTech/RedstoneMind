@@ -1,6 +1,6 @@
 /**
  * Центральный файл регистрации всех типов нод
- * Импортирует и регистрирует все доступные NodeDefinition
+ * Importирует и регистрирует все доступные NodeDefinition
  */
 
 import NodeRegistry from '../core/registry/NodeRegistry';

@@ -102,7 +102,7 @@ describe('debounce utility', () => {
 
         jest.advanceTimersByTime(100);
 
-        // Функция должна быть вызвана только один раз (при flush), а не дважды
+        // Function должна быть вызвана только один раз (при flush), а не дважды
         expect(mockFn).toHaveBeenCalledTimes(1);
     });
 

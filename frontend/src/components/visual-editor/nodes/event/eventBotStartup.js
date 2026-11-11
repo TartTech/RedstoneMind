@@ -2,13 +2,13 @@ import { NodeDefinition } from '../../core/registry';
 
 /**
  * Определение ноды event:botStartup
- * Срабатывает один раз при запуске бота
+ * Срабатывает один раз при запуске botа
  */
 export const eventBotStartupDefinition = new NodeDefinition({
   type: 'event:botStartup',
   category: 'event',
-  label: 'При запуске бота',
-  description: 'Срабатывает один раз при запуске бота',
+  label: t('labels.priZapuskeBota'),
+  description: t('descriptions.srabatyvaetOdinRazPriZapuskeBota'),
 
 
 

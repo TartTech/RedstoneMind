@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 
 /**
- * Компонент настроек для string:concat ноды
+ * Component настроек for string:concat ноды
  */
 const StringConcatSettings = ({ nodeId, data, updateNodeData }) => {
   const { t } = useTranslation('visual-editor');

@@ -7,8 +7,8 @@ import { NodeDefinition } from '../../core/registry';
 export const inventoryCountItemDefinition = new NodeDefinition({
   type: 'inventory:count_item',
   category: 'inventory',
-  label: 'Подсчитать предмет',
-  description: 'Подсчитывает общее количество указанного предмета во всём инвентаре',
+  label: t('labels.podschitatPredmet'),
+  description: t('descriptions.podschityvaetObshcheeKolichestvoUkazannogoPredmetaVo'),
 
 
 

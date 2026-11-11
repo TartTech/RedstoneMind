@@ -54,7 +54,7 @@ function LanguageFlag({ code, className }) {
 }
 
 const languages = [
-  { code: 'ru', name: 'Русский' },
+  { code: 'ru', name: t('russkiy2') },
   { code: 'en', name: 'English' },
 ];
 

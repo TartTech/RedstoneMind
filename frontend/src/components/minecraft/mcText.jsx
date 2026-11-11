@@ -20,7 +20,7 @@ const COLOR_MAP = {
 };
 
 /**
- * Парсит строку с § кодами и возвращает массив React-элементов.
+ * Парсит строку с § кодами и returns массив React-элементов.
  * Также понимает chat-component JSON: '{"text":"...","extra":[...]}'
  */
 export function parseMcText(text, fallbackColor = '#fff') {
@@ -31,7 +31,7 @@ export function parseMcText(text, fallbackColor = '#fff') {
         return parseMcText(componentToLegacy(text), fallbackColor);
     }
 
-    // Если строка похожа на JSON chat component — пробуем распарсить
+    // Если строка похожа на JSON chat component — пробуем расparsesь
     const trimmed = text.trim();
     if (trimmed.startsWith('{') || trimmed.startsWith('[')) {
         try {
@@ -75,7 +75,7 @@ export function parseMcText(text, fallbackColor = '#fff') {
                 current = { color: fallbackColor, bold: false, italic: false, underline: false, strike: false, text: '' };
                 i++; continue;
             }
-            // Неизвестный код — оставляем
+            // Unknown код — оставляем
             current.text += ch;
         } else {
             current.text += ch;
@@ -142,7 +142,7 @@ export function componentToLegacy(comp) {
 }
 
 /**
- * Удаляет все § коды из строки
+ * Удаляет все § коды из strings
  */
 export function stripMcCodes(text) {
     if (!text) return '';
@@ -150,7 +150,7 @@ export function stripMcCodes(text) {
 }
 
 /**
- * Минимальный React-компонент для отображения форматированного MC текста
+ * Минимальный React-компонент for отображения форматированного MC текста
  */
 export const McText = ({ text, fallbackColor }) => {
     return <>{parseMcText(text, fallbackColor)}</>;

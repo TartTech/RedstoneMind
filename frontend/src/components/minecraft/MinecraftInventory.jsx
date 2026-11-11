@@ -2,9 +2,10 @@ import React, { useState, useMemo, useEffect, useRef } from 'react';
 import MinecraftTooltip from './MinecraftTooltip';
 import ItemIcon from './ItemIcon.jsx';
 import MinecraftGuiBackground, { GUI_LAYOUTS } from './MinecraftGuiBackground.jsx';
+import { useTranslation } from 'react-i18next';
 
 /**
- * Полный инвентарь бота (E / И).
+ * Полный инвентарь botа (E / И).
  * Использует настоящую текстуру inventory.png 176×166 из MC.
  *
  * Слоты mineflayer:
@@ -19,7 +20,7 @@ import MinecraftGuiBackground, { GUI_LAYOUTS } from './MinecraftGuiBackground.js
 const SCALE = 2;
 const SLOT_SIZE = 16;
 
-// Координаты слотов в inventory.png (176×166)
+// Coordinates слотов в inventory.png (176×166)
 const INVENTORY_SLOTS = (() => {
     const positions = new Array(46);
     positions[0] = [154, 28];   // craft result
@@ -43,7 +44,7 @@ const INVENTORY_SLOTS = (() => {
     return positions;
 })();
 
-// === Скин бота ===
+// === Скин botа ===
 // Размер 16×32 (16w × 32h пикселей "skin coords") + scale
 const SKIN_W = 16;
 const SKIN_H = 32;
@@ -88,7 +89,7 @@ const BotSkinView = ({ username, uuid, scale }) => {
     if (hide) return null;
 
     // Слоты брони занимают (8,8)..(8+16, 62+16)=(24,78) — 16×70 в исходных пикселях
-    // Скин рендерится между armor (x=24..) и crafting (x=98..). Свободно: 26..96 по x, 8..76 по y → 70×68
+    // Скин rendersся между armor (x=24..) и crafting (x=98..). Свободно: 26..96 по x, 8..76 по y → 70×68
     // Соотношение скина 16w × 32h → влезает в 32×64 при scale=2
     return (
         <canvas
@@ -111,6 +112,7 @@ const BotSkinView = ({ username, uuid, scale }) => {
 };
 
 function drawSkin(ctx, img, w, h) {
+    const { t } = useTranslation('minecraft-viewer');
     ctx.clearRect(0, 0, w, h);
     ctx.imageSmoothingEnabled = false;
     const has64 = img.height >= 64;
@@ -277,7 +279,7 @@ const MinecraftInventory = ({ inventory, onSlotClick, onClose, botState }) => {
             <div style={{ position: 'relative' }}>
                 <button
                     onClick={onClose}
-                    title="Закрыть (E / Esc)"
+                    title=t('titles.closeEEsc')
                     style={{
                         position: 'absolute',
                         top: 4,
@@ -298,14 +300,14 @@ const MinecraftInventory = ({ inventory, onSlotClick, onClose, botState }) => {
                 </button>
 
                 <MinecraftGuiBackground layout={layout} scale={SCALE}>
-                    {/* Скин бота поверх свободной зоны между armor и crafting */}
+                    {/* Скин botа поверх свободной зоны между armor и crafting */}
                     <BotSkinView
                         username={botState?.username}
                         uuid={botState?.uuid}
                         scale={SCALE}
                     />
 
-                    {/* Все слоты */}
+                    {/* All слоты */}
                     {INVENTORY_SLOTS.map((pos, idx) => {
                         if (!pos) return null;
                         const [sx, sy] = pos;

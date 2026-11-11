@@ -7,8 +7,8 @@ import { NodeDefinition } from '../../core/registry';
 export const stringStartsWithDefinition = new NodeDefinition({
   type: 'string:starts_with',
   category: 'string',
-  label: 'Начинается с',
-  description: 'Проверяет начинается ли строка с префикса',
+  label: t('labels.nachinaetsyaS'),
+  description: t('descriptions.proveryaetNachinaetsyaLiStrokaSPrefiksa'),
 
 
 

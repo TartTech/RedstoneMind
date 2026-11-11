@@ -2,13 +2,13 @@ import { NodeDefinition } from '../../core/registry';
 
 /**
  * Определение ноды data:length
- * Возвращает количество элементов в массиве или длину строки
+ * Возвращает количество элементов в массиве or длину strings
  */
 export const dataLengthDefinition = new NodeDefinition({
   type: 'data:length',
   category: 'data',
-  label: 'Длина',
-  description: 'Размер массива или длина строки',
+  label: t('labels.dlina'),
+  description: t('descriptions.razmerMassivaIliDlinaStroki'),
 
 
 

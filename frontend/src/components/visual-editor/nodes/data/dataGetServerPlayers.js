@@ -7,8 +7,8 @@ import { NodeDefinition } from '../../core/registry';
 export const dataGetServerPlayersDefinition = new NodeDefinition({
   type: 'data:get_server_players',
   category: 'data',
-  label: 'Игроки на сервере',
-  description: 'Список всех игроков на сервере',
+  label: t('labels.playeriNaServere'),
+  description: t('descriptions.spisokVsekhIgrokovNaServere'),
 
 
 

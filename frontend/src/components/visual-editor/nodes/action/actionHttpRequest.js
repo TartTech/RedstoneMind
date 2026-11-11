@@ -8,8 +8,8 @@ import ActionHttpRequestSettings from './ActionHttpRequestSettings';
 export const actionHttpRequestDefinition = new NodeDefinition({
   type: 'action:http_request',
   category: 'action',
-  label: 'HTTP Запрос',
-  description: 'Выполняет HTTP запрос. Поддерживает переменные: {varName}',
+  label: t('labels.httpZapros'),
+  description: t('descriptions.vypolnyaetHttpZaprosPodderzhivaetPeremennyeVarname'),
 
 
 

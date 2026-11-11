@@ -2,13 +2,13 @@ import { NodeDefinition } from '../../core/registry';
 
 /**
  * Определение ноды bot:get_position
- * Возвращает текущую позицию бота в мире
+ * Возвращает текущую позицию botа в мире
  */
 export const botGetPositionDefinition = new NodeDefinition({
   type: 'bot:get_position',
   category: 'bot',
-  label: 'Получить позицию',
-  description: 'Возвращает текущую позицию бота в мире',
+  label: t('labels.poluchitPozitsiyu'),
+  description: t('descriptions.vozvrashchaetTekushchuyuPozitsiyuBotaVMire'),
 
 
 

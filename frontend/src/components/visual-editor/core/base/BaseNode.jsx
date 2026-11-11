@@ -13,24 +13,24 @@ import BreakpointDialog from '../../BreakpointDialog';
 import ValueEditor from '../../ValueEditor';
 
 /**
- * BaseNode - базовый UI компонент для всех нод
+ * BaseNode - базовый UI компонент for всех нод
  *
  * Отвечает за:
  * - Отображение заголовка и описания
- * - Рендеринг входных и выходных пинов
- * - Рендеринг инлайн-полей для пинов
- * - Рендеринг компонента настроек
+ * - Rendering входных и выходных пинов
+ * - Rendering инлайн-полей for пинов
+ * - Rendering компонента настроек
  *
  * ОПТИМИЗАЦИЯ:
- * - TooltipProvider создается один раз для всей ноды
+ * - TooltipProvider createsся один раз for всей ноды
  * - Pin компонент мемоизирован через React.memo
  * - Разделение пинов выполняется один раз через useMemo
  */
 
 /**
- * Форматирует значение для отображения в бейдже
- * - Обрезает длинные строки
- * - Показывает JSON для объектов
+ * Formтирует значение for отображения в бейдже
+ * - Обрезает длинные strings
+ * - Показывает JSON for объектов
  */
 const formatValueForDisplay = (value, maxLength = 30) => {
   if (value === null) return 'null';
@@ -49,7 +49,7 @@ const formatValueForDisplay = (value, maxLength = 30) => {
   return str;
 };
 
-// Компонент для рендеринга одного пина с опциональным инлайн-полем
+// Component for рендеринга одного пина с опциональным инлайн-полем
 const Pin = React.memo(({
   pin,
   isInput,
@@ -121,7 +121,7 @@ const Pin = React.memo(({
     shouldUseConnectHighlight && "animate-[pulse_1.5s_ease-in-out_infinite]"
   );
 
-  // Проверяем есть ли подключение к этому пину
+  // Проверяем exists ли подключение к этому пину
   const hasConnection = nodeEdges.some(edge =>
     isInput
       ? (edge.target === nodeId && edge.targetHandle === pin.id)
@@ -129,7 +129,7 @@ const Pin = React.memo(({
   );
 
   // Если пин имеет инлайн-поле, рендерим его в той же строке
-  // НО только если нет подключения к пину И нет trace значения
+  // НО только if no подключения к пину И no trace значения
   const hasInlineField = pin.inlineField && isInput && !hasConnection && traceValue === undefined;
 
   const pinContent = (
@@ -165,7 +165,7 @@ const Pin = React.memo(({
       )}>
         {pin.name}
       </span>
-      {/* Отображаем значение из трассировки, если есть */}
+      {/* Отображаем значение из трассировки, if exists */}
       {traceValue !== undefined && (
         <Tooltip>
           <TooltipTrigger asChild>
@@ -217,13 +217,13 @@ const Pin = React.memo(({
     </div>
   );
 
-  // Если нет инлайн-поля, просто возвращаем пин
+  // Если no инлайн-поля, просто возвращаем пин
   if (!hasInlineField) {
     return pinContent;
   }
 
   // Инлайн-поле рядом с пином
-  // Поддержка select для Boolean типа или если указан inlineFieldType: 'select'
+  // Поддержка select for Boolean типа or if указан inlineFieldType: 'select'
   const isSelectField = pin.inlineFieldType === 'select' || (pin.type === 'Boolean' && pin.inlineFieldOptions);
 
   if (isSelectField) {
@@ -234,7 +234,7 @@ const Pin = React.memo(({
       options = options(context);
     }
 
-    // Дефолтные опции для Boolean
+    // Дефолтные опции for Boolean
     if (!options) {
       options = [
         { value: 'false', label: t('common.pins.false') },
@@ -242,7 +242,7 @@ const Pin = React.memo(({
       ];
     }
 
-    // Определяем текущее значение селекта с правильной обработкой пустых строк
+    // Определяем текущее значение селекта с правильной обраbotкой пустых строк
     const currentValue = data[pin.id];
     const selectValue = (currentValue !== undefined && currentValue !== null && currentValue !== '')
       ? String(currentValue)
@@ -321,7 +321,7 @@ const BaseNode = ({
   const removeBreakpoint = useVisualEditorStore(state => state.removeBreakpoint);
   const connectingPin = useVisualEditorStore(state => state.connectingPin);
 
-  // Обработчик редактирования значения
+  // Handler редактирования значения
   const handleEditValue = ({ nodeId, pinId, pinName, value, isInput }) => {
     setEditingValue({
       nodeId,
@@ -332,14 +332,14 @@ const BaseNode = ({
     });
   };
 
-  // Обработчик сохранения изменений
+  // Handler сохранения изменений
   const handleSaveValue = (newValue) => {
     if (!editingValue || !socket || !command) return;
 
     const { nodeId, pinId, isInput } = editingValue;
 
-    // Формируем ключ для override
-    // Формат: "nodeId.out.pinId" или "nodeId.in.pinId"
+    // Формируем ключ for override
+    // Formт: "nodeId.out.pinId" or "nodeId.in.pinId"
     const key = `${nodeId}.${isInput ? 'in' : 'out'}.${pinId}`;
 
     // Отправляем изменение через WebSocket
@@ -366,7 +366,7 @@ const BaseNode = ({
   const shouldDim = isTraceActive && !isHighlighted && !isActiveNode;
   const shouldUseDefaultGraphAccent = !isHighlighted && !isActiveNode && !isPausedNode;
 
-  // Обработчик правого клика для контекстного меню
+  // Handler правого клика for контекстного меню
   const handleContextMenu = (e) => {
     // Только в Live режиме разрешаем добавлять брейкпоинты
     if (debugMode !== 'live') return;

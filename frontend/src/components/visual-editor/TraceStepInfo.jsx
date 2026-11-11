@@ -8,14 +8,14 @@ import { cn } from '@/lib/utils';
 import { useNodeTranslation } from './hooks/useNodeTranslation';
 
 /**
- * TraceStepInfo - информационная панель для текущего шага трассировки
+ * TraceStepInfo - информационная панель for текущего шага трассировки
  *
  * Показывает:
  * - Информацию о текущей ноде
- * - Входные и выходные значения
- * - Статус выполнения
- * - Время выполнения
- * - Стек вызовов (путь выполнения)
+ * - Inputные и выходные значения
+ * - Status execution
+ * - Time execution
+ * - Стек вызовов (путь execution)
  */
 const TraceStepInfo = () => {
   const { t } = useTranslation('visual-editor');
@@ -44,7 +44,7 @@ const TraceStepInfo = () => {
     };
   }, [trace, currentStepIndex, nodes]);
 
-  // Вычисляем стек вызовов (путь выполнения до текущего шага)
+  // Вычисляем стек вызовов (путь execution до текущего шага)
   const executionPath = useMemo(() => {
     if (!trace || currentStepIndex < 0) return [];
 
@@ -94,7 +94,7 @@ const TraceStepInfo = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="pt-4 space-y-4">
-        {/* Информация о ноде */}
+        {/* Information о ноде */}
         <div>
           <h3 className="text-sm font-semibold text-slate-300 mb-2 flex items-center gap-2">
             <Info className="w-4 h-4" />
@@ -116,7 +116,7 @@ const TraceStepInfo = () => {
           </div>
         </div>
 
-        {/* Статус выполнения */}
+        {/* Status execution */}
         <div>
           <h3 className="text-sm font-semibold text-slate-300 mb-2 flex items-center gap-2">
             {step.status === 'executed' ? (
@@ -146,7 +146,7 @@ const TraceStepInfo = () => {
           </div>
         </div>
 
-        {/* Входные значения */}
+        {/* Inputные значения */}
         {step.inputs && Object.keys(step.inputs).length > 0 && (
           <div>
             <h3 className="text-sm font-semibold text-slate-300 mb-2 flex items-center gap-2">
@@ -166,7 +166,7 @@ const TraceStepInfo = () => {
           </div>
         )}
 
-        {/* Выходные значения */}
+        {/* Outputные значения */}
         {step.outputs && Object.keys(step.outputs).length > 0 && (
           <div>
             <h3 className="text-sm font-semibold text-slate-300 mb-2 flex items-center gap-2">
@@ -186,7 +186,7 @@ const TraceStepInfo = () => {
           </div>
         )}
 
-        {/* Стек вызовов (путь выполнения) */}
+        {/* Стек вызовов (путь execution) */}
         {executionPath.length > 0 && (
           <div>
             <h3 className="text-sm font-semibold text-slate-300 mb-2 flex items-center gap-2">
@@ -221,7 +221,7 @@ const TraceStepInfo = () => {
           </div>
         )}
 
-        {/* Ошибка, если есть */}
+        {/* Error, if exists */}
         {step.error && (
           <div>
             <h3 className="text-sm font-semibold text-red-400 mb-2 flex items-center gap-2">

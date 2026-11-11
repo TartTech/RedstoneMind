@@ -8,7 +8,7 @@ import {
 } from './itemIconResolver';
 
 /**
- * Иконка предмета: локальная PNG → CDN fallback.
+ * Icon предмета: локальная PNG → CDN fallback.
  * Использует кэш успехов и неудач, чтобы не делать повторных запросов.
  */
 const ItemIcon = ({ name, size = 28, style }) => {
@@ -19,7 +19,7 @@ const ItemIcon = ({ name, size = 28, style }) => {
         if (!name) { setSrc(null); return; }
         setFailed(false);
 
-        // Если уже знаем что предмет не загружается — сразу пустота
+        // Если уже знаем что предмет не loadsся — сразу пустота
         if (isItemFailed(name)) {
             setFailed(true);
             return;

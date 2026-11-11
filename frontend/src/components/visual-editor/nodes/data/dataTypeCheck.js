@@ -8,8 +8,8 @@ import DataTypeCheckSettings from './DataTypeCheckSettings';
 export const dataTypeCheckDefinition = new NodeDefinition({
   type: 'data:type_check',
   category: 'data',
-  label: 'Проверить тип',
-  description: 'Проверяет соответствие значения типу',
+  label: t('labels.proveritTip'),
+  description: t('descriptions.proveryaetSootvetstvieZnacheniyaTipu'),
 
 
 

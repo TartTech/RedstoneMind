@@ -62,7 +62,7 @@ export default function DashboardPage() {
         panel: true,
         websocket: true,
         database: true,
-        uptime: '0ч',
+        uptime: '0ch',
         uptimeSeconds: 0,
         systemCpu: 0,
         systemMemory: 0,
@@ -94,11 +94,11 @@ export default function DashboardPage() {
         };
     }, [bots, botStatuses, resourceUsage, systemHealth]);
 
-    // Реальная активность - боты, которые недавно изменили статус
+    // Реальная активность - bots, которые недавно изменor статус
     const recentActivity = useMemo(() => {
         const activities = [];
 
-        // Сначала добавляем запущенные боты
+        // Сначала добавляем запущенные bots
         bots.filter(bot => botStatuses[bot.id] === 'running')
             .slice(0, 3)
             .forEach(bot => {
@@ -127,7 +127,7 @@ export default function DashboardPage() {
         return activities.slice(0, 5);
     }, [bots, botStatuses]);
 
-    // Проверка здоровья системы
+    // Check здоровья системы
     useEffect(() => {
         const checkHealth = async () => {
             try {
@@ -266,7 +266,7 @@ export default function DashboardPage() {
                 <div className="grid items-start gap-6 lg:grid-cols-12">
                     {/* Left Column - Activity */}
                     <div className="lg:col-span-8 flex flex-col gap-6">
-                        {/* Мониторинг ресурсов ботов */}
+                        {/* Мониторинг ресурсов botов */}
                         <Card>
                             <CardHeader>
                                 <div className="flex items-center gap-2">

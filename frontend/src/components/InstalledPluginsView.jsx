@@ -64,8 +64,8 @@ const formatRelativeDate = (dateValue, t) => {
   if (!dateValue) return null;
   const date = new Date(dateValue);
   const days = Math.floor((Date.now() - date) / (1000 * 60 * 60 * 24));
-  if (days === 0) return t('installed.lastUpdated.today', { defaultValue: 'Сегодня' });
-  if (days === 1) return t('installed.lastUpdated.yesterday', { defaultValue: 'Вчера' });
+  if (days === 0) return t('installed.lastUpdated.today', { defaultValue: 'Segodnya' });
+  if (days === 1) return t('installed.lastUpdated.yesterday', { defaultValue: 'Vchera' });
   if (days < 7) return t('installed.lastUpdated.daysAgo', { count: days, defaultValue: '{{count}} дней назад' });
   if (days < 30) {
     return t('installed.lastUpdated.weeksAgo', {
@@ -189,7 +189,7 @@ function InstalledPluginCard({
 
   const renderUpdateTooltip = () =>
     isUpdatingThisPlugin
-      ? t('installed.updateInProgress', { defaultValue: 'Обновление...' })
+      ? t('installed.updateInProgress', { defaultValue: 'Obnovlenie...' })
       : updateVersion
         ? t('tooltips.updateTo', { version: updateVersion, defaultValue: 'Обновить до {{version}}' })
         : t('tooltips.updateAvailable', { defaultValue: 'Доступно обновление' });
@@ -231,7 +231,7 @@ function InstalledPluginCard({
               <Upload className="h-4 w-4" />
             </Button>
           </TooltipTrigger>
-          <TooltipContent>{t('tooltips.publish', { defaultValue: 'Опубликовать' })}</TooltipContent>
+          <TooltipContent>{t('tooltips.publish', { defaultValue: 'Opublikovat' })}</TooltipContent>
         </Tooltip>
       )}
       {isEditable && onReload && (
@@ -276,7 +276,7 @@ function InstalledPluginCard({
               <Settings className="h-4 w-4" />
             </Button>
           </TooltipTrigger>
-          <TooltipContent>{t('tooltips.settings', { defaultValue: 'Настройки' })}</TooltipContent>
+          <TooltipContent>{t('tooltips.settings', { defaultValue: 'Nastroyki' })}</TooltipContent>
         </Tooltip>
       )}
       {onDelete && (
@@ -297,7 +297,7 @@ function InstalledPluginCard({
           <TooltipContent>
             {displayEnabled
               ? t('tooltips.disableBeforeDelete', { defaultValue: 'Сначала выключите плагин' })
-              : t('tooltips.delete', { defaultValue: 'Удалить' })}
+              : t('tooltips.delete', { defaultValue: 'Udalit' })}
           </TooltipContent>
         </Tooltip>
       )}
@@ -352,19 +352,19 @@ function InstalledPluginCard({
             {isNew && (
               <Badge className="border-0 bg-gradient-to-r from-green-500 to-emerald-500 text-xs text-white">
                 <Sparkles className="mr-1 h-3 w-3" />
-                {t('badges.new', { defaultValue: 'Новое' })}
+                {t('badges.new', { defaultValue: 'Novoe' })}
               </Badge>
             )}
             {updateInfo && (
               <Badge className="border-0 bg-gradient-to-r from-blue-500 to-cyan-500 text-xs text-white">
                 <ArrowUpCircle className="mr-1 h-3 w-3" />
-                {t('badges.update', { defaultValue: 'Обновление' })}
+                {t('badges.update', { defaultValue: 'Obnovlenie' })}
               </Badge>
             )}
           </div>
 
           <p className="text-sm text-muted-foreground">
-            {t('labels.by', { defaultValue: 'от' })} <span className="font-medium text-primary/90">{authorLabel}</span>
+            {t('labels.by', { defaultValue: 'ot' })} <span className="font-medium text-primary/90">{authorLabel}</span>
           </p>
           <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{description}</p>
           {plugin.loadError && (
@@ -452,13 +452,13 @@ function InstalledPluginCard({
           {isNew && (
             <Badge className="rounded-none rounded-br-md border-0 bg-gradient-to-r from-green-500 to-emerald-500 px-2 py-0.5 text-[10px] text-white shadow-sm">
               <Sparkles className="mr-1 h-3 w-3" />
-              {t('badges.new', { defaultValue: 'Новое' })}
+              {t('badges.new', { defaultValue: 'Novoe' })}
             </Badge>
           )}
           {updateInfo && (
             <Badge className="rounded-none rounded-br-md border-0 bg-gradient-to-r from-blue-500 to-cyan-500 px-2 py-0.5 text-[10px] text-white shadow-sm">
               <ArrowUpCircle className="mr-1 h-3 w-3" />
-              {t('badges.update', { defaultValue: 'Обновление' })}
+              {t('badges.update', { defaultValue: 'Obnovlenie' })}
             </Badge>
           )}
         </div>
@@ -494,7 +494,7 @@ function InstalledPluginCard({
                 </TooltipContent>
               </Tooltip>
               <CardDescription className="truncate text-sm">
-                {t('labels.by', { defaultValue: 'от' })} {authorLabel}
+                {t('labels.by', { defaultValue: 'ot' })} {authorLabel}
               </CardDescription>
             </div>
           </div>
@@ -637,14 +637,14 @@ function InstalledPluginCard({
             {isUpdatingThisPlugin ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                {t('installed.updateInProgress', { defaultValue: 'Обновление...' })}
+                {t('installed.updateInProgress', { defaultValue: 'Obnovlenie...' })}
               </>
             ) : (
               <>
                 <ArrowUpCircle className="mr-2 h-4 w-4" />
                 {updateVersion
                   ? t('installed.updateButtonTo', { version: updateVersion, defaultValue: 'Обновить до v{{version}}' })
-                  : t('installed.updateButton', { defaultValue: 'Обновить' })}
+                  : t('installed.updateButton', { defaultValue: 'Obnovit' })}
               </>
             )}
           </Button>
@@ -855,7 +855,7 @@ export default function InstalledPluginsView({
             <div className="relative w-48">
               <Icons.Search className="absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
               <Input
-                placeholder={t('installed.searchPlaceholder', { defaultValue: 'Поиск...' })}
+                placeholder={t('installed.searchPlaceholder', { defaultValue: 'Poisk...' })}
                 value={searchQuery}
                 onChange={(event) => setSearchQuery(event.target.value)}
                 className="h-8 pl-8 text-sm"
@@ -863,10 +863,10 @@ export default function InstalledPluginsView({
             </div>
             <Tabs value={viewMode} onValueChange={setViewMode}>
               <TabsList className="h-8">
-                <TabsTrigger value="grid" className="h-7 px-2" aria-label={t('browser.viewGrid', { defaultValue: 'Сетка' })}>
+                <TabsTrigger value="grid" className="h-7 px-2" aria-label={t('browser.viewGrid', { defaultValue: 'Setka' })}>
                   <LayoutGrid className="h-3.5 w-3.5" />
                 </TabsTrigger>
-                <TabsTrigger value="list" className="h-7 px-2" aria-label={t('browser.viewList', { defaultValue: 'Список' })}>
+                <TabsTrigger value="list" className="h-7 px-2" aria-label={t('browser.viewList', { defaultValue: 'Spisok' })}>
                   <List className="h-3.5 w-3.5" />
                 </TabsTrigger>
               </TabsList>

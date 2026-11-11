@@ -43,13 +43,13 @@ export default function LocalInstallDialog({ onInstall, onCancel, isInstalling }
             </form>
             <DialogFooter>
                 <Button variant="ghost" onClick={onCancel}>
-                    {t('actions.cancel', { defaultValue: 'Отмена' })}
+                    {t('actions.cancel', { defaultValue: 'Otmena' })}
                 </Button>
                 <Button type="submit" form="local-install-form" disabled={isInstalling || !path.trim()}>
                     {isInstalling && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                     {isInstalling
-                        ? t('messages.installing', { defaultValue: 'Установка...' })
-                        : t('localInstall.install', { defaultValue: 'Установить' })}
+                        ? t('messages.installing', { defaultValue: 'Ustanovka...' })
+                        : t('localInstall.install', { defaultValue: 'Ustanovit' })}
                 </Button>
             </DialogFooter>
         </DialogContent>

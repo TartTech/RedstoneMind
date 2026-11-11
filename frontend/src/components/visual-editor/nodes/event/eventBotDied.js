@@ -2,13 +2,13 @@ import { NodeDefinition } from '../../core/registry';
 
 /**
  * Определение ноды event:botDied
- * Срабатывает когда бот умирает
+ * Срабатывает когда bot умирает
  */
 export const eventBotDiedDefinition = new NodeDefinition({
   type: 'event:botDied',
   category: 'event',
-  label: 'Бот умер',
-  description: 'Срабатывает, когда бот умирает',
+  label: t('labels.botUmer'),
+  description: t('descriptions.srabatyvaetKogdaBotUmiraet'),
 
 
 

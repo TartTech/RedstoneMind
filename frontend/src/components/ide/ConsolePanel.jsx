@@ -20,6 +20,7 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useAppStore } from '@/stores/appStore';
+import { useTranslation } from 'react-i18next';
 
 const LOG_LEVELS = {
     debug: { icon: Bug, color: 'text-blue-400', label: 'Debug' },
@@ -30,6 +31,7 @@ const LOG_LEVELS = {
 };
 
 export default function ConsolePanel({ botId, pluginName }) {
+    const { t } = useTranslation('plugins');
     const [logs, setLogs] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [autoScroll, setAutoScroll] = useState(true);
@@ -43,25 +45,25 @@ export default function ConsolePanel({ botId, pluginName }) {
     const scrollRef = useRef(null);
     const socket = useAppStore(state => state.socket);
 
-    // Подписка на логи плагина через WebSocket
+    // Subscription на логи pluginа через WebSocket
     useEffect(() => {
         if (!socket || !botId || !pluginName) return;
 
-        // Очищаем логи при смене плагина (чтобы не было наложения)
+        // Очищаем логи при смене pluginа (чтобы не было наложения)
         setLogs([]);
 
-        // Приводим botId к числу для сравнения (может прийти как строка из URL)
+        // Приводим botId к числу for сравнения (может прийти как строка из URL)
         const numericBotId = typeof botId === 'string' ? parseInt(botId, 10) : botId;
 
-        // Сохраняем текущий плагин для проверки в обработчиках
+        // Сохраняем текущий plugin for проверки в обраbotчиках
         const currentPlugin = pluginName;
 
-        // Подписываемся на логи конкретного плагина
+        // Подписываемся на логи конкретного pluginа
         socket.emit('subscribe-plugin-logs', { botId, pluginName });
 
-        // Обработчик буфера логов (приходит при подключении)
+        // Handler буфера логов (приходит при подключении)
         const handleLogsBuffer = (bufferedLogs) => {
-            // Проверяем, что мы всё еще смотрим на тот же плагин
+            // Проверяем, что мы всё еще смотрим на тот же plugin
             if (currentPlugin !== pluginName) return;
 
             const formattedLogs = bufferedLogs
@@ -78,9 +80,9 @@ export default function ConsolePanel({ botId, pluginName }) {
             setLogs(formattedLogs);
         };
 
-        // Обработчик новых real-time логов
+        // Handler новых real-time логов
         const handlePluginLog = (logEntry) => {
-            // Проверяем, что лог относится к текущему плагину
+            // Проверяем, что лог относится к текущему pluginу
             if (logEntry.botId === numericBotId && logEntry.pluginName === currentPlugin) {
                 setLogs(prev => [...prev, {
                     id: Date.now() + Math.random(),
@@ -112,12 +114,12 @@ export default function ConsolePanel({ botId, pluginName }) {
         }
     }, [logs, autoScroll]);
 
-    // Фильтрация логов
+    // Filterация логов
     const filteredLogs = logs.filter(log => {
-        // Фильтр по уровню
+        // Filter по уровню
         if (!filters[log.level]) return false;
 
-        // Фильтр по поиску
+        // Filter по поиску
         if (searchQuery && !log.message.toLowerCase().includes(searchQuery.toLowerCase())) {
             return false;
         }
@@ -173,7 +175,7 @@ export default function ConsolePanel({ botId, pluginName }) {
                 <div className="relative flex-1">
                     <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                     <Input
-                        placeholder="Поиск в логах..."
+                        placeholder=t('placeholders.searchVLogakh')
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         className="pl-8 h-8 text-sm"
@@ -208,7 +210,7 @@ export default function ConsolePanel({ botId, pluginName }) {
                     size="sm"
                     onClick={() => setAutoScroll(!autoScroll)}
                     className="h-8"
-                    title="Автопрокрутка"
+                    title=t('titles.avtoprokrutka')
                 >
                     <ChevronDown className="w-4 h-4" />
                 </Button>
@@ -219,7 +221,7 @@ export default function ConsolePanel({ botId, pluginName }) {
                     size="sm"
                     onClick={clearLogs}
                     className="h-8"
-                    title="Очистить логи"
+                    title=t('titles.ochistitLogi')
                 >
                     <Trash2 className="w-4 h-4" />
                 </Button>
@@ -233,7 +235,7 @@ export default function ConsolePanel({ botId, pluginName }) {
                             <div className="text-center">
                                 <Info className="w-8 h-8 mx-auto mb-2 opacity-50" />
                                 <p className="text-sm">
-                                    {logs.length === 0 ? 'Ожидание логов...' : 'Нет логов по заданным фильтрам'}
+                                    {logs.length === 0 ? t('waitingLogov') : t('noLogovPoZadannymFiltram')}
                                 </p>
                             </div>
                         </div>

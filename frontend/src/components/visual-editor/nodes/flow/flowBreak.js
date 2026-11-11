@@ -7,8 +7,8 @@ import { NodeDefinition } from '../../core/registry';
 export const flowBreakDefinition = new NodeDefinition({
   type: 'flow:break',
   category: 'flow',
-  label: 'Выйти из цикла',
-  description: 'Немедленно прерывает выполнение цикла (For Each Loop) и передает управление на его выход Completed',
+  label: t('labels.vyytiIzTsikla'),
+  description: t('descriptions.nemedlennoPreryvaetVypolnenieTsiklaForEach'),
 
 
 

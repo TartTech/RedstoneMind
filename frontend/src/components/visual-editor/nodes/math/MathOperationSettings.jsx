@@ -4,7 +4,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 /**
- * Компонент настроек для math:operation ноды
+ * Component настроек for math:operation ноды
  */
 const MathOperationSettings = ({ nodeId, data, updateNodeData }) => {
   const { t } = useTranslation('visual-editor');

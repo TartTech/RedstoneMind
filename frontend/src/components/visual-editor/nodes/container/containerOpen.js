@@ -8,8 +8,8 @@ import ContainerOpenSettings from './ContainerOpenSettings';
 export const containerOpenDefinition = new NodeDefinition({
   type: 'container:open',
   category: 'container',
-  label: 'Контейнер: открыть',
-  description: 'Открывает контейнер (сундук, бочку) по координатам',
+  label: t('labels.konteynerOtkryt'),
+  description: t('descriptions.otkryvaetKonteynerSundukBochkuPoKoordinatam'),
 
 
 

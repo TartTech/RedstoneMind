@@ -7,8 +7,8 @@ import { NodeDefinition } from '../../core/registry';
 export const arrayGetNextDefinition = new NodeDefinition({
   type: 'array:get_next',
   category: 'array',
-  label: 'Следующий элемент',
-  description: 'Получает следующий элемент массива',
+  label: t('labels.sleduyushchiyElement'),
+  description: t('descriptions.poluchaetSleduyushchiyElementMassiva'),
 
 
 

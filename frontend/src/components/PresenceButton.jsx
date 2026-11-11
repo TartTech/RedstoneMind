@@ -5,37 +5,39 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Users } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
+import { useTranslation } from 'react-i18next';
 
 const routeTitles = (path, metadata = {}) => {
-	if (path === '/') return 'Дашборд';
+	if (path === '/') return t('yesshbord');
 	if (path.startsWith('/bots/')) {
 		const parts = path.split('/');
 		const id = parts[2];
-		const botName = metadata.botName || `Бот ${id}`;
+		const botName = metadata.botName || t('botId', { id: id });
 
-		// Проверяем любой путь с визуальным редактором (visual-editor или events/visual)
+		// Проверяем любой путь с визуальным редактором (visual-editor or events/visual)
 		if (path.includes('/visual-editor/') || path.includes('/events/visual/') || path.includes('/commands/visual/')) {
-			const graphName = metadata.graphName || 'граф';
-			return `✏️ Редактор "${graphName}" бота "${botName}"`;
+			const graphName = metadata.graphName || t('graf');
+			return t('redaktorGraphnameBotaBotname', { graphName: graphName, botName: botName });
 		}
-		if (path.endsWith('/console')) return `Консоль бота "${botName}"`;
-		if (path.endsWith('/plugins')) return `Плагины бота "${botName}"`;
-		if (path.endsWith('/settings')) return `Настройки бота "${botName}"`;
-		if (path.endsWith('/events')) return `События бота "${botName}"`;
-		if (path.endsWith('/management')) return `Управление бота "${botName}"`;
-		return `Страница бота "${botName}"`;
+		if (path.endsWith('/console')) return t('consoleBotaBotname', { botName: botName });
+		if (path.endsWith('/plugins')) return t('pluginsBotaBotname', { botName: botName });
+		if (path.endsWith('/settings')) return t('settingsBotaBotname', { botName: botName });
+		if (path.endsWith('/events')) return t('eventsBotaBotname', { botName: botName });
+		if (path.endsWith('/management')) return t('upravlenieBotaBotname', { botName: botName });
+		return t('stranitsaBotaBotname', { botName: botName });
 	}
 	return path;
 };
 
 function sinceText(ts) {
 	const diffSec = Math.max(0, Math.floor((Date.now() - ts) / 1000));
-	if (diffSec < 60) return `${diffSec} сек назад`;
+	if (diffSec < 60) return t('diffsecSekAgo', { diffSec: diffSec });
 	const m = Math.floor(diffSec / 60);
-	return `${m} мин назад`;
+	return t('mMinAgo', { m: m });
 }
 
 export default function PresenceButton() {
+    const { t } = useTranslation('common');
 	const socket = useAppStore((s) => s.socket);
 	const currentUser = useAppStore((s) => s.user);
 	const bots = useAppStore((s) => s.bots);
@@ -77,7 +79,7 @@ export default function PresenceButton() {
 					if (!currentUser || user.userId !== currentUser.id) {
 						const lastLeft = lastLeftAtRef.current.get(user.userId);
 						if (!lastLeft || now - lastLeft >= 5 * 60 * 1000) {
-							toast({ title: `${user.username} зашел в панель`, description: routeTitles(user.path, user.metadata) });
+							toast({ title: t('messages.userusernameZashelVPanel', { user.username: user.username }), description: routeTitles(user.path, user.metadata) });
 						}
 					}
 				}
@@ -116,7 +118,7 @@ export default function PresenceButton() {
 						...user,
 						metadata: {
 							...user.metadata,
-							botName: bot.username || bot.name || `Бот ${botId}`
+							botName: bot.username || bot.name || t('botBotid', { botId: botId })
 						}
 					};
 				}

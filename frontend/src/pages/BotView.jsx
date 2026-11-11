@@ -14,8 +14,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 const EMPTY_EXTENSIONS = [];
 const UI_EXTENSION_LABEL_TRANSLATIONS = {
-    'Модерация': {
-        ru: 'Модерация',
+    t('moderatsiya'): {
+        ru: t('moderatsiya2'),
         en: 'Moderation',
     },
 };

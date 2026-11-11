@@ -4,7 +4,7 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 
 /**
- * Компонент настроек для data:number_literal ноды
+ * Component настроек for data:number_literal ноды
  */
 const DataNumberLiteralSettings = ({ nodeId, data, updateNodeData }) => {
   const { t } = useTranslation('visual-editor');

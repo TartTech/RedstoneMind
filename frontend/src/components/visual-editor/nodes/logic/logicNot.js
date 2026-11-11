@@ -7,8 +7,8 @@ import { NodeDefinition } from '../../core/registry';
 export const logicNotDefinition = new NodeDefinition({
   type: 'logic:not',
   category: 'logic',
-  label: '! НЕ',
-  description: 'Инвертирует boolean значение (NOT)',
+  label: t('labels.ne'),
+  description: t('descriptions.invertiruetBooleanZnachenieNot'),
 
 
 

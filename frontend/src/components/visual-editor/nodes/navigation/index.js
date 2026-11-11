@@ -1,4 +1,4 @@
-// Navigation nodes - перемещение бота
+// Navigation nodes - перемещение botа
 
 export { navigationGoToDefinition } from './navigationGoTo';
 export { navigationGoToPlayerDefinition } from './navigationGoToPlayer';

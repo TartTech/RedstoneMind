@@ -2,13 +2,13 @@ import { NodeDefinition } from '../../core/registry';
 
 /**
  * Определение ноды string:contains
- * Проверяет содержится ли подстрока в строке
+ * Проверяет containsся ли подстрока в строке
  */
 export const stringContainsDefinition = new NodeDefinition({
   type: 'string:contains',
   category: 'string',
-  label: 'Содержит',
-  description: 'Проверяет содержится ли подстрока в строке',
+  label: t('labels.soderzhit2'),
+  description: t('descriptions.proveryaetSoderzhitsyaLiPodstrokaVStroke'),
 
 
 

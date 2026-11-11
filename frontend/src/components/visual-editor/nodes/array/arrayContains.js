@@ -2,13 +2,13 @@ import { NodeDefinition } from '../../core/registry';
 
 /**
  * Определение ноды array:contains
- * Проверяет, содержит ли массив указанный элемент и возвращает его индекс
+ * Проверяет, contains ли массив указанный элемент и returns его индекс
  */
 export const arrayContainsDefinition = new NodeDefinition({
   type: 'array:contains',
   category: 'array',
-  label: 'Содержит',
-  description: 'Проверяет, содержит ли массив указанный элемент',
+  label: t('labels.soderzhit'),
+  description: t('descriptions.proveryaetSoderzhitLiMassivUkazannyyElement'),
 
 
 

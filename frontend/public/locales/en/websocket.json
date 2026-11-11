@@ -82,5 +82,9 @@
     "deleteConfirm": "Are you sure you want to delete this key? All applications using it will lose access.",
     "copied": "Copied",
     "copiedHint": "Key copied to clipboard"
-  }
+  },
+  "bkvashklyuchzdes": "bk_your_key_here",
+  "privetVsem": "Hello everyone!",
+  "bkvashklyuchzdes2": "bk_your_key_here",
+  "privetIzApi": "Hello from API!"
 }

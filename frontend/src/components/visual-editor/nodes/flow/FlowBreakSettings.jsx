@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 /**
- * Настройки для ноды flow:break
+ * Settings for ноды flow:break
  */
 function FlowBreakSettings({ nodeId, data, updateNodeData }) {
   const { t } = useTranslation('visual-editor');

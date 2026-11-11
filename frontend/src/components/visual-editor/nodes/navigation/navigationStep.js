@@ -3,8 +3,8 @@ import { NodeDefinition } from '../../core/registry';
 export const navigationStepDefinition = new NodeDefinition({
   type: 'navigation:step',
   category: 'navigation',
-  label: 'Шаг',
-  description: 'Идёт вперёд, назад, влево или вправо относительно взгляда бота',
+  label: t('labels.shag'),
+  description: t('descriptions.idyotVperyodAgoVlevoIliVpravo'),
   defaultData: {
     direction: 'forward',
     distance: 1,

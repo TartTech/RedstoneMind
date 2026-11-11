@@ -2,13 +2,13 @@ import { NodeDefinition } from '../../core/registry';
 
 /**
  * Определение ноды string:equals
- * Сравнивает две строки на равенство
+ * Сравнивает две strings на равенство
  */
 export const stringEqualsDefinition = new NodeDefinition({
   type: 'string:equals',
   category: 'string',
-  label: 'Равно',
-  description: 'Сравнивает две строки на равенство',
+  label: t('labels.ravno'),
+  description: t('descriptions.sravnivaetDveStrokiNaRavenstvo'),
 
 
 

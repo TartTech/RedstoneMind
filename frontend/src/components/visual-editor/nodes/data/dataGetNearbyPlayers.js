@@ -7,8 +7,8 @@ import { NodeDefinition } from '../../core/registry';
 export const dataGetNearbyPlayersDefinition = new NodeDefinition({
   type: 'data:get_nearby_players',
   category: 'data',
-  label: 'Игроки рядом',
-  description: 'Игроки рядом с ботом',
+  label: t('labels.playeriRyadom'),
+  description: t('descriptions.playeriRyadomSBotom'),
 
 
 

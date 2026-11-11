@@ -8,8 +8,8 @@ import DataCastSettings from './DataCastSettings';
 export const dataCastDefinition = new NodeDefinition({
   type: 'data:cast',
   category: 'data',
-  label: 'Преобразовать тип',
-  description: 'Преобразует значение в выбранный тип',
+  label: t('labels.preobrazovatTip'),
+  description: t('descriptions.preobrazuetZnachenieVVybrannyyTip'),
 
 
 

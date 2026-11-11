@@ -7,8 +7,10 @@ import {
     DialogDescription,
 } from '@/components/ui/dialog';
 import { Keyboard } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const ShortcutRow = ({ keys, description, mac = false }) => {
+    const { t } = useTranslation('plugins');
     const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
     const displayKeys = mac && isMac ? keys.replace('Ctrl', '⌘') : keys;
 
@@ -43,10 +45,10 @@ const KeyboardShortcutsHelp = ({ isOpen, onClose }) => {
                             Общие
                         </h3>
                         <div className="space-y-1">
-                            <ShortcutRow keys="Ctrl+S" description="Сохранить файл" mac />
-                            <ShortcutRow keys="Ctrl+W" description="Закрыть вкладку" mac />
-                            <ShortcutRow keys="Ctrl+N" description="Новый файл" mac />
-                            <ShortcutRow keys="Ctrl+P" description="Быстрое открытие файла" mac />
+                            <ShortcutRow keys="Ctrl+S" description=t('descriptions.saveFayl') mac />
+                            <ShortcutRow keys="Ctrl+W" description=t('descriptions.closeVkladku') mac />
+                            <ShortcutRow keys="Ctrl+N" description=t('descriptions.novyyFayl') mac />
+                            <ShortcutRow keys="Ctrl+P" description=t('descriptions.bystroeOtkrytieFayla') mac />
                         </div>
                     </div>
 
@@ -56,12 +58,12 @@ const KeyboardShortcutsHelp = ({ isOpen, onClose }) => {
                             Навигация
                         </h3>
                         <div className="space-y-1">
-                            <ShortcutRow keys="Ctrl+B" description="Показать/скрыть боковую панель" mac />
-                            <ShortcutRow keys="Ctrl+`" description="Показать/скрыть терминал" mac />
-                            <ShortcutRow keys="Ctrl+Shift+E" description="Открыть Explorer" mac />
-                            <ShortcutRow keys="Ctrl+Shift+F" description="Глобальный поиск" mac />
-                            <ShortcutRow keys="Ctrl+Tab" description="Следующая вкладка" mac />
-                            <ShortcutRow keys="Ctrl+Shift+Tab" description="Предыдущая вкладка" mac />
+                            <ShortcutRow keys="Ctrl+B" description=t('descriptions.pokazatskrytBokovuyuPanel') mac />
+                            <ShortcutRow keys="Ctrl+`" description=t('descriptions.pokazatskrytTerminal') mac />
+                            <ShortcutRow keys="Ctrl+Shift+E" description=t('descriptions.openExplorer') mac />
+                            <ShortcutRow keys="Ctrl+Shift+F" description=t('descriptions.globalnyyPoisk') mac />
+                            <ShortcutRow keys="Ctrl+Tab" description=t('descriptions.sleduyushchayaVkladka') mac />
+                            <ShortcutRow keys="Ctrl+Shift+Tab" description=t('descriptions.predydushchayaVkladka') mac />
                         </div>
                     </div>
 
@@ -71,15 +73,15 @@ const KeyboardShortcutsHelp = ({ isOpen, onClose }) => {
                             Редактор
                         </h3>
                         <div className="space-y-1">
-                            <ShortcutRow keys="Ctrl+F" description="Найти в файле" mac />
-                            <ShortcutRow keys="Ctrl+H" description="Найти и заменить" mac />
-                            <ShortcutRow keys="Ctrl+/" description="Закомментировать строку" mac />
-                            <ShortcutRow keys="Ctrl+D" description="Добавить следующее вхождение" mac />
-                            <ShortcutRow keys="Alt+↑/↓" description="Переместить строку" />
-                            <ShortcutRow keys="Shift+Alt+↑/↓" description="Скопировать строку" />
-                            <ShortcutRow keys="Ctrl+Shift+K" description="Удалить строку" mac />
-                            <ShortcutRow keys="Ctrl+Enter" description="Вставить строку ниже" mac />
-                            <ShortcutRow keys="Ctrl+Shift+Enter" description="Вставить строку выше" mac />
+                            <ShortcutRow keys="Ctrl+F" description=t('descriptions.naytiVFayle') mac />
+                            <ShortcutRow keys="Ctrl+H" description=t('descriptions.naytiIZamenit') mac />
+                            <ShortcutRow keys="Ctrl+/" description=t('descriptions.zakommentirovatStroku') mac />
+                            <ShortcutRow keys="Ctrl+D" description=t('descriptions.addSleduyushcheeVkhozhdenie') mac />
+                            <ShortcutRow keys="Alt+↑/↓" description=t('descriptions.peremestitStroku') />
+                            <ShortcutRow keys="Shift+Alt+↑/↓" description=t('descriptions.skopirovatStroku') />
+                            <ShortcutRow keys="Ctrl+Shift+K" description=t('descriptions.deleteStroku') mac />
+                            <ShortcutRow keys="Ctrl+Enter" description=t('descriptions.vstavitStrokuNizhe') mac />
+                            <ShortcutRow keys="Ctrl+Shift+Enter" description=t('descriptions.vstavitStrokuVyshe') mac />
                         </div>
                     </div>
 
@@ -89,10 +91,10 @@ const KeyboardShortcutsHelp = ({ isOpen, onClose }) => {
                             Мультикурсор
                         </h3>
                         <div className="space-y-1">
-                            <ShortcutRow keys="Alt+Click" description="Добавить курсор" />
-                            <ShortcutRow keys="Ctrl+Alt+↑/↓" description="Добавить курсор выше/ниже" mac />
-                            <ShortcutRow keys="Ctrl+D" description="Выделить следующее вхождение" mac />
-                            <ShortcutRow keys="Ctrl+Shift+L" description="Выделить все вхождения" mac />
+                            <ShortcutRow keys="Alt+Click" description=t('descriptions.addKursor') />
+                            <ShortcutRow keys="Ctrl+Alt+↑/↓" description=t('descriptions.addKursorVyshenizhe') mac />
+                            <ShortcutRow keys="Ctrl+D" description=t('descriptions.vydelitSleduyushcheeVkhozhdenie') mac />
+                            <ShortcutRow keys="Ctrl+Shift+L" description=t('descriptions.vydelitVseVkhozhdeniya') mac />
                         </div>
                     </div>
 
@@ -102,12 +104,12 @@ const KeyboardShortcutsHelp = ({ isOpen, onClose }) => {
                             Код
                         </h3>
                         <div className="space-y-1">
-                            <ShortcutRow keys="Ctrl+Space" description="Автодополнение" mac />
-                            <ShortcutRow keys="Ctrl+Shift+Space" description="Подсказка параметров" mac />
-                            <ShortcutRow keys="F2" description="Переименовать символ" />
-                            <ShortcutRow keys="F12" description="Перейти к определению" />
-                            <ShortcutRow keys="Shift+F12" description="Найти все ссылки" />
-                            <ShortcutRow keys="Ctrl+Shift+O" description="Перейти к символу в файле" mac />
+                            <ShortcutRow keys="Ctrl+Space" description=t('descriptions.avtodopolnenie') mac />
+                            <ShortcutRow keys="Ctrl+Shift+Space" description=t('descriptions.podskazkaParametrov') mac />
+                            <ShortcutRow keys="F2" description=t('descriptions.pereimenovatSimvol') />
+                            <ShortcutRow keys="F12" description=t('descriptions.pereytiKOpredeleniyu') />
+                            <ShortcutRow keys="Shift+F12" description=t('descriptions.naytiVseSsylki') />
+                            <ShortcutRow keys="Ctrl+Shift+O" description=t('descriptions.pereytiKSimvoluVFayle') mac />
                         </div>
                     </div>
 
@@ -117,9 +119,9 @@ const KeyboardShortcutsHelp = ({ isOpen, onClose }) => {
                             Вид
                         </h3>
                         <div className="space-y-1">
-                            <ShortcutRow keys="Ctrl++" description="Увеличить масштаб" mac />
-                            <ShortcutRow keys="Ctrl+-" description="Уменьшить масштаб" mac />
-                            <ShortcutRow keys="Ctrl+0" description="Сбросить масштаб" mac />
+                            <ShortcutRow keys="Ctrl++" description=t('descriptions.uvelichitMasshtab') mac />
+                            <ShortcutRow keys="Ctrl+-" description=t('descriptions.umenshitMasshtab') mac />
+                            <ShortcutRow keys="Ctrl+0" description=t('descriptions.resetMasshtab') mac />
                         </div>
                     </div>
                 </div>

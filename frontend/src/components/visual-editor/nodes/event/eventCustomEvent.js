@@ -4,8 +4,8 @@ import EventCustomSettings from './EventCustomSettings';
 export const eventCustomEventDefinition = new NodeDefinition({
   type: 'event:custom_event',
   category: 'event',
-  label: '▶️ Событие',
-  description: 'Стартовая нода пользовательского события с динамическими параметрами',
+  label: t('labels.event'),
+  description: t('descriptions.startovayaNodaPolzovatelskogoSobytiyaSDinamicheskimi'),
 
 
 

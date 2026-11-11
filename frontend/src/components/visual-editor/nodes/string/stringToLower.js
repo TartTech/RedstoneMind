@@ -7,8 +7,8 @@ import { NodeDefinition } from '../../core/registry';
 export const stringToLowerDefinition = new NodeDefinition({
   type: 'string:to_lower',
   category: 'string',
-  label: 'В нижний регистр',
-  description: 'Преобразует строку в нижний регистр (lowercase)',
+  label: t('labels.vNizhniyRegistr'),
+  description: t('descriptions.preobrazuetStrokuVNizhniyRegistrLowercase'),
 
 
 

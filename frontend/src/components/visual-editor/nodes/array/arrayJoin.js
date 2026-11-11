@@ -7,8 +7,8 @@ import { NodeDefinition } from '../../core/registry';
 export const arrayJoinDefinition = new NodeDefinition({
   type: 'array:join',
   category: 'array',
-  label: 'Объединить в строку',
-  description: 'Объединяет элементы массива в строку с разделителем',
+  label: t('labels.obedinitVStroku'),
+  description: t('descriptions.obedinyaetElementyMassivaVStrokuS'),
 
 
 

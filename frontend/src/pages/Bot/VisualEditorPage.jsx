@@ -67,7 +67,7 @@ const nodeTypes = (() => {
     return Object.freeze(types);
 })();
 
-// Создаём типы для edges с анимацией
+// Создаём типы for edges с анимацией
 const edgeTypes = {
     default: AnimatedEdge,
 };
@@ -98,8 +98,8 @@ function VisualEditorControls() {
             <ControlButton
                 className="visual-editor-flow-control-button"
                 onClick={() => zoomIn({ duration: 220 })}
-                title={t('controls.zoomIn', { defaultValue: 'Приблизить' })}
-                aria-label={t('controls.zoomIn', { defaultValue: 'Приблизить' })}
+                title={t('controls.zoomIn', { defaultValue: 'Priblizit' })}
+                aria-label={t('controls.zoomIn', { defaultValue: 'Priblizit' })}
                 disabled={maxZoomReached}
             >
                 <Plus className="h-[15px] w-[15px]" strokeWidth={2.3} absoluteStrokeWidth />
@@ -107,8 +107,8 @@ function VisualEditorControls() {
             <ControlButton
                 className="visual-editor-flow-control-button"
                 onClick={() => zoomOut({ duration: 220 })}
-                title={t('controls.zoomOut', { defaultValue: 'Отдалить' })}
-                aria-label={t('controls.zoomOut', { defaultValue: 'Отдалить' })}
+                title={t('controls.zoomOut', { defaultValue: 'Otdalit' })}
+                aria-label={t('controls.zoomOut', { defaultValue: 'Otdalit' })}
                 disabled={minZoomReached}
             >
                 <Minus className="h-[15px] w-[15px]" strokeWidth={2.3} absoluteStrokeWidth />
@@ -223,7 +223,7 @@ function BotVisualEditorPage() {
         };
     }, [botId, entityId, editorType, init, flushSaveGraph]);
 
-    // Загружаем информацию о боте из store
+    // Загружаем информацию о botе из store
     useEffect(() => {
         if (!botId || !bots) return;
 
@@ -235,7 +235,7 @@ function BotVisualEditorPage() {
         }
     }, [botId, bots, t]);
 
-    // Отправляем метаданные для presence (название графа и бота)
+    // Отправляем метаdata for presence (название графа и botа)
     useEffect(() => {
         if (!appSocket || !command || !botName) return;
 
@@ -248,7 +248,7 @@ function BotVisualEditorPage() {
         });
     }, [appSocket, command, botName, location.pathname]);
 
-    // Global mouse tracking для collaborative cursors и позиции курсора
+    // Global mouse tracking for collaborative cursors и позиции курсора
     useEffect(() => {
         if (!reactFlowInstance) return;
 
@@ -258,7 +258,7 @@ function BotVisualEditorPage() {
                 y: event.clientY,
             });
 
-            // Сохраняем позицию курсора для Ctrl+V
+            // Сохраняем позицию курсора for Ctrl+V
             cursorPositionRef.current = position;
 
             // Collaborative cursor
@@ -311,14 +311,14 @@ function BotVisualEditorPage() {
             const currentNodes = useVisualEditorStore.getState().nodes;
             const currentEdges = useVisualEditorStore.getState().edges;
 
-            if ((event.ctrlKey || event.metaKey) && (event.key === 'c' || event.key === 'с')) {
+            if ((event.ctrlKey || event.metaKey) && (event.key === 'c' || event.key === 's')) {
                 event.preventDefault();
 
-                // Если нет выделенных нод, но есть нода под курсором - выделяем её и копируем
+                // Если no выделенных нод, но exists нода под курсором - выделяем её и копируем
                 const selectedNodes = currentNodes.filter(n => n.selected);
                 if (selectedNodes.length === 0 && hoveredNodeId) {
                     console.log('[Copy] No selected nodes, copying hovered node:', hoveredNodeId);
-                    // Временно выделяем ноду под курсором
+                    // Temporarily выделяем ноду под курсором
                     useVisualEditorStore.setState(state => {
                         const nodeIndex = state.nodes.findIndex(n => n.id === hoveredNodeId);
                         if (nodeIndex !== -1) {
@@ -338,13 +338,13 @@ function BotVisualEditorPage() {
                 }
             }
 
-            if ((event.ctrlKey || event.metaKey) && (event.key === 'v' || event.key === 'м')) {
+            if ((event.ctrlKey || event.metaKey) && (event.key === 'v' || event.key === 'm')) {
                 console.log('[Paste] Triggered!');
                 event.preventDefault();
                 pasteNodes(cursorPositionRef.current);
             }
 
-            // Delete или Backspace - удаляем выбранные элементы
+            // Delete or Backspace - удаляем выбранные элементы
             if (event.key === 'Delete' || event.key === 'Backspace') {
                 event.preventDefault();
 
@@ -355,7 +355,7 @@ function BotVisualEditorPage() {
                 if (selectedNodes.length > 0) {
                     onNodesChange(selectedNodes.map(n => ({ type: 'remove', id: n.id })));
                 }
-                // Если нет выбранных нод, но есть hovered нода - удаляем её
+                // Если no выбранных нод, но exists hovered нода - удаляем её
                 else if (hoveredNodeId) {
                     onNodesChange([{ type: 'remove', id: hoveredNodeId }]);
                 }
@@ -521,7 +521,7 @@ function BotVisualEditorPage() {
     };
     
     // REMOVED: generatedNodeTypes - все ноды используют один компонент CustomNode
-    // который сам получает definition из NodeRegistry, поэтому достаточно
+    // который сам gets definition из NodeRegistry, поэтому достаточно
     // статического объекта nodeTypes = { custom: CustomNode }
     
     const variables = useVisualEditorStore(state => state.variables);
@@ -585,7 +585,7 @@ function BotVisualEditorPage() {
             return;
         }
 
-        // Если есть дополнительные данные (для переменных/аргументов), применяем их
+        // Если exists дополнительные data (for переменных/аргументов), применяем их
         if (item.data && Object.keys(item.data).length > 0) {
             newNode.data = { ...newNode.data, ...item.data };
         }

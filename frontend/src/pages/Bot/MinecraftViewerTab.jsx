@@ -106,7 +106,7 @@ const MinecraftViewerTab = () => {
     const pendingClickRef = useRef(false);
     // Флаг, что выход из pointer lock инициирован самим клиентом
     // (открытие окна/чата/меню/E/T/ESC). Если выход не инициирован — значит
-    // браузер обработал ESC сам → открываем pause-меню.
+    // браузер обраbotал ESC сам → открываем pause-меню.
     const intentionalUnlockRef = useRef(false);
 
     const [connected, setConnected] = useState(false);
@@ -638,10 +638,10 @@ const MinecraftViewerTab = () => {
                 setScoreboard(null);
                 return;
             }
-            // Пустой — игнорируем
+            // Emptyй — игнорируем
             if (!payload?.items || payload.items.length === 0) return;
 
-            // Защита от мерцания: если новый snapshot имеет МЕНЬШЕ § кодов чем
+            // Защита от мерцания: if новый snapshot имеет МЕНЬШЕ § кодов чем
             // последний — это скорее всего промежуточное состояние (prefix/suffix
             // ещё не применился у части строк). Игнорируем.
             const countCodes = (sb) => {
@@ -841,8 +841,8 @@ const MinecraftViewerTab = () => {
                 const material = isEntity ? getEntityMaterial(name) : getBlockMaterial(name);
 
                 let mesh;
-                // InstancedMesh поддерживается только для FrontSide материалов и обычных геометрий
-                // (для прозрачных/cutout-блоков с DoubleSide лучше использовать обычный Mesh)
+                // InstancedMesh поддерживается только for FrontSide материалов и обычных геометрий
+                // (for прозрачных/cutout-blocks с DoubleSide лучше использовать обычный Mesh)
                 const canInstance = useInstanced && !isEntity;
 
                 if (canInstance) {
@@ -1058,7 +1058,7 @@ const MinecraftViewerTab = () => {
                 return;
             }
 
-            // === T или / — чат ===
+            // === T or / — чат ===
             if (e.code === 'KeyT' || e.code === 'Slash') {
                 e.preventDefault();
                 setChatOpen(true);
@@ -1173,7 +1173,7 @@ const MinecraftViewerTab = () => {
 
             // Pointer не залочен:
             //   - ЛКМ → захватываем курсор (как в Minecraft)
-            //   - ПКМ → отправляем use_item (для серверных предметов с GUI: компас, голова и т.п.)
+            // - ПКМ → отправляем use_item (for серверных items с GUI: компас, голова и т.п.)
             if (document.pointerLockElement !== canvasRef.current) {
                 if (isRight) {
                     setWaitingForWindow(true);
@@ -1230,7 +1230,7 @@ const MinecraftViewerTab = () => {
                 return;
             }
 
-            // === ЛКМ — dig (или attack entity) ===
+            // === ЛКМ — dig (or attack entity) ===
             if (isLeft) {
                 socketRef.current?.emit('viewer:control', {
                     command: { type: 'dig', position: { x: bx, y: by, z: bz } }
@@ -1251,15 +1251,15 @@ const MinecraftViewerTab = () => {
                 setWaitingForWindow(true);
                 setTimeout(() => setWaitingForWindow(false), 1500);
 
-                // Сначала пытаемся активировать (для дверей/сундуков/верстаков)
+                // Сначала пытаемся активировать (for дверей/сундуков/верстаков)
                 socketRef.current?.emit('viewer:control', {
                     command: { type: 'activate_block', position: { x: bx, y: by, z: bz } }
                 });
-                // Параллельно — попытка place_block (бот сам разберёт что у него в руке)
+                // Параллельно — попытка place_block (bot сам разберёт что у него в руке)
                 socketRef.current?.emit('viewer:control', {
                     command: { type: 'place_block', position: { x: bx, y: by, z: bz }, face: faceVec }
                 });
-                // Также use_item (если в руке еда/лук/компас с серверным меню)
+                // Также use_item (if в руке еда/лук/компас с серверным меню)
                 socketRef.current?.emit('viewer:control', {
                     command: { type: 'use_item' }
                 });
@@ -1417,7 +1417,7 @@ const MinecraftViewerTab = () => {
                     />
                 )}
 
-                {/* HUD: Health/food/coords (только если есть state) */}
+                {/* HUD: Health/food/coords (только if exists state) */}
                 {botState && pointerLocked && !pauseMenuOpen && !openWindow && !inventoryOpen && !chatOpen && !settings.hideHud && (
                     <div className="absolute top-4 right-4 rounded bg-black bg-opacity-50 px-3 py-2 text-white pointer-events-none text-xs"
                         style={{ fontFamily: '"Minecraft", "Press Start 2P", monospace', textShadow: '1px 1px 0 #000' }}>
@@ -1493,7 +1493,7 @@ const MinecraftViewerTab = () => {
                     alwaysShowMessages={true}
                 />
 
-                {/* Hotbar (скрывается F1, или когда открыто окно/инвентарь/меню) */}
+                {/* Hotbar (скрывается F1, or когда открыто окно/инвентарь/меню) */}
                 {!settings.hideHud && !openWindow && !inventoryOpen && !pauseMenuOpen && !chatOpen && (
                     <MinecraftHotbar
                         inventory={botState?.inventory || []}

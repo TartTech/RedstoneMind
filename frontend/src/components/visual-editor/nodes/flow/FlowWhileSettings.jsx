@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 /**
- * Настройки для ноды flow:while
+ * Settings for ноды flow:while
  */
 function FlowWhileSettings({ nodeId, data, updateNodeData }) {
   const { t } = useTranslation('visual-editor');

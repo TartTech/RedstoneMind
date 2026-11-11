@@ -3,10 +3,10 @@ import { NodeDefinition } from '../../core/registry';
 export const botRestartDefinition = new NodeDefinition({
   type: 'bot:restart',
   category: 'bot',
-  label: 'Перезапустить бота',
-  description: 'Останавливает бота и запускает его снова',
+  label: t('labels.restartBota'),
+  description: t('descriptions.ostanavlivaetBotaIZapuskaetEgoSnova'),
   computeInputs: () => [
-    { id: 'exec', name: 'Выполнить', type: 'Exec' },
+    { id: 'exec', name: t('vypolnit'), type: 'Exec' },
   ],
   computeOutputs: () => [],
   theme: {

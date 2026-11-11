@@ -410,12 +410,12 @@ const SidebarNav = ({ onLinkClick, isCollapsed, isSheetOpen }) => {
             <div
                 className={cn(
                     "min-h-0 custom-scrollbar transition-[max-height,padding] " + SIDEBAR_TRANSITION,
-                    // Список ботов всегда прокручиваемый, занимает гибкую часть высоты
+                    // List botов всегда прокручиваемый, занимает гибкую часть высоты
                     "flex-1 overflow-y-auto",
                     bots.length > 0 && "min-h-[96px]"
                 )}
                 style={{
-                    // Минимум 120px для удобства, максимум — до 50% высоты sidebar
+                    // Минимум 120px for удобства, максимум — до 50% высоты sidebar
                     maxHeight: bots.length > 4 ? '50vh' : 'auto',
                 }}
             >
@@ -519,7 +519,7 @@ export default function Layout() {
             })
             .catch((error) => {
                 if (stopped) return;
-                toast({ variant: 'destructive', title: error.message || 'GitHub не подключился' });
+                toast({ variant: 'destructive', title: error.message || t('errors.githubNePodklyuchilsya') });
             })
             .finally(() => {
                 if (stopped) return;

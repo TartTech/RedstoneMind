@@ -4,7 +4,7 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 
 /**
- * Настройки для ноды flow:delay
+ * Settings for ноды flow:delay
  */
 function FlowDelaySettings({ nodeId, data, updateNodeData }) {
   const { t } = useTranslation('visual-editor');

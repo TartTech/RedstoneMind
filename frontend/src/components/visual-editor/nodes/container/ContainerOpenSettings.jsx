@@ -5,8 +5,8 @@ import { MapPin } from 'lucide-react';
 import CoordinatePickerDialog from '@/components/minecraft/CoordinatePickerDialog';
 
 /**
- * Компонент настроек для container:open ноды
- * Включает кнопку для выбора координат сундука в 3D Viewer
+ * Component настроек for container:open ноды
+ * Включает кнопку for выбора координат сундука в 3D Viewer
  */
 const ContainerOpenSettings = ({ nodeId, data, updateNodeData }) => {
   const { t } = useTranslation('visual-editor');

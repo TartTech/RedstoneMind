@@ -7,8 +7,8 @@ import { NodeDefinition } from '../../core/registry';
 export const timeAddDefinition = new NodeDefinition({
   type: 'time:add',
   category: 'time',
-  label: 'Добавить время',
-  description: 'Добавляет к дате промежуток времени',
+  label: t('labels.addVremya'),
+  description: t('descriptions.dobavlyaetKDatePromezhutokVremeni'),
 
 
 

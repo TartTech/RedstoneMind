@@ -4,11 +4,11 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 /**
- * Компонент настроек для action:http_request ноды
+ * Component настроек for action:http_request ноды
  */
 const ActionHttpRequestSettings = ({ nodeId, data, updateNodeData, nodeEdges }) => {
   const { t } = useTranslation('visual-editor');
-  // Проверяем есть ли подключение к пину method
+  // Проверяем exists ли подключение к пину method
   const hasMethodConnection = nodeEdges?.some(edge =>
     edge.target === nodeId && edge.targetHandle === 'method'
   );

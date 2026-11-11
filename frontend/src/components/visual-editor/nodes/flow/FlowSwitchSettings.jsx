@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { AutosizeInput } from '@/components/ui/AutosizeInput';
 
 /**
- * Компонент настроек для flow:switch ноды
+ * Component настроек for flow:switch ноды
  */
 const FlowSwitchSettings = ({ nodeId, data, updateNodeData }) => {
   const { t } = useTranslation('visual-editor');
@@ -48,7 +48,7 @@ const FlowSwitchSettings = ({ nodeId, data, updateNodeData }) => {
           </div>
         </div>
 
-        {/* Список case'ов */}
+        {/* List case'ов */}
         {Array.from({ length: data.caseCount || 0 }, (_, i) => (
           <div key={i} className="flex items-center gap-2">
             <Label className="text-xs w-12">Case {i}:</Label>

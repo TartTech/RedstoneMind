@@ -2,13 +2,13 @@ import { NodeDefinition } from '../../core/registry';
 
 /**
  * Определение ноды event:health
- * Срабатывает при изменении здоровья, голода или насыщения
+ * Срабатывает при изменении здоровья, голода or насыщения
  */
 export const eventHealthDefinition = new NodeDefinition({
   type: 'event:health',
   category: 'event',
-  label: 'Здоровье/Голод изменилось',
-  description: 'Срабатывает при изменении здоровья, голода или насыщения бота',
+  label: t('labels.healthhungerIzmenilos'),
+  description: t('descriptions.srabatyvaetPriIzmeneniiZdorovyaGolodaIli'),
 
 
 

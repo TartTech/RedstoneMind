@@ -2,13 +2,13 @@ import { NodeDefinition } from '../../core/registry';
 
 /**
  * Определение ноды string:length
- * Возвращает длину строки
+ * Возвращает длину strings
  */
 export const stringLengthDefinition = new NodeDefinition({
   type: 'string:length',
   category: 'string',
-  label: 'Длина',
-  description: 'Возвращает длину строки',
+  label: t('labels.dlina2'),
+  description: t('descriptions.vozvrashchaetDlinuStroki'),
 
 
 

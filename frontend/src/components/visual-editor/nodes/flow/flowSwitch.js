@@ -8,8 +8,8 @@ import FlowSwitchSettings from './FlowSwitchSettings';
 export const flowSwitchDefinition = new NodeDefinition({
   type: 'flow:switch',
   category: 'flow',
-  label: 'Переключатель',
-  description: 'Выбирает ветку выполнения на основе значения',
+  label: t('labels.pereklyuchatel'),
+  description: t('descriptions.vybiraetVetkuVypolneniyaNaOsnoveZnacheniya'),
 
 
 

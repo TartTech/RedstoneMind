@@ -7,8 +7,8 @@ import { NodeDefinition } from '../../core/registry';
 export const objectGetDefinition = new NodeDefinition({
   type: 'object:get',
   category: 'object',
-  label: 'Получить значение',
-  description: 'Получает значение по ключу из объекта',
+  label: t('labels.poluchitZnachenie'),
+  description: t('descriptions.poluchaetZnacheniePoKlyuchuIzObekta'),
 
 
 

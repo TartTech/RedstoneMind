@@ -3,8 +3,10 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Input } from '@/components/ui/input';
 import { Search } from 'lucide-react';
 import FileIcon from './FileIcon';
+import { useTranslation } from 'react-i18next';
 
 const QuickOpen = ({ isOpen, onClose, fileStructure, onSelectFile }) => {
+    const { t } = useTranslation('plugins');
     const [query, setQuery] = useState('');
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [filteredFiles, setFilteredFiles] = useState([]);
@@ -92,7 +94,7 @@ const QuickOpen = ({ isOpen, onClose, fileStructure, onSelectFile }) => {
                         <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                         <Input
                             ref={inputRef}
-                            placeholder="Поиск файлов..."
+                            placeholder=t('placeholders.searchFaylov')
                             className="pl-9"
                             value={query}
                             onChange={(e) => setQuery(e.target.value)}
@@ -104,7 +106,7 @@ const QuickOpen = ({ isOpen, onClose, fileStructure, onSelectFile }) => {
                 <div className="max-h-96 overflow-y-auto">
                     {filteredFiles.length === 0 ? (
                         <div className="p-8 text-center text-muted-foreground text-sm">
-                            {query ? 'Файлы не найдены' : 'Нет доступных файлов'}
+                            {query ? t('filesNeNaydeny') : t('noDostupnykhFaylov')}
                         </div>
                     ) : (
                         filteredFiles.map((file, index) => (

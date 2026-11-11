@@ -1,7 +1,7 @@
 /**
  * Безопасное копирование текста в буфер обмена с fallback методами
- * @param {string} text - Текст для копирования
- * @returns {Promise<boolean>} - true если копирование прошло успешно, false в противном случае
+ * @param {string} text - Текст for копирования
+ * @returns {Promise<boolean>} - true if копирование прошло успешно, false в противном случае
  */
 export const copyToClipboard = async (text) => {
     try {

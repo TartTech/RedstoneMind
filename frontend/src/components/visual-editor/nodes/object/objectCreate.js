@@ -3,13 +3,13 @@ import ObjectCreateSettings from './ObjectCreateSettings';
 
 /**
  * Определение ноды object:create
- * Создание объекта из пар ключ-значение
+ * Creation объекта из пар ключ-значение
  */
 export const objectCreateDefinition = new NodeDefinition({
   type: 'object:create',
   category: 'object',
-  label: 'Создать объект',
-  description: 'Создает объект из пар ключ-значение',
+  label: t('labels.createObekt2'),
+  description: t('descriptions.sozdaetObektIzParKlyuchznachenie2'),
 
 
 

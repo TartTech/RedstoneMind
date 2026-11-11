@@ -5,7 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Button } from '@/components/ui/button';
 
 /**
- * Компонент настроек для logic:operation ноды
+ * Component настроек for logic:operation ноды
  */
 const LogicOperationSettings = ({ nodeId, data, updateNodeData }) => {
   const { t } = useTranslation('visual-editor');

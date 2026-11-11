@@ -7,8 +7,8 @@ import { NodeDefinition } from '../../core/registry';
 export const stringLiteralDefinition = new NodeDefinition({
   type: 'data:string_literal',
   category: 'string',
-  label: 'Строка',
-  description: 'Строка с поддержкой переменных {name}',
+  label: t('labels.string'),
+  description: t('descriptions.stringSPodderzhkoyPeremennykhName'),
 
 
 

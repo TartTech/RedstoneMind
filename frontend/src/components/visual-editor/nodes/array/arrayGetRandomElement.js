@@ -7,8 +7,8 @@ import { NodeDefinition } from '../../core/registry';
 export const arrayGetRandomElementDefinition = new NodeDefinition({
   type: 'array:get_random_element',
   category: 'array',
-  label: 'Случайный элемент',
-  description: 'Возвращает случайный элемент из массива и его индекс',
+  label: t('labels.sluchaynyyElement'),
+  description: t('descriptions.vozvrashchaetSluchaynyyElementIzMassivaI'),
 
 
 

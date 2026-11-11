@@ -1,0 +1,86 @@
+{
+  "title": "System Overview",
+  "subtitle": "Monitor and manage your RedstoneMindJS bots",
+  "import": "Importar",
+  "startAll": "Iniciar todos",
+  "stopAll": "Parar todos",
+  "botImported": "Bot \"{{name}}\" imported successfully.",
+  "confirmMassAction": "Are you sure you want to {{action}} ALL bots?",
+  "actions": {
+    "start": "start",
+    "stop": "stop"
+  },
+  "metrics": {
+    "totalBots": "Total Bots",
+    "active": "Ativo",
+    "systemCpu": "System CPU",
+    "systemRam": "System RAM"
+  },
+  "resourceMonitoring": {
+    "title": "Resource Monitoring",
+    "description": "CPU and RAM usage by all running bots"
+  },
+  "quickActions": {
+    "title": "Quick Ações",
+    "description": "Navigate to main sections",
+    "scheduler": "Scheduler",
+    "settings": "Configurações",
+    "suggest": "Suggest",
+    "currentVersion": "Current version",
+    "updateAvailable": "Atualização available",
+    "changelog": "Changelog",
+    "servers": "Servidores"
+  },
+  "systemHealth": {
+    "title": "System Saúde",
+    "panel": "Control Panel",
+    "websocket": "WebSocket Servidor",
+    "database": "Database",
+    "uptime": "Uptime"
+  },
+  "resources": {
+    "title": "System Resources",
+    "activeBots": "Bots ativos",
+    "totalMemory": "Total memory"
+  },
+  "botDistribution": {
+    "title": "Bot Distribution",
+    "running": "Executando",
+    "stopped": "Pararped"
+  },
+  "activity": {
+    "active": "Ativo",
+    "stopped": "Pararped"
+  },
+  "widgets": {
+    "botStatus": {
+      "title": "Bot Status",
+      "noBots": "No bots to display.",
+      "running": "Executando",
+      "stopped": "Pararped"
+    },
+    "recentActivity": {
+      "title": "Recent Activity",
+      "description": "Summary of recent messages from bot consoles.",
+      "noActivity": "No activity. Start some bots."
+    },
+    "quickManage": {
+      "title": "Todos bots",
+      "description": "Quick management of all bots in the system",
+      "bot": "Bot",
+      "status": "Status",
+      "actions": "Ações",
+      "running": "Executando",
+      "stopped": "Pararped",
+      "start": "Iniciar",
+      "stop": "Parar",
+      "restart": "Reiniciar",
+      "console": "Console",
+      "settings": "Configurações",
+      "noBots": "No bots found.",
+      "commandSent": "Comando enviado",
+      "restartingBot": "Bot {{name}} is restarting.",
+      "actionSent": "Command {{action}} sent to bot."
+    }
+  }
+}

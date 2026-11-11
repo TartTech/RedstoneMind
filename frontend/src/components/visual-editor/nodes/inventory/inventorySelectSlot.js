@@ -7,8 +7,8 @@ import { NodeDefinition } from '../../core/registry';
 export const inventorySelectSlotDefinition = new NodeDefinition({
   type: 'inventory:select_slot',
   category: 'inventory',
-  label: 'Выбрать слот',
-  description: 'Выбирает слот хотбара (0-8), переключая активный предмет в руке',
+  label: t('labels.vybratSlot'),
+  description: t('descriptions.vybiraetSlotKhotbara08PereklyuchayaAktivnyy'),
 
 
 

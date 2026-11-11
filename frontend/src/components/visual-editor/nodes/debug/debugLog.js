@@ -2,13 +2,13 @@ import { NodeDefinition } from '../../core/registry';
 
 /**
  * Определение ноды debug:log
- * Выводит значение в консоль терминала
+ * Выводит значение в консоль terminalа
  */
 export const debugLogDefinition = new NodeDefinition({
   type: 'debug:log',
   category: 'debug',
-  label: 'Отладка',
-  description: 'Выводит значение в консоль сервера',
+  label: t('labels.debug'),
+  description: t('descriptions.vyvoditZnachenieVKonsolServera'),
 
 
 

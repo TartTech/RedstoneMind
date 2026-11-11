@@ -7,8 +7,8 @@ import { NodeDefinition } from '../../core/registry';
 export const inventoryFindItemDefinition = new NodeDefinition({
   type: 'inventory:find_item',
   category: 'inventory',
-  label: 'Найти предмет',
-  description: 'Ищет предмет в инвентаре по имени и возвращает информацию о нём',
+  label: t('labels.naytiPredmet'),
+  description: t('descriptions.ishchetPredmetVInventarePoImeni'),
 
 
 

@@ -18,5 +18,8 @@
     "saveError": "Save error",
     "unknownError": "An unknown error occurred while saving",
     "error": "Error"
+  },
+  "errors": {
+    "uzheSushchestvuet": "already exists"
   }
 }

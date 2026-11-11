@@ -1,9 +1,9 @@
 /**
  * Тема и конфигурация визуального редактора графов
  *
- * Этот файл содержит все настройки внешнего вида редактора:
+ * Этот файл contains все настройки внешнего вида редактора:
  * - Цвета типов данных (пинов)
- * - Стили нод
+ * - Стor нод
  * - Размеры и отступы
  * - Цветовая схема
  */
@@ -37,7 +37,7 @@ export const nodeStyles = {
     fontFamily: 'Arial, sans-serif',
   },
 
-  // Стиль для выбранной ноды
+  // Стиль for выбранной ноды
   selected: {
     border: '2px solid #2196F3',
     boxShadow: '0 0 0 2px rgba(33, 150, 243, 0.3)',
@@ -54,7 +54,7 @@ export const nodeStyles = {
     alignItems: 'center',
   },
 
-  // Название ноды
+  // Name ноды
   title: {
     color: '#ffffff',
     fontSize: '14px',
@@ -62,7 +62,7 @@ export const nodeStyles = {
     margin: '0',
   },
 
-  // Кнопка удаления
+  // Button удаления
   deleteButton: {
     background: 'none',
     border: 'none',
@@ -77,12 +77,12 @@ export const nodeStyles = {
     justifyContent: 'center',
   },
 
-  // Контейнер для контента ноды
+  // Контейнер for контента ноды
   content: {
     padding: '12px',
   },
 
-  // Описание ноды
+  // Description ноды
   description: {
     color: '#999',
     fontSize: '12px',
@@ -156,7 +156,7 @@ export const editorColors = {
   gridLine: '#1a1a1a',
   gridDot: '#333',
 
-  // Нода
+  // Node
   nodeBackground: '#1e1e1e',
   nodeBorder: '#333',
   nodeHeader: '#2d2d2d',
@@ -179,14 +179,14 @@ export const editorColors = {
 // НАСТРОЙКИ REACT FLOW
 // ============================================================================
 export const reactFlowConfig = {
-  // Стили фона
+  // Стor фона
   background: {
     color: editorColors.background,
     gap: 16,
     size: 1,
   },
 
-  // Настройки edge
+  // Settings edge
   edge: {
     type: 'smoothstep',
     style: {
@@ -196,7 +196,7 @@ export const reactFlowConfig = {
     animated: false,
   },
 
-  // Настройки minimap (если используется)
+  // Settings minimap (if используется)
   minimap: {
     nodeColor: nodeStyles.base.backgroundColor,
     maskColor: 'rgba(0, 0, 0, 0.5)',
@@ -204,7 +204,7 @@ export const reactFlowConfig = {
 };
 
 /**
- * Получить цвет для типа данных
+ * Получить цвет for типа данных
  * @param {string} type - тип данных
  * @returns {string} цвет в формате hex
  */
@@ -213,7 +213,7 @@ export const getPinColor = (type) => {
 };
 
 /**
- * Получить стиль для ноды
+ * Получить стиль for ноды
  * @param {boolean} selected - выбрана ли нода
  * @returns {object} объект стилей
  */
@@ -224,9 +224,9 @@ export const getNodeStyle = (selected) => {
 };
 
 /**
- * Получить стиль для пина
+ * Получить стиль for пина
  * @param {string} type - тип данных
- * @param {boolean} hasConnection - есть ли подключение
+ * @param {boolean} hasConnection - exists ли подключение
  * @returns {object} объект стилей
  */
 export const getPinHandleStyle = (type, hasConnection) => {

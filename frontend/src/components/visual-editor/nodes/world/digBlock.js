@@ -3,8 +3,8 @@ import { NodeDefinition } from '../../core/registry';
 export const worldDigDefinition = new NodeDefinition({
   type: 'world:dig',
   category: 'world',
-  label: 'Сломать блок',
-  description: 'Ломает блок по объекту или координатам',
+  label: t('labels.slomatBlok'),
+  description: t('descriptions.lomaetBlokPoObektuIliKoordinatam'),
   defaultData: {
     x: null,
     y: null,

@@ -100,7 +100,7 @@ export default function PublishPluginDialog({ open, onClose, botId, plugin, onPu
       setBusy(false);
       toast({
         variant: 'destructive',
-        title: t('ui.error', { defaultValue: 'Ошибка' }),
+        title: t('ui.error', { defaultValue: 'Oshibka' }),
         description: error.message,
       });
     }
@@ -172,7 +172,7 @@ export default function PublishPluginDialog({ open, onClose, botId, plugin, onPu
                 <Button variant="outline" size="sm" className="rounded-full" asChild>
                   <a href={result.repoUrl} target="_blank" rel="noopener noreferrer">
                     <ExternalLink className="mr-2 h-3 w-3" />
-                    {t('publish.openRepo', { defaultValue: 'Репозиторий' })}
+                    {t('publish.openRepo', { defaultValue: 'Repozitoriy' })}
                   </a>
                 </Button>
               ) : null}
@@ -219,11 +219,11 @@ export default function PublishPluginDialog({ open, onClose, botId, plugin, onPu
               <>
                 <div className="grid gap-3 sm:grid-cols-[1fr_140px]">
                   <div>
-                    <Label htmlFor="publish-name" className="mb-1 block">{t('publish.name', { defaultValue: 'Название' })}</Label>
+                    <Label htmlFor="publish-name" className="mb-1 block">{t('publish.name', { defaultValue: 'Nazvanie' })}</Label>
                     <Input id="publish-name" value={displayName} onChange={(event) => setDisplayName(event.target.value)} />
                   </div>
                   <div>
-                    <Label htmlFor="publish-icon" className="mb-1 block">{t('publish.icon', { defaultValue: 'Иконка' })}</Label>
+                    <Label htmlFor="publish-icon" className="mb-1 block">{t('publish.icon', { defaultValue: 'Ikonka' })}</Label>
                     <Input id="publish-icon" className="rounded-none" value={icon} onChange={(event) => setIcon(event.target.value)} />
                     <a href="https://lucide.dev/icons" target="_blank" rel="noopener noreferrer" className="mt-1 block text-xs text-primary underline">
                       {t('publish.iconSite', { defaultValue: 'Выбрать иконку' })}
@@ -231,11 +231,11 @@ export default function PublishPluginDialog({ open, onClose, botId, plugin, onPu
                   </div>
                 </div>
                 <div>
-                  <Label htmlFor="publish-author" className="mb-1 block">{t('publish.author', { defaultValue: 'Автор' })}</Label>
+                  <Label htmlFor="publish-author" className="mb-1 block">{t('publish.author', { defaultValue: 'Avtor' })}</Label>
                   <Input id="publish-author" value={author} onChange={(event) => setAuthor(event.target.value)} />
                 </div>
                 <div>
-                  <Label htmlFor="publish-description" className="mb-1 block">{t('publish.description', { defaultValue: 'Описание' })}</Label>
+                  <Label htmlFor="publish-description" className="mb-1 block">{t('publish.description', { defaultValue: 'Opisanie' })}</Label>
                   <Textarea id="publish-description" rows={4} value={description} onChange={(event) => setDescription(event.target.value)} />
                 </div>
               </>
@@ -244,13 +244,13 @@ export default function PublishPluginDialog({ open, onClose, botId, plugin, onPu
         )}
 
         <DialogFooter className="gap-2">
-          <Button variant="ghost" onClick={onClose}>{t('actions.cancel', { defaultValue: 'Отмена' })}</Button>
+          <Button variant="ghost" onClick={onClose}>{t('actions.cancel', { defaultValue: 'Otmena' })}</Button>
           {!result ? (
             <Button onClick={publish} disabled={busy} className="rounded-none">
               {busy ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
               {info?.published
                 ? t('publish.release', { defaultValue: 'Выпустить версию' })
-                : t('publish.submit', { defaultValue: 'Опубликовать' })}
+                : t('publish.submit', { defaultValue: 'Opublikovat' })}
             </Button>
           ) : null}
         </DialogFooter>

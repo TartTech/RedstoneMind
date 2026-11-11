@@ -4,7 +4,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 /**
- * Компонент настроек для logic:compare ноды
+ * Component настроек for logic:compare ноды
  */
 const LogicCompareSettings = ({ nodeId, data, updateNodeData }) => {
   const { t } = useTranslation('visual-editor');

@@ -3,8 +3,8 @@ import { NodeDefinition } from '../../core/registry';
 export const worldFindBlockDefinition = new NodeDefinition({
   type: 'world:find_block',
   category: 'world',
-  label: 'Найти блок',
-  description: 'Ищет блоки по имени в загруженных чанках',
+  label: t('labels.naytiBlok'),
+  description: t('descriptions.ishchetBlokiPoImeniVZagruzhennykh'),
   defaultData: {
     name: 'wheat',
     radius: 16,

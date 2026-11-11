@@ -1,0 +1,118 @@
+{
+  "changelog": {
+    "title": "What's new in version {{version}}",
+    "selectVersion": "Select version",
+    "noData": "No data to display"
+  },
+  "panelUpdate": {
+    "title": "Atualização available",
+    "subtitle": "GitHub has a newer version. The panel will close and start again.",
+    "subtitlePm2": "GitHub has a newer version. The panel will close and start again.",
+    "subtitleIdle": "Comparing this install with the latest commit in the repository.",
+    "current": "Current",
+    "latest": "On GitHub",
+    "whatsNew": "What's new",
+    "noCommits": "Commit list is unavailable.",
+    "update": "Atualizar",
+    "updating": "Atualização…",
+    "later": "Later",
+    "close": "Fechar",
+    "restarting": "The panel is restarting. This page will reload on its own.",
+    "restartingPm2": "The panel is restarting. This page will reload on its own.",
+    "checking": "Checking GitHub…",
+    "upToDate": "You are on the latest version",
+    "applyError": "Falha ao atualizar painel.",
+    "failedTitle": "Update did not finish",
+    "failedHint": "GitHub code may already be pulled. The error log is below. If the panel is on the latest commit, you can close this window.",
+    "retry": "Tentar novamente",
+    "closingTitle": "Closing the panel",
+    "closingHint": "This tab will close, the panel will open on its own.",
+    "commitCount": "{{count}} commits",
+    "reason": {
+      "not_git": "In-app updates work from a git clone: start.bat on Windows or PM2 on Linux. For npx, install again with: npx redstonemind",
+      "no_git_binary": "Git was not found. Instalar Git and start the panel again.",
+      "dirty": "Could not pull from GitHub: local files block the merge. Remove the conflicting edits and try again.",
+      "wrong_branch": "The panel is not on master/main. Switch to the default branch to update with the button.",
+      "diverged": "Local history has diverged from GitHub. A manual git pull is required.",
+      "offline": "Could not reach GitHub.",
+      "ahead": "This copy is newer than GitHub.",
+      "same": "Não updates."
+    },
+    "stages": {
+      "fetch": "Carregando com GitHub",
+      "pull": "git pull",
+      "install": "npm install",
+      "build": "Building the panel",
+      "build_skipped": "Build skipped in development mode",
+      "restarting": "Reiniciaring",
+      "error": "Erro da atualização"
+    }
+  },
+  "contribute": {
+    "title": "Suggest an improvement or ask a question",
+    "guide": "Here's a quick guide on how to submit your requests properly.",
+    "description": "To ask a question, report a bug, or suggest a new idea, go to our GitHub Issues page. Click the \"New issue\" button and select an appropriate template. For a simple question, you can create a blank issue.",
+    "imageAlt": "How to create a GitHub issue",
+    "close": "Fechar",
+    "goToGithub": "Go to GitHub"
+  },
+  "search": {
+    "title": "Global Pesquisar",
+    "description": "Use this palette to quickly search bots, users, and plugins, as well as navigate the app.",
+    "placeholder": "Pesquisar or go to...",
+    "loading": "Carregando...",
+    "noResults": "Nada encontrado.",
+    "navigation": "Navegação",
+    "dashboard": "Painel",
+    "scheduler": "Scheduler",
+    "servers": "Servidores",
+    "bots": "Bots",
+    "users": "Usuários",
+    "plugins": "Plugins",
+    "forBotId": "para do bot ID: {{botId}}",
+    "installedForBotId": "installed for bot ID: {{botId}}"
+  },
+  "import": {
+    "eventGraph": {
+      "title": "Import Event Graph",
+      "description": "Paste the previously copied code to import the graph. A new event graph will be created.",
+      "success": "Event graph imported successfully."
+    },
+    "command": {
+      "title": "Importar comandos",
+      "description": "Paste the previously copied code to import the command. A new command will be created.",
+      "success": "Command imported successfully."
+    },
+    "codeLabel": "Importar code",
+    "placeholder": "Paste JSON here...",
+    "cancel": "Cancelar",
+    "submit": "Import",
+    "invalidJson": "Formato inválido JSON."
+  },
+  "share": {
+    "eventGraph": {
+      "title": "Share Evento Grafo",
+      "description": "Copy this code to import the event graph on another bot or share it.",
+      "fetchError": "Falha ao obter dados do grafo:"
+    },
+    "command": {
+      "title": "Share Comando",
+      "description": "Copy this code to import the command on another bot or share it.",
+      "fetchError": "Falha ao obter dados comandos:"
+    },
+    "codeLabel": "Importar code",
+    "close": "Fechar",
+    "copyCode": "Copiar code",
+    "copied": "Copiado!",
+    "copiedDescription": "Importar code copied to clipboard.",
+    "copyError": "Failed to copy code. Try selecting and copying manually.",
+    "loadError": "Failed to load data for export."
+  },
+  "common": {
+    "error": "Erro"
+  },
+  "confirm": {
+    "confirm": "Confirmar"
+  },
+  "cancel": "Cancelar"
+}

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 
 /**
- * Компонент настроек для data:make_object ноды
+ * Component настроек for data:make_object ноды
  */
 const DataMakeObjectSettings = ({ nodeId, data, updateNodeData }) => {
   const { t } = useTranslation('visual-editor');

@@ -2,13 +2,13 @@ import { NodeDefinition } from '../../core/registry';
 
 /**
  * Определение ноды data:entity_info
- * Извлекает данные из объекта существа
+ * Извлекает data из объекта существа
  */
 export const dataEntityInfoDefinition = new NodeDefinition({
   type: 'data:entity_info',
   category: 'data',
-  label: 'Информация о сущности',
-  description: 'Информация о существе',
+  label: t('labels.informationOSushchnosti'),
+  description: t('descriptions.informationOSushchestve'),
 
 
 

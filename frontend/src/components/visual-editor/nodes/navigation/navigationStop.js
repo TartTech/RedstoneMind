@@ -2,13 +2,13 @@ import { NodeDefinition } from '../../core/registry';
 
 /**
  * Определение ноды navigation:stop
- * Останавливает текущее движение бота
+ * Останавливает текущее движение botа
  */
 export const navigationStopDefinition = new NodeDefinition({
   type: 'navigation:stop',
   category: 'navigation',
-  label: 'Остановиться',
-  description: 'Останавливает текущее движение/следование бота',
+  label: t('labels.stopsya'),
+  description: t('descriptions.ostanavlivaetTekushcheeDvizheniesledovanieBota'),
 
 
 

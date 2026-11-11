@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { AutosizeInput } from '@/components/ui/AutosizeInput';
 
 /**
- * Компонент настроек для data:string_literal ноды
+ * Component настроек for data:string_literal ноды
  */
 const StringLiteralSettings = ({ nodeId, data, updateNodeData }) => {
   const { t } = useTranslation('visual-editor');

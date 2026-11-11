@@ -31,14 +31,14 @@ const WebSocketTab = () => {
     const [connectedClients, setConnectedClients] = useState(0);
     const [activeTab, setActiveTab] = useState('keys');
 
-    // Создание ключа
+    // Creation ключа
     const [createDialogOpen, setCreateDialogOpen] = useState(false);
     const [newKeyName, setNewKeyName] = useState('');
     const [newKeyPermissions, setNewKeyPermissions] = useState('ReadWrite');
     const [creating, setCreating] = useState(false);
     const [createdKey, setCreatedKey] = useState(null);
 
-    // Загрузка ключей
+    // Loading ключей
     const loadKeys = async () => {
         try {
             const response = await apiHelper(`/api/bots/${botId}/api-keys`);
@@ -57,7 +57,7 @@ const WebSocketTab = () => {
         }
     };
 
-    // Загрузка логов
+    // Loading логов
     const loadLogs = async () => {
         setLogsLoading(true);
         try {
@@ -77,7 +77,7 @@ const WebSocketTab = () => {
         }
     };
 
-    // Загрузка количества подключенных клиентов
+    // Loading количества подключенных клиентов
     const loadConnectedClients = async () => {
         try {
             const response = await apiHelper(`/api/bots/${botId}/api-keys/connected`);
@@ -94,14 +94,14 @@ const WebSocketTab = () => {
         loadLogs();
         loadConnectedClients();
 
-        // Автообновление количества подключенных клиентов каждые 5 секунд
+        // Автообновление количества подключенных клиентов каждые 5 seconds
         const interval = setInterval(loadConnectedClients, 5000);
 
         return () => clearInterval(interval);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [botId]);
 
-    // Создать ключ
+    // Create ключ
     const handleCreateKey = async () => {
         if (!newKeyName.trim()) {
             toast({
@@ -141,7 +141,7 @@ const WebSocketTab = () => {
         }
     };
 
-    // Удалить ключ
+    // Delete ключ
     const handleDeleteKey = async (keyId) => {
         if (!confirm(t('messages.deleteConfirm'))) {
             return;
@@ -167,7 +167,7 @@ const WebSocketTab = () => {
         }
     };
 
-    // Копировать в буфер обмена
+    // Copy в буфер обмена
     const copyToClipboard = (text) => {
         navigator.clipboard.writeText(text);
         toast({
@@ -222,7 +222,7 @@ const WebSocketTab = () => {
                     </TabsTrigger>
                 </TabsList>
 
-                {/* Вкладка: API Ключи */}
+                {/* Tab: API Keyи */}
                 <TabsContent value="keys" className="space-y-4 data-[state=active]:animate-none">
                     <FadeTransition
                         transitionKey={activeTab}
@@ -295,7 +295,7 @@ const WebSocketTab = () => {
                     </FadeTransition>
                 </TabsContent>
 
-                {/* Вкладка: Логи подключений */}
+                {/* Tab: Логи подключений */}
                 <TabsContent value="logs" className="space-y-4 data-[state=active]:animate-none">
                     <FadeTransition
                         transitionKey={activeTab}
@@ -357,7 +357,7 @@ const WebSocketTab = () => {
                     </FadeTransition>
                 </TabsContent>
 
-                {/* Вкладка: Документация */}
+                {/* Tab: Documentation */}
                 <TabsContent value="docs" className="space-y-4 data-[state=active]:animate-none">
                     <FadeTransition transitionKey={activeTab} duration={0.22}>
                     <Alert className="bg-primary/10 border-primary/20">
@@ -427,7 +427,7 @@ const RedstoneMindBot = require('redstonemind-sdk');
 const bot = new RedstoneMindBot({
     url: 'http://localhost:3001',
     botId: ${botId},
-    apiKey: 'bk_ваш_ключ_здесь'
+    apiKey: t('bkvashklyuchzdes')
 });
 
 async function main() {
@@ -459,21 +459,21 @@ async function main() {
     });
 
     bot.onPlayerJoin((username) => {
-        console.log(\`\${username} зашёл\`);
-        bot.sendMessage(\`Привет, \${username}!\`);
+        console.log(\`\${username} joined\`);
+        bot.sendMessage(\`Hello, \${username}!\`);
     });
 
-    // Отправить сообщение
-    await bot.sendMessage('Привет всем!');
+    // Send сообщение
+    await bot.sendMessage(t('privetVsem'));
 
-    // Получить данные пользователя
+    // Получить data пользователя
     const user = await bot.getUser('Player123');
     console.log('Группы:', user.groups);
 
-    // Добавить в группу
+    // Add в группу
     await bot.addUserToGroup('Player123', 'Admin');
 
-    // Запустить граф
+    // Start граф
     await bot.triggerGraph('welcome_player', {
         playerName: 'Steve'
     });
@@ -493,7 +493,7 @@ main().catch(console.error);`}
 
 const socket = io('http://localhost:3001/bot-api', {
     query: { botId: ${botId} },
-    auth: { token: 'bk_ваш_ключ_здесь' }
+    auth: { token: t('bkvashklyuchzdes2') }
 });
 
 socket.on('connect', () => {
@@ -504,7 +504,7 @@ socket.on('connect_error', (error) => {
     console.error('Ошибка подключения:', error.message);
 });
 
-// Получаем статус бота (при подключении и при изменениях)
+// Получаем статус botа (при подключении и при изменениях)
 socket.on('bot:status', (data) => {
     console.log('Статус бота:', data.online ? 'ONLINE' : 'OFFLINE');
 });
@@ -524,7 +524,7 @@ socket.on('chat:raw_message', (data) => {
 // Отправляем сообщение
 socket.emit('action:send_message', {
     chatType: 'chat',
-    message: 'Привет из API!'
+    message: t('privetIzApi')
 });`}
                                 </pre>
                             </div>
@@ -665,7 +665,7 @@ socket.on('action:result', (data) => {
                 </TabsContent>
             </Tabs>
 
-            {/* Диалог создания ключа */}
+            {/* Dialog создания ключа */}
             <Dialog open={createDialogOpen} onOpenChange={setCreateDialogOpen}>
                 <DialogContent>
                     <DialogHeader>

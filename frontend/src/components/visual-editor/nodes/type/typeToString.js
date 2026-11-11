@@ -7,8 +7,8 @@ import { NodeDefinition } from '../../core/registry';
 export const typeToStringDefinition = new NodeDefinition({
   type: 'type:to_string',
   category: 'type',
-  label: 'В строку',
-  description: 'Преобразует любое значение в строку (toString)',
+  label: t('labels.vStroku'),
+  description: t('descriptions.preobrazuetLyuboeZnachenieVStrokuTostring'),
 
 
 

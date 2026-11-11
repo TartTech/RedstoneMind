@@ -7,7 +7,7 @@ export const createBotActionsSlice = (set, get) => ({
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(botData),
-        }, "Новый бот успешно создан.");
+        }, t('novyyBotUspeshnoSozdan'));
         
         if (newBot) {
             await get().fetchInitialData();
@@ -28,16 +28,16 @@ export const createBotActionsSlice = (set, get) => ({
     },
     
     deleteBot: async (botId) => {
-        await apiHelper(`/api/bots/${botId}`, { method: 'DELETE' }, "Бот успешно удален.");
+        await apiHelper(`/api/bots/${botId}`, { method: 'DELETE' }, t('botUspeshnoUdalen'));
         await get().fetchInitialData();
     },
 
     startAllBots: async () => {
-        await apiHelper('/api/bots/start-all', { method: 'POST' }, 'Команда на запуск всех ботов отправлена.');
+        await apiHelper('/api/bots/start-all', { method: 'POST' }, t('commandNaZapuskVsekhBotovOtpravlena'));
     },
 
     stopAllBots: async () => {
-        await apiHelper('/api/bots/stop-all', { method: 'POST' }, 'Команда на остановку всех ботов отправлена.');
+        await apiHelper('/api/bots/stop-all', { method: 'POST' }, t('commandNaOstanovkuVsekhBotovOtpravlena'));
     },
 
     applyProxyToBots: async (botIds, proxySettings) => {
@@ -49,7 +49,7 @@ export const createBotActionsSlice = (set, get) => ({
                     botIds,
                     proxySettings
                 })
-            }, `Настройки прокси применены к ${botIds.length} бот(ам)`);
+            }, t('settingsProksiPrimenenyKBotidslengthBotam', { botIds.length: botIds.length }));
             
             if (result.success) {
                 await get().fetchInitialData();

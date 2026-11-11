@@ -2,13 +2,13 @@ import { NodeDefinition } from '../../core/registry';
 
 /**
  * Определение ноды user:set_blacklist
- * Добавляет или убирает пользователя из черного списка
+ * Добавляет or убирает пользователя из черного списка
  */
 export const userSetBlacklistDefinition = new NodeDefinition({
   type: 'user:set_blacklist',
   category: 'user',
-  label: 'Установить ЧС',
-  description: 'Управляет черным списком пользователя',
+  label: t('labels.installChs'),
+  description: t('descriptions.upravlyaetChernymSpiskomPolzovatelya'),
 
 
 

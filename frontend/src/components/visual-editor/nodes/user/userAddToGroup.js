@@ -3,8 +3,8 @@ import { NodeDefinition } from '../../core/registry';
 export const userAddToGroupDefinition = new NodeDefinition({
   type: 'user:add_to_group',
   category: 'user',
-  label: 'Добавить в группу',
-  description: 'Добавляет пользователя в указанную группу',
+  label: t('labels.addVGruppu'),
+  description: t('descriptions.dobavlyaetPolzovatelyaVUkazannuyuGruppu'),
 
 
 

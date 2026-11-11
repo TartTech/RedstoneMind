@@ -15,11 +15,11 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { AlertCircle } from 'lucide-react';
 
 /**
- * ValueEditor - Редактор значений для Live Debug режима
+ * ValueEditor - Редактор значений for Live Debug режима
  *
  * Позволяет редактировать:
- * - Простые значения (строки, числа, булевы)
- * - JSON объекты и массивы
+ * - Простые значения (strings, numbers, булевы)
+ * - JSON objects и arrays
  */
 const ValueEditor = ({
   isOpen,
@@ -45,7 +45,7 @@ const ValueEditor = ({
     setError(null);
 
     if (isObject) {
-      // Пытаемся распарсить JSON
+      // Пытаемся расparsesь JSON
       try {
         const parsed = JSON.parse(editedValue);
         onSave(parsed);

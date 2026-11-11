@@ -19,7 +19,7 @@ export const createTaskSlice = (set, get) => ({
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(taskData),
-        }, "Задача успешно создана.");
+        }, t('zadachaUspeshnoSozdana'));
         
         if (newTask) {
             set(state => {
@@ -34,7 +34,7 @@ export const createTaskSlice = (set, get) => ({
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(dataToUpdate),
-        }, "Задача успешно обновлена.");
+        }, t('zadachaUspeshnoObnovlena'));
         
         if (updatedTask) {
             set(state => {
@@ -48,7 +48,7 @@ export const createTaskSlice = (set, get) => ({
     },
 
     deleteTask: async (taskId) => {
-        await apiHelper(`/api/tasks/${taskId}`, { method: 'DELETE' }, "Задача успешно удалена.");
+        await apiHelper(`/api/tasks/${taskId}`, { method: 'DELETE' }, t('zadachaUspeshnoUdalena'));
         set(state => {
             state.tasks = state.tasks.filter(t => t.id !== taskId);
         });

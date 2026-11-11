@@ -8,8 +8,8 @@ import MathOperationSettings from './MathOperationSettings';
 export const mathOperationDefinition = new NodeDefinition({
   type: 'math:operation',
   category: 'math',
-  label: 'Математическая операция',
-  description: 'Математические операции и сравнения',
+  label: t('labels.matematicheskayaOperatsiya'),
+  description: t('descriptions.matematicheskieOperatsiiISravneniya'),
 
 
 

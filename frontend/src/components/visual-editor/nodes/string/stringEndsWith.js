@@ -7,8 +7,8 @@ import { NodeDefinition } from '../../core/registry';
 export const stringEndsWithDefinition = new NodeDefinition({
   type: 'string:ends_with',
   category: 'string',
-  label: 'Заканчивается на',
-  description: 'Проверяет заканчивается ли строка суффиксом',
+  label: t('labels.zakanchivaetsyaNa'),
+  description: t('descriptions.proveryaetZakanchivaetsyaLiStrokaSuffiksom'),
 
 
 

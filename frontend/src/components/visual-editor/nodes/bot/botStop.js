@@ -3,8 +3,8 @@ import { NodeDefinition } from '../../core/registry';
 export const botStopDefinition = new NodeDefinition({
   type: 'bot:stop',
   category: 'bot',
-  label: 'Выключить бота',
-  description: 'Останавливает бота',
+  label: t('labels.vyklyuchitBota'),
+  description: t('descriptions.ostanavlivaetBota'),
 
 
 

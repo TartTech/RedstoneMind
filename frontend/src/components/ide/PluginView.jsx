@@ -11,6 +11,7 @@ import { apiHelper } from '@/lib/api';
 import { toast } from '@/hooks/use-toast';
 import CreateReleaseDialog from './CreateReleaseDialog';
 import SubmitToOfficialListDialog from './SubmitToOfficialListDialog';
+import { useTranslation } from 'react-i18next';
 
 const GITHUB_TOKEN_KEY = 'redstonemind_github_token';
 
@@ -32,6 +33,7 @@ const compareVersions = (v1, v2) => {
 };
 
 export default function PluginView({ botId, pluginName, onRefresh }) {
+    const { t } = useTranslation('plugins');
     const [pluginInfo, setPluginInfo] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -84,7 +86,7 @@ export default function PluginView({ botId, pluginName, onRefresh }) {
         setIsLoading(true);
         try {
             const data = await apiHelper(`/api/bots/${botId}/plugins/ide/${pluginName}/info`);
-            // Парсим manifest если он строка
+            // Парсим manifest if он строка
             if (data && typeof data.manifest === 'string') {
                 try {
                     data.manifest = JSON.parse(data.manifest);
@@ -123,8 +125,8 @@ export default function PluginView({ botId, pluginName, onRefresh }) {
             console.error('Failed to fetch GitHub user:', error);
             toast({
                 variant: 'destructive',
-                title: 'Ошибка токена',
-                description: 'Не удалось проверить GitHub токен. Проверьте правильность.'
+                title: t('titles.errorTokena'),
+                description: t('descriptions.failedToProveritGithubTokenProverte')
             });
             handleRemoveToken();
         }
@@ -134,8 +136,8 @@ export default function PluginView({ botId, pluginName, onRefresh }) {
         if (!githubToken.trim()) {
             toast({
                 variant: 'destructive',
-                title: 'Ошибка',
-                description: 'Введите GitHub токен'
+                title: t('titles.error'),
+                description: t('descriptions.vvediteGithubToken')
             });
             return;
         }
@@ -144,8 +146,8 @@ export default function PluginView({ botId, pluginName, onRefresh }) {
         setTokenSaved(true);
         fetchGithubUser(githubToken);
         toast({
-            title: 'Успех',
-            description: 'GitHub токен сохранен локально в браузере'
+            title: t('titles.success'),
+            description: t('descriptions.githubTokenSokhranenLokalnoVBrauzere')
         });
     };
 
@@ -175,8 +177,8 @@ export default function PluginView({ botId, pluginName, onRefresh }) {
             console.error('Failed to fetch repositories:', error);
             toast({
                 variant: 'destructive',
-                title: 'Ошибка',
-                description: 'Не удалось загрузить список репозиториев'
+                title: t('titles.error2'),
+                description: t('descriptions.failedToZagruzitSpisokRepozitoriev')
             });
         } finally {
             setIsLoadingRepos(false);
@@ -272,8 +274,8 @@ export default function PluginView({ botId, pluginName, onRefresh }) {
         if (uploadMode === 'new' && !newRepoName.trim()) {
             toast({
                 variant: 'destructive',
-                title: 'Ошибка',
-                description: 'Введите имя репозитория'
+                title: t('titles.error3'),
+                description: t('descriptions.vvediteImyaRepozitoriya')
             });
             return;
         }
@@ -281,8 +283,8 @@ export default function PluginView({ botId, pluginName, onRefresh }) {
         if (uploadMode === 'existing' && !selectedRepo) {
             toast({
                 variant: 'destructive',
-                title: 'Ошибка',
-                description: 'Выберите репозиторий'
+                title: t('titles.error4'),
+                description: t('descriptions.vyberiteRepozitoriy')
             });
             return;
         }
@@ -303,8 +305,8 @@ export default function PluginView({ botId, pluginName, onRefresh }) {
             });
 
             toast({
-                title: 'Успех',
-                description: `Плагин успешно загружен в ${uploadMode === 'new' ? 'новый' : 'существующий'} репозиторий`
+                title: t('titles.success2'),
+                description: t('descriptions.pluginUspeshnoZagruzhenVUploadmodeNew', { uploadMode === 'new' ? 'novyy' : 'sushchestvuyushchiy': uploadMode === 'new' ? 'novyy' : 'sushchestvuyushchiy' })
             });
 
             await fetchPluginInfo();
@@ -312,8 +314,8 @@ export default function PluginView({ botId, pluginName, onRefresh }) {
         } catch (error) {
             toast({
                 variant: 'destructive',
-                title: 'Ошибка загрузки',
-                description: error.message || 'Не удалось загрузить плагин в GitHub'
+                title: t('titles.errorZagruzki'),
+                description: error.message || t('errors.failedToZagruzitPluginVGithub')
             });
         } finally {
             setIsUploading(false);
@@ -337,8 +339,8 @@ export default function PluginView({ botId, pluginName, onRefresh }) {
             });
 
             toast({
-                title: 'Успех',
-                description: `Релиз ${tagName} успешно создан на GitHub`
+                title: t('titles.success3'),
+                description: t('descriptions.relizTagnameUspeshnoSozdanNaGithub', { tagName: tagName })
             });
 
             setShowReleaseDialog(false);
@@ -347,8 +349,8 @@ export default function PluginView({ botId, pluginName, onRefresh }) {
         } catch (error) {
             toast({
                 variant: 'destructive',
-                title: 'Ошибка создания релиза',
-                description: error.message || 'Не удалось создать релиз'
+                title: t('titles.errorSozdaniyaReliza'),
+                description: error.message || t('errors.failedToSozdatReliz')
             });
         } finally {
             setIsCreatingRelease(false);
@@ -373,7 +375,7 @@ export default function PluginView({ botId, pluginName, onRefresh }) {
             });
 
             toast({
-                title: 'Pull Request создан!',
+                title: t('titles.pullRequestSozdan'),
                 description: (
                     <div>
                         <a href={result.prUrl} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
@@ -388,8 +390,8 @@ export default function PluginView({ botId, pluginName, onRefresh }) {
         } catch (error) {
             toast({
                 variant: 'destructive',
-                title: 'Ошибка создания PR',
-                description: error.message || 'Не удалось создать Pull Request'
+                title: t('titles.errorSozdaniyaPr'),
+                description: error.message || t('errors.failedToSozdatPullRequest')
             });
         } finally {
             setIsCreatingPR(false);
@@ -883,7 +885,7 @@ export default function PluginView({ botId, pluginName, onRefresh }) {
                                 <Label htmlFor="existing-repo">Выберите репозиторий</Label>
                                 <Select value={selectedRepo} onValueChange={setSelectedRepo}>
                                     <SelectTrigger>
-                                        <SelectValue placeholder={isLoadingRepos ? "Загрузка..." : "Выберите репозиторий"} />
+                                        <SelectValue placeholder={isLoadingRepos ? t('placeholders.loading') : t('placeholders.vyberiteRepozitoriy')} />
                                     </SelectTrigger>
                                     <SelectContent>
                                         {repositories.map(repo => (

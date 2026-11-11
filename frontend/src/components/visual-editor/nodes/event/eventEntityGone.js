@@ -7,8 +7,8 @@ import { NodeDefinition } from '../../core/registry';
 export const eventEntityGoneDefinition = new NodeDefinition({
   type: 'event:entityGone',
   category: 'event',
-  label: 'Сущность исчезла',
-  description: 'Вызывается, когда сущность пропадает из зоны видимости бота',
+  label: t('labels.entityIschezla'),
+  description: t('descriptions.vyzyvaetsyaKogdaSushchnostPropadaetIzZony'),
 
 
 

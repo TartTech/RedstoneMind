@@ -101,7 +101,7 @@ const DebugStepInfo = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="pt-4 space-y-4">
-        {/* Контролы пошагового выполнения */}
+        {/* Контролы пошагового execution */}
         <div className="bg-slate-900 rounded-lg p-3 space-y-2">
           <div className="text-xs text-slate-400 mb-1">{t('debugStepInfo.controls')}</div>
           <div className="flex items-center gap-2 flex-wrap">
@@ -162,7 +162,7 @@ const DebugStepInfo = () => {
           </div>
         </div>
 
-        {/* Информация о ноде */}
+        {/* Information о ноде */}
         <div>
           <h3 className="text-sm font-semibold text-slate-300 mb-2 flex items-center gap-2">
             <Info className="w-4 h-4" />
@@ -184,7 +184,7 @@ const DebugStepInfo = () => {
           </div>
         </div>
 
-        {/* Статус (на паузе) */}
+        {/* Status (на паузе) */}
         <div>
           <h3 className="text-sm font-semibold text-slate-300 mb-2 flex items-center gap-2">
             <Clock className="w-4 h-4 text-amber-400" />
@@ -209,7 +209,7 @@ const DebugStepInfo = () => {
           </div>
         </div>
 
-        {/* Входные значения */}
+        {/* Inputные значения */}
         {inputs && Object.keys(inputs).length > 0 && (
           <div>
             <h3 className="text-sm font-semibold text-slate-300 mb-2 flex items-center gap-2">
@@ -229,7 +229,7 @@ const DebugStepInfo = () => {
           </div>
         )}
 
-        {/* Путь выполнения */}
+        {/* Путь execution */}
         {executionPath.length > 0 && (
           <div>
             <h3 className="text-sm font-semibold text-slate-300 mb-2 flex items-center gap-2">

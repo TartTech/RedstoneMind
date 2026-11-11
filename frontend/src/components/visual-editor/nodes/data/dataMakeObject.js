@@ -3,13 +3,13 @@ import DataMakeObjectSettings from './DataMakeObjectSettings';
 
 /**
  * Определение ноды data:make_object
- * Создание объекта из пар ключ-значение (упрощенная версия)
+ * Creation объекта из пар ключ-значение (упрощенная версия)
  */
 export const dataMakeObjectDefinition = new NodeDefinition({
   type: 'data:make_object',
   category: 'data',
-  label: 'Создать объект',
-  description: 'Создает объект из пар ключ-значение',
+  label: t('labels.createObekt'),
+  description: t('descriptions.sozdaetObektIzParKlyuchznachenie'),
 
 
 

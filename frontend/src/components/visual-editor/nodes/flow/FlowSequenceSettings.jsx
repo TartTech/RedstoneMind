@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 
 /**
- * Компонент настроек для flow:sequence ноды
+ * Component настроек for flow:sequence ноды
  */
 const FlowSequenceSettings = ({ nodeId, data, updateNodeData }) => {
   const { t } = useTranslation('visual-editor');

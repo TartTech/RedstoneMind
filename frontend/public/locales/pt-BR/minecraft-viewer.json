@@ -1,0 +1,91 @@
+{
+  "connecting": "Connecting to bot...",
+  "waitingChunks": "Waiting for world chunks...",
+  "error": "Erro",
+  "errors": {
+    "botNotRunning": "Bot is not running"
+  },
+  "webgl": {
+    "error": "Erro WebGL",
+    "notSupported": "WebGL is not available in this browser. The 3D viewer cannot start.",
+    "contextLost": "WebGL context lost. Try reloading the page."
+  },
+  "settingsButton": "Configurações",
+  "tabButton": "TAB - player list",
+  "scoreboardButton": "Scoreboard",
+  "settings": {
+    "title": "Configurações",
+    "renderDistance": "Render distance: {{value}} blocks",
+    "correctionSpeed": "Sync strength: {{value}}x",
+    "correctionSpeedHint": "Less = smoother movement, More = more accurate position",
+    "sensitivity": "Mouse sensitivity: {{value}}x",
+    "localMovement": "Predictions (local movement)",
+    "showDebug": "Show debug info",
+    "fxaa": "FXAA (anti-aliasing)",
+    "instancedRendering": "Instanced rendering (optimization)",
+    "frustumCulling": "Frustum culling (camera-based)",
+    "throttleWhenHidden": "Throttle FPS on inactive tab",
+    "rendering": "Rendering",
+    "graphics": "Graphics",
+    "controls": "Controls",
+    "reset": "Redefinir configurações"
+  },
+  "hud": {
+    "health": "Saúde",
+    "food": "Food",
+    "fps": "FPS"
+  },
+  "picker": {
+    "clickOnBlock": "+ Click on a block",
+    "title": "📍 Coordinate selection",
+    "description": "Click on a block to select destination point",
+    "notSelected": "No coordinates selected",
+    "cancel": "Cancelar",
+    "confirm": "✓ Confirmar"
+  },
+  "titles": {
+    "closeEEsc": "Fechar (E / Esc)",
+    "dvizhenie": "Movimento",
+    "inventory": "Inventário",
+    "actions": "Ações",
+    "prochee": "Outros",
+    "closeEscE": "Fechar (Esc / E)"
+  },
+  "labels": {
+    "yeslnostProrisovki": "Distância de renderização",
+    "chuvstvitelnost": "Sensibilidade",
+    "silaSinkhron": "Força de sincr.",
+    "skorbord": "Placar",
+    "sglazhivanieFxaa": "Suavização (FXAA)",
+    "osveshchenie": "Iluminação",
+    "zamedlVFone": "Desacelerar em segundo plano",
+    "lokalnoeDvizhenie": "Movimento local",
+    "debugF3": "Depuração (F3)"
+  },
+  "vChank": "{{v}} chunks",
+  "peremeshchenie": "Movement",
+  "probel": "Espaço",
+  "pryzhok": "Pulo",
+  "krastsya": "Agachar",
+  "bezhat": "Correr",
+  "openInventar": "Open inventory",
+  "slotKhotbara": "Slot da hotbar",
+  "koleso": "Roda do mouse",
+  "loopKhotbara": "Ciclo da hotbar",
+  "vykinutOdin": "Descartar um",
+  "vykinutVesStak": "Descartar toda a pilha",
+  "pomenyatRuki": "Trocar mãos",
+  "shiftKlik": "Shift + clique",
+  "bystryyPerenos": "Transferência rápida",
+  "lkm": "BEM",
+  "atakaKopat": "Atacar / cavar",
+  "pkm": "BDM",
+  "ispolzPostavit": "Usar / colocar",
+  "tIli": "T or /",
+  "openChat": "Abrir chat",
+  "spisokIgrokov": "Lista de jogadores",
+  "menyuPauzy": "Menu de pausa",
+  "skrytHud": "Hide HUD",
+  "debug": "Depuração",
+  "perspektiva": "Perspectiva"
+}

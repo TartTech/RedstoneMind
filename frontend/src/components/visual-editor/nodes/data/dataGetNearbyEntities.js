@@ -2,13 +2,13 @@ import { NodeDefinition } from '../../core/registry';
 
 /**
  * Определение ноды data:get_nearby_entities
- * Возвращает массив существ в радиусе от бота
+ * Возвращает массив существ в радиусе от botа
  */
 export const dataGetNearbyEntitiesDefinition = new NodeDefinition({
   type: 'data:get_nearby_entities',
   category: 'data',
-  label: 'Сущности рядом',
-  description: 'Существа в радиусе от бота',
+  label: t('labels.sushchnostiRyadom'),
+  description: t('descriptions.sushchestvaVRadiuseOtBota'),
 
 
 

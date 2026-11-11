@@ -118,5 +118,7 @@
     "prepareError": "Failed to prepare data for sending.",
     "createSuccess": "Bot created with imported settings.",
     "createError": "Failed to create bot."
-  }
+  },
+  "moderatsiya": "Moderation",
+  "moderatsiya2": "Moderation"
 }

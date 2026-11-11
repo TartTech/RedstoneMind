@@ -74,11 +74,11 @@ export default function DependencyDialog({ mainPlugin, dependencies, onConfirm, 
       </div>
       <DialogFooter>
         <Button variant="ghost" onClick={onCancel}>
-          {t('actions.cancel', { defaultValue: 'Отмена' })}
+          {t('actions.cancel', { defaultValue: 'Otmena' })}
         </Button>
         <Button onClick={onConfirm} disabled={isInstalling}>
           {isInstalling
-            ? t('dependencyDialog.installing', { defaultValue: 'Установка...' })
+            ? t('dependencyDialog.installing', { defaultValue: 'Ustanovka...' })
             : t('dependencyDialog.installMissing', {
                 count: toInstall.length,
                 defaultValue: 'Установить недостающие ({{count}})',

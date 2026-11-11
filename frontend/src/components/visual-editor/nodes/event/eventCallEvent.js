@@ -4,8 +4,8 @@ import EventCallSettings from './EventCallSettings';
 export const eventCallEventDefinition = new NodeDefinition({
   type: 'event:call_event',
   category: 'flow',
-  label: 'Вызвать событие',
-  description: 'Вызывает пользовательское событие и передаёт параметры',
+  label: t('labels.vyzvatSobytie'),
+  description: t('descriptions.vyzyvaetPolzovatelskoeSobytieIPeredayotParametry'),
 
 
 

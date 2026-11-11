@@ -2,13 +2,13 @@ import { NodeDefinition } from '../../core/registry';
 
 /**
  * Определение ноды inventory:get_all
- * Возвращает весь инвентарь бота как массив слотов
+ * Возвращает весь инвентарь botа как массив слотов
  */
 export const inventoryGetAllDefinition = new NodeDefinition({
   type: 'inventory:get_all',
   category: 'inventory',
-  label: 'Весь инвентарь',
-  description: 'Возвращает весь инвентарь бота как массив предметов',
+  label: t('labels.vesInventar'),
+  description: t('descriptions.vozvrashchaetVesInventarBotaKakMassiv'),
 
 
 

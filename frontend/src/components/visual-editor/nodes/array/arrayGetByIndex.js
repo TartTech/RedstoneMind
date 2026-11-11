@@ -7,8 +7,8 @@ import { NodeDefinition } from '../../core/registry';
 export const arrayGetByIndexDefinition = new NodeDefinition({
   type: 'array:get_by_index',
   category: 'array',
-  label: 'Получить по индексу',
-  description: 'Получает элемент массива по его индексу',
+  label: t('labels.poluchitPoIndeksu'),
+  description: t('descriptions.poluchaetElementMassivaPoEgoIndeksu'),
 
 
 

@@ -2,13 +2,13 @@ import { NodeDefinition } from '../../core/registry';
 
 /**
  * Определение ноды navigation:go_to_player
- * Перемещает бота к указанному игроку
+ * Перемещает botа к указанному игроку
  */
 export const navigationGoToPlayerDefinition = new NodeDefinition({
   type: 'navigation:go_to_player',
   category: 'navigation',
-  label: 'Идти к игроку',
-  description: 'Перемещает бота к указанному игроку',
+  label: t('labels.idtiKIgroku'),
+  description: t('descriptions.peremeshchaetBotaKUkazannomuIgroku'),
 
 
 

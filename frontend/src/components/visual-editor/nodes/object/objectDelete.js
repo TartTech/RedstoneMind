@@ -7,8 +7,8 @@ import { NodeDefinition } from '../../core/registry';
 export const objectDeleteDefinition = new NodeDefinition({
   type: 'object:delete',
   category: 'object',
-  label: 'Удалить ключ',
-  description: 'Удаляет ключ из объекта',
+  label: t('labels.deleteKlyuch'),
+  description: t('descriptions.udalyaetKlyuchIzObekta'),
 
 
 

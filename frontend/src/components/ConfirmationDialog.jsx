@@ -10,17 +10,18 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { buttonVariants } from "@/components/ui/button";
+import { useTranslation } from 'react-i18next';
 
 /**
  * Переиспользуемый диалог подтверждения.
  * @param {object} props
- * @param {boolean} props.open - Состояние, открыт ли диалог
- * @param {function} props.onOpenChange - Функция для изменения состояния open
+ * @param {boolean} props.open - State, открыт ли диалог
+ * @param {function} props.onOpenChange - Function for изменения состояния open
  * @param {string} props.title - Заголовок диалога
- * @param {string|React.ReactNode} props.description - Описание/тело диалога
- * @param {function} props.onConfirm - Функция, выполняемая при подтверждении
- * @param {string} [props.confirmText='Подтвердить'] - Текст на кнопке подтверждения
- * @param {string} [props.cancelText='Отмена'] - Текст на кнопке отмены
+ * @param {string|React.ReactNode} props.description - Description/тело диалога
+ * @param {function} props.onConfirm - Function, выполняемая при подтверждении
+ * @param {string} [props.confirmText='Confirm'] - Текст на кнопке подтверждения
+ * @param {string} [props.cancelText='Cancel'] - Текст на кнопке отмены
  */
 export default function ConfirmationDialog({
   open,
@@ -28,8 +29,8 @@ export default function ConfirmationDialog({
   title,
   description,
   onConfirm,
-  confirmText = 'Подтвердить',
-  cancelText = 'Отмена',
+  confirmText = t('confirm.confirm'),
+  cancelText = t('cancel'),
 }) {
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>

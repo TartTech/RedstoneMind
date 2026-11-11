@@ -123,10 +123,10 @@ export const useVisualEditorStore = create(
     collabSelections: new Map(), // Map<socketId, {nodeIds: [], username, color}>
     collabConnections: new Map(), // Map<socketId, {fromX, fromY, toX, toY, username, color}>
 
-    // Viewport state (для правильного отображения collaborative курсоров)
+    // Viewport state (for правильного отображения collaborative курсоров)
     viewport: { x: 0, y: 0, zoom: 1 },
 
-    // Clipboard state (для копирования и вставки нод)
+    // Clipboard state (for копирования и вставки нод)
     clipboard: { nodes: [], edges: [] },
 
     init: async (botId, id, type) => {
@@ -151,8 +151,8 @@ export const useVisualEditorStore = create(
             if (type === 'command') {
                 const managementData = await get().fetchManagementData(botId);
                 itemData = {
-                    name: 'Новая команда',
-                    description: 'Описание новой команды',
+                    name: t('novayaKomanda'),
+                    description: t('descriptions.descriptionNovoyKomandy'),
                     graphJson: JSON.stringify({ nodes: [], edges: [], variables: [] }),
                     argumentsJson: '[]',
                     isEnabled: true,
@@ -162,7 +162,7 @@ export const useVisualEditorStore = create(
                  set({ chatTypes: managementData.chatTypes });
             } else {
                  itemData = {
-                    name: 'Новый граф',
+                    name: t('novyyGraf'),
                     graphJson: JSON.stringify({ nodes: [], edges: [], variables: [] }),
                     variables: '[]',
                     triggers: '[]',
@@ -180,7 +180,7 @@ export const useVisualEditorStore = create(
         }
         
         if (!itemData) {
-            throw new Error(type === 'command' ? 'Команда не найдена.' : 'Граф события не найден.');
+            throw new Error(type === 'command' ? t('errors.commandNeNaydena') : t('errors.graphSobytiyaNeNayden'));
         }
 
         let parsedGraph;
@@ -206,7 +206,7 @@ export const useVisualEditorStore = create(
         
 
 
-        const EVENT_CATEGORY_KEYS = ['события', 'event', 'events'];
+        const EVENT_CATEGORY_KEYS = [t('sobytiya'), 'event', 'events'];
         const sortedAvailableNodes = Object.fromEntries(
           Object.entries(availableNodesData).sort(([a], [b]) => {
             const aIsEvent = EVENT_CATEGORY_KEYS.includes(a.toLowerCase());
@@ -289,9 +289,9 @@ export const useVisualEditorStore = create(
         });
 
         // Подключаемся к collaborative socket
-        // Передаем callback для инициализации graphState после получения collab:state
+        // Передаем callback for инициализации graphState после получения collab:state
         get().connectGraphSocket(() => {
-          // Callback вызывается после получения collab:state
+          // Callback callsся после получения collab:state
           // Если graphState пустой - отправляем наше состояние
           const { nodes, edges, variables, command } = get();
           console.log('[Collab] Sending init-graph-state after connection');
@@ -305,7 +305,7 @@ export const useVisualEditorStore = create(
         });
       } catch (error) {
         console.error("Ошибка инициализации редактора:", error);
-        toast({ variant: 'destructive', title: 'Ошибка загрузки', description: error.message });
+        toast({ variant: 'destructive', title: t('errors.errorZagruzki'), description: error.message });
         set({ isLoading: false });
       }
     },
@@ -313,7 +313,7 @@ export const useVisualEditorStore = create(
     fetchCommand: async (botId, commandId) => {
       const allData = await apiHelper(`/api/bots/${botId}/management-data`);
       const command = allData.commands.find(c => c.id === parseInt(commandId));
-      if (!command) throw new Error('Команда не найдена');
+      if (!command) throw new Error(t('errors.commandNeNaydena2'));
       set({ chatTypes: allData.chatTypes });
       return command;
     },
@@ -509,7 +509,7 @@ export const useVisualEditorStore = create(
           return;
         }
 
-        // Типы несовместимы, пытаемся найти цепочку конвертации
+        // Types несовместимы, пытаемся найти цепочку конвертации
         const conversionChain = getConversionChain(sourcePin.type, targetPin.type, sourceNode);
 
         if (conversionChain) {
@@ -538,7 +538,7 @@ export const useVisualEditorStore = create(
             state.connectingPin = null;
           });
 
-          // Broadcast созданные ноды и edges
+          // Broadcast созdata ноды и edges
           result.additionalNodes.forEach(broadcastNodeCreation);
           result.newEdges.forEach(broadcastEdgeCreation);
         } else {
@@ -827,10 +827,10 @@ export const useVisualEditorStore = create(
           }
         });
         
-        toast({ title: 'Успех', description: 'Плагин-владелец обновлен' });
+        toast({ title: t('messages.success'), description: t('messages.pluginvladeletsObnovlen') });
       } catch (error) {
         console.error('Ошибка обновления плагина-владельца:', error);
-        toast({ variant: 'destructive', title: 'Ошибка', description: 'Не удалось обновить плагин-владелец' });
+        toast({ variant: 'destructive', title: t('messages.error'), description: t('messages.failedToObnovitPluginvladelets') });
       }
     },
 
@@ -974,7 +974,7 @@ export const useVisualEditorStore = create(
         const targetNodeConfig = nodeConfigs.find(n => n.type === nodeType);
 
         if (!sourceNodeConfig || !targetNodeConfig) {
-          throw new Error('Не удалось получить конфигурацию узлов.');
+          throw new Error(t('errors.failedToPoluchitKonfiguratsiyuUzlov'));
         }
 
         const sourcePin = (sourceNodeConfig.pins?.outputs || sourceNodeConfig.outputs || []).find(p => p.id === connectingPin.pinId);
@@ -1002,7 +1002,7 @@ export const useVisualEditorStore = create(
 
       } catch (error) {
         console.error("Ошибка при добавлении и подключении узла:", error);
-        toast({ variant: 'destructive', title: 'Ошибка', description: 'Ошибка добавления узла.' });
+        toast({ variant: 'destructive', title: t('messages.error2'), description: t('messages.errorDobavleniyaUzla') });
       } finally {
         set({ connectingPin: null });
       }
@@ -1052,17 +1052,17 @@ export const useVisualEditorStore = create(
 
         await apiHelper(url, { method: 'PUT', body: payload });
 
-        // Отправляем событие для hot reload графов (только для event-графов)
+        // Отправляем событие for hot reload графов (только for event-графов)
         const { socket } = get();
         if (socket && editorType === 'event') {
           console.log('[Graph Hot Reload] Sending graph:updated event...');
           socket.emit('graph:updated', { botId, graphId: id });
         }
 
-        toast({ title: 'Успешно', description: 'Граф сохранен.' });
+        toast({ title: t('messages.success2'), description: t('messages.graphSokhranen') });
       } catch (error) {
         console.error("Ошибка сохранения графа:", error);
-        toast({ variant: 'destructive', title: 'Ошибка', description: `Ошибка сохранения графа: ${error.message}` });
+        toast({ variant: 'destructive', title: t('errors.error2'), description: t('errors.errorSokhraneniyaGrafaErrormessage', { error.message: error.message }) });
       } finally {
         set({ isSaving: false });
       }
@@ -1147,9 +1147,9 @@ export const useVisualEditorStore = create(
 
     /**
      * Принудительное сохранение графа с очисткой отложенного таймера
-     * Вызывается при выгрузке компонента для предотвращения потери изменений
+     * Вызывается при выгрузке компонента for предотвращения потери изменений
      *
-     * Метод flush() теперь автоматически вызывает отложенную функцию,
+     * Метод flush() теперь автоматически calls отложенную функцию,
      * поэтому больше не нужно дополнительно вызывать saveGraph()
      */
     flushSaveGraph: () => {
@@ -1167,7 +1167,7 @@ export const useVisualEditorStore = create(
       const executionSteps = trace.steps.filter(step => step.type !== 'traversal');
       const lastStepIndex = executionSteps.length > 0 ? executionSteps.length - 1 : -1;
 
-      // Вычисляем подсветку для последнего шага
+      // Вычисляем подсветку for последнего шага
       const nodeIds = new Set();
       let currentActiveNodeId = null;
       if (lastStepIndex >= 0) {
@@ -1231,7 +1231,7 @@ export const useVisualEditorStore = create(
         state.playbackState.currentStepIndex = stepIndex;
 
         // Обновляем подсветку нод на основе текущего шага
-        // Фильтруем только шаги выполнения (без traversals)
+        // Filterуем только шаги execution (без traversals)
         if (state.trace && stepIndex >= 0) {
           const executionSteps = state.trace.steps.filter(step => step.type !== 'traversal');
 
@@ -1391,11 +1391,11 @@ export const useVisualEditorStore = create(
     startTestRun: async (payload) => {
       const { command, editorType, socket } = get();
       if (!command?.id) {
-        toast({ variant: 'destructive', title: 'Ошибка', description: 'Сначала сохраните граф' });
+        toast({ variant: 'destructive', title: t('messages.error3'), description: t('messages.snachalaSokhraniteGraf') });
         return { success: false, error: 'not_saved' };
       }
       if (!socket) {
-        toast({ variant: 'destructive', title: 'Ошибка', description: 'Нет соединения с панелью' });
+        toast({ variant: 'destructive', title: t('messages.error4'), description: t('messages.noSoedineniyaSPanelyu') });
         return { success: false, error: 'no_socket' };
       }
 
@@ -1464,7 +1464,7 @@ export const useVisualEditorStore = create(
     runSingleNode: async ({ nodeId, inputs, variables }) => {
       const { command, editorType, nodes, edges, variables: graphVariables } = get();
       if (!command?.id) {
-        const errResult = { success: false, error: 'Сначала сохраните граф' };
+        const errResult = { success: false, error: t('errors.snachalaSokhraniteGraf') };
         set({ runNodeResult: errResult });
         return errResult;
       }
@@ -1506,7 +1506,7 @@ export const useVisualEditorStore = create(
         });
       }
 
-      // Если переключаемся в live режим и есть socket - присоединяемся к debug
+      // Если переключаемся в live режим и exists socket - присоединяемся к debug
       if (mode === 'live' && socket && command) {
         console.log('[Debug] Joining debug session...');
         socket.emit('debug:join', {
@@ -1515,7 +1515,7 @@ export const useVisualEditorStore = create(
         });
       }
 
-      // Если переключаемся из live режима (в trace или normal) - покидаем debug
+      // Если переключаемся из live режима (в trace or normal) - покидаем debug
       if ((mode === 'trace' || mode === 'normal') && get().debugMode === 'live' && socket && command) {
         console.log('[Debug] Leaving debug session...');
         socket.emit('debug:leave', {
@@ -1547,7 +1547,7 @@ export const useVisualEditorStore = create(
       set({ debugMode: mode });
     },
 
-    // Подключение к графу для collaborative editing (всегда активно)
+    // Connection к графу for collaborative editing (всегда активно)
     connectGraphSocket: (onConnectedCallback) => {
       const { socket, command } = get();
       if (socket || !command) return; // Уже подключен или нет команды
@@ -1585,7 +1585,7 @@ export const useVisualEditorStore = create(
           path: window.location.pathname
         });
 
-        // Присоединяемся к графу для collaborative editing с текущим режимом
+        // Присоединяемся к графу for collaborative editing с текущим режимом
         const { debugMode } = get();
         newSocket.emit('collab:join', {
           botId: command.botId,
@@ -1612,12 +1612,12 @@ export const useVisualEditorStore = create(
 
       // ========== COLLABORATIVE EDITING EVENTS ==========
 
-      // Состояние комнаты при подключении
+      // State комнаты при подключении
       newSocket.on('collab:state', ({ users, graphState }) => {
         console.log('[Collab] Received room state:', users, graphState);
         set({ collabUsers: users });
 
-        // Если есть состояние графа от других пользователей - применяем его
+        // Если exists состояние графа от других пользователей - применяем его
         if (graphState && graphState.nodes && graphState.edges && graphState.nodes.length > 0) {
           console.log('[Collab] Applying synced graph state from other users:', graphState.nodes.length, 'nodes,', graphState.edges.length, 'edges');
           set({
@@ -1626,7 +1626,7 @@ export const useVisualEditorStore = create(
             variables: graphState.variables || get().variables,
           });
         } else {
-          // Мы первые в комнате или graphState пустой - вызываем callback для инициализации
+          // Мы первые в комнате or graphState пустой - вызываем callback for инициализации
           console.log('[Collab] No graph state from server, will initialize from loaded data');
           if (onConnectedCallback) {
             onConnectedCallback();
@@ -1643,12 +1643,12 @@ export const useVisualEditorStore = create(
           }
         });
         toast({
-          title: '👋 Пользователь присоединился',
-          description: `${user.username} начал редактировать граф`
+          title: t('titles.userPrisoedinilsya'),
+          description: t('descriptions.userusernameNachalRedaktirovatGraf', { user.username: user.username })
         });
       });
 
-      // Пользователь покинул
+      // User покинул
       newSocket.on('collab:user-left', ({ socketId, username }) => {
         console.log('[Collab] User left:', socketId);
         set(state => {
@@ -1657,8 +1657,8 @@ export const useVisualEditorStore = create(
           state.collabSelections.delete(socketId);
         });
         toast({
-          title: '👋 Пользователь отключился',
-          description: `${username} покинул редактор`
+          title: t('titles.userOtklyuchilsya'),
+          description: t('descriptions.usernamePokinulRedaktor', { username: username })
         });
       });
 
@@ -1689,11 +1689,11 @@ export const useVisualEditorStore = create(
         // Показываем уведомление
         const modeLabels = {
           'live': '🐛 Live Debug',
-          'trace': '📊 Просмотр трассировки',
-          'normal': '✏️ Обычный режим'
+          'trace': t('prosmotrTrassirovki'),
+          'normal': t('obychnyyRezhim')
         };
         toast({
-          title: `${username} переключился`,
+          title: t('titles.usernamePereklyuchilsya', { username: username }),
           description: modeLabels[debugMode] || debugMode
         });
       });
@@ -1791,12 +1791,12 @@ export const useVisualEditorStore = create(
       newSocket.on('collab:graph-reloaded', ({ botId, graphId }) => {
         console.log('[Collab] Graph reloaded for bot', botId, 'graphId:', graphId);
         toast({
-          title: '🔄 Граф перезагружен',
-          description: 'Изменения применены без перезапуска бота'
+          title: t('titles.graphPerezagruzhen'),
+          description: t('descriptions.izmeneniyaPrimenenyBezPerezapuskaBota')
         });
       });
 
-      // Начало создания соединения
+      // Start создания соединения
       newSocket.on('collab:connection-start', ({ socketId, username, color, fromX, fromY, fromNodeId, fromHandleId }) => {
         console.log('[Collab] Connection started by', username);
         set(state => {
@@ -1813,7 +1813,7 @@ export const useVisualEditorStore = create(
         });
       });
 
-      // Обновление позиции соединения
+      // Update позиции соединения
       newSocket.on('collab:connection-update', ({ socketId, toX, toY }) => {
         set(state => {
           const connection = state.collabConnections.get(socketId);
@@ -1824,7 +1824,7 @@ export const useVisualEditorStore = create(
         });
       });
 
-      // Завершение создания соединения
+      // Completedие создания соединения
       newSocket.on('collab:connection-end', ({ socketId }) => {
         set(state => {
           state.collabConnections.delete(socketId);
@@ -2053,7 +2053,7 @@ export const useVisualEditorStore = create(
         graphId: command.id
       });
 
-      // Отключаем все обработчики
+      // Отключаем все обраbotчики
       socket.off('collab:state');
       socket.off('collab:user-joined');
       socket.off('collab:user-left');

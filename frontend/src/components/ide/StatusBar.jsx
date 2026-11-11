@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { PanelBottom, Keyboard, AlertCircle, AlertTriangle } from 'lucide-react';
 import KeyboardShortcutsHelp from './KeyboardShortcutsHelp';
+import { useTranslation } from 'react-i18next';
 
 export default function StatusBar({ botId, pluginName, activeFile, onTogglePanel, problems = [], onProblemsClick }) {
+    const { t } = useTranslation('plugins');
     const [showShortcutsHelp, setShowShortcutsHelp] = useState(false);
 
     // Count errors and warnings
@@ -36,7 +38,7 @@ export default function StatusBar({ botId, pluginName, activeFile, onTogglePanel
                     <div
                         className="flex items-center gap-3 cursor-pointer hover:bg-primary-foreground/20 px-2 py-0.5 rounded"
                         onClick={onProblemsClick}
-                        title="Показать проблемы"
+                        title=t('titles.pokazatProblemy')
                     >
                         {errorCount > 0 && (
                             <div className="flex items-center gap-1">
@@ -57,7 +59,7 @@ export default function StatusBar({ botId, pluginName, activeFile, onTogglePanel
                 <div
                     className="cursor-pointer hover:bg-primary-foreground/20 px-1 rounded"
                     onClick={() => setShowShortcutsHelp(true)}
-                    title="Горячие клавиши"
+                    title=t('titles.keyboardShortcuts')
                 >
                     <Keyboard className="h-3 w-3" />
                 </div>

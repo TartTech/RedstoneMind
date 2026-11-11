@@ -23,10 +23,10 @@ import {
 } from '@/utils/pluginPresentation';
 
 const SORT_OPTIONS = [
-  { id: 'popular', icon: Icons.TrendingUp, labelKey: 'browser.sort.popular', defaultLabel: 'Популярные' },
-  { id: 'newest', icon: Icons.Clock, labelKey: 'browser.sort.newest', defaultLabel: 'Новые' },
-  { id: 'alphabetical', icon: Icons.ArrowDownAZ, labelKey: 'browser.sort.alphabetical', defaultLabel: 'По алфавиту' },
-  { id: 'downloads', icon: Icons.Download, labelKey: 'browser.sort.downloads', defaultLabel: 'По загрузкам' },
+  { id: 'popular', icon: Icons.TrendingUp, labelKey: 'browser.sort.popular', defaultLabel: t('labels.populyarnye') },
+  { id: 'newest', icon: Icons.Clock, labelKey: 'browser.sort.newest', defaultLabel: t('labels.novye') },
+  { id: 'alphabetical', icon: Icons.ArrowDownAZ, labelKey: 'browser.sort.alphabetical', defaultLabel: t('labels.poAlfavitu') },
+  { id: 'downloads', icon: Icons.Download, labelKey: 'browser.sort.downloads', defaultLabel: t('labels.poZagruzkam') },
 ];
 
 export default function PluginBrowserView({ botId, isActive, installedPlugins, onInstallSuccess }) {
@@ -368,7 +368,7 @@ export default function PluginBrowserView({ botId, isActive, installedPlugins, o
                 variant={viewMode === 'grid' ? 'secondary' : 'ghost'}
                 size="icon"
                 onClick={() => setViewMode('grid')}
-                aria-label={t('browser.viewGrid', { defaultValue: 'Сетка' })}
+                aria-label={t('browser.viewGrid', { defaultValue: 'Setka' })}
               >
                 <Icons.LayoutGrid className="h-4 w-4" />
               </Button>
@@ -376,7 +376,7 @@ export default function PluginBrowserView({ botId, isActive, installedPlugins, o
                 variant={viewMode === 'list' ? 'secondary' : 'ghost'}
                 size="icon"
                 onClick={() => setViewMode('list')}
-                aria-label={t('browser.viewList', { defaultValue: 'Список' })}
+                aria-label={t('browser.viewList', { defaultValue: 'Spisok' })}
               >
                 <Icons.List className="h-4 w-4" />
               </Button>
@@ -389,7 +389,7 @@ export default function PluginBrowserView({ botId, isActive, installedPlugins, o
                 checked={showUnofficial}
                 onCheckedChange={(checked) => setShowUnofficial(checked === true)}
               />
-              <span>{t('browser.showUnofficial', { defaultValue: 'Неофициальные' })}</span>
+              <span>{t('browser.showUnofficial', { defaultValue: 'Neofitsialnye' })}</span>
             </label>
             {PLUGIN_BROWSER_CATEGORIES.map(({ id, iconName, color, defaultLabel }) => {
               const Icon = Icons[iconName] || Icons.LayoutGrid;

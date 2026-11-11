@@ -1,8 +1,8 @@
 import { create } from 'zustand';
 
 /**
- * Store для режима выбора координат в 3D Viewer
- * Используется нодами navigation:go_to для выбора точки назначения
+ * Store for режима выбора координат в 3D Viewer
+ * Используется нодами navigation:go_to for выбора точки назначения
  */
 export const useCoordinatePickerStore = create((set, get) => ({
   isPickMode: false,
@@ -27,7 +27,7 @@ export const useCoordinatePickerStore = create((set, get) => ({
   },
 
   /**
-   * Завершить выбор (вызывается при клике на блок)
+   * Завершить выбор (callsся при клике на блок)
    * @param {Object} coords - {x, y, z}
    */
   confirmSelection: (coords) => {
@@ -44,7 +44,7 @@ export const useCoordinatePickerStore = create((set, get) => ({
   },
 
   /**
-   * Отменить выбор
+   * Undo выбор
    */
   cancelPicking: () => {
     set({
@@ -56,14 +56,14 @@ export const useCoordinatePickerStore = create((set, get) => ({
   },
 
   /**
-   * Обновить координаты под курсором
+   * Refresh координаты под курсором
    */
   setHoveredCoords: (coords) => {
     set({ hoveredCoords: coords });
   },
 
   /**
-   * Установить выбранные координаты (до подтверждения)
+   * Install выбранные координаты (до подтверждения)
    */
   setSelectedCoords: (coords) => {
     set({ selectedCoords: coords });

@@ -268,7 +268,7 @@ const VisualEditorCanvas = () => {
         <Controls />
       </ReactFlow>
 
-      {/* Collaborative overlays - рендерим вне ReactFlow для правильного позиционирования */}
+      {/* Collaborative overlays - рендерим вне ReactFlow for правильного позиционирования */}
       <CollaborativeCursors flowToScreenPosition={flowToScreenPosition} />
       <CollaborativeConnections flowToScreenPosition={flowToScreenPosition} />
       {isMenuOpen && (

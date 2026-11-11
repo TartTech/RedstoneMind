@@ -2,13 +2,13 @@ import { NodeDefinition } from '../../core/registry';
 
 /**
  * Определение ноды action:send_message
- * Отправка сообщения с инлайн-полями для ввода
+ * Sending сообщения с инлайн-полями for ввода
  */
 export const actionSendMessageDefinition = new NodeDefinition({
   type: 'action:send_message',
   category: 'action',
-  label: 'Отправить сообщение',
-  description: 'Отправляет сообщение в чат. Поддерживает переменные в формате {varName}',
+  label: t('labels.sendSoobshchenie'),
+  description: t('descriptions.otpravlyaetSoobshchenieVChatPodderzhivaetPeremennye'),
 
 
 

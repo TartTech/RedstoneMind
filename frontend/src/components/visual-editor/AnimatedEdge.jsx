@@ -3,7 +3,7 @@ import { BaseEdge, EdgeLabelRenderer, getBezierPath, getStraightPath } from 'rea
 import { useVisualEditorStore } from '@/stores/visualEditorStore';
 
 /**
- * Кастомный edge компонент с анимацией для трассировки выполнения
+ * Кастомный edge компонент с анимацией for трассировки execution
  */
 export default function AnimatedEdge({
   id,

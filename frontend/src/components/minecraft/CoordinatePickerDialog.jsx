@@ -13,9 +13,9 @@ import { loadBlockTextures, getBlockMaterial } from '@/pages/Bot/blockTextureLoa
 import { getEntityGeometry, getEntityMaterial, isEntityBlock } from '@/pages/Bot/entityModels';
 
 /**
- * Модальное окно для выбора координат в 3D мире Minecraft
- * @param {boolean} targetBlock - если true, возвращает точные координаты блока;
- *                                если false (default), добавляет +1 к Y для навигации (точка над блоком)
+ * Modal window for выбора координат в 3D мире Minecraft
+ * @param {boolean} targetBlock - if true, returns точные координаты блока;
+ * if false (default), добавляет +1 к Y for навигации (точка над блоком)
  */
 const CoordinatePickerDialog = ({ open, onClose, onSelect, currentCoords, targetBlock = false }) => {
   const { botId } = useParams();
@@ -41,7 +41,7 @@ const CoordinatePickerDialog = ({ open, onClose, onSelect, currentCoords, target
   const isDragging = useRef(false);
   const lastMouse = useRef({ x: 0, y: 0 });
 
-  // Подключение при открытии
+  // Connection при открытии
   useEffect(() => {
     if (open && botId) {
       setLoading(true);
@@ -53,7 +53,7 @@ const CoordinatePickerDialog = ({ open, onClose, onSelect, currentCoords, target
     };
   }, [open, botId]);
 
-  // Инициализация сцены ПОСЛЕ подключения
+  // Initialization сцены ПОСЛЕ подключения
   useEffect(() => {
     if (connected && canvasRef.current && !rendererRef.current) {
       initializeScene();
@@ -103,17 +103,17 @@ const CoordinatePickerDialog = ({ open, onClose, onSelect, currentCoords, target
     socket.on('viewer:state', (state) => {
       console.log('[CoordinatePicker] Got state:', state.position);
 
-      // Сохраняем позицию бота
+      // Сохраняем позицию botа
       if (state.position) {
         botPositionRef.current = state.position;
 
-        // Если камера уже есть - позиционируем
+        // Если камера уже exists - позиционируем
         if (cameraRef.current) {
           positionCameraAboveBot(state.position);
         }
       }
 
-      // Рендерим или сохраняем блоки
+      // Рендерим or сохраняем блоки
       if (state.blocks) {
         if (blocksGroupRef.current) {
           renderBlocks(state.blocks);
@@ -141,7 +141,7 @@ const CoordinatePickerDialog = ({ open, onClose, onSelect, currentCoords, target
   const positionCameraAboveBot = (pos) => {
     if (!cameraRef.current) return;
 
-    // Камера сзади-сверху от бота
+    // Камера сзади-сверху от botа
     cameraRef.current.position.set(pos.x - 10, pos.y + 20, pos.z + 10);
     cameraRef.current.lookAt(pos.x, pos.y, pos.z);
     console.log('[CoordinatePicker] Camera positioned at bot:', pos);
@@ -165,7 +165,7 @@ const CoordinatePickerDialog = ({ open, onClose, onSelect, currentCoords, target
 
     const camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 500);
 
-    // Если уже есть позиция бота - используем её
+    // Если уже exists позиция botа - используем её
     if (botPositionRef.current) {
       const pos = botPositionRef.current;
       camera.position.set(pos.x - 10, pos.y + 20, pos.z + 10);
@@ -181,7 +181,7 @@ const CoordinatePickerDialog = ({ open, onClose, onSelect, currentCoords, target
     dirLight.position.set(50, 100, 50);
     scene.add(dirLight);
 
-    // Группа блоков
+    // Группа blocks
     const blocksGroup = new THREE.Group();
     scene.add(blocksGroup);
     blocksGroupRef.current = blocksGroup;
@@ -206,7 +206,7 @@ const CoordinatePickerDialog = ({ open, onClose, onSelect, currentCoords, target
     scene.add(marker);
     targetMarkerRef.current = marker;
 
-    // Показываем маркер если есть текущие координаты
+    // Показываем маркер if exists текущие координаты
     if (currentCoords) {
       marker.position.set(currentCoords.x + 0.5, currentCoords.y + 1.25, currentCoords.z + 0.5);
       marker.visible = true;
@@ -223,7 +223,7 @@ const CoordinatePickerDialog = ({ open, onClose, onSelect, currentCoords, target
       setLoading(false);
     }
 
-    // Анимация
+    // Animation
     const animate = () => {
       animationFrameRef.current = requestAnimationFrame(animate);
 
@@ -274,10 +274,10 @@ const CoordinatePickerDialog = ({ open, onClose, onSelect, currentCoords, target
     });
 
     Object.entries(blocksByMat).forEach(([name, list]) => {
-      // Проверяем, является ли блок entity-блоком (сундук, шалкер и т.д.)
+      // Проверяем, is ли блок entity-блоком (сундук, шалкер и т.д.)
       const isEntity = isEntityBlock(name);
 
-      // Используем разные геометрии и материалы для entity-блоков
+      // Используем разные геометрии и материалы for entity-blocks
       const blockGeometry = isEntity ? getEntityGeometry(name) : geometry;
       const material = isEntity ? getEntityMaterial(name) : getBlockMaterial(name);
 
@@ -296,7 +296,7 @@ const CoordinatePickerDialog = ({ open, onClose, onSelect, currentCoords, target
     console.log('[CoordinatePicker] Rendered', blocks.length, 'blocks');
   }, []);
 
-  // Обработчики мыши
+  // Handlerи мыши
   const handleMouseMove = (e) => {
     const canvas = canvasRef.current;
     const camera = cameraRef.current;
@@ -325,7 +325,7 @@ const CoordinatePickerDialog = ({ open, onClose, onSelect, currentCoords, target
       return;
     }
 
-    // Raycast для highlight
+    // Raycast for highlight
     const rect = canvas.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
     const y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
@@ -465,7 +465,7 @@ const CoordinatePickerDialog = ({ open, onClose, onSelect, currentCoords, target
             <div className="text-cyan-400/70 text-3xl font-thin select-none">+</div>
           </div>
 
-          {/* Координаты */}
+          {/* Coordinates */}
           <div className="absolute top-3 left-3 bg-black/80 text-white px-3 py-2 rounded text-sm">
             {selectedCoords ? (
               <span className="text-green-400 font-mono">
@@ -476,7 +476,7 @@ const CoordinatePickerDialog = ({ open, onClose, onSelect, currentCoords, target
             )}
           </div>
 
-          {/* Загрузка */}
+          {/* Loading */}
           {loading && (
             <div className="absolute inset-0 flex items-center justify-center bg-slate-950/90">
               <div className="text-center">

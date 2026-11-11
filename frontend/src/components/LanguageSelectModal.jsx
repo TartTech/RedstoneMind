@@ -11,18 +11,18 @@ const LANGUAGE_CHOSEN_KEY = 'redstonemind-language-chosen';
 const languages = [
   {
     code: 'ru',
-    name: 'Русский',
+    name: t('russkiy'),
     nativeName: 'Russian',
     flagSrc: '/flags/ru.svg',
-    greeting: 'Добро пожаловать!',
-    description: 'Русский язык интерфейса',
+    greeting: t('dobroPozhalovat'),
+    description: t('descriptions.russkiyYazykInterfeysa'),
     gradient: 'from-blue-500 via-blue-600 to-red-500',
     bgGradient: 'from-blue-500/10 to-red-500/10',
   },
   {
     code: 'en',
     name: 'English',
-    nativeName: 'Английский',
+    nativeName: t('angliyskiy'),
     flagSrc: '/flags/en.svg',
     greeting: 'Welcome!',
     description: 'English interface language',
@@ -59,13 +59,13 @@ export default function LanguageSelectModal() {
     // Меняем язык
     await i18n.changeLanguage(selectedLang);
 
-    // Сохраняем в localStorage (i18n делает это автоматически, но для надёжности)
+    // Сохраняем в localStorage (i18n делает это автоматически, но for надёжности)
     localStorage.setItem(LANGUAGE_STORAGE_KEY, selectedLang);
 
     // Отмечаем что пользователь явно выбрал язык
     localStorage.setItem(LANGUAGE_CHOSEN_KEY, 'true');
 
-    // Небольшая задержка для анимации
+    // Небольшая задержка for анимации
     setTimeout(() => {
       setIsOpen(false);
       setIsAnimating(false);
@@ -155,7 +155,7 @@ export default function LanguageSelectModal() {
                 />
               </div>
 
-              {/* Название */}
+              {/* Name */}
               <div className="space-y-1 text-center">
                 <div className={cn(
                   "font-semibold text-lg transition-colors",
@@ -188,7 +188,7 @@ export default function LanguageSelectModal() {
           ))}
         </div>
 
-        {/* Кнопка подтверждения */}
+        {/* Button подтверждения */}
         <Button
           onClick={handleConfirm}
           disabled={!selectedLang || isAnimating}
@@ -206,12 +206,12 @@ export default function LanguageSelectModal() {
             </div>
           ) : (
             <span>
-              {selectedLang === 'ru' ? 'Продолжить' : selectedLang === 'en' ? 'Continue' : 'Select language'}
+              {selectedLang === 'ru' ? t('prodolzhit') : selectedLang === 'en' ? 'Continue' : 'Select language'}
             </span>
           )}
         </Button>
 
-        {/* Подсказка */}
+        {/* Tooltip */}
         <p className="relative text-xs text-center text-muted-foreground/60">
           You can change the language later in settings
           <br />

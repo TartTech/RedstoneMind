@@ -69,15 +69,15 @@ export default function PluginStoreCard({ plugin, isInstalled, isInstalling, onI
             : 'border-sky-700/50 bg-background text-sky-200'
         )}>
           {plugin.listing === 'unofficial'
-            ? t('badges.unofficial', { defaultValue: 'Неофициальный' })
-            : t('badges.official', { defaultValue: 'Официальный' })}
+            ? t('badges.unofficial', { defaultValue: 'Neofitsialnyy' })
+            : t('badges.official', { defaultValue: 'Ofitsialnyy' })}
         </Badge>
 
         {plugin.isTop3 && (
           <div className="absolute left-0 top-0 z-10 flex flex-col items-start gap-1">
             <Badge className="rounded-none rounded-br-md border-0 bg-gradient-to-r from-orange-500 to-red-500 px-2 py-0.5 text-[10px] text-white shadow-sm">
               <TrendingUp className="mr-1 h-3 w-3" />
-              {t('badges.popular', { defaultValue: 'Популярное' })}
+              {t('badges.popular', { defaultValue: 'Populyarnoe' })}
             </Badge>
           </div>
         )}
@@ -101,7 +101,7 @@ export default function PluginStoreCard({ plugin, isInstalled, isInstalling, onI
 
               <CardDescription className="mt-1">
                 <span>
-                  {t('labels.by', { defaultValue: 'от' })} {authorLabel}
+                  {t('labels.by', { defaultValue: 'ot' })} {authorLabel}
                 </span>
               </CardDescription>
             </div>
@@ -237,21 +237,21 @@ export default function PluginStoreCard({ plugin, isInstalled, isInstalling, onI
             {isInstalling ? (
               <span className="flex w-full items-center justify-center">
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                {t('messages.installing', { defaultValue: 'Установка...' })}
+                {t('messages.installing', { defaultValue: 'Ustanovka...' })}
               </span>
             ) : !safeRepoUrl ? (
               <span className="flex w-full items-center justify-center">
-                {t('actions.unavailable', { defaultValue: 'Недоступно' })}
+                {t('actions.unavailable', { defaultValue: 'Nedostupno' })}
               </span>
             ) : isInstalled ? (
               <span className="flex w-full items-center justify-center">
                 <CheckCircle className="mr-2 h-4 w-4" />
-                {t('status.installed', { defaultValue: 'Установлен' })}
+                {t('status.installed', { defaultValue: 'Ustanovlen' })}
               </span>
             ) : (
               <span className="flex w-full items-center justify-center">
                 <Download className="mr-2 h-4 w-4" />
-                {t('actions.install', { defaultValue: 'Установить' })}
+                {t('actions.install', { defaultValue: 'Ustanovit' })}
               </span>
             )}
 

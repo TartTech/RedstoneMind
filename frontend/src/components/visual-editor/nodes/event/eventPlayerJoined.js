@@ -7,8 +7,8 @@ import { NodeDefinition } from '../../core/registry';
 export const eventPlayerJoinedDefinition = new NodeDefinition({
   type: 'event:playerJoined',
   category: 'event',
-  label: 'Игрок зашел',
-  description: 'Срабатывает, когда игрок заходит на сервер',
+  label: t('labels.playerZashel'),
+  description: t('descriptions.srabatyvaetKogdaIgrokZakhoditNaServer'),
 
 
 

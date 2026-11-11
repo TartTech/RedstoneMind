@@ -1,0 +1,70 @@
+{
+  "notFound": {
+    "title": "Plugin not found",
+    "description": "Failed to load plugin information.",
+    "back": "Go back"
+  },
+  "backToStore": "Voltar to store",
+  "by": "by",
+  "buttons": {
+    "installing": "Instalaring...",
+    "installed": "Instalado",
+    "install": "Instalar",
+    "fork": "Fork",
+    "downloadZip": "Baixar zip",
+    "settings": "Configurações",
+    "delete": "Excluir"
+  },
+  "status": {
+    "enabled": "Ativado",
+    "disabled": "Desativado",
+    "title": "Plugin status"
+  },
+  "stats": {
+    "totalDownloads": "Total downloads",
+    "updated": "Atualizaçãod",
+    "commands": "Comandos",
+    "events": "Eventos"
+  },
+  "dates": {
+    "today": "Hoje",
+    "yesterday": "Ontem",
+    "daysAgo": "{{count}} dias atrás",
+    "weeksAgo": "{{count}} weeks ago",
+    "monthsAgo": "{{count}} months ago"
+  },
+  "tabs": {
+    "overview": "Overview",
+    "changelog": "Changelog",
+    "commands": "Comandos"
+  },
+  "overview": {
+    "description": "Descrição",
+    "noDescription": "No description available.",
+    "info": "Informação",
+    "version": "Versão",
+    "dependencies": "Dependências",
+    "supportedServers": "Supported servers"
+  },
+  "sections": {
+    "pluginCommands": "Plugin commands",
+    "eventGraphs": "Evento graphs"
+  },
+  "deleteDialog": {
+    "title": "Excluir plugin \"{{name}}\"?",
+    "description": "This action cannot be undone. Todos plugin files and settings will be removed for this bot.",
+    "confirm": "Sim, delete plugin"
+  },
+  "changelog": {
+    "title": "Release notes",
+    "empty": {
+      "title": "No release notes found",
+      "description": "Release notes can be added to the plugin's GitHub release"
+    }
+  },
+  "messages": {
+    "statsError": "Failed to load statistics",
+    "releaseError": "Failed to load release notes",
+    "error": "Erro"
+  }
+}

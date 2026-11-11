@@ -54,7 +54,7 @@ const resolveAuthor = (...candidates) => {
     }
   }
 
-  return translatePlugins('labels.unknownAuthor', 'Неизвестный автор');
+  return translatePlugins('labels.unknownAuthor', t('labels.unknownAuthor'));
 };
 
 const executePluginOperation = async (get, botId, apiEndpoint, params, successMessage) => {
@@ -188,7 +188,7 @@ export const createPluginSlice = (set, get) => {
             description:
               pluginData.description ||
               manifest.description ||
-              translatePlugins('labels.noDescription', 'Нет описания.'),
+              translatePlugins('labels.noDescription', t('labels.noDescription')),
             commands: pluginData.commands || [],
             eventGraphs: pluginData.eventGraphs || [],
           };
@@ -289,7 +289,7 @@ export const createPluginSlice = (set, get) => {
       await apiHelper(
         `/api/bots/${botId}/plugins/${pluginId}`,
         { method: 'DELETE' },
-        translatePlugins('toasts.pluginDeleted', 'Плагин "{{name}}" удален.', { name: pluginName })
+        translatePlugins('toasts.pluginDeleted', t('messages.pluginNameUdalen'), { name: pluginName })
       );
       await get().fetchInstalledPlugins(botId, true);
     },
@@ -305,8 +305,8 @@ export const createPluginSlice = (set, get) => {
           body: JSON.stringify({ repoUrl, tag }),
         });
         toast({
-          title: translatePlugins('ui.success', 'Успех!'),
-          description: translatePlugins('toasts.pluginInstalled', 'Плагин "{{name}}" успешно установлен.', {
+          title: translatePlugins('ui.success', t('titles.success4')),
+          description: translatePlugins('toasts.pluginInstalled', t('messages.pluginNameUspeshnoUstanovlen'), {
             name: data.name,
           }),
         });
@@ -327,8 +327,8 @@ export const createPluginSlice = (set, get) => {
           body,
         });
         toast({
-          title: translatePlugins('ui.success', 'Успех!'),
-          description: translatePlugins('toasts.pluginInstalled', 'Плагин "{{name}}" успешно установлен.', {
+          title: translatePlugins('ui.success', t('titles.success5')),
+          description: translatePlugins('toasts.pluginInstalled', t('messages.pluginNameUspeshnoUstanovlen2'), {
             name: data.name,
           }),
         });
@@ -345,8 +345,8 @@ export const createPluginSlice = (set, get) => {
           body: JSON.stringify({ path }),
         });
         toast({
-          title: translatePlugins('ui.success', 'Успех!'),
-          description: translatePlugins('toasts.pluginInstalled', 'Плагин "{{name}}" успешно установлен.', {
+          title: translatePlugins('ui.success', t('titles.success6')),
+          description: translatePlugins('toasts.pluginInstalled', t('messages.pluginNameUspeshnoUstanovlen3'), {
             name: data.name,
           }),
         });
@@ -373,8 +373,8 @@ export const createPluginSlice = (set, get) => {
 
         if (typeof previousCount === 'number' && previousCount !== updatesCount) {
           toast({
-            title: translatePlugins('toasts.updateCheckCompleted', 'Проверка завершена'),
-            description: translatePlugins('toasts.updateCheckFound', 'Найдено обновлений: {{count}}', {
+            title: translatePlugins('toasts.updateCheckCompleted', t('messages.proverkaZavershena')),
+            description: translatePlugins('toasts.updateCheckFound', t('messages.naydenoObnovleniyCount'), {
               count: updatesCount,
             }),
           });
@@ -395,7 +395,7 @@ export const createPluginSlice = (set, get) => {
           method: 'POST',
           body: JSON.stringify({ targetTag, targetRepoUrl: updateInfo?.targetRepoUrl || null }),
         },
-        translatePlugins('toasts.pluginUpdated', 'Плагин обновлен. Перезапустите бота.')
+        translatePlugins('toasts.pluginUpdated', t('messages.pluginObnovlenPerezapustiteBota'))
       );
 
       if (pluginToUpdate) {
@@ -420,7 +420,7 @@ export const createPluginSlice = (set, get) => {
           method: 'POST',
           body: JSON.stringify({ name, template }),
         },
-        translatePlugins('toasts.pluginCreated', 'Плагин "{{name}}" успешно создан.', { name })
+        translatePlugins('toasts.pluginCreated', t('messages.pluginNameUspeshnoSozdan'), { name })
       ),
 
     updatePluginManifest: async (botId, pluginName, manifestData) => {
@@ -442,7 +442,7 @@ export const createPluginSlice = (set, get) => {
         botId,
         `/api/bots/${botId}/plugins/ide/${pluginName}/fork`,
         { method: 'POST' },
-        translatePlugins('toasts.pluginForked', 'Плагин "{{name}}" успешно превращен в локальный.', {
+        translatePlugins('toasts.pluginForked', t('messages.pluginNameUspeshnoPrevrashchenVLokalnyy'), {
           name: pluginName,
         })
       ),
@@ -451,7 +451,7 @@ export const createPluginSlice = (set, get) => {
       await apiHelper(
         `/api/plugins/${pluginId}/reload`,
         { method: 'POST' },
-        translatePlugins('toasts.pluginReloaded', 'Плагин перезагружен. Настройки не изменены.')
+        translatePlugins('toasts.pluginReloaded', t('messages.pluginPerezagruzhenSettingsNeIzmeneny'))
       );
       await get().fetchInstalledPlugins(botId, true);
     },

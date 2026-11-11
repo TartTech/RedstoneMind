@@ -2,13 +2,13 @@ import { NodeDefinition } from '../../core/registry';
 
 /**
  * Определение ноды event:command
- * Стартовая точка для графа команды
+ * Стартовая точка for графа команды
  */
 export const eventCommandDefinition = new NodeDefinition({
   type: 'event:command',
   category: 'event',
-  label: '▶️ При выполнении команды',
-  description: 'Стартовая точка для графа команды',
+  label: t('labels.priVypolneniiKomandy'),
+  description: t('descriptions.startovayaTochkaDlyaGrafaKomandy'),
 
 
 

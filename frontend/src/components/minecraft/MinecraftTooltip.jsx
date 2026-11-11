@@ -6,8 +6,8 @@ import { McText } from './mcText';
  *
  * Логика:
  *   - default: справа-снизу (offset +12, +12)
- *   - если справа не помещается → переносим влево: x - width - 8
- *   - если снизу не помещается → переносим вверх: y - height - 8
+ * - if справа не помещается → переносим влево: x - width - 8
+ * - if снизу не помещается → переносим вверх: y - height - 8
  */
 const MinecraftTooltip = ({ x, y, item }) => {
     const ref = useRef(null);
@@ -23,7 +23,7 @@ const MinecraftTooltip = ({ x, y, item }) => {
         const margin = 6;
         const offset = 14;
 
-        // По умолчанию — справа от курсора
+        // By default — справа от курсора
         let left = x + offset;
         if (left + tw > vw - margin) {
             // Не помещается справа — слева от курсора
@@ -33,7 +33,7 @@ const MinecraftTooltip = ({ x, y, item }) => {
         if (left < margin) left = margin;
         if (left + tw > vw - margin) left = Math.max(margin, vw - tw - margin);
 
-        // По умолчанию — снизу
+        // By default — снизу
         let top = y + offset;
         if (top + th > vh - margin) {
             top = y - th - offset;

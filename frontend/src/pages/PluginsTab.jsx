@@ -121,9 +121,9 @@ export default function PluginsTab() {
         try {
             const updatedPlugin = await forkPlugin(intBotId, plugin.name);
             if (updatedPlugin) {
-                // Обновляем список плагинов чтобы отобразить изменение sourceType
+                // Обновляем список pluginов чтобы отобразить изменение sourceType
                 await fetchInstalledPlugins(intBotId);
-                // Переходим в редактор (имя плагина не меняется)
+                // Переходим в редактор (имя pluginа не меняется)
                 navigate(`/bots/${intBotId}/plugins/edit/${updatedPlugin.name}`);
             }
         } finally {

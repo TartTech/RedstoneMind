@@ -7,8 +7,8 @@ import { NodeDefinition } from '../../core/registry';
 export const stringToUpperDefinition = new NodeDefinition({
   type: 'string:to_upper',
   category: 'string',
-  label: 'В верхний регистр',
-  description: 'Преобразует строку в верхний регистр (UPPERCASE)',
+  label: t('labels.vVerkhniyRegistr'),
+  description: t('descriptions.preobrazuetStrokuVVerkhniyRegistrUppercase'),
 
 
 

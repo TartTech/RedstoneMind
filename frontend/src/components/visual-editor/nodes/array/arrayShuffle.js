@@ -3,8 +3,8 @@ import { NodeDefinition } from '../../core/registry';
 export const arrayShuffleDefinition = new NodeDefinition({
   type: 'array:shuffle',
   category: 'array',
-  label: 'Перемешать массив',
-  description: 'Возвращает новый массив с элементами в случайном порядке',
+  label: t('labels.peremeshatMassiv'),
+  description: t('descriptions.vozvrashchaetNovyyMassivSElementamiV'),
 
 
 

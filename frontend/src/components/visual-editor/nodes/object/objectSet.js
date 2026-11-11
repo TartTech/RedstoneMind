@@ -2,13 +2,13 @@ import { NodeDefinition } from '../../core/registry';
 
 /**
  * Определение ноды object:set
- * Добавляет или изменяет значение по ключу в объекте
+ * Добавляет or изменяет значение по ключу в объекте
  */
 export const objectSetDefinition = new NodeDefinition({
   type: 'object:set',
   category: 'object',
-  label: 'Установить значение',
-  description: 'Добавляет или изменяет значение по ключу в объекте',
+  label: t('labels.installZnachenie'),
+  description: t('descriptions.dobavlyaetIliIzmenyaetZnacheniePoKlyuchu'),
 
 
 

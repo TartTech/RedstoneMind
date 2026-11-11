@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 /**
- * Hook для глобальных горячих клавиш IDE
+ * Hook for глобальных горячих клавиш IDE
  */
 export const useKeyboardShortcuts = ({
     onToggleSidebar,

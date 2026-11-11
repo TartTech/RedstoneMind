@@ -5,8 +5,8 @@ import { MapPin } from 'lucide-react';
 import CoordinatePickerDialog from '@/components/minecraft/CoordinatePickerDialog';
 
 /**
- * Компонент настроек для navigation:go_to ноды
- * Включает кнопку для выбора координат в 3D Viewer (модальное окно)
+ * Component настроек for navigation:go_to ноды
+ * Включает кнопку for выбора координат в 3D Viewer (модальное окно)
  */
 const NavigationGoToSettings = ({ nodeId, data, updateNodeData }) => {
   const { t } = useTranslation('visual-editor');

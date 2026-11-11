@@ -7,8 +7,8 @@ import { NodeDefinition } from '../../core/registry';
 export const eventRawMessageDefinition = new NodeDefinition({
   type: 'event:raw_message',
   category: 'event',
-  label: 'Сырое сообщение',
-  description: 'Срабатывает при получении любого сообщения в сыром виде (до парсинга)',
+  label: t('labels.syroeSoobshchenie'),
+  description: t('descriptions.srabatyvaetPriPolucheniiLyubogoSoobshcheniyaV'),
 
 
 

@@ -8,8 +8,8 @@ import TimeCompareSettings from './TimeCompareSettings';
 export const timeCompareDefinition = new NodeDefinition({
   type: 'time:compare',
   category: 'time',
-  label: 'Сравнить даты',
-  description: 'Сравнивает две даты',
+  label: t('labels.sravnitDaty'),
+  description: t('descriptions.sravnivaetDveDaty'),
 
 
 

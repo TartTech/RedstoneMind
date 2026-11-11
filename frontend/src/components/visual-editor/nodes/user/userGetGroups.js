@@ -7,8 +7,8 @@ import { NodeDefinition } from '../../core/registry';
 export const userGetGroupsDefinition = new NodeDefinition({
   type: 'user:get_groups',
   category: 'user',
-  label: 'Получить группы',
-  description: 'Возвращает группы пользователя',
+  label: t('labels.poluchitGruppy'),
+  description: t('descriptions.vozvrashchaetGruppyPolzovatelya'),
 
 
 

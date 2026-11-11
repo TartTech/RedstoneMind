@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
 /**
- * 3D модели для entity-блоков (сундуки, шалкеры)
+ * 3D модели for entity-blocks (сундуки, шалкеры)
  * Только блоки которые реально нуждаются в особой модели
  */
 
@@ -109,7 +109,7 @@ function createSimpleBoxGeometry(w = 0.875, h = 0.875, d = 0.875) {
 }
 
 /**
- * Получает геометрию для entity-блока
+ * Получает геометрию for entity-блока
  */
 export function getEntityGeometry(blockName) {
     const cleanName = blockName.replace(/^minecraft:/, '');
@@ -137,7 +137,7 @@ export function getEntityGeometry(blockName) {
 }
 
 /**
- * Получает материал для entity-блока
+ * Получает материал for entity-блока
  */
 export function getEntityMaterial(blockName) {
     const cleanName = blockName.replace(/^minecraft:/, '');
@@ -192,8 +192,8 @@ export function getEntityMaterial(blockName) {
 }
 
 /**
- * Проверяет, является ли блок entity-блоком
- * Только сундуки, шалкеры, бочки - они реально нуждаются в особой обработке
+ * Проверяет, is ли блок entity-блоком
+ * Только сундуки, шалкеры, бочки - они реально нуждаются в особой обраbotке
  */
 export function isEntityBlock(blockName) {
     const cleanName = blockName.replace(/^minecraft:/, '');

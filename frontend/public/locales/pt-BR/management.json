@@ -1,0 +1,223 @@
+{
+  "title": "Bot Management",
+  "description": "Configure users, groups, permissions and commands for bot {{username}}.",
+  "tabs": {
+    "users": "Usuários",
+    "groups": "Groups",
+    "permissions": "Permissões",
+    "commands": "Comandos",
+    "history": "History"
+  },
+  "messages": {
+    "success": "Sucesso",
+    "error": "Erro",
+    "commandCreated": "Command \"{{name}}\" created successfully.",
+    "commandCreateError": "Failed to create command",
+    "loadError": "Failed to load management data.",
+    "criticalError": "Critical error"
+  },
+  "dynamicInput": {
+    "placeholder": "Add item...",
+    "add": "Adicionar"
+  },
+  "users": {
+    "title": "Usuários",
+    "description": "List of all users who interacted with the bot.",
+    "searchPlaceholder": "Search by nickname...",
+    "blacklisted": "Blacklisted",
+    "table": {
+      "username": "Usuárioname",
+      "groups": "Groups",
+      "status": "Status",
+      "actions": "Ações",
+      "loading": "Carregando..."
+    },
+    "pagination": {
+      "showing": "Showing {{from}} - {{to}} of {{total}} users",
+      "previous": "Voltar",
+      "next": "Próximo",
+      "page": "Page {{page}} of {{totalPages}}"
+    },
+    "toast": {
+      "updated": "User {{name}} updated."
+    }
+  },
+  "groups": {
+    "title": "Groups",
+    "description": "List of all groups and their permissions for this bot.",
+    "create": "Create group",
+    "table": {
+      "name": "Nome",
+      "permissions": "Permissões",
+      "actions": "Ações",
+      "loading": "Carregando..."
+    },
+    "toast": {
+      "saved": "Group successfully {{action}}.",
+      "deleted": "Group deleted."
+    },
+    "actions": {
+      "created": "created",
+      "updated": "updated"
+    },
+    "errors": {
+      "missingBotId": "Failed to determine bot ID.",
+      "deleteSource": "Cannot delete a group with source \"{{owner}}\"."
+    },
+    "deleteDialog": {
+      "title": "Delete group \"{{name}}\"?",
+      "description": "This action cannot be undone. Users in this group will lose the corresponding permissions.",
+      "confirm": "Yes, delete group"
+    }
+  },
+  "permissionsSection": {
+    "title": "Permissões",
+    "description": "Complete list of all permissions registered for this bot.",
+    "create": "Create permission",
+    "table": {
+      "permission": "Permissão",
+      "description": "Descrição",
+      "source": "Source",
+      "loading": "Carregando..."
+    },
+    "toast": {
+      "created": "New permission created successfully."
+    },
+    "createDialog": {
+      "title": "Create new permission",
+      "description": "Permissões are used for fine-grained access control to commands.",
+      "nameLabel": "Permission name (for example, plugin.name.action)",
+      "descriptionLabel": "Descrição",
+      "cancel": "Cancelar",
+      "create": "Criar",
+      "creating": "Creating..."
+    }
+  },
+  "commandEdit": {
+    "title": "Edit command: {{name}}",
+    "enabled": "Command enabled",
+    "aliases": "Aliases",
+    "aliasesPlaceholder": "e.g., ping",
+    "aliasesDescription": "Adicionaritional names to call the command.",
+    "cooldown": "Cooldown (seconds)",
+    "requiredPermission": "Required permission",
+    "selectPermission": "Select permission...",
+    "noPermission": "Nãot required",
+    "allowedChatTypes": "Todosowed chat types",
+    "chatTypesPlaceholder": "e.g., trade",
+    "chatTypesDescription": "Chat types where the command will work.",
+    "cancel": "Cancelar",
+    "save": "Salvar",
+    "saving": "Saving..."
+  },
+  "createCommand": {
+    "title": "Create new command",
+    "description": "Enter name and description for your new command. You can configure it later.",
+    "name": "Nome",
+    "commandDescription": "Descrição",
+    "create": "Criar"
+  },
+  "commandHistory": {
+    "title": "Comando history",
+    "description": "Who called which command on this bot.",
+    "command": "Comando",
+    "empty": "Não calls yet.",
+    "sinceStart": "Since start",
+    "allTime": "Todos time",
+    "allTimeHint": "Stored in the database and kept after a panel restart."
+  },
+  "commandDetail": {
+    "title": "Comando: {{name}}",
+    "tabOverview": "Overview",
+    "tabSettings": "Configurações",
+    "tabHistory": "History",
+    "historyLoading": "Loading history...",
+    "historyError": "Failed to load call history.",
+    "historyEmpty": "Nãobody has called this command yet.",
+    "historyHint": "Shows calls since the panel started. The list starts over after a restart.",
+    "historyCount": "Total: {{count}}",
+    "historyUser": "Who",
+    "historyChat": "Chat",
+    "historyWhen": "When",
+    "historyArgs": "Arguments",
+    "historyResult": "Resultado",
+    "historyOk": "Ok",
+    "historyFail": "Erro",
+    "usage": "Usage",
+    "arguments": "Arguments",
+    "argument": "Argument",
+    "type": "Tipo",
+    "required": "Required",
+    "yes": "Sim",
+    "no": "Não",
+    "source": "Source",
+    "enabled": "Command enabled",
+    "aliases": "Aliases",
+    "cooldown": "Cooldown (sec)",
+    "requiredPermission": "Required permission",
+    "noPermission": "Nãot required",
+    "allowedChatTypes": "Todosowed chat types",
+    "close": "Fechar",
+    "saveSettings": "Salvar configurações"
+  },
+  "userEdit": {
+    "title": "Edit user: {{name}}",
+    "description": "Manage groups and blacklist status.",
+    "blacklist": "Blacklist",
+    "blacklistDescription": "Blacklisted user cannot use commands.",
+    "userGroups": "Usuário groups",
+    "cancel": "Cancelar",
+    "save": "Salvar",
+    "saving": "Saving..."
+  },
+  "commands": {
+    "title": "Comandos",
+    "activeCount": "{{active}} of {{total}} active",
+    "description": "List of all commands available to the bot",
+    "import": "Importar",
+    "create": "Criar",
+    "searchPlaceholder": "Search by name or description...",
+    "sort": {
+      "name": "By name",
+      "plugin": "By plugin"
+    },
+    "sourceFilter": {
+      "all": "All sources",
+      "system": "System"
+    },
+    "table": {
+      "enabled": "On",
+      "command": "Comando",
+      "type": "Tipo",
+      "source": "Source",
+      "aliases": "Aliases",
+      "permission": "Perm",
+      "cooldown": "CD",
+      "actions": "Ações"
+    },
+    "loading": "Carregando...",
+    "notFound": "Comandos not found",
+    "empty": "No commands",
+    "open": "Abrir",
+    "export": "Exportar",
+    "delete": "Excluir",
+    "noPermission": "Não",
+    "noPermissionTooltip": "This command can be used by everyone",
+    "deleteConfirm": {
+      "title": "Tem certeza?",
+      "description": "Tem certeza you want to delete the command \"{{name}}\"? This action cannot be undone.",
+      "cancel": "Cancelar",
+      "delete": "Excluir"
+    },
+    "toast": {
+      "created": "Command \"{{name}}\" created successfully.",
+      "createError": "Failed to create command: {{error}}",
+      "deleted": "Command \"{{name}}\" deleted.",
+      "deleteError": "Failed to delete command: {{error}}",
+      "enabled": "Command \"{{name}}\" has been enabled.",
+      "disabled": "Command \"{{name}}\" has been disabled.",
+      "toggleError": "Failed to change command status.",
+      "updated": "Command \"{{name}}\" settings updated."
+    }
+  }
+}

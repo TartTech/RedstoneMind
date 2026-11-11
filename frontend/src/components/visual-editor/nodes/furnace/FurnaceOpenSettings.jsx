@@ -5,8 +5,8 @@ import { MapPin } from 'lucide-react';
 import CoordinatePickerDialog from '@/components/minecraft/CoordinatePickerDialog';
 
 /**
- * Компонент настроек для furnace:open ноды
- * Включает кнопку для выбора координат печки в 3D Viewer
+ * Component настроек for furnace:open ноды
+ * Включает кнопку for выбора координат печки в 3D Viewer
  */
 const FurnaceOpenSettings = ({ nodeId, data, updateNodeData }) => {
   const { t } = useTranslation('visual-editor');

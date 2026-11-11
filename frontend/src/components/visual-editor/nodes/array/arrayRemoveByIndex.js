@@ -7,8 +7,8 @@ import { NodeDefinition } from '../../core/registry';
 export const arrayRemoveByIndexDefinition = new NodeDefinition({
   type: 'array:remove_by_index',
   category: 'array',
-  label: 'Удалить по индексу',
-  description: 'Удаляет элемент из массива по его индексу',
+  label: t('labels.deletePoIndeksu'),
+  description: t('descriptions.udalyaetElementIzMassivaPoEgo'),
 
 
 

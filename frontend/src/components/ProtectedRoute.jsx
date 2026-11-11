@@ -3,8 +3,10 @@ import { Navigate } from 'react-router-dom';
 import { useAppStore } from '@/stores/appStore';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const ProtectedRoute = ({ children, requiredPermission }) => {
+    const { t } = useTranslation('common');
     const hasPermission = useAppStore((state) => state.hasPermission);
     const authInitialized = useAppStore((state) => state.authInitialized);
     const { toast } = useToast();
@@ -15,8 +17,8 @@ const ProtectedRoute = ({ children, requiredPermission }) => {
         if (authInitialized && !canAccess) {
             toast({
                 variant: 'destructive',
-                title: 'Доступ запрещен',
-                description: 'У вас недостаточно прав для просмотра этой страницы.',
+                title: t('titles.accessDenied'),
+                description: t('descriptions.uVasNedostatochnoPravDlyaProsmotra'),
             });
         }
     }, [canAccess, authInitialized, toast]);

@@ -1,5 +1,5 @@
 /**
- * Container ноды - работа с сундуками и другими контейнерами
+ * Container ноды - раbotа с сундуками и другими контейнерами
  */
 
 export { containerOpenDefinition } from './containerOpen';

@@ -19,7 +19,7 @@ const MINECRAFT_VERSIONS = [
     '1.12'
 ];
 
-// Блоки, излучающие свет (для имитации Block Light через emissive + PointLight)
+// Blockи, излучающие свет (for имитации Block Light через emissive + PointLight)
 // intensity: множитель эмиссии, light: радиус и яркость PointLight
 export const EMISSIVE_BLOCKS = new Map([
     ['glowstone',         { color: 0xffd966, intensity: 0.9, light: { color: 0xffd966, intensity: 1.5, distance: 16 } }],
@@ -50,10 +50,10 @@ export const EMISSIVE_BLOCKS = new Map([
     ['copper_bulb',       { color: 0xffd068, intensity: 1.0, light: { color: 0xffd068, intensity: 1.4, distance: 14 } }],
 ]);
 
-// Блоки с прозрачностью / cutout / частичной геометрией
+// Blockи с прозрачностью / cutout / частичной геометрией
 // transparency: 'cutout' = alpha-tested (стекло, листва, факел, лестница)
 //               'translucent' = blending (вода, лава)
-// shape: специальная форма блока ('full' по умолчанию, 'thin' для люков и плит, 'cross' для факелов и растений)
+// shape: специальная форма блока ('full' по умолчанию, 'thin' for люков и плит, 'cross' for факелов и растений)
 export const SPECIAL_BLOCKS = new Map([
     ['water',                { transparency: 'translucent', opacity: 0.7, shape: 'liquid', noTexture: false }],
     ['flowing_water',        { transparency: 'translucent', opacity: 0.7, shape: 'liquid' }],
@@ -80,7 +80,7 @@ export const SPECIAL_BLOCKS = new Map([
     ['powered_rail',         { transparency: 'cutout', shape: 'flat' }],
     ['detector_rail',        { transparency: 'cutout', shape: 'flat' }],
     ['activator_rail',       { transparency: 'cutout', shape: 'flat' }],
-    // Все люки (trapdoor) - тонкая горизонтальная плита
+    // All люки (trapdoor) - тонкая горизонтальная плита
     // Имена обрабатываются через функцию isTrapdoor()
 ]);
 
@@ -92,7 +92,7 @@ const TRANSLUCENT_GLASS_RE = /^(.*_)?(stained_glass|tinted_glass)$/;
 const LEAVES_RE = /_leaves$/;
 // Цветы/трава
 const FLOWER_RE = /^(dandelion|poppy|blue_orchid|allium|azure_bluet|red_tulip|orange_tulip|white_tulip|pink_tulip|oxeye_daisy|cornflower|lily_of_the_valley|wither_rose|sunflower|lilac|rose_bush|peony|tall_grass|grass|fern|tall_seagrass|seagrass|kelp|kelp_plant|sea_pickle|sapling|.*_sapling|short_grass|small_dripleaf|big_dripleaf|.*_bush|.*_sprouts|wheat|carrots|potatoes|beetroots)$/;
-// Все факелы
+// All факелы
 const TORCH_RE = /(^|_)(torch|wall_torch|soul_torch|soul_wall_torch|redstone_torch)$/;
 // Двери
 const DOOR_RE = /^[a-z_]*door$/;
@@ -350,7 +350,7 @@ export function getBlockMaterial(blockName) {
 }
 
 /**
- * Возвращает специальную геометрию блока (для люков, лестниц, факелов и т.д.)
+ * Возвращает специальную геометрию блока (for люков, лестниц, факелов и т.д.)
  * Если null - используется обычный куб.
  */
 export function getBlockGeometry(blockName) {
@@ -424,7 +424,7 @@ function makeXCrossGeometry(w, h) {
 }
 
 function makeCrossGeometry(w, h, thickness) {
-    // Два бокса крестом (для решёток / стеклянных панелей)
+    // Два бокса крестом (for решёток / стеклянных панелей)
     const g1 = new THREE.BoxGeometry(w, h, thickness);
     g1.translate(0.5, h / 2, 0.5);
     const g2 = new THREE.BoxGeometry(thickness, h, w);
@@ -432,7 +432,7 @@ function makeCrossGeometry(w, h, thickness) {
     return mergeGeometries([g1, g2]);
 }
 
-// Простой ручной merge для двух BufferGeometry (избегаем зависимости от BufferGeometryUtils)
+// Простой ручной merge for двух BufferGeometry (избегаем зависимости от BufferGeometryUtils)
 function mergeGeometries(geometries) {
     const positions = [];
     const normals = [];

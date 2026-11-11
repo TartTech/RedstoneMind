@@ -3,6 +3,7 @@ import { McText } from './mcText';
 import MinecraftTooltip from './MinecraftTooltip';
 import ItemIcon from './ItemIcon.jsx';
 import MinecraftGuiBackground, { detectGuiLayout } from './MinecraftGuiBackground.jsx';
+import { useTranslation } from 'react-i18next';
 
 /**
  * GUI-оверлей открытого контейнера с настоящими Minecraft текстурами.
@@ -19,13 +20,14 @@ const SCALE = 2;
 const SLOT_SIZE = 16;
 
 /**
- * Координаты слотов для chest с N рядами.
+ * Coordinates слотов for chest с N рядами.
  * Соответствует vanilla Minecraft GenericContainerScreen.
  *   Container y: 18 + r*18 (где r = 0..N-1)
- *   Inventory y: 18 + N*18 + 13 + r*18  (= 85 для N=3, 139 для N=6)
- *   Hotbar y: inventoryY + 58            (= 143 для N=3, 197 для N=6)
+ * Inventory y: 18 + N*18 + 13 + r*18  (= 85 for N=3, 139 for N=6)
+ * Hotbar y: inventoryY + 58            (= 143 for N=3, 197 for N=6)
  */
 function getChestSlots(rows) {
+    const { t } = useTranslation('minecraft-viewer');
     const positions = [];
     // Container: rows × 9
     for (let r = 0; r < rows; r++) {
@@ -220,10 +222,10 @@ const MinecraftWindowOverlay = ({ window: win, onSlotClick, onClose }) => {
                         : ''}
                 </div>
 
-                {/* Кнопка закрытия */}
+                {/* Button закрытия */}
                 <button
                     onClick={onClose}
-                    title="Закрыть (Esc / E)"
+                    title=t('titles.closeEscE')
                     style={{
                         position: 'absolute',
                         top: 4,

@@ -1,0 +1,90 @@
+{
+  "title": "WebSocket API",
+  "tabs": {
+    "keys": "Chaves API",
+    "logs": "Conexão Logs",
+    "docs": "Documentação"
+  },
+  "clients": "Clients",
+  "createKey": "Create Key",
+  "keys": {
+    "title": "Your API Keys",
+    "description": "Create and manage API keys for accessing the bot via WebSocket",
+    "loading": "Carregando...",
+    "empty": "You don't have any API keys yet",
+    "emptyHint": "Criar your first key to start using WebSocket API",
+    "name": "Nome",
+    "key": "Chave",
+    "permissions": "Permissões",
+    "createdAt": "Criard",
+    "lastUsed": "Last Used",
+    "actions": "Ações",
+    "never": "Never"
+  },
+  "permissions": {
+    "Read": "Read",
+    "Write": "Write",
+    "ReadWrite": "Read/Write"
+  },
+  "logs": {
+    "title": "Conexão Logs",
+    "description": "WebSocket API connection history (last 50)",
+    "empty": "Não connections yet",
+    "action": "Ação",
+    "key": "Chave",
+    "ip": "IP Adicionarress",
+    "time": "Hora",
+    "connect": "Conexão",
+    "disconnect": "Disconnect"
+  },
+  "docs": {
+    "botId": "Current bot ID",
+    "title": "Conexão a WebSocket API",
+    "description": "API usage examples for different programming languages",
+    "endpoint": "Fimpoint",
+    "params": "Connection parameters",
+    "recommended": "Recommended",
+    "recommendedHint": "Use the high-level redstonemind-sdk SDK for easy API usage",
+    "sdkTitle": "Option 1: High-level SDK (recommended)",
+    "sdkDescription": "Simple Promise-based API for working with the bot",
+    "rawTitle": "Option 2: Direct Socket.IO usage",
+    "rawDescription": "For advanced users who need full control",
+    "eventsTitle": "Available events (Read)",
+    "actionsTitle": "Available actions",
+    "examplesTitle": "Usage examples"
+  },
+  "createDialog": {
+    "title": "Create API Key",
+    "description": "Create a new API key to access the bot via WebSocket",
+    "nameLabel": "Key name",
+    "namePlaceholder": "E.g.: Discord-bot",
+    "permissionsLabel": "Access permissions",
+    "readOnly": "Read only (receive events)",
+    "writeOnly": "Write only (send actions)",
+    "readWrite": "Read and write (full access)",
+    "creating": "Creating...",
+    "create": "Criar",
+    "cancel": "Cancelar",
+    "close": "Fechar",
+    "keyCreated": "Your API Chave",
+    "saveWarning": "Importarant! Salvar this key now. You won't be able to see it again."
+  },
+  "messages": {
+    "error": "Erro",
+    "success": "Sucesso",
+    "loadKeysError": "Failed to load API keys",
+    "loadLogsError": "Failed to load connection logs",
+    "enterKeyName": "Enter key name",
+    "keyCreated": "API key created",
+    "keyCreateError": "Failed to create key",
+    "keyDeleted": "API key deleted",
+    "keyDeleteError": "Failed to delete key",
+    "deleteConfirm": "Are you sure you want to delete this key? All applications using it will lose access.",
+    "copied": "Copiado",
+    "copiedHint": "Key copied to clipboard"
+  },
+  "bkvashklyuchzdes": "bk_sua_chave_aqui",
+  "privetVsem": "Olá a todos!",
+  "bkvashklyuchzdes2": "bk_sua_chave_aqui",
+  "privetIzApi": "Olá da API!"
+}

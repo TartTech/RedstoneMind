@@ -138,7 +138,7 @@ export default function EditorGroup({
 
     useEffect(() => {
         const handleKeyDown = (e) => {
-            if ((e.ctrlKey || e.metaKey) && e.key === 'ы') {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'y') {
                 e.preventDefault();
                 if (activeFileRef.current) {
                     onSaveFile(activeFileRef.current);

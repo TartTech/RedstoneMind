@@ -7,8 +7,8 @@ import { NodeDefinition } from '../../core/registry';
 export const inventoryDropDefinition = new NodeDefinition({
   type: 'inventory:drop',
   category: 'inventory',
-  label: 'Выбросить',
-  description: 'Выбрасывает предмет из инвентаря на землю',
+  label: t('labels.vybrosit'),
+  description: t('descriptions.vybrasyvaetPredmetIzInventaryaNaZemlyu'),
 
 
 

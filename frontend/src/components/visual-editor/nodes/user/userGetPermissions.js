@@ -7,8 +7,8 @@ import { NodeDefinition } from '../../core/registry';
 export const userGetPermissionsDefinition = new NodeDefinition({
   type: 'user:get_permissions',
   category: 'user',
-  label: 'Получить разрешения',
-  description: 'Возвращает права пользователя',
+  label: t('labels.poluchitRazresheniya'),
+  description: t('descriptions.vozvrashchaetPravaPolzovatelya'),
 
 
 

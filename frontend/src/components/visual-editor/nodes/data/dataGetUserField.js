@@ -2,13 +2,13 @@ import { NodeDefinition } from '../../core/registry';
 
 /**
  * Определение ноды data:get_user_field
- * Получает различные данные из объекта пользователя
+ * Получает различные data из объекта пользователя
  */
 export const dataGetUserFieldDefinition = new NodeDefinition({
   type: 'data:get_user_field',
   category: 'data',
-  label: 'Поле пользователя',
-  description: 'Данные пользователя',
+  label: t('labels.polePolzovatelya'),
+  description: t('descriptions.yesnnyePolzovatelya'),
 
 
 

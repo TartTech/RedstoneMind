@@ -6,6 +6,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { useAppStore } from '@/stores/appStore';
 import FileIcon from './FileIcon';
+import { useTranslation } from 'react-i18next';
 
 const SearchResult = ({ result, onResultClick, isExpanded, onToggle }) => {
     return (
@@ -47,6 +48,7 @@ const SearchResult = ({ result, onResultClick, isExpanded, onToggle }) => {
 };
 
 export default function SearchPanel({ botId, pluginName, onOpenFile }) {
+    const { t } = useTranslation('plugins');
     const token = useAppStore(state => state.token);
     const searchInputRef = useRef(null);
     const [searchQuery, setSearchQuery] = useState('');
@@ -141,7 +143,7 @@ export default function SearchPanel({ botId, pluginName, onOpenFile }) {
         if (!searchQuery.trim() || !replaceQuery) return;
 
         const confirmed = window.confirm(
-            `Заменить все вхождения "${searchQuery}" на "${replaceQuery}"?`
+            t('zamenitVseVkhozhdeniyaSearchqueryNaReplacequery', { searchQuery: searchQuery, replaceQuery: replaceQuery })
         );
 
         if (!confirmed) return;
@@ -166,13 +168,13 @@ export default function SearchPanel({ botId, pluginName, onOpenFile }) {
             if (!response.ok) throw new Error('Replace failed');
 
             const data = await response.json();
-            alert(`Заменено ${data.replacedCount} вхождений в ${data.filesModified} файлах`);
+            alert(t('replaceResult', { count: data.replacedCount, files: data.filesModified }));
 
             // Refresh search results
             handleSearch();
         } catch (error) {
             console.error('Replace error:', error);
-            alert('Ошибка при замене');
+            alert('Oshibka pri zamene');
         }
     };
 
@@ -209,7 +211,7 @@ export default function SearchPanel({ botId, pluginName, onOpenFile }) {
                     <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
                     <Input
                         ref={searchInputRef}
-                        placeholder="Поиск"
+                        placeholder=t('placeholders.search')
                         className="pl-8"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
@@ -223,7 +225,7 @@ export default function SearchPanel({ botId, pluginName, onOpenFile }) {
                     <div className="relative">
                         <Replace className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
                         <Input
-                            placeholder="Заменить"
+                            placeholder=t('placeholders.zamenit')
                             className="pl-8"
                             value={replaceQuery}
                             onChange={(e) => setReplaceQuery(e.target.value)}
@@ -255,7 +257,7 @@ export default function SearchPanel({ botId, pluginName, onOpenFile }) {
                             }
                         />
                         <Label htmlFor="whole-word" className="cursor-pointer">
-                            Слово
+                            {t('slovo')}
                         </Label>
                     </div>
                     <div className="flex items-center space-x-2">
@@ -277,7 +279,7 @@ export default function SearchPanel({ botId, pluginName, onOpenFile }) {
                     {isSearching && (
                         <div className="flex items-center gap-2 text-xs text-muted-foreground">
                             <Loader2 className="h-3 w-3 animate-spin" />
-                            <span>Поиск...</span>
+                            <span>{t('poisk')}</span>
                         </div>
                     )}
                     <div className="flex-grow"></div>
@@ -285,7 +287,7 @@ export default function SearchPanel({ botId, pluginName, onOpenFile }) {
                         size="sm"
                         variant="outline"
                         onClick={() => setShowReplace(!showReplace)}
-                        title="Показать/скрыть замену"
+                        title=t('titles.pokazatskrytZamenu')
                     >
                         <Replace className="h-4 w-4" />
                     </Button>
@@ -299,7 +301,7 @@ export default function SearchPanel({ botId, pluginName, onOpenFile }) {
                         disabled={!searchQuery.trim() || !replaceQuery}
                         className="w-full"
                     >
-                        Заменить все
+                        {t('zamenitVse')}
                     </Button>
                 )}
             </div>
@@ -307,8 +309,8 @@ export default function SearchPanel({ botId, pluginName, onOpenFile }) {
             {/* Results Summary */}
             {results.length > 0 && (
                 <div className="text-xs text-muted-foreground">
-                    {totalMatches} {totalMatches === 1 ? 'совпадение' : 'совпадений'} в {totalFiles}{' '}
-                    {totalFiles === 1 ? 'файле' : 'файлах'}
+                    {totalMatches} {totalMatches === 1 ? t('sovpadenie') : t('sovpadeniy')} в {totalFiles}{' '}
+                    {totalFiles === 1 ? t('fayle') : t('faylakh')}
                 </div>
             )}
 
@@ -321,7 +323,7 @@ export default function SearchPanel({ botId, pluginName, onOpenFile }) {
                 ) : results.length === 0 && searchQuery ? (
                     <div className="flex flex-col items-center justify-center h-32 text-muted-foreground text-sm">
                         <FileText className="h-8 w-8 mb-2 opacity-50" />
-                        Ничего не найдено
+                        {t('nichego')}
                     </div>
                 ) : (
                     results.map((result, idx) => (

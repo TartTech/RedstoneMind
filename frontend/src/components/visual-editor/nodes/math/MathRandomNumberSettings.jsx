@@ -4,7 +4,7 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 
 /**
- * Настройки для ноды math:random_number
+ * Settings for ноды math:random_number
  */
 function MathRandomNumberSettings({ nodeId, data, updateNodeData }) {
   const { t } = useTranslation('visual-editor');

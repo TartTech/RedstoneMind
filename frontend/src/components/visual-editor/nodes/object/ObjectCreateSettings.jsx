@@ -5,7 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Button } from '@/components/ui/button';
 
 /**
- * Компонент настроек для object:create ноды
+ * Component настроек for object:create ноды
  */
 const ObjectCreateSettings = ({ nodeId, data, updateNodeData }) => {
   const { t } = useTranslation('visual-editor');

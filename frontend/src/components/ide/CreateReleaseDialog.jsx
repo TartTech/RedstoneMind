@@ -4,8 +4,10 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Loader2, Tag } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export default function CreateReleaseDialog({ isOpen, onClose, version, onConfirm, isLoading }) {
+    const { t } = useTranslation('plugins');
     const [description, setDescription] = useState('');
 
     const handleCreate = () => {
@@ -37,7 +39,7 @@ export default function CreateReleaseDialog({ isOpen, onClose, version, onConfir
                         </Label>
                         <Textarea
                             id="description"
-                            placeholder={`- Добавлена функция X\n- Исправлен баг Y\n- Улучшена производительность`}
+                            placeholder={t('placeholders.dobavlenaFunktsiyaXnIspravlenBagYn')}
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
                             rows={8}

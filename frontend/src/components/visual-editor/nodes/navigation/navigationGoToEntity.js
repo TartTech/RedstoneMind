@@ -2,13 +2,13 @@ import { NodeDefinition } from '../../core/registry';
 
 /**
  * Определение ноды navigation:go_to_entity
- * Перемещает бота к указанной сущности
+ * Перемещает botа к указанной сущности
  */
 export const navigationGoToEntityDefinition = new NodeDefinition({
   type: 'navigation:go_to_entity',
   category: 'navigation',
-  label: 'Идти к сущности',
-  description: 'Перемещает бота к указанной сущности (моб, животное)',
+  label: t('labels.idtiKSushchnosti'),
+  description: t('descriptions.peremeshchaetBotaKUkazannoySushchnostiMob'),
 
 
 

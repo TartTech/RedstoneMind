@@ -8,8 +8,8 @@ import LogicOperationSettings from './LogicOperationSettings';
 export const logicOperationDefinition = new NodeDefinition({
   type: 'logic:operation',
   category: 'logic',
-  label: 'Логическая операция',
-  description: 'Логические операции',
+  label: t('labels.logicheskayaOperatsiya'),
+  description: t('descriptions.logicheskieOperatsii'),
 
 
 

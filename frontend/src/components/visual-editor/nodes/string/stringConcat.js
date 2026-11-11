@@ -8,8 +8,8 @@ import StringConcatSettings from './StringConcatSettings';
 export const stringConcatDefinition = new NodeDefinition({
   type: 'string:concat',
   category: 'string',
-  label: 'Объединить строки',
-  description: 'Объединяет несколько строк в одну',
+  label: t('labels.obedinitStroki'),
+  description: t('descriptions.obedinyaetNeskolkoStrokVOdnu'),
 
 
 

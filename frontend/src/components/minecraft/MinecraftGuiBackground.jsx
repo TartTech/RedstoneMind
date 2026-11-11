@@ -7,7 +7,7 @@ import React from 'react';
  *   - верхняя часть: top + container rows
  *   - нижняя часть: inventory + hotbar (последние ~76 px из 222)
  *
- * Для остальных типов берём картинку как есть (одна часть).
+ * Для остальных типов берём картинку как exists (одна часть).
  */
 
 const GUI_PATH = '/minecraft-assets/gui/container';
@@ -112,7 +112,7 @@ export const GUI_LAYOUTS = {
 };
 
 /**
- * Layout для chest рассчитывается динамически по числу строк контейнера.
+ * Layout for chest рассчитывается динамически по числу строк контейнера.
  * Размер: 17 (top) + rows*18 (container) + 14 (separator) + 3*18 (inv) + 4 + 18 (hotbar) + 7 (bottom)
  *       = 17 + rows*18 + 97
  */

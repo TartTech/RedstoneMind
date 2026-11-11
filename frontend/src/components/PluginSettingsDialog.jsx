@@ -643,7 +643,7 @@ export default function PluginSettingsDialog({ bot, plugin, onOpenChange, onSave
                 description={t('settingsDialog.confirmResetDescription')}
                 onConfirm={performResetSettings}
                 confirmText={t('settingsDialog.resetSettings')}
-                cancelText={t('actions.cancel', { defaultValue: 'Отмена' })}
+                cancelText={t('actions.cancel', { defaultValue: 'Otmena' })}
             />
 
             <ConfirmationDialog
@@ -652,8 +652,8 @@ export default function PluginSettingsDialog({ bot, plugin, onOpenChange, onSave
                 title={t('settingsDialog.confirmClearDataTitle', { name: plugin.name, defaultValue: 'Очистить данные плагина "{{name}}"?' })}
                 description={t('settingsDialog.confirmClearDataDescription', { defaultValue: 'Все сохранённые ключи плагина будут удалены безвозвратно.' })}
                 onConfirm={performClearData}
-                confirmText={t('settingsDialog.confirmClearDataAction', { defaultValue: 'Очистить' })}
-                cancelText={t('actions.cancel', { defaultValue: 'Отмена' })}
+                confirmText={t('settingsDialog.confirmClearDataAction', { defaultValue: 'Ochistit' })}
+                cancelText={t('actions.cancel', { defaultValue: 'Otmena' })}
             />
 
             <ConfirmationDialog
@@ -666,8 +666,8 @@ export default function PluginSettingsDialog({ bot, plugin, onOpenChange, onSave
                     setKeyPendingDelete(null);
                     performDeleteKey(key);
                 }}
-                confirmText={t('actions.delete', { defaultValue: 'Удалить' })}
-                cancelText={t('actions.cancel', { defaultValue: 'Отмена' })}
+                confirmText={t('actions.delete', { defaultValue: 'Udalit' })}
+                cancelText={t('actions.cancel', { defaultValue: 'Otmena' })}
             />
         </DialogContent>
     );

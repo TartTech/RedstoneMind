@@ -48,7 +48,7 @@ const DebugPanel = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="pt-4 space-y-4">
-        {/* Подключение */}
+        {/* Connection */}
         <div>
           <h3 className="text-sm font-semibold text-slate-300 mb-2 flex items-center gap-2">
             <Wifi className="w-4 h-4" />
@@ -206,7 +206,7 @@ const DebugPanel = () => {
           )}
         </div>
 
-        {/* Подсказки для режимов */}
+        {/* Подсказки for режимов */}
         {debugMode === 'live' && (
           <div>
             <h3 className="text-sm font-semibold text-slate-300 mb-2 flex items-center gap-2">

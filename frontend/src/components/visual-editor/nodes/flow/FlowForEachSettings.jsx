@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 /**
- * Настройки для ноды flow:for_each
+ * Settings for ноды flow:for_each
  */
 function FlowForEachSettings({ nodeId, data, updateNodeData }) {
   const { t } = useTranslation('visual-editor');

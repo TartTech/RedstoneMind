@@ -148,7 +148,7 @@ export default function PluginIdePage() {
                 tab.path === targetPath ? { ...tab, isDirty: false, originalContent: tab.content } : tab
             ));
 
-            // Проверка на переименование плагина
+            // Check на переименование pluginа
             if (result?.renamed && result?.newName) {
                 toast({
                     title: t('ide.pluginRenamed'),
@@ -161,12 +161,12 @@ export default function PluginIdePage() {
             }
             toast({ title: t('ide.success'), description: t('ide.fileSaved', { name: currentTab.name }) });
         } catch (e) {
-            // Если 404 (вероятно плагин был переименован параллельно) — попробуем найти его
+            // Если 404 (вероятно plugin был переименован параллельно) — попробуем найти его
             if (e?.message?.includes('404') || e?.status === 404) {
                 toast({
                     variant: 'destructive',
                     title: t('ide.error'),
-                    description: 'Плагин не найден, возможно был переименован. Перенаправление...'
+                    description: t('descriptions.pluginNeNaydenVozmozhnoBylPereimenovan')
                 });
                 navigate(`/bots/${botId}/plugins`, { replace: true });
                 return;

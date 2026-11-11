@@ -7,8 +7,8 @@ import { NodeDefinition } from '../../core/registry';
 export const userCheckBlacklistDefinition = new NodeDefinition({
   type: 'user:check_blacklist',
   category: 'user',
-  label: 'Проверить ЧС',
-  description: 'Проверяет, находится ли пользователь в черном списке',
+  label: t('labels.proveritChs'),
+  description: t('descriptions.proveryaetNakhoditsyaLiPolzovatelVChernom'),
 
 
 

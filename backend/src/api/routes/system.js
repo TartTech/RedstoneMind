@@ -2,6 +2,7 @@ const express = require('express');
 const { authenticate, authenticateUniversal } = require('../middleware/auth');
 const os = require('os');
 const rateLimit = require('express-rate-limit');
+const { t } = require('../../i18n');
 
 const router = express.Router();
 
@@ -158,7 +159,6 @@ router.get('/health', authenticateUniversal, async (req, res) => {
 router.get('/stats', authenticateUniversal, async (req, res) => {
     try {
         const prisma = req.app.get('prisma') || require('../../lib/prisma');
-const { t } = require('../../i18n');
         
         const totalBots = await prisma.bot.count();
         const totalServers = await prisma.server.count();

@@ -20,6 +20,7 @@ const UserService = require('./UserService');
 const PermissionManager = require('./ipc/PermissionManager.stub.js');
 const Transport = require('./system/Transport');
 const CommandContext = require('./system/CommandContext');
+const { t } = require('../i18n');
 
 let bot = null;
 const prisma = new PrismaClient();
@@ -2206,7 +2207,6 @@ process.on('message', async (message) => {
             }
 
             const { buildGraphContext } = require('./graphContext');
-const { t } = require('../i18n');
             const context = buildGraphContext({
                 bot,
                 botId: config.id,

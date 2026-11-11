@@ -2,6 +2,7 @@ const express = require('express');
 const prisma = require('../../lib/prisma');
 const { authenticateUniversal, authorize } = require('../middleware/auth');
 const { checkBotAccess } = require('../middleware/botAccess');
+const { t } = require('../../i18n');
 
 const router = express.Router();
 
@@ -93,7 +94,6 @@ router.delete('/:botId/permissions/:permissionId', authenticateUniversal, author
         await prisma.permission.delete({ where: { id: permissionId } });
 
         const { botManager } = require('../../core/services');
-const { t } = require('../../i18n');
         botManager.invalidateAllUserCache(botId);
 
         res.json({ success: true });

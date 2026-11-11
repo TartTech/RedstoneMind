@@ -9,6 +9,7 @@ const UserService = require('./UserService');
 const GraphExecutionEngine = require('./GraphExecutionEngine');
 const NodeRegistry = require('./NodeRegistry');
 const Command = require('./system/Command');
+const { t } = require('../i18n');
 
 let viewerRenderDistance = 24;
 
@@ -310,7 +311,6 @@ function createBotIPCHandler(bot, prisma, pluginUiState, pendingRequests, sendLo
         }
 
         const { buildGraphContext } = require('./graphContext');
-const { t } = require('../i18n');
         const context = buildGraphContext({
             bot,
             botId: config.id,

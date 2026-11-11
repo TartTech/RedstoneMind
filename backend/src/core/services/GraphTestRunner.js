@@ -5,6 +5,7 @@ const { parseVariables } = require('../utils/variableParser');
 const { buildTestContext, createEffectRecorder, sanitizeArgs, sanitizeEventArgs, sanitizeTypeChat, sanitizeUsername } = require('./TestModeContext');
 const { runInGraphTest } = require('./testModeGuard');
 const { checkCommandAccess, parseStringList } = require('../commandGate');
+const { t } = require('../../i18n');
 
 const MAX_NODES = 2000;
 const MAX_CONNECTIONS = 4000;
@@ -387,7 +388,6 @@ async function runOwnedNode({ kind, botId, graphId, nodeId, body }) {
 
     const { recordEffect, effects } = createEffectRecorder(graphId, { broadcast: false });
     const GraphExecutionEngine = require('../GraphExecutionEngine');
-const { t } = require('../../i18n');
     const engine = new GraphExecutionEngine(nodeRegistry, null);
     const inputs = body?.inputs && typeof body.inputs === 'object' ? body.inputs : {};
     const variablesInput = body?.variables;

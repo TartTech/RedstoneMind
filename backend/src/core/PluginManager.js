@@ -19,6 +19,7 @@ const { assertSafeZip, assertArchiveLimits } = require('./utils/zipSafe');
 const TtlCache = require('./utils/ttlCache');
 const { pluginDependencySatisfied, diffSettings, listDeclaredPermissions, ensureDeclaredPermissions } = require('./utils/pluginManifest');
 const { isFloatingLatest } = require('./utils/pluginCatalog');
+const { t } = require('../i18n');
 
 const DATA_DIR = path.join(os.homedir(), '.redstonemind');
 const PLUGINS_BASE_DIR = path.join(DATA_DIR, 'storage', 'plugins');
@@ -569,7 +570,6 @@ class PluginManager {
         const processManager = this.botManager?.processManager;
         if (!processManager?.isRunning?.(botId)) return;
         const { v4: uuidv4 } = require('uuid');
-const { t } = require('../i18n');
         const requestId = uuidv4();
         const pending = processManager.waitForPluginUnload(requestId);
         const sent = processManager.sendMessage(botId, {

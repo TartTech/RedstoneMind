@@ -246,7 +246,6 @@ const gracefulShutdown = async (signal) => {
             console.log(t('core:log_09681227'));
 
             const prisma = require('./lib/prisma');
-const { t } = require('./i18n');
             await prisma.$disconnect();
             console.log(t('core:log_302f60d3'));
 

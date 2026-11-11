@@ -5,6 +5,7 @@ const os = require('os');
 const slugify = require('slugify');
 const prisma = require('../../../lib/prisma');
 const { ok, err, wrap, requirePermission, requireBotAccess } = require('../helpers');
+const { t } = require('../../../i18n');
 
 const DATA_DIR = path.join(os.homedir(), '.redstonemind');
 const PLUGINS_BASE_DIR = path.join(DATA_DIR, 'storage', 'plugins');
@@ -327,7 +328,6 @@ function register(server, { user }) {
         if (!plugin) return err('Plugin not found');
 
         const { botManager } = require('../../../core/services');
-const { t } = require('../../../i18n');
         const result = await botManager.reloadPlugins(botId, plugin.name);
         if (!result?.success) return err(result?.message || 'Bot is not running');
         return ok({ success: true, message: 'Plugin reload dispatched', pluginName: plugin.name });

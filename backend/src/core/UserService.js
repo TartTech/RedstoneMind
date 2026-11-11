@@ -1,4 +1,5 @@
 const { PrismaClient } = require('@prisma/client');
+const { t } = require('../i18n');
 const prisma = new PrismaClient();
 
 class User {
@@ -166,7 +167,6 @@ class User {
 
         if (!userInstance) {
             const { isGraphTestMode } = require('./services/testModeGuard');
-const { t } = require('../i18n');
             if (isGraphTestMode()) {
                 return null;
             }

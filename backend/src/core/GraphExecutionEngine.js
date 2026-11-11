@@ -9,6 +9,7 @@ const { getGlobalDebugManager } = require('./services/DebugSessionManager');
 const { MessageTypes } = require('./ipc/ipcMessageTypes');
 const RewindSignal = require('./RewindSignal');
 const BreakLoopSignal = require('./BreakLoopSignal');
+const { t } = require('../i18n');
 
 const MAX_REWINDS = 100;
 const PIN_TYPE_EXEC = 'Exec';
@@ -438,7 +439,6 @@ class GraphExecutionEngine {
 
     _evaluateLegacyNode(node, pinId, defaultValue) {
         const { evaluateEventPin } = require('./nodes/event/evaluateEvent');
-const { t } = require('../i18n');
         if (node?.type?.startsWith('event:')) {
             const eventValue = evaluateEventPin(node, pinId, this.context);
             return eventValue !== undefined ? eventValue : defaultValue;

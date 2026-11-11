@@ -6,6 +6,7 @@ const logger = require('../../lib/logger');
 const crypto = require('crypto');
 const fse = require('fs-extra');
 const path = require('path');
+const { t } = require('../../i18n');
 
 const prisma = new PrismaClient();
 const router = express.Router({ mergeParams: true });
@@ -498,7 +499,6 @@ router.post('/run-node/:graphId/:nodeId',
   async (req, res) => {
     try {
       const { runOwnedNode } = require('../../core/services/GraphTestRunner');
-const { t } = require('../../i18n');
       const result = await runOwnedNode({
         kind: 'event',
         botId: parseInt(req.params.botId, 10),

@@ -17,6 +17,7 @@ router.get('/connected', authorize('bot:update'), async (req, res) => {
 
         const { getIO } = require('../../real-time/socketHandler');
         const { getConnectedClientsCount } = require('../../real-time/botApi/utils');
+const { t } = require('../../i18n');
 
         const io = getIO();
         const count = getConnectedClientsCount(io, botId);
@@ -164,7 +165,6 @@ router.delete('/:keyId', authorize('bot:update'), async (req, res) => {
         const keyId = parseInt(req.params.keyId, 10);
 
         const { getIO } = require('../../real-time/socketHandler');
-const { t } = require('../../i18n');
 
         const io = getIO();
 

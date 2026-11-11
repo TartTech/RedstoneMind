@@ -5,6 +5,7 @@ const PermissionManager = require('../PermissionManager');
 const CrashRestartManager = require('./CrashRestartManager');
 const BotIPCMessageRouter = require('./BotIPCMessageRouter');
 const ErrorHandler = require('../errors/ErrorHandler');
+const { t } = require('../../i18n');
 
 const dependencyResolver = new DependencyResolver();
 const errorHandler = new ErrorHandler({ logger: console });
@@ -450,7 +451,6 @@ class BotLifecycleService {
 
         return new Promise((resolve) => {
             const { v4: uuidv4 } = require('uuid');
-const { t } = require('../../i18n');
             const requestId = uuidv4();
 
             const timeout = setTimeout(() => {

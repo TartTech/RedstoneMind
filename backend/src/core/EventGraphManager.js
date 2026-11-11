@@ -3,6 +3,7 @@ const { safeJsonParse } = require('./utils/jsonParser');
 const { parseVariables } = require('./utils/variableParser');
 const validationService = require('./services/ValidationService');
 const botHistoryStore = require('./BotHistoryStore');
+const { t } = require('../i18n');
 
 class EventGraphManager {
     constructor({ prisma } = {}) {
@@ -168,7 +169,6 @@ class EventGraphManager {
         try {
             const { getIOSafe } = require('../real-time/socketHandler');
             const { broadcastToApiClients } = require('../real-time/botApi');
-const { t } = require('../i18n');
 
             const io = getIOSafe();
             if (!io) return;

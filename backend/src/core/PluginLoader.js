@@ -7,6 +7,7 @@ const PluginStore = require('../plugins/PluginStore');
 const { deepMergeSettings } = require('./utils/settingsMerger');
 const { ensureDeclaredPermissions } = require('./utils/pluginManifest');
 const { installDependencies, installSinglePackage, getPeerDependencies, isValidPackageName } = require('./utils/npmInstall');
+const { t } = require('../i18n');
 
 const SYSTEM_LOG_PATTERNS = [
     /^\[Config\]/,
@@ -412,7 +413,6 @@ async function initializePlugins(bot, installedPlugins = [], prisma) {
 function emitLoadSuccess(bot, plugin) {
     try {
         const { getIOSafe } = require('../real-time/socketHandler');
-const { t } = require('../i18n');
         const io = getIOSafe();
         if (!io) return;
         const room = `plugin-logs:${bot.config.id}:${plugin.name}`;

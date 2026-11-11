@@ -3,6 +3,7 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
+const { t } = require('../../i18n');
 class TelemetryService {
     constructor({ config, botProcessManager, logger }) {
         this.config = config;
@@ -102,7 +103,6 @@ class TelemetryService {
             } while (!hash.startsWith('0'.repeat(difficulty)));
 
             const packageJson = require('../../../../package.json');
-const { t } = require('../../i18n');
             await fetch(`${this.STATS_SERVER_URL}/api/heartbeat`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },

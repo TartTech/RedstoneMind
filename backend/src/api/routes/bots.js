@@ -13,6 +13,7 @@ const { randomUUID } = require('crypto');
 const eventGraphsRouter = require('./eventGraphs');
 const pluginIdeRouter = require('./pluginIde');
 const apiKeysRouter = require('./apiKeys');
+const { t } = require('../../i18n');
 const { deepMergeSettings } = require('../../core/utils/settingsMerger');
 const { checkBotAccess } = require('../middleware/botAccess');
 const { setupDefaultPermissionsForBot } = require('../../core/setupDefaultBotPermissions');
@@ -2217,7 +2218,6 @@ router.post('/:botId/plugins/:pluginName/action', authorize('plugin:list'), asyn
         
         delete require.cache[require.resolve(pluginPath)];
         const pluginModule = require(pluginPath);
-const { t } = require('../../i18n');
 
         if (typeof pluginModule.handleAction !== 'function') {
             return res.status(501).json({ error: `Плагин "${pluginName}" не поддерживает обработку действий.` });

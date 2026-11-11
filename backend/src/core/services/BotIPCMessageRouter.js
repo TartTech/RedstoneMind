@@ -1,3 +1,4 @@
+const { t } = require('../../i18n');
 class BotIPCMessageRouter {
     constructor(deps) {
         this.eventGraphManager = deps.eventGraphManager;
@@ -367,7 +368,6 @@ class BotIPCMessageRouter {
         try {
             const { getIOSafe } = require('../../real-time/socketHandler');
             const { broadcastBotStatus } = require('../../real-time/botApi');
-const { t } = require('../../i18n');
             broadcastBotStatus(getIOSafe(), botId, false);
         } catch (e) {}
 

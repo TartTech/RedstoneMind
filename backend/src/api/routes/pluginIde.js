@@ -25,6 +25,7 @@ function resolveWithin(baseDir, relativePath) {
 }
 
 const { execFileSync } = require('child_process');
+const { t } = require('../../i18n');
 
 function validateGitUrl(url) {
     if (typeof url !== 'string') return false;
@@ -1830,7 +1831,6 @@ router.get('/:pluginName/git/log', resolvePluginPath, async (req, res) => {
 router.get('/:pluginName/git/diff', resolvePluginPath, async (req, res) => {
     try {
         const { execSync } = require('child_process');
-const { t } = require('../../i18n');
         const { path: filePath, staged, status } = req.query;
 
         if (!filePath) {

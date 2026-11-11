@@ -4,12 +4,12 @@
   "error_253e1dbc": "Falha ao obter servidor",
   "error_28ae49fc": "Falha ao excluir servidor",
   "error_8cd5e92a": "[API /api/servers] Erro atualização servidor:",
-  "error_aa2edc07": "Некорректный ID servidor",
-  "error_cb732a5d": "[API /api/servers] Erro obtenção списка серверов:",
+  "error_aa2edc07": "Invalid ID server",
+  "error_cb732a5d": "[API /api/servidores] Erro ao obter list servidores:",
   "error_f20c2bda": "[API /api/servers/:id] Erro obtenção servidor:",
   "msg_0a311f6d": "Um servidor com este nome já existe",
   "msg_269b9f3c": "Servidor não encontrado",
-  "msg_53f17922": "Não é possível excluir servidor, так как он é usado {{botsOnServer}} ботом(ами).",
+  "msg_53f17922": "Não é possível excluir o servidor pois está sendo usado por {{botsOnServer}} bot(s).",
   "validation_24910023": "A porta deve ser um número de 1 a 65535 (máximo 5 dígitos)",
-  "validation_49972ec1": "Nome, хост e versão servidor é obrigatório"
+  "validation_49972ec1": "Nome, host e versão do servidor são obrigatórios"
 }

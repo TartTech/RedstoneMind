@@ -10,10 +10,10 @@
   "error_ba69cc29": "[API /api/proxies] Error getting list proxy:",
   "error_d2c2b498": "[API /api/proxies] Error updating proxy:",
   "error_f89d55f7": "Invalid ID proxy",
-  "msg_6f634bc7": "Cannot delete proxy, так as он is used {{botsUsingProxy}} bot(ами).",
+  "msg_6f634bc7": "Cannot delete proxy because it is used by {{botsUsingProxy}} bot(s).",
   "msg_7a8bb01b": "Proxy not found",
   "msg_e713e25d": "A proxy with this name already exists",
   "validation_67710bc0": "Port must be in range 1..65535",
-  "validation_d9eabe1e": "Name, хост and port proxy is required",
+  "validation_d9eabe1e": "Name, host and port of the proxy are required",
   "validation_f2be6209": "Proxy type must be socks5 or http"
 }

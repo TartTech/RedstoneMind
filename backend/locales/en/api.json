@@ -19,8 +19,8 @@
   "error_907f7574": "Error during retrieving statistics logs:",
   "error_924d84ca": "Invalid API key",
   "error_a2d08b49": "[API /traces/:botId] Error:",
-  "error_aaebe464": "Error permissions access: user not authenticated or format permissions некорректен.",
-  "error_afe760a6": "Error during отправке лога client:",
+  "error_aaebe464": "Access permission error: user is not authenticated or permission format is invalid.",
+  "error_afe760a6": "Error sending log to client:",
   "error_b4da0119": "Invalid botId",
   "error_b81ba731": "Failed to save settings directories",
   "error_c68ab9b3": "No token, access denied",
@@ -35,11 +35,11 @@
   "msg_190056bb": "Invalid token",
   "msg_250ce550": "Access forbidden: insufficient permissions",
   "msg_5b180fb8": "Logs cleared",
-  "msg_adeefe28": "GitHub not подтвердил this login.",
+  "msg_adeefe28": "GitHub did not confirm this login.",
   "msg_b3ba1397": "Trace not found",
-  "msg_c47816b2": "Ожидался array directories",
+  "msg_c47816b2": "Expected an array of directories",
   "msg_d602b92c": "Unauthorized",
   "msg_e0f84354": "API key not provided",
   "msg_fe71da7e": "Connect GitHub first.",
-  "perm_52682a87": "Access to логам разрешен only in mode отладки"
+  "perm_52682a87": "Access to logs is allowed only in debug mode"
 }

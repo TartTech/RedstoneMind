@@ -13,7 +13,7 @@
   "error_d301814b": "Error during creating key",
   "error_ebf23142": "Error during retrieving keys",
   "msg_c82b4016": "Key not found",
-  "msg_dc2abbfe": "Нечего update",
+  "msg_dc2abbfe": "Nothing to update",
   "success_6ee89242": "Key updated",
   "success_92e69113": "Key deleted",
   "validation_6eedfe63": "Name key is required"

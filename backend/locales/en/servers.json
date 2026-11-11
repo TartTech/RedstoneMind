@@ -9,7 +9,7 @@
   "error_f20c2bda": "[API /api/servers/:id] Error getting server:",
   "msg_0a311f6d": "A server with this name already exists",
   "msg_269b9f3c": "Server not found",
-  "msg_53f17922": "Cannot delete server, так as он is used {{botsOnServer}} bot(ами).",
+  "msg_53f17922": "Cannot delete server because it is used by {{botsOnServer}} bot(s).",
   "validation_24910023": "Port must be a number from 1 to 65535 (maximum 5 digits)",
-  "validation_49972ec1": "Name, хост and version server is required"
+  "validation_49972ec1": "Name, host and version of the server are required"
 }

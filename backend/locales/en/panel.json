@@ -15,11 +15,11 @@
   "msg_9a99eac8": "Now cannot update panel.",
   "msg_c4e0ad23": "API key not found",
   "msg_c82ee80f": "Enabled",
-  "success_0b43a1a1": "Settings сохранены. For применения is required restart panel.",
+  "success_0b43a1a1": "Settings saved. A panel restart is required to apply them.",
   "success_30c88110": "API key successfully deleted",
   "success_5140f095": "API key successfully created",
   "success_63c30d95": "API key successfully updated",
-  "success_cdade1f2": "Update already выполняется.",
+  "success_cdade1f2": "Update is already in progress.",
   "validation_071159a9": "Name key is required",
-  "validation_31b9497e": "customScopes must be массивом strings"
+  "validation_31b9497e": "customScopes must be an array of strings"
 }

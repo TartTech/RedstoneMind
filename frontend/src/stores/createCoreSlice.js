@@ -144,7 +144,7 @@ export const createCoreSlice = (set, get) => ({
 
                 return {
                     ...state,
-                    bots: botsData || [],
+                    bots: Array.isArray(botsData) ? botsData : [],
                     servers: serversData?.items || [],
                     proxies: proxiesData?.items || [],
                     botStatuses: stateData.statuses || {},

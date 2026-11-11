@@ -101,6 +101,9 @@ export const apiHelper = async (url, options = {}, successMessage) => {
 
     const responseText = await response.text();
     if (!responseText) {
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status} ${response.statusText}`);
+      }
       if (successMessage) {
         toast({
           title: translateCommon('messages.success', i18n.t('titles.success')),

@@ -1,4 +1,5 @@
 const { GRAPH_TYPES } = require('../constants/graphTypes');
+const { t } = require('../../i18n');
 
 const timeNodes = [
   {
@@ -89,7 +90,6 @@ const timeNodes = [
     description: t('nodes:msg_2563cb7d'),
     graphType: GRAPH_TYPES.ALL,
     evaluator: require('../nodes/time/compare').evaluate,
-const { t } = require('../../i18n');
     computeInputs: (data) => [
       { id: 'date_left', name: t('nodes:msg_50e059f7'), type: 'DateTime', required: true, inlineField: true, placeholder: '' },
       { id: 'date_right', name: t('nodes:msg_0530d8fa'), type: 'DateTime', required: true, inlineField: true, placeholder: '' },

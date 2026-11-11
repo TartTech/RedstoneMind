@@ -1,4 +1,5 @@
 const { GRAPH_TYPES } = require('../../core/constants/graphTypes');
+const { t } = require('../../i18n');
 
 const dataNodes = [
   {
@@ -268,7 +269,6 @@ const dataNodes = [
     description: t('nodes:msg_b5cd6585'),
     graphType: GRAPH_TYPES.ALL,
     executor: require('../../core/nodes/data/store_write').execute,
-const { t } = require('../../i18n');
     computeInputs: (data) => [
       { id: 'exec', name: t('nodes:msg_bdf82a2a'), type: 'Exec', required: true },
       { id: 'plugin_name', name: t('nodes:msg_e0273c19'), type: 'String', required: true, inlineField: true, placeholder: 'my-plugin' },

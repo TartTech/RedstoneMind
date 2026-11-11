@@ -1,4 +1,5 @@
 const { GRAPH_TYPES } = require('../../core/constants/graphTypes');
+const { t } = require('../../i18n');
 
 const navigationNodes = [
   {
@@ -112,7 +113,6 @@ const navigationNodes = [
     graphType: GRAPH_TYPES.ALL,
     executor: require('../../core/nodes/navigation/step').execute,
     evaluator: require('../../core/nodes/navigation/step').evaluate,
-const { t } = require('../../i18n');
     computeInputs: () => [
       { id: 'exec', name: t('nodes:msg_bdf82a2a'), type: 'Exec' },
       {

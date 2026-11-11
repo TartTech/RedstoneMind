@@ -1,4 +1,5 @@
 const { GRAPH_TYPES } = require('../../core/constants/graphTypes');
+const { t } = require('../../i18n');
 
 const stringsNodes = [
   {
@@ -152,7 +153,6 @@ const stringsNodes = [
     description: t('nodes:msg_c788b53e'),
     graphType: GRAPH_TYPES.ALL,
     evaluator: require('../../core/nodes/strings/to_lower').evaluate,
-const { t } = require('../../i18n');
     computeInputs: (data) => [
       { id: 'text', name: t('nodes:msg_8c45d9cf'), type: 'String', required: false, inlineField: true, placeholder: '' }
     ],

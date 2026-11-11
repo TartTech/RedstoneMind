@@ -1,4 +1,5 @@
 const { GRAPH_TYPES } = require('../../core/constants/graphTypes');
+const { t } = require('../../i18n');
 
 function registerNodes(registry) {
   registry.registerNodeType({
@@ -161,7 +162,6 @@ function registerNodes(registry) {
     graphType: GRAPH_TYPES.ALL,
     executor: require('../../core/nodes/inventory/select_slot').execute,
     evaluator: require('../../core/nodes/inventory/select_slot').evaluate,
-const { t } = require('../../i18n');
     computeInputs: (data) => [
       { id: 'exec', name: t('nodes:msg_bdf82a2a'), type: 'Exec' },
       { id: 'slot', name: t('nodes:msg_38b55f06'), type: 'Number', required: true, inlineField: true, placeholder: '0-8' }

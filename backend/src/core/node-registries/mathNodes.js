@@ -1,4 +1,5 @@
 const { GRAPH_TYPES } = require('../../core/constants/graphTypes');
+const { t } = require('../../i18n');
 
 const mathNodes = [
   {
@@ -24,7 +25,6 @@ const mathNodes = [
     graphType: GRAPH_TYPES.ALL,
     description: t('nodes:msg_3a6ea93f'),
     evaluator: require('../../core/nodes/math/random_number').evaluate,
-const { t } = require('../../i18n');
     computeInputs: (data) => [
       { id: 'min', name: t('nodes:msg_7928c27e'), type: 'Number', required: false, inlineField: true, placeholder: '0' },
       { id: 'max', name: t('nodes:msg_3e4038c4'), type: 'Number', required: false, inlineField: true, placeholder: '100' }

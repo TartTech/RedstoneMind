@@ -1,4 +1,5 @@
 const { GRAPH_TYPES } = require('../../core/constants/graphTypes');
+const { t } = require('../../i18n');
 
 const arraysNodes = [
   {
@@ -139,7 +140,6 @@ const arraysNodes = [
     graphType: GRAPH_TYPES.ALL,
     description: t('nodes:msg_0351d736'),
     evaluator: require('../../core/nodes/arrays/shuffle').evaluate,
-const { t } = require('../../i18n');
     computeInputs: () => [
       { id: 'array', name: t('nodes:msg_016c515a'), type: 'Array', required: true }
     ],

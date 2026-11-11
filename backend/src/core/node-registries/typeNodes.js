@@ -1,4 +1,5 @@
 const { GRAPH_TYPES } = require('../../core/constants/graphTypes');
+const { t } = require('../../i18n');
 
 const typeNodes = [
   {
@@ -8,7 +9,6 @@ const typeNodes = [
     description: t('nodes:msg_637cc157'),
     graphType: GRAPH_TYPES.ALL,
     evaluator: require('../../core/nodes/type/to_string').evaluate,
-const { t } = require('../../i18n');
     computeInputs: (data) => [
       { id: 'value', name: t('nodes:msg_7b46d8cc'), type: 'Wildcard', required: false }
     ],

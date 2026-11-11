@@ -1,4 +1,5 @@
 const { botManager } = require('../../core/services');
+const { t } = require('../../i18n');
 const { authenticateApiClient, logConnection } = require('./middleware');
 const { registerActionHandlers } = require('./handlers');
 
@@ -37,5 +38,4 @@ function initializeBotApiNamespace(io) {
 module.exports = {
     initializeBotApiNamespace,
     ...require('./utils'),
-const { t } = require('../../i18n');
 };

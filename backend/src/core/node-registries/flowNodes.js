@@ -1,4 +1,5 @@
 const { GRAPH_TYPES } = require('../../core/constants/graphTypes');
+const { t } = require('../../i18n');
 
 const flowNodes = [
   {
@@ -133,7 +134,6 @@ const flowNodes = [
     graphType: GRAPH_TYPES.ALL,
     executor: require('../../core/nodes/flow/timer').execute,
     evaluator: require('../../core/nodes/flow/timer').evaluate,
-const { t } = require('../../i18n');
     computeInputs: (data) => [
       { id: 'exec', name: t('nodes:msg_bdf82a2a'), type: 'Exec', required: true },
       { id: 'interval', name: t('nodes:msg_f6b59750'), type: 'Number', required: false, inlineField: true, placeholder: '1' },

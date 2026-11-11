@@ -1,4 +1,5 @@
 const { GRAPH_TYPES } = require('../../core/constants/graphTypes');
+const { t } = require('../../i18n');
 
 const containerNodes = [
   {
@@ -124,7 +125,6 @@ const containerNodes = [
     description: t('nodes:msg_fd38402d'),
     graphType: GRAPH_TYPES.ALL,
     evaluator: require('../../core/nodes/container/find_item').evaluate,
-const { t } = require('../../i18n');
     computeInputs: (data) => [
       { id: 'itemName', name: t('nodes:msg_444a3bce'), type: 'String', required: true, inlineField: true, placeholder: 'diamond...' }
     ],

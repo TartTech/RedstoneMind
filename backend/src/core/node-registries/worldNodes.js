@@ -1,4 +1,5 @@
 const { GRAPH_TYPES } = require('../../core/constants/graphTypes');
+const { t } = require('../../i18n');
 
 const faceOptions = [
   { value: 'up', label: t('nodes:msg_c6ddca9c') },
@@ -108,7 +109,6 @@ const worldNodes = [
     graphType: GRAPH_TYPES.ALL,
     executor: require('../../core/nodes/world/attack').execute,
     evaluator: require('../../core/nodes/world/attack').evaluate,
-const { t } = require('../../i18n');
     computeInputs: () => [
       { id: 'exec', name: t('nodes:msg_bdf82a2a'), type: 'Exec' },
       { id: 'entity', name: t('nodes:msg_de2925f0'), type: 'Object', required: true },

@@ -1,4 +1,5 @@
 const { GRAPH_TYPES } = require('../../core/constants/graphTypes');
+const { t } = require('../../i18n');
 
 const furnaceNodes = [
   {
@@ -106,7 +107,6 @@ const furnaceNodes = [
     description: t('nodes:msg_66093c58'),
     graphType: GRAPH_TYPES.ALL,
     evaluator: require('../../core/nodes/furnace/get_status').evaluate,
-const { t } = require('../../i18n');
     computeInputs: () => [],
     computeOutputs: () => [
       { id: 'inputItem', name: t('nodes:msg_5bd7411d'), type: 'Object' },

@@ -1,4 +1,5 @@
 const { GRAPH_TYPES } = require('../../core/constants/graphTypes');
+const { t } = require('../../i18n');
 
 const usersNodes = [
   {
@@ -110,7 +111,6 @@ const usersNodes = [
     description: t('nodes:msg_dc480aad'),
     graphType: GRAPH_TYPES.ALL,
     executor: require('../../core/nodes/users/remove_from_group').execute,
-const { t } = require('../../i18n');
     computeInputs: (data) => [
       { id: 'exec', name: t('nodes:msg_bdf82a2a'), type: 'Exec', required: true },
       { id: 'user', name: t('nodes:msg_f154d6cc'), type: 'User', required: true },

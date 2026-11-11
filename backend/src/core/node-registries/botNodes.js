@@ -1,4 +1,5 @@
 const { GRAPH_TYPES } = require('../../core/constants/graphTypes');
+const { t } = require('../../i18n');
 
 const botNodes = [
   {
@@ -50,7 +51,6 @@ const botNodes = [
     description: t('nodes:msg_243b628d'),
     graphType: GRAPH_TYPES.ALL,
     evaluator: require('../../core/nodes/bot/get_name').evaluate,
-const { t } = require('../../i18n');
     computeInputs: () => [],
     computeOutputs: () => [
       { id: 'name', name: t('nodes:msg_d38d6d92'), type: 'String' }

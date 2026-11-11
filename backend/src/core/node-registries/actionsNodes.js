@@ -1,4 +1,5 @@
 const { GRAPH_TYPES } = require('../../core/constants/graphTypes');
+const { t } = require('../../i18n');
 
 const actionNodes = [
   {
@@ -175,7 +176,6 @@ const actionNodes = [
     description: t('nodes:msg_f46876d5'),
     graphType: GRAPH_TYPES.ALL,
     executor: require('../../core/nodes/actions/delete_command').execute,
-const { t } = require('../../i18n');
     computeInputs: (data) => [
       { id: 'exec', name: t('nodes:msg_bdf82a2a'), type: 'Exec' },
       { id: 'commandName', name: t('nodes:msg_7b4954b8'), type: 'String', required: true, inlineField: true, placeholder: 'mycommand' }

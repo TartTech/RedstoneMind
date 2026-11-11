@@ -1,4 +1,5 @@
 const { GRAPH_TYPES } = require('../../core/constants/graphTypes');
+const { t } = require('../../i18n');
 
 const objectsNodes = [
   {
@@ -74,7 +75,6 @@ const objectsNodes = [
     description: t('nodes:msg_6fc83c64'),
     graphType: GRAPH_TYPES.ALL,
     evaluator: require('../../core/nodes/objects/has_key').evaluate,
-const { t } = require('../../i18n');
     computeInputs: (data) => [
       { id: 'object', name: t('nodes:msg_4c243872'), type: 'Object', required: true },
       { id: 'key', name: t('nodes:msg_62527274'), type: 'String', required: true, inlineField: true, placeholder: 'key...' }

@@ -1,4 +1,5 @@
 const { GRAPH_TYPES } = require('../../core/constants/graphTypes');
+const { t } = require('../../i18n');
 
 const logicNodes = [
   {
@@ -41,7 +42,6 @@ const logicNodes = [
     description: t('nodes:msg_557e400d'),
     graphType: GRAPH_TYPES.ALL,
     evaluator: require('../../core/nodes/logic/not').evaluate,
-const { t } = require('../../i18n');
     computeInputs: (data) => [
       { id: 'value', name: t('nodes:msg_7b46d8cc'), type: 'Boolean', required: false, inlineField: true }
     ],

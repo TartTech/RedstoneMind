@@ -27,7 +27,6 @@ const SLOT_SIZE = 16;
  * Hotbar y: inventoryY + 58            (= 143 for N=3, 197 for N=6)
  */
 function getChestSlots(rows) {
-    const { t } = useTranslation('minecraft-viewer');
     const positions = [];
     // Container: rows × 9
     for (let r = 0; r < rows; r++) {
@@ -154,6 +153,7 @@ const Slot = ({ item, x, y, scale, onMouseDown, onContextMenu, onHover, onLeave,
 );
 
 const MinecraftWindowOverlay = ({ window: win, onSlotClick, onClose }) => {
+    const { t } = useTranslation('minecraft-viewer');
     const [hover, setHover] = useState(null);
     const [hoveredSlot, setHoveredSlot] = useState(-1);
 

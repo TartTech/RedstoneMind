@@ -112,7 +112,6 @@ const BotSkinView = ({ username, uuid, scale }) => {
 };
 
 function drawSkin(ctx, img, w, h) {
-    const { t } = useTranslation('minecraft-viewer');
     ctx.clearRect(0, 0, w, h);
     ctx.imageSmoothingEnabled = false;
     const has64 = img.height >= 64;
@@ -223,6 +222,7 @@ const Slot = ({ item, x, y, scale, onMouseDown, onContextMenu, onHover, onLeave,
 );
 
 const MinecraftInventory = ({ inventory, onSlotClick, onClose, botState }) => {
+    const { t } = useTranslation('minecraft-viewer');
     const [hover, setHover] = useState(null);
     const [hoveredSlot, setHoveredSlot] = useState(-1);
 

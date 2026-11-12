@@ -26,7 +26,7 @@ const buildNodeTypeKeys = (nodeType) => {
  * for нод визуального редактора
  */
 export function useNodeTranslation() {
-  const { t, i18n } = useTranslation('nodes');
+  const { t } = useTranslation('visual-editor');
 
   /**
    * Получает перевод for ноды

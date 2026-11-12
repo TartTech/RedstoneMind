@@ -146,7 +146,6 @@ function VisualEditorControls() {
 function BotVisualEditorPage() {
     const { botId, commandId, eventId } = useParams();
     const location = useLocation();
-    const { t } = useTranslation('visual-editor');
     const { getNodeTranslation } = useNodeTranslation();
 
     const [botName, setBotName] = useState(null);

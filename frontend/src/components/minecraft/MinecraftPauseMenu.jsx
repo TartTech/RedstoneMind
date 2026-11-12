@@ -99,7 +99,9 @@ const Toggle = ({ label, value, onChange }) => (
     </button>
 );
 
-const SettingsView = ({ settings, updateSetting, onBack, scoreboardVisible, setScoreboardVisible, gameInfo }) => (
+const SettingsView = ({ settings, updateSetting, onBack, scoreboardVisible, setScoreboardVisible, gameInfo }) => {
+    const { t } = useTranslation('minecraft-viewer');
+    return (
     <div className="flex flex-col gap-2" style={{ width: 420 }}>
         <h2
             className="text-center text-white text-xl mb-3"
@@ -175,7 +177,8 @@ const SettingsView = ({ settings, updateSetting, onBack, scoreboardVisible, setS
             <MCButton onClick={onBack} width={200}>Готово</MCButton>
         </div>
     </div>
-);
+    );
+};
 
 const ControlsView = ({ onBack }) => {
     const { t } = useTranslation('minecraft-viewer');
